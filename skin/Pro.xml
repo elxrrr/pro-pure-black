@@ -2093,8 +2093,8 @@
 					</panel>
 			</group>
 		</group>
-		<group name="beat_matcher_notch" x="560" y="8" condition="is_mac" visibility="has_notch">
-			<group name="phrase_3" x="-35" y="-2" visibility="var_equal '@$phrasecircle' 1 && var_not_equal '@$4decks' 0">
+		<group name="beat_matcher_notch" x="760" y="8" condition="is_mac" visibility="has_notch">
+			<group name="phrase_3" x="+35" y="-2" visibility="var_not_equal '@$4decks' 0">
 				<deck deck="3">
 					<visual source="get_beat_counter" type="circle">
 						<pos x="+0" y="+0"/>
@@ -2118,7 +2118,7 @@
 					</button>
 				</deck>
 			</group>
-			<group name="phrase_left" x="+0" y="-2" visibility="var_equal '@$phrasecircle' 1">
+			<group name="phrase_left" x="+0" y="-2">
 				<deck deck="1">
 					<visual source="get_beat_counter" type="circle">
 						<pos x="+0" y="+0"/>
@@ -2143,7 +2143,7 @@
 				</deck>
 			</group>
 
-			<group name="phrase_right" x="+40+33+33+33+40" y="-2" visibility="var_equal '@$phrasecircle' 1">
+			<group name="phrase_right" x="+335" y="-2">
 				<deck deck="2">
 					<visual source="get_beat_counter" type="circle">
 						<pos x="+0" y="+0"/>
@@ -2167,7 +2167,7 @@
 					</button>
 				</deck>  	
 			</group>
-			<group name="phrase_4" x="+40+33+33+33+40+35" y="-2" visibility="var_equal '@$phrasecircle' 1 && var_not_equal '@$4decks' 0">
+			<group name="phrase_4" x="+370" y="-2" visibility="var_not_equal '@$4decks' 0">
 				<deck deck="4">
 					<visual source="get_beat_counter" type="circle">
 						<pos x="+0" y="+0"/>
@@ -2190,93 +2190,6 @@
 						<size width="30" height="30"/>
 					</button>
 				</deck>
-			</group>
-
-			<group name="beatbar" x="+40" y="+2" >
-					<panel condition="var_equal '@$4decks' 0">
-						<deck deck="1">	
-							<button class="beat_bar" x="+0" y="+0" action="goto_bar 1"/>
-							<button class="beat_bar" x="+33" y="+0" action="goto_bar 2"/>
-							<button class="beat_bar" x="+33+33" y="+0" action="goto_bar 3"/>
-							<button class="beat_bar" x="+33+33+33" y="+0" action="goto_bar 4"/>
-							<group x="+4" y="+3" visibility="var_equal '@$phrasecircle' 0">
-								<button class="phrase_bar" x="+0" y="+0" query="get_phrase_num 1"/>
-								<button class="phrase_bar" x="+33" y="+0" query="get_phrase_num 2"/>
-								<button class="phrase_bar" x="+33+33" y="+0" query="get_phrase_num 3"/>
-								<button class="phrase_bar" x="+33+33+33" y="+0" query="get_phrase_num 4"/>
-							</group>
-						</deck>
-						<deck deck="2">
-							<button class="beat_bar" x="+0" y="+14" action="goto_bar 1"/>
-							<button class="beat_bar" x="+33" y="+14" action="goto_bar 2"/>
-							<button class="beat_bar" x="+33+33" y="+14" action="goto_bar 3"/>
-							<button class="beat_bar" x="+33+33+33" y="+14" action="goto_bar 4"/>
-							<group x="+4" y="+3" visibility="var_equal '@$phrasecircle' 0">
-								<button class="phrase_bar" x="+0" y="+14" query="get_phrase_num 1"/>
-								<button class="phrase_bar" x="+33" y="+14" query="get_phrase_num 2"/>
-								<button class="phrase_bar" x="+33+33" y="+14" query="get_phrase_num 3"/>
-								<button class="phrase_bar" x="+33+33+33" y="+14" query="get_phrase_num 4"/>
-							</group>
-						</deck>
-					</panel>
-					<panel condition="var_not_equal '@$4decks' 0" y="-2">
-						<group>
-							<deck deck="1">	
-							<button class="beat_bar_narrow" x="+0" y="+0" action="goto_bar 1"/>
-							<button class="beat_bar_narrow" x="+33" y="+0" action="goto_bar 2"/>
-							<button class="beat_bar_narrow" x="+33+33" y="+0" action="goto_bar 3"/>
-							<button class="beat_bar_narrow" x="+33+33+33" y="+0" action="goto_bar 4"/>
-							<group x="+4" y="+2" visibility="var_equal '@$phrasecircle' 0">
-								<button class="phrase_bar" height="2" x="+0" y="+0" query="get_phrase_num 1"/>
-								<button class="phrase_bar" height="2" x="+33" y="+0" query="get_phrase_num 2"/>
-								<button class="phrase_bar" height="2" x="+33+33" y="+0" query="get_phrase_num 3"/>
-								<button class="phrase_bar" height="2" x="+33+33+33" y="+0" query="get_phrase_num 4"/>
-							</group>
-							</deck>
-						</group>
-						<group y="+7">
-							<deck deck="2">	
-							<button class="beat_bar_narrow" x="+0" y="+0" action="goto_bar 1"/>
-							<button class="beat_bar_narrow" x="+33" y="+0" action="goto_bar 2"/>
-							<button class="beat_bar_narrow" x="+33+33" y="+0" action="goto_bar 3"/>
-							<button class="beat_bar_narrow" x="+33+33+33" y="+0" action="goto_bar 4"/>
-							<group x="+4" y="+2" visibility="var_equal '@$phrasecircle' 0">
-								<button class="phrase_bar" height="2" x="+0" y="+0" query="get_phrase_num 1"/>
-								<button class="phrase_bar" height="2" x="+33" y="+0" query="get_phrase_num 2"/>
-								<button class="phrase_bar" height="2" x="+33+33" y="+0" query="get_phrase_num 3"/>
-								<button class="phrase_bar" height="2" x="+33+33+33" y="+0" query="get_phrase_num 4"/>
-							</group>
-							</deck>
-						</group>
-						<group y="+7+7">
-							<deck deck="3">	
-							<button class="beat_bar_narrow" x="+0" y="+0" action="goto_bar 1"/>
-							<button class="beat_bar_narrow" x="+33" y="+0" action="goto_bar 2"/>
-							<button class="beat_bar_narrow" x="+33+33" y="+0" action="goto_bar 3"/>
-							<button class="beat_bar_narrow" x="+33+33+33" y="+0" action="goto_bar 4"/>
-							<group x="+4" y="+2" visibility="var_equal '@$phrasecircle' 0">
-								<button class="phrase_bar" height="2" x="+0" y="+0" query="get_phrase_num 1"/>
-								<button class="phrase_bar" height="2" x="+33" y="+0" query="get_phrase_num 2"/>
-								<button class="phrase_bar" height="2" x="+33+33" y="+0" query="get_phrase_num 3"/>
-								<button class="phrase_bar" height="2" x="+33+33+33" y="+0" query="get_phrase_num 4"/>
-							</group>
-							</deck>
-						</group>
-						<group y="+7+7+7">
-							<deck deck="4">	
-							<button class="beat_bar_narrow" x="+0" y="+0" action="goto_bar 1"/>
-							<button class="beat_bar_narrow" x="+33" y="+0" action="goto_bar 2"/>
-							<button class="beat_bar_narrow" x="+33+33" y="+0" action="goto_bar 3"/>
-							<button class="beat_bar_narrow" x="+33+33+33" y="+0" action="goto_bar 4"/>
-							<group x="+4" y="+2" visibility="var_equal '@$phrasecircle' 0">
-								<button class="phrase_bar" height="2" x="+0" y="+0" query="get_phrase_num 1"/>
-								<button class="phrase_bar" height="2" x="+33" y="+0" query="get_phrase_num 2"/>
-								<button class="phrase_bar" height="2" x="+33+33" y="+0" query="get_phrase_num 3"/>
-								<button class="phrase_bar" height="2" x="+33+33+33" y="+0" query="get_phrase_num 4"/>
-							</group>
-							</deck>
-						</group>
-					</panel>
 			</group>
 		</group>
 	</group>

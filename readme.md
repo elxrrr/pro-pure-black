@@ -10,7 +10,8 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | --- | --- | --- |
 | Decks, mixer, waveforms and browser | Pure-black backgrounds (`#000000`). | Modified |
 | Phrase-sync indicators and beat counters | Inactive phrase-sync markers `#303030`; inactive beat markers and rings `#484848`; counter text `#B8B8B8`. | Modified |
-| Top phrase counters and beat bars | Kept together left of the notch in macOS fullscreen. | Modified |
+| Top phrase counters | Circles only in macOS fullscreen: A/C left of the notch, B/D right. | Modified |
+| Top beat bars | Hidden in macOS fullscreen on notched displays. | Removed |
 | Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. | Modified |
 | Sandbox, Shoutout, Event Scheduler and account box | Hidden from the toolbar. | Removed |
 | Layout, status and Settings | Grouped on the right on macOS. | Modified |
