@@ -17,7 +17,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 ## Install
 
 1. Download **[Pro-OLED.zip](https://github.com/elxrrr/virtualdj-pro-oled/releases/latest/download/Pro-OLED.zip)** from the latest release.
-2. Copy it, still zipped, into your VirtualDJ **Skins** folder. On macOS this is usually `~/Library/Application Support/VirtualDJ/Skins/`; some installations use `~/Documents/VirtualDJ/Skins/`. **Settings → Interface → Edit this skin** opens the folder VirtualDJ actually uses.
+2. Copy `Pro-OLED.zip` into your VirtualDJ `Skins` folder without extracting it.
 3. Select **Pro OLED** in **Settings → Interface**. Select **OLED Black** in the layout menu’s colour scheme options if needed.
 
 ## Full interface
