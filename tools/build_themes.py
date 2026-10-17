@@ -9,6 +9,8 @@ PATH = ROOT / 'skin/Pro.xml'
 BEGIN = '\t\t<!-- BEGIN OLED DECK THEMES -->'
 END = '\t\t<!-- END OLED DECK THEMES -->'
 ATOMIX_DEFAULT = ('#156C89', '#AC2F37', '#0D7264', '#A54D30')
+METER_HEIGHTS = {'120-43': 77, '82': 82, '180-48': 132, '153-4': 149, '160': 160}
+METER_DECKS = {'1792': 1, '1793': 1, '1776': 2, '1777': 2, '1469': 3, '1453': 4}
 
 
 def validate_themes(themes):
@@ -48,41 +50,90 @@ def definition(name, value, deck=None, indent='\t\t\t'):
     return f'{indent}<define color="{name}" value="{value}"{scope}/>'
 
 
-def theme_waveforms(text, themes):
-    """Give Shapes theme shades while leaving Default's native colours unset."""
-    # Recover the original elements before rebuilding, so this stays idempotent.
+def unwrap_variants(text, label):
+    """Recover native elements before regenerating their themed alternatives."""
     generated = re.compile(
-        r'^(?P<indent>[ \t]*)<!-- BEGIN OLED WAVEFORM -->\n'
+        rf'^(?P<indent>[ \t]*)<!-- BEGIN OLED {label} -->\n'
         r'[ \t]*<group condition="[^"]+">\n(?P<original>.*?)\n'
         r'(?P=indent)</group>\n.*?'
-        r'(?P=indent)<!-- END OLED WAVEFORM -->', re.M | re.S)
-    text = generated.sub(
+        rf'(?P=indent)<!-- END OLED {label} -->', re.M | re.S)
+    return generated.sub(
         lambda match: '\n'.join(line[1:] for line in match['original'].split('\n')),
         text)
+
+
+def wrap_variant(original, custom, indent, themes, label):
     native = ''.join(f"var_equal '@$oleddecktheme' {t['id']} ? false : "
                      for t in themes[1:]) + 'true'
     themed = ''.join(f"var_equal '@$oleddecktheme' {t['id']} ? true : "
                      for t in themes[1:]) + 'false'
+    def nested(element):
+        return '\n'.join('\t' + re.sub(r'^[ \t]+',
+            lambda prefix: prefix[0].replace(' ', ''), line.rstrip())
+            for line in element.split('\n'))
+    return (f'{indent}<!-- BEGIN OLED {label} -->\n'
+            f'{indent}<group condition="{native}">\n{nested(original)}\n'
+            f'{indent}</group>\n'
+            f'{indent}<group condition="{themed}">\n{nested(custom)}\n'
+            f'{indent}</group>\n{indent}<!-- END OLED {label} -->')
+
+
+def theme_waveforms(text, themes):
+    """Give Shapes theme shades while leaving Default's native colours unset."""
+    text = unwrap_variants(text, 'WAVEFORM')
     colours = (' colorVocal="oled_wavevocal" colorInstru="oled_waveinstru"'
                ' colorBeat="oled_wavebeat"')
 
     def variants(match):
         indent, original = match['indent'], match[0]
         custom = original.replace('>', colours + '>', 1)
-        def nested(element):
-            return '\n'.join('\t' + re.sub(r'^[ \t]+',
-                lambda prefix: prefix[0].replace(' ', ''), line.rstrip())
-                for line in element.split('\n'))
-        return (f'{indent}<!-- BEGIN OLED WAVEFORM -->\n'
-                f'{indent}<group condition="{native}">\n{nested(original)}\n'
-                f'{indent}</group>\n'
-                f'{indent}<group condition="{themed}">\n{nested(custom)}\n'
-                f'{indent}</group>\n{indent}<!-- END OLED WAVEFORM -->')
+        return wrap_variant(original, custom, indent, themes, 'WAVEFORM')
 
     text, count = re.subn(
         r'^(?P<indent>[ \t]*)<(?P<tag>scratchwave|songpos)\b[^>]*>.*?</(?P=tag)>',
         variants, text, flags=re.M | re.S)
     assert count == 16, f'Expected 12 scratch waves and 4 deck overviews, got {count}'
+    return text
+
+
+def meter_classes():
+    """Vector versions of the original 4px-on/2px-gap meter strips."""
+    lines = []
+    for height in sorted(METER_HEIGHTS.values()):
+        phase = 1 if height == 149 else 0
+        lines.append(f'\t\t<define class="oled_meter_{height}" placeholders="metercolor=deckcolor">')
+        for sprite_y in reversed(range(0, height + phase, 6)):
+            top, bottom = max(0, sprite_y - phase), min(height, sprite_y + 4 - phase)
+            if bottom <= top:
+                continue
+            colour = '#BEBEBE' if sprite_y < 12 else '[METERCOLOR]'
+            lines += [f'\t\t\t<led x="+0" y="+{top}" width="3" height="{bottom-top}">',
+                      '\t\t\t\t<off color="#19191B"/>',
+                      f'\t\t\t\t<on color="{colour}"/>', '\t\t\t</led>']
+        lines.append('\t\t</define>')
+    return lines
+
+
+def theme_meters(text, themes):
+    """Theme deck VUs without touching the native master/mic warning meters."""
+    text = unwrap_variants(text, 'METER')
+    def variants(match):
+        original, indent = match[0], match['indent']
+        sprite = re.search(r'<on x="(1792|1793|1776|1777|1469|1453)" y="([01])"/>', original)
+        assert sprite, 'Unrecognised deck meter sprite'
+        size = re.search(r'<size width="3" height="([^"]+)"/>', original)
+        assert size and size[1] in METER_HEIGHTS, 'Unrecognised deck meter size'
+        height = METER_HEIGHTS[size[1]]
+        assert int(sprite[2]) == (1 if height == 149 else 0)
+        deck = METER_DECKS[sprite[1]]
+        custom = original.replace('type="linear"', 'type="vumeter"', 1)
+        custom = custom.replace('>', f' class="oled_meter_{height}" smooth="true" metercolor="oled_meter{deck}">', 1)
+        custom = re.sub(r'^[ \t]*<(?:off|on) x="\d+" y="\d+"/>\n', '', custom, flags=re.M)
+        return wrap_variant(original, custom, indent, themes, 'METER')
+    text, count = re.subn(
+        r'^(?P<indent>[ \t]*)<visual\b(?=[^>]*\bsource="(?:deck [1-4] )?get_level(?:_left|_right)?")'
+        r'[^>]*>.*?</visual>', variants, text, flags=re.M | re.S)
+    assert count == 40, f'Expected 40 deck meters, got {count}'
     return text
 
 
@@ -134,6 +185,7 @@ def build():
     text = text.replace('<selected color="deckcolordark"', '<selected color="oled_deck_selected"')
 
     lines = [BEGIN]
+    lines.extend(meter_classes())
     for name, value in plugin_defaults.items():
         lines.append(definition(name, value, indent='\t\t'))
     originals = themes[0]['colors']
@@ -162,6 +214,7 @@ def build():
                 lines.append(definition(name, value, deck))
             lines.append(definition(f'waveform_active{deck}', base))
             lines.append(definition(f'waveform_passive{deck}', dark))
+            lines.append(definition(f'oled_meter{deck}', base))
         for side, index in (('left', 0), ('right', 1)):
             base = theme['colors'][index]
             for name in ('deckcolor', 'faderinon', 'knobfillon'):
@@ -190,6 +243,7 @@ def build():
     assert count == 2
     assert '@$oledcolorscheme' not in text
     text = theme_waveforms(text, themes)
+    text = theme_meters(text, themes)
     text = re.sub(r'\n[ \t]*\n(?:[ \t]*\n)+', '\n\n', text)
     text = re.sub(r'(^[ \t]*(?:over|selected|down)_deck[12]="oled_plugin_[^"]+")[ \t]+$', r'\1', text, flags=re.M)
     PATH.write_bytes(text.replace('\n', '\r\n').encode())

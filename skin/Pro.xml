@@ -321,6 +321,420 @@
 		<define color="oled_jog_time" value="#b0b0b0"/>
 
 		<!-- BEGIN OLED DECK THEMES -->
+		<define class="oled_meter_77" placeholders="metercolor=deckcolor">
+			<led x="+0" y="+72" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+66" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+60" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+54" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+48" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+42" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+36" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+30" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+24" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+18" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+12" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+6" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+			<led x="+0" y="+0" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+		</define>
+		<define class="oled_meter_82" placeholders="metercolor=deckcolor">
+			<led x="+0" y="+78" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+72" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+66" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+60" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+54" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+48" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+42" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+36" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+30" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+24" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+18" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+12" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+6" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+			<led x="+0" y="+0" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+		</define>
+		<define class="oled_meter_132" placeholders="metercolor=deckcolor">
+			<led x="+0" y="+126" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+120" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+114" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+108" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+102" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+96" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+90" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+84" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+78" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+72" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+66" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+60" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+54" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+48" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+42" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+36" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+30" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+24" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+18" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+12" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+6" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+			<led x="+0" y="+0" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+		</define>
+		<define class="oled_meter_149" placeholders="metercolor=deckcolor">
+			<led x="+0" y="+143" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+137" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+131" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+125" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+119" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+113" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+107" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+101" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+95" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+89" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+83" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+77" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+71" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+65" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+59" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+53" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+47" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+41" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+35" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+29" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+23" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+17" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+11" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+5" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+			<led x="+0" y="+0" width="3" height="3">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+		</define>
+		<define class="oled_meter_160" placeholders="metercolor=deckcolor">
+			<led x="+0" y="+156" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+150" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+144" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+138" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+132" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+126" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+120" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+114" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+108" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+102" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+96" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+90" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+84" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+78" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+72" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+66" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+60" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+54" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+48" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+42" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+36" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+30" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+24" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+18" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+12" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="[METERCOLOR]"/>
+			</led>
+			<led x="+0" y="+6" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+			<led x="+0" y="+0" width="3" height="4">
+				<off color="#19191B"/>
+				<on color="#BEBEBE"/>
+			</led>
+		</define>
 		<define color="oled_plugin_over1" value="#1C7B97"/>
 		<define color="oled_plugin_selected1" value="#136C8A"/>
 		<define color="oled_plugin_down1" value="#0B485D"/>
@@ -365,6 +779,7 @@
 			<define color="oled_wavebeat" value="#EE9EBF" deck="1"/>
 			<define color="waveform_active1" value="#E56A9C"/>
 			<define color="waveform_passive1" value="#9C486A"/>
+			<define color="oled_meter1" value="#E56A9C"/>
 			<define color="deckcolor" value="#F5AD9D" deck="2"/>
 			<define color="deckcolorbright" value="#F6B7A9" deck="2"/>
 			<define color="deckcolordark" value="#A7766B" deck="2"/>
@@ -388,6 +803,7 @@
 			<define color="oled_wavebeat" value="#F8CABF" deck="2"/>
 			<define color="waveform_active2" value="#F5AD9D"/>
 			<define color="waveform_passive2" value="#A7766B"/>
+			<define color="oled_meter2" value="#F5AD9D"/>
 			<define color="deckcolor" value="#CC98E5" deck="3"/>
 			<define color="deckcolorbright" value="#D2A4E8" deck="3"/>
 			<define color="deckcolordark" value="#8B679C" deck="3"/>
@@ -411,6 +827,7 @@
 			<define color="oled_wavebeat" value="#DEBCEE" deck="3"/>
 			<define color="waveform_active3" value="#CC98E5"/>
 			<define color="waveform_passive3" value="#8B679C"/>
+			<define color="oled_meter3" value="#CC98E5"/>
 			<define color="deckcolor" value="#F8D7E8" deck="4"/>
 			<define color="deckcolorbright" value="#F9DCEB" deck="4"/>
 			<define color="deckcolordark" value="#A9929E" deck="4"/>
@@ -434,6 +851,7 @@
 			<define color="oled_wavebeat" value="#FAE5F0" deck="4"/>
 			<define color="waveform_active4" value="#F8D7E8"/>
 			<define color="waveform_passive4" value="#A9929E"/>
+			<define color="oled_meter4" value="#F8D7E8"/>
 			<define color="deckcolor" value="#E56A9C" deck="left"/>
 			<define color="faderinon" value="#E56A9C" deck="left"/>
 			<define color="knobfillon" value="#E56A9C" deck="left"/>
@@ -479,6 +897,7 @@
 			<define color="oled_wavebeat" value="#95B8E6" deck="1"/>
 			<define color="waveform_active1" value="#5C91D8"/>
 			<define color="waveform_passive1" value="#3F6393"/>
+			<define color="oled_meter1" value="#5C91D8"/>
 			<define color="deckcolor" value="#78D0E3" deck="2"/>
 			<define color="deckcolorbright" value="#88D6E6" deck="2"/>
 			<define color="deckcolordark" value="#528D9A" deck="2"/>
@@ -502,6 +921,7 @@
 			<define color="oled_wavebeat" value="#A7E0ED" deck="2"/>
 			<define color="waveform_active2" value="#78D0E3"/>
 			<define color="waveform_passive2" value="#528D9A"/>
+			<define color="oled_meter2" value="#78D0E3"/>
 			<define color="deckcolor" value="#B09CE8" deck="3"/>
 			<define color="deckcolorbright" value="#B9A8EB" deck="3"/>
 			<define color="deckcolordark" value="#786A9E" deck="3"/>
@@ -525,6 +945,7 @@
 			<define color="oled_wavebeat" value="#CCBFF0" deck="3"/>
 			<define color="waveform_active3" value="#B09CE8"/>
 			<define color="waveform_passive3" value="#786A9E"/>
+			<define color="oled_meter3" value="#B09CE8"/>
 			<define color="deckcolor" value="#D0E7FC" deck="4"/>
 			<define color="deckcolorbright" value="#D6EAFC" deck="4"/>
 			<define color="deckcolordark" value="#8D9DAB" deck="4"/>
@@ -548,6 +969,7 @@
 			<define color="oled_wavebeat" value="#E0EFFD" deck="4"/>
 			<define color="waveform_active4" value="#D0E7FC"/>
 			<define color="waveform_passive4" value="#8D9DAB"/>
+			<define color="oled_meter4" value="#D0E7FC"/>
 			<define color="deckcolor" value="#5C91D8" deck="left"/>
 			<define color="faderinon" value="#5C91D8" deck="left"/>
 			<define color="knobfillon" value="#5C91D8" deck="left"/>
@@ -593,6 +1015,7 @@
 			<define color="oled_wavebeat" value="#BDA3EC" deck="1"/>
 			<define color="waveform_active1" value="#9A71E2"/>
 			<define color="waveform_passive1" value="#694D9A"/>
+			<define color="oled_meter1" value="#9A71E2"/>
 			<define color="deckcolor" value="#D574B7" deck="2"/>
 			<define color="deckcolorbright" value="#DA85C0" deck="2"/>
 			<define color="deckcolordark" value="#914F7C" deck="2"/>
@@ -616,6 +1039,7 @@
 			<define color="oled_wavebeat" value="#E4A5D0" deck="2"/>
 			<define color="waveform_active2" value="#D574B7"/>
 			<define color="waveform_passive2" value="#914F7C"/>
+			<define color="oled_meter2" value="#D574B7"/>
 			<define color="deckcolor" value="#C1A3F4" deck="3"/>
 			<define color="deckcolorbright" value="#C8AEF5" deck="3"/>
 			<define color="deckcolordark" value="#836FA6" deck="3"/>
@@ -639,6 +1063,7 @@
 			<define color="oled_wavebeat" value="#D7C3F8" deck="3"/>
 			<define color="waveform_active3" value="#C1A3F4"/>
 			<define color="waveform_passive3" value="#836FA6"/>
+			<define color="oled_meter3" value="#C1A3F4"/>
 			<define color="deckcolor" value="#F1C3E9" deck="4"/>
 			<define color="deckcolorbright" value="#F3CAEC" deck="4"/>
 			<define color="deckcolordark" value="#A4859E" deck="4"/>
@@ -662,6 +1087,7 @@
 			<define color="oled_wavebeat" value="#F6D8F1" deck="4"/>
 			<define color="waveform_active4" value="#F1C3E9"/>
 			<define color="waveform_passive4" value="#A4859E"/>
+			<define color="oled_meter4" value="#F1C3E9"/>
 			<define color="deckcolor" value="#9A71E2" deck="left"/>
 			<define color="faderinon" value="#9A71E2" deck="left"/>
 			<define color="knobfillon" value="#9A71E2" deck="left"/>
@@ -707,6 +1133,7 @@
 			<define color="oled_wavebeat" value="#C6A6D7" deck="1"/>
 			<define color="waveform_active1" value="#A776C2"/>
 			<define color="waveform_passive1" value="#725084"/>
+			<define color="oled_meter1" value="#A776C2"/>
 			<define color="deckcolor" value="#F078A4" deck="2"/>
 			<define color="deckcolorbright" value="#F288AF" deck="2"/>
 			<define color="deckcolordark" value="#A35270" deck="2"/>
@@ -730,6 +1157,7 @@
 			<define color="oled_wavebeat" value="#F5A7C4" deck="2"/>
 			<define color="waveform_active2" value="#F078A4"/>
 			<define color="waveform_passive2" value="#A35270"/>
+			<define color="oled_meter2" value="#F078A4"/>
 			<define color="deckcolor" value="#F3AF63" deck="3"/>
 			<define color="deckcolorbright" value="#F4B976" deck="3"/>
 			<define color="deckcolordark" value="#A57743" deck="3"/>
@@ -753,6 +1181,7 @@
 			<define color="oled_wavebeat" value="#F7CB9A" deck="3"/>
 			<define color="waveform_active3" value="#F3AF63"/>
 			<define color="waveform_passive3" value="#A57743"/>
+			<define color="oled_meter3" value="#F3AF63"/>
 			<define color="deckcolor" value="#7DACF0" deck="4"/>
 			<define color="deckcolorbright" value="#8DB6F2" deck="4"/>
 			<define color="deckcolordark" value="#5575A3" deck="4"/>
@@ -776,6 +1205,7 @@
 			<define color="oled_wavebeat" value="#AAC9F5" deck="4"/>
 			<define color="waveform_active4" value="#7DACF0"/>
 			<define color="waveform_passive4" value="#5575A3"/>
+			<define color="oled_meter4" value="#7DACF0"/>
 			<define color="deckcolor" value="#A776C2" deck="left"/>
 			<define color="faderinon" value="#A776C2" deck="left"/>
 			<define color="knobfillon" value="#A776C2" deck="left"/>
@@ -821,6 +1251,7 @@
 			<define color="oled_wavebeat" value="#EFAFA7" deck="1"/>
 			<define color="waveform_active1" value="#E78477"/>
 			<define color="waveform_passive1" value="#9D5A51"/>
+			<define color="oled_meter1" value="#E78477"/>
 			<define color="deckcolor" value="#F5BE91" deck="2"/>
 			<define color="deckcolorbright" value="#F6C69E" deck="2"/>
 			<define color="deckcolordark" value="#A78163" deck="2"/>
@@ -844,6 +1275,7 @@
 			<define color="oled_wavebeat" value="#F8D5B8" deck="2"/>
 			<define color="waveform_active2" value="#F5BE91"/>
 			<define color="waveform_passive2" value="#A78163"/>
+			<define color="oled_meter2" value="#F5BE91"/>
 			<define color="deckcolor" value="#D69AC3" deck="3"/>
 			<define color="deckcolorbright" value="#DBA6CA" deck="3"/>
 			<define color="deckcolordark" value="#926985" deck="3"/>
@@ -867,6 +1299,7 @@
 			<define color="oled_wavebeat" value="#E4BDD8" deck="3"/>
 			<define color="waveform_active3" value="#D69AC3"/>
 			<define color="waveform_passive3" value="#926985"/>
+			<define color="oled_meter3" value="#D69AC3"/>
 			<define color="deckcolor" value="#ABBFE9" deck="4"/>
 			<define color="deckcolorbright" value="#B5C7EC" deck="4"/>
 			<define color="deckcolordark" value="#74829E" deck="4"/>
@@ -890,6 +1323,7 @@
 			<define color="oled_wavebeat" value="#C8D5F1" deck="4"/>
 			<define color="waveform_active4" value="#ABBFE9"/>
 			<define color="waveform_passive4" value="#74829E"/>
+			<define color="oled_meter4" value="#ABBFE9"/>
 			<define color="deckcolor" value="#E78477" deck="left"/>
 			<define color="faderinon" value="#E78477" deck="left"/>
 			<define color="knobfillon" value="#E78477" deck="left"/>
@@ -935,6 +1369,7 @@
 			<define color="oled_wavebeat" value="#ACE4F7" deck="1"/>
 			<define color="waveform_active1" value="#80D6F2"/>
 			<define color="waveform_passive1" value="#5792A5"/>
+			<define color="oled_meter1" value="#80D6F2"/>
 			<define color="deckcolor" value="#B8F2CF" deck="2"/>
 			<define color="deckcolorbright" value="#C1F4D5" deck="2"/>
 			<define color="deckcolordark" value="#7DA58D" deck="2"/>
@@ -958,6 +1393,7 @@
 			<define color="oled_wavebeat" value="#D1F7E0" deck="2"/>
 			<define color="waveform_active2" value="#B8F2CF"/>
 			<define color="waveform_passive2" value="#7DA58D"/>
+			<define color="oled_meter2" value="#B8F2CF"/>
 			<define color="deckcolor" value="#FFB5DC" deck="3"/>
 			<define color="deckcolorbright" value="#FFBEE0" deck="3"/>
 			<define color="deckcolordark" value="#AD7B96" deck="3"/>
@@ -981,6 +1417,7 @@
 			<define color="oled_wavebeat" value="#FFCFE8" deck="3"/>
 			<define color="waveform_active3" value="#FFB5DC"/>
 			<define color="waveform_passive3" value="#AD7B96"/>
+			<define color="oled_meter3" value="#FFB5DC"/>
 			<define color="deckcolor" value="#C5ABFA" deck="4"/>
 			<define color="deckcolorbright" value="#CCB5FB" deck="4"/>
 			<define color="deckcolordark" value="#8674AA" deck="4"/>
@@ -1004,6 +1441,7 @@
 			<define color="oled_wavebeat" value="#D9C8FC" deck="4"/>
 			<define color="waveform_active4" value="#C5ABFA"/>
 			<define color="waveform_passive4" value="#8674AA"/>
+			<define color="oled_meter4" value="#C5ABFA"/>
 			<define color="deckcolor" value="#80D6F2" deck="left"/>
 			<define color="faderinon" value="#80D6F2" deck="left"/>
 			<define color="knobfillon" value="#80D6F2" deck="left"/>
@@ -1049,6 +1487,7 @@
 			<define color="oled_wavebeat" value="#DEB1CA" deck="1"/>
 			<define color="waveform_active1" value="#CC87AE"/>
 			<define color="waveform_passive1" value="#8B5C76"/>
+			<define color="oled_meter1" value="#CC87AE"/>
 			<define color="deckcolor" value="#9D90D1" deck="2"/>
 			<define color="deckcolorbright" value="#A99DD7" deck="2"/>
 			<define color="deckcolordark" value="#6B628E" deck="2"/>
@@ -1072,6 +1511,7 @@
 			<define color="oled_wavebeat" value="#BFB7E1" deck="2"/>
 			<define color="waveform_active2" value="#9D90D1"/>
 			<define color="waveform_passive2" value="#6B628E"/>
+			<define color="oled_meter2" value="#9D90D1"/>
 			<define color="deckcolor" value="#EF9571" deck="3"/>
 			<define color="deckcolorbright" value="#F1A282" deck="3"/>
 			<define color="deckcolordark" value="#A3654D" deck="3"/>
@@ -1095,6 +1535,7 @@
 			<define color="oled_wavebeat" value="#F5BAA3" deck="3"/>
 			<define color="waveform_active3" value="#EF9571"/>
 			<define color="waveform_passive3" value="#A3654D"/>
+			<define color="oled_meter3" value="#EF9571"/>
 			<define color="deckcolor" value="#F4C8A2" deck="4"/>
 			<define color="deckcolorbright" value="#F5CFAD" deck="4"/>
 			<define color="deckcolordark" value="#A6886E" deck="4"/>
@@ -1118,6 +1559,7 @@
 			<define color="oled_wavebeat" value="#F8DBC3" deck="4"/>
 			<define color="waveform_active4" value="#F4C8A2"/>
 			<define color="waveform_passive4" value="#A6886E"/>
+			<define color="oled_meter4" value="#F4C8A2"/>
 			<define color="deckcolor" value="#CC87AE" deck="left"/>
 			<define color="faderinon" value="#CC87AE" deck="left"/>
 			<define color="knobfillon" value="#CC87AE" deck="left"/>
@@ -1163,6 +1605,7 @@
 			<define color="oled_wavebeat" value="#92C8B8" deck="1"/>
 			<define color="waveform_active1" value="#57AA92"/>
 			<define color="waveform_passive1" value="#3B7463"/>
+			<define color="oled_meter1" value="#57AA92"/>
 			<define color="deckcolor" value="#83C46A" deck="2"/>
 			<define color="deckcolorbright" value="#92CB7C" deck="2"/>
 			<define color="deckcolordark" value="#598548" deck="2"/>
@@ -1186,6 +1629,7 @@
 			<define color="oled_wavebeat" value="#AED99E" deck="2"/>
 			<define color="waveform_active2" value="#83C46A"/>
 			<define color="waveform_passive2" value="#598548"/>
+			<define color="oled_meter2" value="#83C46A"/>
 			<define color="deckcolor" value="#CBD879" deck="3"/>
 			<define color="deckcolorbright" value="#D1DD89" deck="3"/>
 			<define color="deckcolordark" value="#8A9352" deck="3"/>
@@ -1209,6 +1653,7 @@
 			<define color="oled_wavebeat" value="#DDE6A8" deck="3"/>
 			<define color="waveform_active3" value="#CBD879"/>
 			<define color="waveform_passive3" value="#8A9352"/>
+			<define color="oled_meter3" value="#CBD879"/>
 			<define color="deckcolor" value="#D7F0BD" deck="4"/>
 			<define color="deckcolorbright" value="#DCF2C5" deck="4"/>
 			<define color="deckcolordark" value="#92A381" deck="4"/>
@@ -1232,6 +1677,7 @@
 			<define color="oled_wavebeat" value="#E5F5D4" deck="4"/>
 			<define color="waveform_active4" value="#D7F0BD"/>
 			<define color="waveform_passive4" value="#92A381"/>
+			<define color="oled_meter4" value="#D7F0BD"/>
 			<define color="deckcolor" value="#57AA92" deck="left"/>
 			<define color="faderinon" value="#57AA92" deck="left"/>
 			<define color="knobfillon" value="#57AA92" deck="left"/>
@@ -1277,6 +1723,7 @@
 			<define color="oled_wavebeat" value="#D4A3C6" deck="1"/>
 			<define color="waveform_active1" value="#BD72A8"/>
 			<define color="waveform_passive1" value="#814E72"/>
+			<define color="oled_meter1" value="#BD72A8"/>
 			<define color="deckcolor" value="#917CD1" deck="2"/>
 			<define color="deckcolorbright" value="#9E8CD7" deck="2"/>
 			<define color="deckcolordark" value="#63548E" deck="2"/>
@@ -1300,6 +1747,7 @@
 			<define color="oled_wavebeat" value="#B8AAE1" deck="2"/>
 			<define color="waveform_active2" value="#917CD1"/>
 			<define color="waveform_passive2" value="#63548E"/>
+			<define color="oled_meter2" value="#917CD1"/>
 			<define color="deckcolor" value="#D0A1E9" deck="3"/>
 			<define color="deckcolorbright" value="#D6ACEC" deck="3"/>
 			<define color="deckcolordark" value="#8D6D9E" deck="3"/>
@@ -1323,6 +1771,7 @@
 			<define color="oled_wavebeat" value="#E0C2F1" deck="3"/>
 			<define color="waveform_active3" value="#D0A1E9"/>
 			<define color="waveform_passive3" value="#8D6D9E"/>
+			<define color="oled_meter3" value="#D0A1E9"/>
 			<define color="deckcolor" value="#EFCFED" deck="4"/>
 			<define color="deckcolorbright" value="#F1D5EF" deck="4"/>
 			<define color="deckcolordark" value="#A38DA1" deck="4"/>
@@ -1346,6 +1795,7 @@
 			<define color="oled_wavebeat" value="#F5E0F3" deck="4"/>
 			<define color="waveform_active4" value="#EFCFED"/>
 			<define color="waveform_passive4" value="#A38DA1"/>
+			<define color="oled_meter4" value="#EFCFED"/>
 			<define color="deckcolor" value="#BD72A8" deck="left"/>
 			<define color="faderinon" value="#BD72A8" deck="left"/>
 			<define color="knobfillon" value="#BD72A8" deck="left"/>
@@ -1391,6 +1841,7 @@
 			<define color="oled_wavebeat" value="#E4A193" deck="1"/>
 			<define color="waveform_active1" value="#D66E59"/>
 			<define color="waveform_passive1" value="#924B3D"/>
+			<define color="oled_meter1" value="#D66E59"/>
 			<define color="deckcolor" value="#ED9760" deck="2"/>
 			<define color="deckcolorbright" value="#EFA373" deck="2"/>
 			<define color="deckcolordark" value="#A16741" deck="2"/>
@@ -1414,6 +1865,7 @@
 			<define color="oled_wavebeat" value="#F3BB98" deck="2"/>
 			<define color="waveform_active2" value="#ED9760"/>
 			<define color="waveform_passive2" value="#A16741"/>
+			<define color="oled_meter2" value="#ED9760"/>
 			<define color="deckcolor" value="#F5BE7C" deck="3"/>
 			<define color="deckcolorbright" value="#F6C68C" deck="3"/>
 			<define color="deckcolordark" value="#A78154" deck="3"/>
@@ -1437,6 +1889,7 @@
 			<define color="oled_wavebeat" value="#F8D5AA" deck="3"/>
 			<define color="waveform_active3" value="#F5BE7C"/>
 			<define color="waveform_passive3" value="#A78154"/>
+			<define color="oled_meter3" value="#F5BE7C"/>
 			<define color="deckcolor" value="#F9E0BA" deck="4"/>
 			<define color="deckcolorbright" value="#FAE4C2" deck="4"/>
 			<define color="deckcolordark" value="#A9987E" deck="4"/>
@@ -1460,6 +1913,7 @@
 			<define color="oled_wavebeat" value="#FBEBD2" deck="4"/>
 			<define color="waveform_active4" value="#F9E0BA"/>
 			<define color="waveform_passive4" value="#A9987E"/>
+			<define color="oled_meter4" value="#F9E0BA"/>
 			<define color="deckcolor" value="#D66E59" deck="left"/>
 			<define color="faderinon" value="#D66E59" deck="left"/>
 			<define color="knobfillon" value="#D66E59" deck="left"/>
@@ -5531,72 +5985,152 @@
 							<panel visibility="not deck [MINIDECK_LEFT] leftdeck">
 								<deck deck="3">
 									<group name="vu_left" x="+9" y="+0">
-										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
-											<pos x="+0" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1469" y="0"/>
-										</visual>
-										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
-											<pos x="+3+2" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1469" y="0"/>
-										</visual>
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1469" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter3">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1469" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter3">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
 									</group>
 								</deck>
 							</panel>
 							<panel visibility="deck [MINIDECK_LEFT] leftdeck">
 								<deck deck="1">
 									<group name="vu_left" x="+9" y="+0">
-										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
-											<pos x="+0" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1792" y="0"/>
-										</visual>
-										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
-											<pos x="+3+2" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1792" y="0"/>
-										</visual>
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1792" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter1">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1792" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter1">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
 									</group>
 								</deck>
 							</panel>
 							<panel visibility="deck [MINIDECK_RIGHT] rightdeck">
 								<deck deck="2">
 									<group name="vu_right" x="+9+8+6" y="+0">
-										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
-											<pos x="+0" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1776" y="0"/>
-										</visual>
-										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
-											<pos x="+3+2" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1776" y="0"/>
-										</visual>
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1776" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter2">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1776" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter2">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
 									</group>
 								</deck>
 							</panel>
 							<panel visibility="not deck [MINIDECK_RIGHT] rightdeck">
 								<deck deck="4">
 									<group name="vu_right" x="+9+8+6" y="+0">
-										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
-											<pos x="+0" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1453" y="0"/>
-										</visual>
-										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
-											<pos x="+3+2" y="+0"/>
-											<size width="3" height="120-43"/>
-											<off x="1760" y="0"/>
-											<on x="1453" y="0"/>
-										</visual>
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1453" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter4">
+												<pos x="+0" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
+										<!-- BEGIN OLED METER -->
+										<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+											<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+												<off x="1760" y="0"/>
+												<on x="1453" y="0"/>
+											</visual>
+										</group>
+										<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+											<visual source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_77" smooth="true" metercolor="oled_meter4">
+												<pos x="+3+2" y="+0"/>
+												<size width="3" height="120-43"/>
+											</visual>
+										</group>
+										<!-- END OLED METER -->
 									</group>
 								</deck>
 							</panel>
@@ -6307,62 +6841,142 @@
 
 			<group name="vu_area" x="+120+1" y="+26+8+45">
 				<group name="vu_ch3" x="+12" y="+0">
-					<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1469" y="0"/>
-					</visual>
-					<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1469" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1469" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="3" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter3">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1469" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="3" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter3">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group name="vu_ch1" x="+12+16" y="+0">
-					<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1793" y="0"/>
-					</visual>
-					<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1793" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1793" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="1" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter1">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1793" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="1" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter1">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 
 				<group name="vu_ch2" x="+12+16+16" y="+0">
-					<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1777" y="0"/>
-					</visual>
-					<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1777" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1777" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="2" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter2">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1777" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="2" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter2">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 
 				<group name="vu_ch4" x="+12+16+16+16" y="+0">
-					<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1453" y="0"/>
-					</visual>
-					<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="160"/>
-						<off x="1760" y="0"/>
-						<on x="1453" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1453" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="4" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter4">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+							<off x="1760" y="0"/>
+							<on x="1453" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="4" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_160" smooth="true" metercolor="oled_meter4">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="160"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 			</group>
 
@@ -6509,60 +7123,140 @@
 			</visual>
 			<group name="vu_area" x="+80+60+1" y="+26+8">
 				<group name="vu_left_ch1" x="+9" y="+12+46" novisibility="deck 3 leftdeck">
-					<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1793" y="0"/>
-					</visual>
-					<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1793" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1793" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="1" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter1">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1793" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="1" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter1">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group name="vu_left_ch3" x="+9" y="+12+46" visibility="deck 3 leftdeck">
-					<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1469" y="0"/>
-					</visual>
-					<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1469" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1469" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="3" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter3">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1469" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="3" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter3">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group name="vu_right_ch2" x="+9+8+6" y="+12+46" novisibility="deck 4 rightdeck">
-					<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1777" y="0"/>
-					</visual>
-					<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1777" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1777" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="2" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter2">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1777" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="2" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter2">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group name="vu_right_ch4" x="+9+8+6" y="+12+46" visibility="deck 4 rightdeck">
-					<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1453" y="0"/>
-					</visual>
-					<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="180-48"/>
-						<off x="1760" y="0"/>
-						<on x="1453" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1453" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="4" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter4">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+							<off x="1760" y="0"/>
+							<on x="1453" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="4" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_132" smooth="true" metercolor="oled_meter4">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="180-48"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 			</group>
 			<group name="2ch_mix_deck1" novisibility="deck 3 leftdeck">
@@ -6717,36 +7411,76 @@
 
 				<panel visible="var_equal '@$4decks' 1 ? var_not_equal '@$4mixer' 0 : true">
 					<group visibility="deck 1 leftdeck">
-						<visual source="deck 1 get_level" type="linear" orientation="vertical" direction="up">
-							<pos x="+11" y="+15+2"/>
-							<size width="3" height="153-4"/>
-							<off x="1760" y="0"/>
-							<on x="1793" y="1"/>
-						</visual>
+						<!-- BEGIN OLED METER -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<visual source="deck 1 get_level" type="linear" orientation="vertical" direction="up">
+								<pos x="+11" y="+15+2"/>
+								<size width="3" height="153-4"/>
+								<off x="1760" y="0"/>
+								<on x="1793" y="1"/>
+							</visual>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<visual source="deck 1 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter1">
+								<pos x="+11" y="+15+2"/>
+								<size width="3" height="153-4"/>
+							</visual>
+						</group>
+						<!-- END OLED METER -->
 					</group>
 					<group visibility="deck 3 leftdeck">
-						<visual source="deck 3 get_level" type="linear" orientation="vertical" direction="up">
-							<pos x="+11" y="+15+2"/>
-							<size width="3" height="153-4"/>
-							<off x="1760" y="0"/>
-							<on x="1469" y="1"/>
-						</visual>
+						<!-- BEGIN OLED METER -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<visual source="deck 3 get_level" type="linear" orientation="vertical" direction="up">
+								<pos x="+11" y="+15+2"/>
+								<size width="3" height="153-4"/>
+								<off x="1760" y="0"/>
+								<on x="1469" y="1"/>
+							</visual>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<visual source="deck 3 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter3">
+								<pos x="+11" y="+15+2"/>
+								<size width="3" height="153-4"/>
+							</visual>
+						</group>
+						<!-- END OLED METER -->
 					</group>
 					<group visibility="deck 2 rightdeck">
-						<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
-							<pos x="+320-14" y="+15+2"/>
-							<size width="3" height="153-4"/>
-							<off x="1760" y="0"/>
-							<on x="1777" y="1"/>
-						</visual>
+						<!-- BEGIN OLED METER -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
+								<pos x="+320-14" y="+15+2"/>
+								<size width="3" height="153-4"/>
+								<off x="1760" y="0"/>
+								<on x="1777" y="1"/>
+							</visual>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<visual source="deck 2 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter2">
+								<pos x="+320-14" y="+15+2"/>
+								<size width="3" height="153-4"/>
+							</visual>
+						</group>
+						<!-- END OLED METER -->
 					</group>
 					<group visibility="deck 4 rightdeck">
-						<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
-							<pos x="+320-14" y="+15+2"/>
-							<size width="3" height="153-4"/>
-							<off x="1760" y="0"/>
-							<on x="1453" y="1"/>
-						</visual>
+						<!-- BEGIN OLED METER -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
+								<pos x="+320-14" y="+15+2"/>
+								<size width="3" height="153-4"/>
+								<off x="1760" y="0"/>
+								<on x="1453" y="1"/>
+							</visual>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<visual source="deck 2 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter4">
+								<pos x="+320-14" y="+15+2"/>
+								<size width="3" height="153-4"/>
+							</visual>
+						</group>
+						<!-- END OLED METER -->
 					</group>
 	   			</panel>
 
@@ -6844,60 +7578,140 @@
 		<panel name="videomixer_volume" y="-25" visibility="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0">
 			<group name="vu_area" x="+120+1" y="+310">
 				<group name="vu_ch3" x="+12" y="+0">
-					<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1469" y="0"/>
-					</visual>
-					<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1469" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1469" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="3" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter3">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1469" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="3" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter3">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group name="vu_ch1" x="+12+16" y="+0">
-					<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1793" y="0"/>
-					</visual>
-					<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1793" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1793" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="1" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter1">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1793" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="1" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter1">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group name="vu_ch2" x="+12+16+16" y="+0">
-					<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1777" y="0"/>
-					</visual>
-					<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1777" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1777" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="2" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter2">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1777" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="2" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter2">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group name="vu_ch4" x="+12+16+16+16" y="+0">
-					<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
-						<pos x="+0" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1453" y="0"/>
-					</visual>
-					<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
-						<pos x="+3+2" y="+0"/>
-						<size width="3" height="82"/>
-						<off x="1760" y="0"/>
-						<on x="1453" y="0"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1453" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="4" source="get_level_left" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter4">
+							<pos x="+0" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+							<off x="1760" y="0"/>
+							<on x="1453" y="0"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual deck="4" source="get_level_right" type="vumeter" orientation="vertical" direction="up" class="oled_meter_82" smooth="true" metercolor="oled_meter4">
+							<pos x="+3+2" y="+0"/>
+							<size width="3" height="82"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 			</group>
 
@@ -7139,36 +7953,76 @@
 				</panel>
 
 				<group visibility="deck 1 leftdeck">
-					<visual source="deck 1 get_level" type="linear" orientation="vertical" direction="up">
-						<pos x="+11" y="+15+2"/>
-						<size width="3" height="153-4"/>
-						<off x="1760" y="0"/>
-						<on x="1793" y="1"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual source="deck 1 get_level" type="linear" orientation="vertical" direction="up">
+							<pos x="+11" y="+15+2"/>
+							<size width="3" height="153-4"/>
+							<off x="1760" y="0"/>
+							<on x="1793" y="1"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual source="deck 1 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter1">
+							<pos x="+11" y="+15+2"/>
+							<size width="3" height="153-4"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group visibility="deck 3 leftdeck">
-					<visual source="deck 3 get_level" type="linear" orientation="vertical" direction="up">
-						<pos x="+11" y="+15+2"/>
-						<size width="3" height="153-4"/>
-						<off x="1760" y="0"/>
-						<on x="1469" y="1"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual source="deck 3 get_level" type="linear" orientation="vertical" direction="up">
+							<pos x="+11" y="+15+2"/>
+							<size width="3" height="153-4"/>
+							<off x="1760" y="0"/>
+							<on x="1469" y="1"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual source="deck 3 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter3">
+							<pos x="+11" y="+15+2"/>
+							<size width="3" height="153-4"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group visibility="deck 2 rightdeck">
-					<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
-						<pos x="+320-14" y="+15+2"/>
-						<size width="3" height="153-4"/>
-						<off x="1760" y="0"/>
-						<on x="1777" y="1"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
+							<pos x="+320-14" y="+15+2"/>
+							<size width="3" height="153-4"/>
+							<off x="1760" y="0"/>
+							<on x="1777" y="1"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual source="deck 2 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter2">
+							<pos x="+320-14" y="+15+2"/>
+							<size width="3" height="153-4"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 				<group visibility="deck 4 rightdeck">
-					<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
-						<pos x="+320-14" y="+15+2"/>
-						<size width="3" height="153-4"/>
-						<off x="1760" y="0"/>
-						<on x="1453" y="1"/>
-					</visual>
+					<!-- BEGIN OLED METER -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
+							<pos x="+320-14" y="+15+2"/>
+							<size width="3" height="153-4"/>
+							<off x="1760" y="0"/>
+							<on x="1453" y="1"/>
+						</visual>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<visual source="deck 2 get_level" type="vumeter" orientation="vertical" direction="up" class="oled_meter_149" smooth="true" metercolor="oled_meter4">
+							<pos x="+320-14" y="+15+2"/>
+							<size width="3" height="153-4"/>
+						</visual>
+					</group>
+					<!-- END OLED METER -->
 				</group>
 
 		</panel>
