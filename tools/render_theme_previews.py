@@ -132,12 +132,6 @@ def main() -> None:
     )
     save(ROOT / "screenshots" / "theme-preview.svg",
          document("Pro OLED — all deck palettes", ROW_HEIGHT * len(themes), sheet))
-    established = [theme for theme in themes if theme.get('source')]
-    if established:
-        rows = '\n'.join(theme_row(theme, index * ROW_HEIGHT, divider=index > 0)
-                         for index, theme in enumerate(established))
-        save(ROOT / 'screenshots' / 'established-themes.svg',
-             document('Pro OLED — Dracula, Nord and Solarized', ROW_HEIGHT * len(established), rows))
     print(f"Rendered and XML-validated {len(themes)} palette previews and one combined sheet.")
 
 

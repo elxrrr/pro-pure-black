@@ -9,8 +9,5 @@
   {"id":7,"name":"Dusk","slug":"dusk","colors":["#CC87AE","#9D90D1","#EF9571","#F4C8A2"]},
   {"id":8,"name":"Grove","slug":"grove","colors":["#57AA92","#83C46A","#CBD879","#D7F0BD"]},
   {"id":9,"name":"Orchid","slug":"orchid","colors":["#BD72A8","#917CD1","#D0A1E9","#EFCFED"]},
-  {"id":10,"name":"Ember","slug":"ember","colors":["#D66E59","#ED9760","#F5BE7C","#F9E0BA"]},
-  {"id":11,"name":"Dracula","slug":"dracula","colors":["#8BE9FD","#FF79C6","#50FA7B","#BD93F9"],"source":"https://draculatheme.com/contribute"},
-  {"id":12,"name":"Nord","slug":"nord","colors":["#88C0D0","#BF616A","#A3BE8C","#EBCB8B"],"source":"https://www.nordtheme.com/docs/colors-and-palettes/"},
-  {"id":13,"name":"Solarized","slug":"solarized","colors":["#268BD2","#DC322F","#2AA198","#B58900"],"source":"https://ethanschoonover.com/solarized/"}
+  {"id":10,"name":"Ember","slug":"ember","colors":["#D66E59","#ED9760","#F5BE7C","#F9E0BA"]}
 ]
