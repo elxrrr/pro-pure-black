@@ -342,1024 +342,1330 @@
 		<define color="oled_buttonfill" value="#B03239" deck="right"/>
 		<define color="oled_buttonfill" value="#4F5076" deck="master"/>
 		<group name="oled-theme-pastel-pink" condition="var_equal '@$oleddecktheme' 1">
-			<define color="deckcolor" value="#E879A1" deck="1"/>
-			<define color="deckcolorbright" value="#EB89AC" deck="1"/>
-			<define color="deckcolordark" value="#9E526D" deck="1"/>
-			<define color="deckcolor_invert" value="#EB89AC" deck="1"/>
-			<define color="padbuttonselected" value="#2A161D" deck="1"/>
-			<define color="buttonon" value="#E879A1" deck="1"/>
-			<define color="buttonover" value="#381D27" deck="1"/>
-			<define color="buttonselected" value="#2A161D" deck="1"/>
-			<define color="oled_buttonfill" value="#4F2937" deck="1"/>
-			<define color="oled_deck_selected" value="#4F2937" deck="1"/>
-			<define color="textdeck" value="#EB89AC" deck="1"/>
-			<define color="faderinon" value="#E879A1" deck="1"/>
-			<define color="knobfillon" value="#E879A1" deck="1"/>
-			<define color="colorbass" value="#4F2937" deck="1"/>
-			<define color="colormed" value="#9E526D" deck="1"/>
-			<define color="colorhigh" value="#E879A1" deck="1"/>
-			<define color="scratch1" value="#E879A1" deck="1"/>
-			<define color="scratch2" value="#E879A1" deck="1"/>
-			<define color="waveform_active1" value="#E879A1"/>
-			<define color="waveform_passive1" value="#9E526D"/>
-			<define color="deckcolor" value="#F4A0BC" deck="2"/>
-			<define color="deckcolorbright" value="#F5ABC4" deck="2"/>
-			<define color="deckcolordark" value="#A66D80" deck="2"/>
-			<define color="deckcolor_invert" value="#F5ABC4" deck="2"/>
-			<define color="padbuttonselected" value="#2C1D22" deck="2"/>
-			<define color="buttonon" value="#F4A0BC" deck="2"/>
-			<define color="buttonover" value="#3B262D" deck="2"/>
-			<define color="buttonselected" value="#2C1D22" deck="2"/>
-			<define color="oled_buttonfill" value="#533640" deck="2"/>
-			<define color="oled_deck_selected" value="#533640" deck="2"/>
-			<define color="textdeck" value="#F5ABC4" deck="2"/>
-			<define color="faderinon" value="#F4A0BC" deck="2"/>
-			<define color="knobfillon" value="#F4A0BC" deck="2"/>
-			<define color="colorbass" value="#533640" deck="2"/>
-			<define color="colormed" value="#A66D80" deck="2"/>
-			<define color="colorhigh" value="#F4A0BC" deck="2"/>
-			<define color="scratch1" value="#F4A0BC" deck="2"/>
-			<define color="scratch2" value="#F4A0BC" deck="2"/>
-			<define color="waveform_active2" value="#F4A0BC"/>
-			<define color="waveform_passive2" value="#A66D80"/>
-			<define color="deckcolor" value="#E8B1DF" deck="3"/>
-			<define color="deckcolorbright" value="#EBBAE3" deck="3"/>
-			<define color="deckcolordark" value="#9E7898" deck="3"/>
-			<define color="deckcolor_invert" value="#EBBAE3" deck="3"/>
-			<define color="padbuttonselected" value="#2A2028" deck="3"/>
-			<define color="buttonon" value="#E8B1DF" deck="3"/>
-			<define color="buttonover" value="#382A36" deck="3"/>
-			<define color="buttonselected" value="#2A2028" deck="3"/>
-			<define color="oled_buttonfill" value="#4F3C4C" deck="3"/>
-			<define color="oled_deck_selected" value="#4F3C4C" deck="3"/>
-			<define color="textdeck" value="#EBBAE3" deck="3"/>
-			<define color="faderinon" value="#E8B1DF" deck="3"/>
-			<define color="knobfillon" value="#E8B1DF" deck="3"/>
-			<define color="colorbass" value="#4F3C4C" deck="3"/>
-			<define color="colormed" value="#9E7898" deck="3"/>
-			<define color="colorhigh" value="#E8B1DF" deck="3"/>
-			<define color="scratch1" value="#E8B1DF" deck="3"/>
-			<define color="scratch2" value="#E8B1DF" deck="3"/>
-			<define color="waveform_active3" value="#E8B1DF"/>
-			<define color="waveform_passive3" value="#9E7898"/>
-			<define color="deckcolor" value="#FAD3E3" deck="4"/>
-			<define color="deckcolorbright" value="#FBD8E6" deck="4"/>
-			<define color="deckcolordark" value="#AA8F9A" deck="4"/>
-			<define color="deckcolor_invert" value="#FBD8E6" deck="4"/>
-			<define color="padbuttonselected" value="#2D2629" deck="4"/>
-			<define color="buttonon" value="#FAD3E3" deck="4"/>
-			<define color="buttonover" value="#3C3336" deck="4"/>
-			<define color="buttonselected" value="#2D2629" deck="4"/>
-			<define color="oled_buttonfill" value="#55484D" deck="4"/>
-			<define color="oled_deck_selected" value="#55484D" deck="4"/>
-			<define color="textdeck" value="#FBD8E6" deck="4"/>
-			<define color="faderinon" value="#FAD3E3" deck="4"/>
-			<define color="knobfillon" value="#FAD3E3" deck="4"/>
-			<define color="colorbass" value="#55484D" deck="4"/>
-			<define color="colormed" value="#AA8F9A" deck="4"/>
-			<define color="colorhigh" value="#FAD3E3" deck="4"/>
-			<define color="scratch1" value="#FAD3E3" deck="4"/>
-			<define color="scratch2" value="#FAD3E3" deck="4"/>
-			<define color="waveform_active4" value="#FAD3E3"/>
-			<define color="waveform_passive4" value="#AA8F9A"/>
-			<define color="deckcolor" value="#E879A1" deck="left"/>
-			<define color="faderinon" value="#E879A1" deck="left"/>
-			<define color="knobfillon" value="#E879A1" deck="left"/>
-			<define color="faderinleft" value="#E879A1"/>
-			<define color="deckcolor" value="#F4A0BC" deck="right"/>
-			<define color="faderinon" value="#F4A0BC" deck="right"/>
-			<define color="knobfillon" value="#F4A0BC" deck="right"/>
-			<define color="buttonon" value="#F4A0BC" deck="right"/>
-			<define color="oled_buttonfill" value="#533640" deck="right"/>
-			<define color="faderinright" value="#F4A0BC"/>
-			<define color="oled_plugin_over1" value="#381D27"/>
-			<define color="oled_plugin_selected1" value="#4F2937"/>
-			<define color="oled_plugin_down1" value="#41222D"/>
-			<define color="oled_plugin_slider1" value="#E879A1"/>
-			<define color="oled_plugin_disabled1" value="#4F2937"/>
-			<define color="oled_plugin_over2" value="#3B262D"/>
-			<define color="oled_plugin_selected2" value="#533640"/>
-			<define color="oled_plugin_down2" value="#442D35"/>
-			<define color="oled_plugin_slider2" value="#F4A0BC"/>
-			<define color="oled_plugin_disabled2" value="#533640"/>
+			<define color="deckcolor" value="#E56A9C" deck="1"/>
+			<define color="deckcolorbright" value="#E87CA8" deck="1"/>
+			<define color="deckcolordark" value="#9C486A" deck="1"/>
+			<define color="deckcolor_invert" value="#E87CA8" deck="1"/>
+			<define color="padbuttonselected" value="#29131C" deck="1"/>
+			<define color="buttonon" value="#E56A9C" deck="1"/>
+			<define color="buttonover" value="#371925" deck="1"/>
+			<define color="buttonselected" value="#29131C" deck="1"/>
+			<define color="oled_buttonfill" value="#4E2435" deck="1"/>
+			<define color="oled_deck_selected" value="#4E2435" deck="1"/>
+			<define color="textdeck" value="#E87CA8" deck="1"/>
+			<define color="faderinon" value="#E56A9C" deck="1"/>
+			<define color="knobfillon" value="#E56A9C" deck="1"/>
+			<define color="colorbass" value="#4E2435" deck="1"/>
+			<define color="colormed" value="#9C486A" deck="1"/>
+			<define color="colorhigh" value="#E56A9C" deck="1"/>
+			<define color="scratch1" value="#E56A9C" deck="1"/>
+			<define color="scratch2" value="#E56A9C" deck="1"/>
+			<define color="waveform_active1" value="#E56A9C"/>
+			<define color="waveform_passive1" value="#9C486A"/>
+			<define color="deckcolor" value="#F5AD9D" deck="2"/>
+			<define color="deckcolorbright" value="#F6B7A9" deck="2"/>
+			<define color="deckcolordark" value="#A7766B" deck="2"/>
+			<define color="deckcolor_invert" value="#F6B7A9" deck="2"/>
+			<define color="padbuttonselected" value="#2C1F1C" deck="2"/>
+			<define color="buttonon" value="#F5AD9D" deck="2"/>
+			<define color="buttonover" value="#3B2A26" deck="2"/>
+			<define color="buttonselected" value="#2C1F1C" deck="2"/>
+			<define color="oled_buttonfill" value="#533B35" deck="2"/>
+			<define color="oled_deck_selected" value="#533B35" deck="2"/>
+			<define color="textdeck" value="#F6B7A9" deck="2"/>
+			<define color="faderinon" value="#F5AD9D" deck="2"/>
+			<define color="knobfillon" value="#F5AD9D" deck="2"/>
+			<define color="colorbass" value="#533B35" deck="2"/>
+			<define color="colormed" value="#A7766B" deck="2"/>
+			<define color="colorhigh" value="#F5AD9D" deck="2"/>
+			<define color="scratch1" value="#F5AD9D" deck="2"/>
+			<define color="scratch2" value="#F5AD9D" deck="2"/>
+			<define color="waveform_active2" value="#F5AD9D"/>
+			<define color="waveform_passive2" value="#A7766B"/>
+			<define color="deckcolor" value="#CC98E5" deck="3"/>
+			<define color="deckcolorbright" value="#D2A4E8" deck="3"/>
+			<define color="deckcolordark" value="#8B679C" deck="3"/>
+			<define color="deckcolor_invert" value="#D2A4E8" deck="3"/>
+			<define color="padbuttonselected" value="#251B29" deck="3"/>
+			<define color="buttonon" value="#CC98E5" deck="3"/>
+			<define color="buttonover" value="#312437" deck="3"/>
+			<define color="buttonselected" value="#251B29" deck="3"/>
+			<define color="oled_buttonfill" value="#45344E" deck="3"/>
+			<define color="oled_deck_selected" value="#45344E" deck="3"/>
+			<define color="textdeck" value="#D2A4E8" deck="3"/>
+			<define color="faderinon" value="#CC98E5" deck="3"/>
+			<define color="knobfillon" value="#CC98E5" deck="3"/>
+			<define color="colorbass" value="#45344E" deck="3"/>
+			<define color="colormed" value="#8B679C" deck="3"/>
+			<define color="colorhigh" value="#CC98E5" deck="3"/>
+			<define color="scratch1" value="#CC98E5" deck="3"/>
+			<define color="scratch2" value="#CC98E5" deck="3"/>
+			<define color="waveform_active3" value="#CC98E5"/>
+			<define color="waveform_passive3" value="#8B679C"/>
+			<define color="deckcolor" value="#F8D7E8" deck="4"/>
+			<define color="deckcolorbright" value="#F9DCEB" deck="4"/>
+			<define color="deckcolordark" value="#A9929E" deck="4"/>
+			<define color="deckcolor_invert" value="#F9DCEB" deck="4"/>
+			<define color="padbuttonselected" value="#2D272A" deck="4"/>
+			<define color="buttonon" value="#F8D7E8" deck="4"/>
+			<define color="buttonover" value="#3C3438" deck="4"/>
+			<define color="buttonselected" value="#2D272A" deck="4"/>
+			<define color="oled_buttonfill" value="#54494F" deck="4"/>
+			<define color="oled_deck_selected" value="#54494F" deck="4"/>
+			<define color="textdeck" value="#F9DCEB" deck="4"/>
+			<define color="faderinon" value="#F8D7E8" deck="4"/>
+			<define color="knobfillon" value="#F8D7E8" deck="4"/>
+			<define color="colorbass" value="#54494F" deck="4"/>
+			<define color="colormed" value="#A9929E" deck="4"/>
+			<define color="colorhigh" value="#F8D7E8" deck="4"/>
+			<define color="scratch1" value="#F8D7E8" deck="4"/>
+			<define color="scratch2" value="#F8D7E8" deck="4"/>
+			<define color="waveform_active4" value="#F8D7E8"/>
+			<define color="waveform_passive4" value="#A9929E"/>
+			<define color="deckcolor" value="#E56A9C" deck="left"/>
+			<define color="faderinon" value="#E56A9C" deck="left"/>
+			<define color="knobfillon" value="#E56A9C" deck="left"/>
+			<define color="faderinleft" value="#E56A9C"/>
+			<define color="deckcolor" value="#F5AD9D" deck="right"/>
+			<define color="faderinon" value="#F5AD9D" deck="right"/>
+			<define color="knobfillon" value="#F5AD9D" deck="right"/>
+			<define color="buttonon" value="#F5AD9D" deck="right"/>
+			<define color="oled_buttonfill" value="#533B35" deck="right"/>
+			<define color="faderinright" value="#F5AD9D"/>
+			<define color="oled_plugin_over1" value="#371925"/>
+			<define color="oled_plugin_selected1" value="#4E2435"/>
+			<define color="oled_plugin_down1" value="#401E2C"/>
+			<define color="oled_plugin_slider1" value="#E56A9C"/>
+			<define color="oled_plugin_disabled1" value="#4E2435"/>
+			<define color="oled_plugin_over2" value="#3B2A26"/>
+			<define color="oled_plugin_selected2" value="#533B35"/>
+			<define color="oled_plugin_down2" value="#45302C"/>
+			<define color="oled_plugin_slider2" value="#F5AD9D"/>
+			<define color="oled_plugin_disabled2" value="#533B35"/>
 		</group>
 		<group name="oled-theme-pastel-blue" condition="var_equal '@$oleddecktheme' 2">
-			<define color="deckcolor" value="#6D9FDC" deck="1"/>
-			<define color="deckcolorbright" value="#7FABE0" deck="1"/>
-			<define color="deckcolordark" value="#4A6C96" deck="1"/>
-			<define color="deckcolor_invert" value="#7FABE0" deck="1"/>
-			<define color="padbuttonselected" value="#141D28" deck="1"/>
-			<define color="buttonon" value="#6D9FDC" deck="1"/>
-			<define color="buttonover" value="#1A2635" deck="1"/>
-			<define color="buttonselected" value="#141D28" deck="1"/>
-			<define color="oled_buttonfill" value="#25364B" deck="1"/>
-			<define color="oled_deck_selected" value="#25364B" deck="1"/>
-			<define color="textdeck" value="#7FABE0" deck="1"/>
-			<define color="faderinon" value="#6D9FDC" deck="1"/>
-			<define color="knobfillon" value="#6D9FDC" deck="1"/>
-			<define color="colorbass" value="#25364B" deck="1"/>
-			<define color="colormed" value="#4A6C96" deck="1"/>
-			<define color="colorhigh" value="#6D9FDC" deck="1"/>
-			<define color="scratch1" value="#6D9FDC" deck="1"/>
-			<define color="scratch2" value="#6D9FDC" deck="1"/>
-			<define color="waveform_active1" value="#6D9FDC"/>
-			<define color="waveform_passive1" value="#4A6C96"/>
-			<define color="deckcolor" value="#8BC2EF" deck="2"/>
-			<define color="deckcolorbright" value="#99C9F1" deck="2"/>
-			<define color="deckcolordark" value="#5F84A3" deck="2"/>
-			<define color="deckcolor_invert" value="#99C9F1" deck="2"/>
-			<define color="padbuttonselected" value="#19232B" deck="2"/>
-			<define color="buttonon" value="#8BC2EF" deck="2"/>
-			<define color="buttonover" value="#212F39" deck="2"/>
-			<define color="buttonselected" value="#19232B" deck="2"/>
-			<define color="oled_buttonfill" value="#2F4251" deck="2"/>
-			<define color="oled_deck_selected" value="#2F4251" deck="2"/>
-			<define color="textdeck" value="#99C9F1" deck="2"/>
-			<define color="faderinon" value="#8BC2EF" deck="2"/>
-			<define color="knobfillon" value="#8BC2EF" deck="2"/>
-			<define color="colorbass" value="#2F4251" deck="2"/>
-			<define color="colormed" value="#5F84A3" deck="2"/>
-			<define color="colorhigh" value="#8BC2EF" deck="2"/>
-			<define color="scratch1" value="#8BC2EF" deck="2"/>
-			<define color="scratch2" value="#8BC2EF" deck="2"/>
-			<define color="waveform_active2" value="#8BC2EF"/>
-			<define color="waveform_passive2" value="#5F84A3"/>
-			<define color="deckcolor" value="#A6B6EF" deck="3"/>
-			<define color="deckcolorbright" value="#B1BFF1" deck="3"/>
-			<define color="deckcolordark" value="#717CA3" deck="3"/>
-			<define color="deckcolor_invert" value="#B1BFF1" deck="3"/>
-			<define color="padbuttonselected" value="#1E212B" deck="3"/>
-			<define color="buttonon" value="#A6B6EF" deck="3"/>
-			<define color="buttonover" value="#282C39" deck="3"/>
-			<define color="buttonselected" value="#1E212B" deck="3"/>
-			<define color="oled_buttonfill" value="#383E51" deck="3"/>
-			<define color="oled_deck_selected" value="#383E51" deck="3"/>
-			<define color="textdeck" value="#B1BFF1" deck="3"/>
-			<define color="faderinon" value="#A6B6EF" deck="3"/>
-			<define color="knobfillon" value="#A6B6EF" deck="3"/>
-			<define color="colorbass" value="#383E51" deck="3"/>
-			<define color="colormed" value="#717CA3" deck="3"/>
-			<define color="colorhigh" value="#A6B6EF" deck="3"/>
-			<define color="scratch1" value="#A6B6EF" deck="3"/>
-			<define color="scratch2" value="#A6B6EF" deck="3"/>
-			<define color="waveform_active3" value="#A6B6EF"/>
-			<define color="waveform_passive3" value="#717CA3"/>
-			<define color="deckcolor" value="#C3E3FA" deck="4"/>
-			<define color="deckcolorbright" value="#CAE6FB" deck="4"/>
-			<define color="deckcolordark" value="#859AAA" deck="4"/>
-			<define color="deckcolor_invert" value="#CAE6FB" deck="4"/>
-			<define color="padbuttonselected" value="#23292D" deck="4"/>
-			<define color="buttonon" value="#C3E3FA" deck="4"/>
-			<define color="buttonover" value="#2F363C" deck="4"/>
-			<define color="buttonselected" value="#23292D" deck="4"/>
-			<define color="oled_buttonfill" value="#424D55" deck="4"/>
-			<define color="oled_deck_selected" value="#424D55" deck="4"/>
-			<define color="textdeck" value="#CAE6FB" deck="4"/>
-			<define color="faderinon" value="#C3E3FA" deck="4"/>
-			<define color="knobfillon" value="#C3E3FA" deck="4"/>
-			<define color="colorbass" value="#424D55" deck="4"/>
-			<define color="colormed" value="#859AAA" deck="4"/>
-			<define color="colorhigh" value="#C3E3FA" deck="4"/>
-			<define color="scratch1" value="#C3E3FA" deck="4"/>
-			<define color="scratch2" value="#C3E3FA" deck="4"/>
-			<define color="waveform_active4" value="#C3E3FA"/>
-			<define color="waveform_passive4" value="#859AAA"/>
-			<define color="deckcolor" value="#6D9FDC" deck="left"/>
-			<define color="faderinon" value="#6D9FDC" deck="left"/>
-			<define color="knobfillon" value="#6D9FDC" deck="left"/>
-			<define color="faderinleft" value="#6D9FDC"/>
-			<define color="deckcolor" value="#8BC2EF" deck="right"/>
-			<define color="faderinon" value="#8BC2EF" deck="right"/>
-			<define color="knobfillon" value="#8BC2EF" deck="right"/>
-			<define color="buttonon" value="#8BC2EF" deck="right"/>
-			<define color="oled_buttonfill" value="#2F4251" deck="right"/>
-			<define color="faderinright" value="#8BC2EF"/>
-			<define color="oled_plugin_over1" value="#1A2635"/>
-			<define color="oled_plugin_selected1" value="#25364B"/>
-			<define color="oled_plugin_down1" value="#1F2D3E"/>
-			<define color="oled_plugin_slider1" value="#6D9FDC"/>
-			<define color="oled_plugin_disabled1" value="#25364B"/>
-			<define color="oled_plugin_over2" value="#212F39"/>
-			<define color="oled_plugin_selected2" value="#2F4251"/>
-			<define color="oled_plugin_down2" value="#273643"/>
-			<define color="oled_plugin_slider2" value="#8BC2EF"/>
-			<define color="oled_plugin_disabled2" value="#2F4251"/>
+			<define color="deckcolor" value="#5C91D8" deck="1"/>
+			<define color="deckcolorbright" value="#709EDD" deck="1"/>
+			<define color="deckcolordark" value="#3F6393" deck="1"/>
+			<define color="deckcolor_invert" value="#709EDD" deck="1"/>
+			<define color="padbuttonselected" value="#111A27" deck="1"/>
+			<define color="buttonon" value="#5C91D8" deck="1"/>
+			<define color="buttonover" value="#162334" deck="1"/>
+			<define color="buttonselected" value="#111A27" deck="1"/>
+			<define color="oled_buttonfill" value="#1F3149" deck="1"/>
+			<define color="oled_deck_selected" value="#1F3149" deck="1"/>
+			<define color="textdeck" value="#709EDD" deck="1"/>
+			<define color="faderinon" value="#5C91D8" deck="1"/>
+			<define color="knobfillon" value="#5C91D8" deck="1"/>
+			<define color="colorbass" value="#1F3149" deck="1"/>
+			<define color="colormed" value="#3F6393" deck="1"/>
+			<define color="colorhigh" value="#5C91D8" deck="1"/>
+			<define color="scratch1" value="#5C91D8" deck="1"/>
+			<define color="scratch2" value="#5C91D8" deck="1"/>
+			<define color="waveform_active1" value="#5C91D8"/>
+			<define color="waveform_passive1" value="#3F6393"/>
+			<define color="deckcolor" value="#78D0E3" deck="2"/>
+			<define color="deckcolorbright" value="#88D6E6" deck="2"/>
+			<define color="deckcolordark" value="#528D9A" deck="2"/>
+			<define color="deckcolor_invert" value="#88D6E6" deck="2"/>
+			<define color="padbuttonselected" value="#162529" deck="2"/>
+			<define color="buttonon" value="#78D0E3" deck="2"/>
+			<define color="buttonover" value="#1D3236" deck="2"/>
+			<define color="buttonselected" value="#162529" deck="2"/>
+			<define color="oled_buttonfill" value="#29474D" deck="2"/>
+			<define color="oled_deck_selected" value="#29474D" deck="2"/>
+			<define color="textdeck" value="#88D6E6" deck="2"/>
+			<define color="faderinon" value="#78D0E3" deck="2"/>
+			<define color="knobfillon" value="#78D0E3" deck="2"/>
+			<define color="colorbass" value="#29474D" deck="2"/>
+			<define color="colormed" value="#528D9A" deck="2"/>
+			<define color="colorhigh" value="#78D0E3" deck="2"/>
+			<define color="scratch1" value="#78D0E3" deck="2"/>
+			<define color="scratch2" value="#78D0E3" deck="2"/>
+			<define color="waveform_active2" value="#78D0E3"/>
+			<define color="waveform_passive2" value="#528D9A"/>
+			<define color="deckcolor" value="#B09CE8" deck="3"/>
+			<define color="deckcolorbright" value="#B9A8EB" deck="3"/>
+			<define color="deckcolordark" value="#786A9E" deck="3"/>
+			<define color="deckcolor_invert" value="#B9A8EB" deck="3"/>
+			<define color="padbuttonselected" value="#201C2A" deck="3"/>
+			<define color="buttonon" value="#B09CE8" deck="3"/>
+			<define color="buttonover" value="#2A2538" deck="3"/>
+			<define color="buttonselected" value="#201C2A" deck="3"/>
+			<define color="oled_buttonfill" value="#3C354F" deck="3"/>
+			<define color="oled_deck_selected" value="#3C354F" deck="3"/>
+			<define color="textdeck" value="#B9A8EB" deck="3"/>
+			<define color="faderinon" value="#B09CE8" deck="3"/>
+			<define color="knobfillon" value="#B09CE8" deck="3"/>
+			<define color="colorbass" value="#3C354F" deck="3"/>
+			<define color="colormed" value="#786A9E" deck="3"/>
+			<define color="colorhigh" value="#B09CE8" deck="3"/>
+			<define color="scratch1" value="#B09CE8" deck="3"/>
+			<define color="scratch2" value="#B09CE8" deck="3"/>
+			<define color="waveform_active3" value="#B09CE8"/>
+			<define color="waveform_passive3" value="#786A9E"/>
+			<define color="deckcolor" value="#D0E7FC" deck="4"/>
+			<define color="deckcolorbright" value="#D6EAFC" deck="4"/>
+			<define color="deckcolordark" value="#8D9DAB" deck="4"/>
+			<define color="deckcolor_invert" value="#D6EAFC" deck="4"/>
+			<define color="padbuttonselected" value="#252A2D" deck="4"/>
+			<define color="buttonon" value="#D0E7FC" deck="4"/>
+			<define color="buttonover" value="#32373C" deck="4"/>
+			<define color="buttonselected" value="#252A2D" deck="4"/>
+			<define color="oled_buttonfill" value="#474F56" deck="4"/>
+			<define color="oled_deck_selected" value="#474F56" deck="4"/>
+			<define color="textdeck" value="#D6EAFC" deck="4"/>
+			<define color="faderinon" value="#D0E7FC" deck="4"/>
+			<define color="knobfillon" value="#D0E7FC" deck="4"/>
+			<define color="colorbass" value="#474F56" deck="4"/>
+			<define color="colormed" value="#8D9DAB" deck="4"/>
+			<define color="colorhigh" value="#D0E7FC" deck="4"/>
+			<define color="scratch1" value="#D0E7FC" deck="4"/>
+			<define color="scratch2" value="#D0E7FC" deck="4"/>
+			<define color="waveform_active4" value="#D0E7FC"/>
+			<define color="waveform_passive4" value="#8D9DAB"/>
+			<define color="deckcolor" value="#5C91D8" deck="left"/>
+			<define color="faderinon" value="#5C91D8" deck="left"/>
+			<define color="knobfillon" value="#5C91D8" deck="left"/>
+			<define color="faderinleft" value="#5C91D8"/>
+			<define color="deckcolor" value="#78D0E3" deck="right"/>
+			<define color="faderinon" value="#78D0E3" deck="right"/>
+			<define color="knobfillon" value="#78D0E3" deck="right"/>
+			<define color="buttonon" value="#78D0E3" deck="right"/>
+			<define color="oled_buttonfill" value="#29474D" deck="right"/>
+			<define color="faderinright" value="#78D0E3"/>
+			<define color="oled_plugin_over1" value="#162334"/>
+			<define color="oled_plugin_selected1" value="#1F3149"/>
+			<define color="oled_plugin_down1" value="#1A293C"/>
+			<define color="oled_plugin_slider1" value="#5C91D8"/>
+			<define color="oled_plugin_disabled1" value="#1F3149"/>
+			<define color="oled_plugin_over2" value="#1D3236"/>
+			<define color="oled_plugin_selected2" value="#29474D"/>
+			<define color="oled_plugin_down2" value="#223A40"/>
+			<define color="oled_plugin_slider2" value="#78D0E3"/>
+			<define color="oled_plugin_disabled2" value="#29474D"/>
 		</group>
 		<group name="oled-theme-violet" condition="var_equal '@$oleddecktheme' 3">
-			<define color="deckcolor" value="#9272D4" deck="1"/>
-			<define color="deckcolorbright" value="#9F83D9" deck="1"/>
-			<define color="deckcolordark" value="#634E90" deck="1"/>
-			<define color="deckcolor_invert" value="#9F83D9" deck="1"/>
-			<define color="padbuttonselected" value="#1A1526" deck="1"/>
-			<define color="buttonon" value="#9272D4" deck="1"/>
-			<define color="buttonover" value="#231B33" deck="1"/>
-			<define color="buttonselected" value="#1A1526" deck="1"/>
-			<define color="oled_buttonfill" value="#322748" deck="1"/>
-			<define color="oled_deck_selected" value="#322748" deck="1"/>
-			<define color="textdeck" value="#9F83D9" deck="1"/>
-			<define color="faderinon" value="#9272D4" deck="1"/>
-			<define color="knobfillon" value="#9272D4" deck="1"/>
-			<define color="colorbass" value="#322748" deck="1"/>
-			<define color="colormed" value="#634E90" deck="1"/>
-			<define color="colorhigh" value="#9272D4" deck="1"/>
-			<define color="scratch1" value="#9272D4" deck="1"/>
-			<define color="scratch2" value="#9272D4" deck="1"/>
-			<define color="waveform_active1" value="#9272D4"/>
-			<define color="waveform_passive1" value="#634E90"/>
-			<define color="deckcolor" value="#CD79BD" deck="2"/>
-			<define color="deckcolorbright" value="#D389C5" deck="2"/>
-			<define color="deckcolordark" value="#8B5281" deck="2"/>
-			<define color="deckcolor_invert" value="#D389C5" deck="2"/>
-			<define color="padbuttonselected" value="#251622" deck="2"/>
-			<define color="buttonon" value="#CD79BD" deck="2"/>
-			<define color="buttonover" value="#311D2D" deck="2"/>
-			<define color="buttonselected" value="#251622" deck="2"/>
-			<define color="oled_buttonfill" value="#462940" deck="2"/>
-			<define color="oled_deck_selected" value="#462940" deck="2"/>
-			<define color="textdeck" value="#D389C5" deck="2"/>
-			<define color="faderinon" value="#CD79BD" deck="2"/>
-			<define color="knobfillon" value="#CD79BD" deck="2"/>
-			<define color="colorbass" value="#462940" deck="2"/>
-			<define color="colormed" value="#8B5281" deck="2"/>
-			<define color="colorhigh" value="#CD79BD" deck="2"/>
-			<define color="scratch1" value="#CD79BD" deck="2"/>
-			<define color="scratch2" value="#CD79BD" deck="2"/>
-			<define color="waveform_active2" value="#CD79BD"/>
-			<define color="waveform_passive2" value="#8B5281"/>
-			<define color="deckcolor" value="#B7A0EE" deck="3"/>
-			<define color="deckcolorbright" value="#C0ABF0" deck="3"/>
-			<define color="deckcolordark" value="#7C6DA2" deck="3"/>
-			<define color="deckcolor_invert" value="#C0ABF0" deck="3"/>
-			<define color="padbuttonselected" value="#211D2B" deck="3"/>
-			<define color="buttonon" value="#B7A0EE" deck="3"/>
-			<define color="buttonover" value="#2C2639" deck="3"/>
-			<define color="buttonselected" value="#211D2B" deck="3"/>
-			<define color="oled_buttonfill" value="#3E3651" deck="3"/>
-			<define color="oled_deck_selected" value="#3E3651" deck="3"/>
-			<define color="textdeck" value="#C0ABF0" deck="3"/>
-			<define color="faderinon" value="#B7A0EE" deck="3"/>
-			<define color="knobfillon" value="#B7A0EE" deck="3"/>
-			<define color="colorbass" value="#3E3651" deck="3"/>
-			<define color="colormed" value="#7C6DA2" deck="3"/>
-			<define color="colorhigh" value="#B7A0EE" deck="3"/>
-			<define color="scratch1" value="#B7A0EE" deck="3"/>
-			<define color="scratch2" value="#B7A0EE" deck="3"/>
-			<define color="waveform_active3" value="#B7A0EE"/>
-			<define color="waveform_passive3" value="#7C6DA2"/>
-			<define color="deckcolor" value="#E4B9EA" deck="4"/>
-			<define color="deckcolorbright" value="#E7C1ED" deck="4"/>
-			<define color="deckcolordark" value="#9B7E9F" deck="4"/>
-			<define color="deckcolor_invert" value="#E7C1ED" deck="4"/>
-			<define color="padbuttonselected" value="#29212A" deck="4"/>
-			<define color="buttonon" value="#E4B9EA" deck="4"/>
-			<define color="buttonover" value="#372C38" deck="4"/>
-			<define color="buttonselected" value="#29212A" deck="4"/>
-			<define color="oled_buttonfill" value="#4E3F50" deck="4"/>
-			<define color="oled_deck_selected" value="#4E3F50" deck="4"/>
-			<define color="textdeck" value="#E7C1ED" deck="4"/>
-			<define color="faderinon" value="#E4B9EA" deck="4"/>
-			<define color="knobfillon" value="#E4B9EA" deck="4"/>
-			<define color="colorbass" value="#4E3F50" deck="4"/>
-			<define color="colormed" value="#9B7E9F" deck="4"/>
-			<define color="colorhigh" value="#E4B9EA" deck="4"/>
-			<define color="scratch1" value="#E4B9EA" deck="4"/>
-			<define color="scratch2" value="#E4B9EA" deck="4"/>
-			<define color="waveform_active4" value="#E4B9EA"/>
-			<define color="waveform_passive4" value="#9B7E9F"/>
-			<define color="deckcolor" value="#9272D4" deck="left"/>
-			<define color="faderinon" value="#9272D4" deck="left"/>
-			<define color="knobfillon" value="#9272D4" deck="left"/>
-			<define color="faderinleft" value="#9272D4"/>
-			<define color="deckcolor" value="#CD79BD" deck="right"/>
-			<define color="faderinon" value="#CD79BD" deck="right"/>
-			<define color="knobfillon" value="#CD79BD" deck="right"/>
-			<define color="buttonon" value="#CD79BD" deck="right"/>
-			<define color="oled_buttonfill" value="#462940" deck="right"/>
-			<define color="faderinright" value="#CD79BD"/>
-			<define color="oled_plugin_over1" value="#231B33"/>
-			<define color="oled_plugin_selected1" value="#322748"/>
-			<define color="oled_plugin_down1" value="#29203B"/>
-			<define color="oled_plugin_slider1" value="#9272D4"/>
-			<define color="oled_plugin_disabled1" value="#322748"/>
-			<define color="oled_plugin_over2" value="#311D2D"/>
-			<define color="oled_plugin_selected2" value="#462940"/>
-			<define color="oled_plugin_down2" value="#392235"/>
-			<define color="oled_plugin_slider2" value="#CD79BD"/>
-			<define color="oled_plugin_disabled2" value="#462940"/>
+			<define color="deckcolor" value="#9A71E2" deck="1"/>
+			<define color="deckcolorbright" value="#A682E5" deck="1"/>
+			<define color="deckcolordark" value="#694D9A" deck="1"/>
+			<define color="deckcolor_invert" value="#A682E5" deck="1"/>
+			<define color="padbuttonselected" value="#1C1429" deck="1"/>
+			<define color="buttonon" value="#9A71E2" deck="1"/>
+			<define color="buttonover" value="#251B36" deck="1"/>
+			<define color="buttonselected" value="#1C1429" deck="1"/>
+			<define color="oled_buttonfill" value="#34264D" deck="1"/>
+			<define color="oled_deck_selected" value="#34264D" deck="1"/>
+			<define color="textdeck" value="#A682E5" deck="1"/>
+			<define color="faderinon" value="#9A71E2" deck="1"/>
+			<define color="knobfillon" value="#9A71E2" deck="1"/>
+			<define color="colorbass" value="#34264D" deck="1"/>
+			<define color="colormed" value="#694D9A" deck="1"/>
+			<define color="colorhigh" value="#9A71E2" deck="1"/>
+			<define color="scratch1" value="#9A71E2" deck="1"/>
+			<define color="scratch2" value="#9A71E2" deck="1"/>
+			<define color="waveform_active1" value="#9A71E2"/>
+			<define color="waveform_passive1" value="#694D9A"/>
+			<define color="deckcolor" value="#D574B7" deck="2"/>
+			<define color="deckcolorbright" value="#DA85C0" deck="2"/>
+			<define color="deckcolordark" value="#914F7C" deck="2"/>
+			<define color="deckcolor_invert" value="#DA85C0" deck="2"/>
+			<define color="padbuttonselected" value="#261521" deck="2"/>
+			<define color="buttonon" value="#D574B7" deck="2"/>
+			<define color="buttonover" value="#331C2C" deck="2"/>
+			<define color="buttonselected" value="#261521" deck="2"/>
+			<define color="oled_buttonfill" value="#48273E" deck="2"/>
+			<define color="oled_deck_selected" value="#48273E" deck="2"/>
+			<define color="textdeck" value="#DA85C0" deck="2"/>
+			<define color="faderinon" value="#D574B7" deck="2"/>
+			<define color="knobfillon" value="#D574B7" deck="2"/>
+			<define color="colorbass" value="#48273E" deck="2"/>
+			<define color="colormed" value="#914F7C" deck="2"/>
+			<define color="colorhigh" value="#D574B7" deck="2"/>
+			<define color="scratch1" value="#D574B7" deck="2"/>
+			<define color="scratch2" value="#D574B7" deck="2"/>
+			<define color="waveform_active2" value="#D574B7"/>
+			<define color="waveform_passive2" value="#914F7C"/>
+			<define color="deckcolor" value="#C1A3F4" deck="3"/>
+			<define color="deckcolorbright" value="#C8AEF5" deck="3"/>
+			<define color="deckcolordark" value="#836FA6" deck="3"/>
+			<define color="deckcolor_invert" value="#C8AEF5" deck="3"/>
+			<define color="padbuttonselected" value="#231D2C" deck="3"/>
+			<define color="buttonon" value="#C1A3F4" deck="3"/>
+			<define color="buttonover" value="#2E273B" deck="3"/>
+			<define color="buttonselected" value="#231D2C" deck="3"/>
+			<define color="oled_buttonfill" value="#423753" deck="3"/>
+			<define color="oled_deck_selected" value="#423753" deck="3"/>
+			<define color="textdeck" value="#C8AEF5" deck="3"/>
+			<define color="faderinon" value="#C1A3F4" deck="3"/>
+			<define color="knobfillon" value="#C1A3F4" deck="3"/>
+			<define color="colorbass" value="#423753" deck="3"/>
+			<define color="colormed" value="#836FA6" deck="3"/>
+			<define color="colorhigh" value="#C1A3F4" deck="3"/>
+			<define color="scratch1" value="#C1A3F4" deck="3"/>
+			<define color="scratch2" value="#C1A3F4" deck="3"/>
+			<define color="waveform_active3" value="#C1A3F4"/>
+			<define color="waveform_passive3" value="#836FA6"/>
+			<define color="deckcolor" value="#F1C3E9" deck="4"/>
+			<define color="deckcolorbright" value="#F3CAEC" deck="4"/>
+			<define color="deckcolordark" value="#A4859E" deck="4"/>
+			<define color="deckcolor_invert" value="#F3CAEC" deck="4"/>
+			<define color="padbuttonselected" value="#2B232A" deck="4"/>
+			<define color="buttonon" value="#F1C3E9" deck="4"/>
+			<define color="buttonover" value="#3A2F38" deck="4"/>
+			<define color="buttonselected" value="#2B232A" deck="4"/>
+			<define color="oled_buttonfill" value="#52424F" deck="4"/>
+			<define color="oled_deck_selected" value="#52424F" deck="4"/>
+			<define color="textdeck" value="#F3CAEC" deck="4"/>
+			<define color="faderinon" value="#F1C3E9" deck="4"/>
+			<define color="knobfillon" value="#F1C3E9" deck="4"/>
+			<define color="colorbass" value="#52424F" deck="4"/>
+			<define color="colormed" value="#A4859E" deck="4"/>
+			<define color="colorhigh" value="#F1C3E9" deck="4"/>
+			<define color="scratch1" value="#F1C3E9" deck="4"/>
+			<define color="scratch2" value="#F1C3E9" deck="4"/>
+			<define color="waveform_active4" value="#F1C3E9"/>
+			<define color="waveform_passive4" value="#A4859E"/>
+			<define color="deckcolor" value="#9A71E2" deck="left"/>
+			<define color="faderinon" value="#9A71E2" deck="left"/>
+			<define color="knobfillon" value="#9A71E2" deck="left"/>
+			<define color="faderinleft" value="#9A71E2"/>
+			<define color="deckcolor" value="#D574B7" deck="right"/>
+			<define color="faderinon" value="#D574B7" deck="right"/>
+			<define color="knobfillon" value="#D574B7" deck="right"/>
+			<define color="buttonon" value="#D574B7" deck="right"/>
+			<define color="oled_buttonfill" value="#48273E" deck="right"/>
+			<define color="faderinright" value="#D574B7"/>
+			<define color="oled_plugin_over1" value="#251B36"/>
+			<define color="oled_plugin_selected1" value="#34264D"/>
+			<define color="oled_plugin_down1" value="#2B203F"/>
+			<define color="oled_plugin_slider1" value="#9A71E2"/>
+			<define color="oled_plugin_disabled1" value="#34264D"/>
+			<define color="oled_plugin_over2" value="#331C2C"/>
+			<define color="oled_plugin_selected2" value="#48273E"/>
+			<define color="oled_plugin_down2" value="#3C2033"/>
+			<define color="oled_plugin_slider2" value="#D574B7"/>
+			<define color="oled_plugin_disabled2" value="#48273E"/>
 		</group>
 		<group name="oled-theme-prism" condition="var_equal '@$oleddecktheme' 4">
-			<define color="deckcolor" value="#AA81BC" deck="1"/>
-			<define color="deckcolorbright" value="#B490C4" deck="1"/>
-			<define color="deckcolordark" value="#745880" deck="1"/>
-			<define color="deckcolor_invert" value="#B490C4" deck="1"/>
-			<define color="padbuttonselected" value="#1F1722" deck="1"/>
-			<define color="buttonon" value="#AA81BC" deck="1"/>
-			<define color="buttonover" value="#291F2D" deck="1"/>
-			<define color="buttonselected" value="#1F1722" deck="1"/>
-			<define color="oled_buttonfill" value="#3A2C40" deck="1"/>
-			<define color="oled_deck_selected" value="#3A2C40" deck="1"/>
-			<define color="textdeck" value="#B490C4" deck="1"/>
-			<define color="faderinon" value="#AA81BC" deck="1"/>
-			<define color="knobfillon" value="#AA81BC" deck="1"/>
-			<define color="colorbass" value="#3A2C40" deck="1"/>
-			<define color="colormed" value="#745880" deck="1"/>
-			<define color="colorhigh" value="#AA81BC" deck="1"/>
-			<define color="scratch1" value="#AA81BC" deck="1"/>
-			<define color="scratch2" value="#AA81BC" deck="1"/>
-			<define color="waveform_active1" value="#AA81BC"/>
-			<define color="waveform_passive1" value="#745880"/>
-			<define color="deckcolor" value="#EB709A" deck="2"/>
-			<define color="deckcolorbright" value="#ED81A6" deck="2"/>
-			<define color="deckcolordark" value="#A04C69" deck="2"/>
-			<define color="deckcolor_invert" value="#ED81A6" deck="2"/>
-			<define color="padbuttonselected" value="#2A141C" deck="2"/>
-			<define color="buttonon" value="#EB709A" deck="2"/>
-			<define color="buttonover" value="#381B25" deck="2"/>
-			<define color="buttonselected" value="#2A141C" deck="2"/>
-			<define color="oled_buttonfill" value="#502634" deck="2"/>
-			<define color="oled_deck_selected" value="#502634" deck="2"/>
-			<define color="textdeck" value="#ED81A6" deck="2"/>
-			<define color="faderinon" value="#EB709A" deck="2"/>
-			<define color="knobfillon" value="#EB709A" deck="2"/>
-			<define color="colorbass" value="#502634" deck="2"/>
-			<define color="colormed" value="#A04C69" deck="2"/>
-			<define color="colorhigh" value="#EB709A" deck="2"/>
-			<define color="scratch1" value="#EB709A" deck="2"/>
-			<define color="scratch2" value="#EB709A" deck="2"/>
-			<define color="waveform_active2" value="#EB709A"/>
-			<define color="waveform_passive2" value="#A04C69"/>
-			<define color="deckcolor" value="#F2A65D" deck="3"/>
-			<define color="deckcolorbright" value="#F4B170" deck="3"/>
-			<define color="deckcolordark" value="#A5713F" deck="3"/>
-			<define color="deckcolor_invert" value="#F4B170" deck="3"/>
-			<define color="padbuttonselected" value="#2C1E11" deck="3"/>
-			<define color="buttonon" value="#F2A65D" deck="3"/>
-			<define color="buttonover" value="#3A2816" deck="3"/>
-			<define color="buttonselected" value="#2C1E11" deck="3"/>
-			<define color="oled_buttonfill" value="#523820" deck="3"/>
-			<define color="oled_deck_selected" value="#523820" deck="3"/>
-			<define color="textdeck" value="#F4B170" deck="3"/>
-			<define color="faderinon" value="#F2A65D" deck="3"/>
-			<define color="knobfillon" value="#F2A65D" deck="3"/>
-			<define color="colorbass" value="#523820" deck="3"/>
-			<define color="colormed" value="#A5713F" deck="3"/>
-			<define color="colorhigh" value="#F2A65D" deck="3"/>
-			<define color="scratch1" value="#F2A65D" deck="3"/>
-			<define color="scratch2" value="#F2A65D" deck="3"/>
-			<define color="waveform_active3" value="#F2A65D"/>
-			<define color="waveform_passive3" value="#A5713F"/>
-			<define color="deckcolor" value="#8DA9F5" deck="4"/>
-			<define color="deckcolorbright" value="#9BB3F6" deck="4"/>
-			<define color="deckcolordark" value="#6073A7" deck="4"/>
-			<define color="deckcolor_invert" value="#9BB3F6" deck="4"/>
-			<define color="padbuttonselected" value="#191E2C" deck="4"/>
-			<define color="buttonon" value="#8DA9F5" deck="4"/>
-			<define color="buttonover" value="#22293B" deck="4"/>
-			<define color="buttonselected" value="#191E2C" deck="4"/>
-			<define color="oled_buttonfill" value="#303953" deck="4"/>
-			<define color="oled_deck_selected" value="#303953" deck="4"/>
-			<define color="textdeck" value="#9BB3F6" deck="4"/>
-			<define color="faderinon" value="#8DA9F5" deck="4"/>
-			<define color="knobfillon" value="#8DA9F5" deck="4"/>
-			<define color="colorbass" value="#303953" deck="4"/>
-			<define color="colormed" value="#6073A7" deck="4"/>
-			<define color="colorhigh" value="#8DA9F5" deck="4"/>
-			<define color="scratch1" value="#8DA9F5" deck="4"/>
-			<define color="scratch2" value="#8DA9F5" deck="4"/>
-			<define color="waveform_active4" value="#8DA9F5"/>
-			<define color="waveform_passive4" value="#6073A7"/>
-			<define color="deckcolor" value="#AA81BC" deck="left"/>
-			<define color="faderinon" value="#AA81BC" deck="left"/>
-			<define color="knobfillon" value="#AA81BC" deck="left"/>
-			<define color="faderinleft" value="#AA81BC"/>
-			<define color="deckcolor" value="#EB709A" deck="right"/>
-			<define color="faderinon" value="#EB709A" deck="right"/>
-			<define color="knobfillon" value="#EB709A" deck="right"/>
-			<define color="buttonon" value="#EB709A" deck="right"/>
-			<define color="oled_buttonfill" value="#502634" deck="right"/>
-			<define color="faderinright" value="#EB709A"/>
-			<define color="oled_plugin_over1" value="#291F2D"/>
-			<define color="oled_plugin_selected1" value="#3A2C40"/>
-			<define color="oled_plugin_down1" value="#302435"/>
-			<define color="oled_plugin_slider1" value="#AA81BC"/>
-			<define color="oled_plugin_disabled1" value="#3A2C40"/>
-			<define color="oled_plugin_over2" value="#381B25"/>
-			<define color="oled_plugin_selected2" value="#502634"/>
-			<define color="oled_plugin_down2" value="#421F2B"/>
-			<define color="oled_plugin_slider2" value="#EB709A"/>
-			<define color="oled_plugin_disabled2" value="#502634"/>
+			<define color="deckcolor" value="#A776C2" deck="1"/>
+			<define color="deckcolorbright" value="#B286C9" deck="1"/>
+			<define color="deckcolordark" value="#725084" deck="1"/>
+			<define color="deckcolor_invert" value="#B286C9" deck="1"/>
+			<define color="padbuttonselected" value="#1E1523" deck="1"/>
+			<define color="buttonon" value="#A776C2" deck="1"/>
+			<define color="buttonover" value="#281C2F" deck="1"/>
+			<define color="buttonselected" value="#1E1523" deck="1"/>
+			<define color="oled_buttonfill" value="#392842" deck="1"/>
+			<define color="oled_deck_selected" value="#392842" deck="1"/>
+			<define color="textdeck" value="#B286C9" deck="1"/>
+			<define color="faderinon" value="#A776C2" deck="1"/>
+			<define color="knobfillon" value="#A776C2" deck="1"/>
+			<define color="colorbass" value="#392842" deck="1"/>
+			<define color="colormed" value="#725084" deck="1"/>
+			<define color="colorhigh" value="#A776C2" deck="1"/>
+			<define color="scratch1" value="#A776C2" deck="1"/>
+			<define color="scratch2" value="#A776C2" deck="1"/>
+			<define color="waveform_active1" value="#A776C2"/>
+			<define color="waveform_passive1" value="#725084"/>
+			<define color="deckcolor" value="#F078A4" deck="2"/>
+			<define color="deckcolorbright" value="#F288AF" deck="2"/>
+			<define color="deckcolordark" value="#A35270" deck="2"/>
+			<define color="deckcolor_invert" value="#F288AF" deck="2"/>
+			<define color="padbuttonselected" value="#2B161E" deck="2"/>
+			<define color="buttonon" value="#F078A4" deck="2"/>
+			<define color="buttonover" value="#3A1D27" deck="2"/>
+			<define color="buttonselected" value="#2B161E" deck="2"/>
+			<define color="oled_buttonfill" value="#522938" deck="2"/>
+			<define color="oled_deck_selected" value="#522938" deck="2"/>
+			<define color="textdeck" value="#F288AF" deck="2"/>
+			<define color="faderinon" value="#F078A4" deck="2"/>
+			<define color="knobfillon" value="#F078A4" deck="2"/>
+			<define color="colorbass" value="#522938" deck="2"/>
+			<define color="colormed" value="#A35270" deck="2"/>
+			<define color="colorhigh" value="#F078A4" deck="2"/>
+			<define color="scratch1" value="#F078A4" deck="2"/>
+			<define color="scratch2" value="#F078A4" deck="2"/>
+			<define color="waveform_active2" value="#F078A4"/>
+			<define color="waveform_passive2" value="#A35270"/>
+			<define color="deckcolor" value="#F3AF63" deck="3"/>
+			<define color="deckcolorbright" value="#F4B976" deck="3"/>
+			<define color="deckcolordark" value="#A57743" deck="3"/>
+			<define color="deckcolor_invert" value="#F4B976" deck="3"/>
+			<define color="padbuttonselected" value="#2C2012" deck="3"/>
+			<define color="buttonon" value="#F3AF63" deck="3"/>
+			<define color="buttonover" value="#3A2A18" deck="3"/>
+			<define color="buttonselected" value="#2C2012" deck="3"/>
+			<define color="oled_buttonfill" value="#533B22" deck="3"/>
+			<define color="oled_deck_selected" value="#533B22" deck="3"/>
+			<define color="textdeck" value="#F4B976" deck="3"/>
+			<define color="faderinon" value="#F3AF63" deck="3"/>
+			<define color="knobfillon" value="#F3AF63" deck="3"/>
+			<define color="colorbass" value="#533B22" deck="3"/>
+			<define color="colormed" value="#A57743" deck="3"/>
+			<define color="colorhigh" value="#F3AF63" deck="3"/>
+			<define color="scratch1" value="#F3AF63" deck="3"/>
+			<define color="scratch2" value="#F3AF63" deck="3"/>
+			<define color="waveform_active3" value="#F3AF63"/>
+			<define color="waveform_passive3" value="#A57743"/>
+			<define color="deckcolor" value="#7DACF0" deck="4"/>
+			<define color="deckcolorbright" value="#8DB6F2" deck="4"/>
+			<define color="deckcolordark" value="#5575A3" deck="4"/>
+			<define color="deckcolor_invert" value="#8DB6F2" deck="4"/>
+			<define color="padbuttonselected" value="#171F2B" deck="4"/>
+			<define color="buttonon" value="#7DACF0" deck="4"/>
+			<define color="buttonover" value="#1E293A" deck="4"/>
+			<define color="buttonselected" value="#171F2B" deck="4"/>
+			<define color="oled_buttonfill" value="#2A3A52" deck="4"/>
+			<define color="oled_deck_selected" value="#2A3A52" deck="4"/>
+			<define color="textdeck" value="#8DB6F2" deck="4"/>
+			<define color="faderinon" value="#7DACF0" deck="4"/>
+			<define color="knobfillon" value="#7DACF0" deck="4"/>
+			<define color="colorbass" value="#2A3A52" deck="4"/>
+			<define color="colormed" value="#5575A3" deck="4"/>
+			<define color="colorhigh" value="#7DACF0" deck="4"/>
+			<define color="scratch1" value="#7DACF0" deck="4"/>
+			<define color="scratch2" value="#7DACF0" deck="4"/>
+			<define color="waveform_active4" value="#7DACF0"/>
+			<define color="waveform_passive4" value="#5575A3"/>
+			<define color="deckcolor" value="#A776C2" deck="left"/>
+			<define color="faderinon" value="#A776C2" deck="left"/>
+			<define color="knobfillon" value="#A776C2" deck="left"/>
+			<define color="faderinleft" value="#A776C2"/>
+			<define color="deckcolor" value="#F078A4" deck="right"/>
+			<define color="faderinon" value="#F078A4" deck="right"/>
+			<define color="knobfillon" value="#F078A4" deck="right"/>
+			<define color="buttonon" value="#F078A4" deck="right"/>
+			<define color="oled_buttonfill" value="#522938" deck="right"/>
+			<define color="faderinright" value="#F078A4"/>
+			<define color="oled_plugin_over1" value="#281C2F"/>
+			<define color="oled_plugin_selected1" value="#392842"/>
+			<define color="oled_plugin_down1" value="#2F2136"/>
+			<define color="oled_plugin_slider1" value="#A776C2"/>
+			<define color="oled_plugin_disabled1" value="#392842"/>
+			<define color="oled_plugin_over2" value="#3A1D27"/>
+			<define color="oled_plugin_selected2" value="#522938"/>
+			<define color="oled_plugin_down2" value="#43222E"/>
+			<define color="oled_plugin_slider2" value="#F078A4"/>
+			<define color="oled_plugin_disabled2" value="#522938"/>
 		</group>
 		<group name="oled-theme-blush" condition="var_equal '@$oleddecktheme' 5">
-			<define color="deckcolor" value="#F08D7E" deck="1"/>
-			<define color="deckcolorbright" value="#F29B8D" deck="1"/>
-			<define color="deckcolordark" value="#A36056" deck="1"/>
-			<define color="deckcolor_invert" value="#F29B8D" deck="1"/>
-			<define color="padbuttonselected" value="#2B1917" deck="1"/>
-			<define color="buttonon" value="#F08D7E" deck="1"/>
-			<define color="buttonover" value="#3A221E" deck="1"/>
-			<define color="buttonselected" value="#2B1917" deck="1"/>
-			<define color="oled_buttonfill" value="#52302B" deck="1"/>
-			<define color="oled_deck_selected" value="#52302B" deck="1"/>
-			<define color="textdeck" value="#F29B8D" deck="1"/>
-			<define color="faderinon" value="#F08D7E" deck="1"/>
-			<define color="knobfillon" value="#F08D7E" deck="1"/>
-			<define color="colorbass" value="#52302B" deck="1"/>
-			<define color="colormed" value="#A36056" deck="1"/>
-			<define color="colorhigh" value="#F08D7E" deck="1"/>
-			<define color="scratch1" value="#F08D7E" deck="1"/>
-			<define color="scratch2" value="#F08D7E" deck="1"/>
-			<define color="waveform_active1" value="#F08D7E"/>
-			<define color="waveform_passive1" value="#A36056"/>
-			<define color="deckcolor" value="#F5B59E" deck="2"/>
-			<define color="deckcolorbright" value="#F6BEAA" deck="2"/>
-			<define color="deckcolordark" value="#A77B6B" deck="2"/>
-			<define color="deckcolor_invert" value="#F6BEAA" deck="2"/>
-			<define color="padbuttonselected" value="#2C211C" deck="2"/>
-			<define color="buttonon" value="#F5B59E" deck="2"/>
-			<define color="buttonover" value="#3B2B26" deck="2"/>
-			<define color="buttonselected" value="#2C211C" deck="2"/>
-			<define color="oled_buttonfill" value="#533E36" deck="2"/>
-			<define color="oled_deck_selected" value="#533E36" deck="2"/>
-			<define color="textdeck" value="#F6BEAA" deck="2"/>
-			<define color="faderinon" value="#F5B59E" deck="2"/>
-			<define color="knobfillon" value="#F5B59E" deck="2"/>
-			<define color="colorbass" value="#533E36" deck="2"/>
-			<define color="colormed" value="#A77B6B" deck="2"/>
-			<define color="colorhigh" value="#F5B59E" deck="2"/>
-			<define color="scratch1" value="#F5B59E" deck="2"/>
-			<define color="scratch2" value="#F5B59E" deck="2"/>
-			<define color="waveform_active2" value="#F5B59E"/>
-			<define color="waveform_passive2" value="#A77B6B"/>
-			<define color="deckcolor" value="#E6B6D0" deck="3"/>
-			<define color="deckcolorbright" value="#E9BFD6" deck="3"/>
-			<define color="deckcolordark" value="#9C7C8D" deck="3"/>
-			<define color="deckcolor_invert" value="#E9BFD6" deck="3"/>
-			<define color="padbuttonselected" value="#292125" deck="3"/>
-			<define color="buttonon" value="#E6B6D0" deck="3"/>
-			<define color="buttonover" value="#372C32" deck="3"/>
-			<define color="buttonselected" value="#292125" deck="3"/>
-			<define color="oled_buttonfill" value="#4E3E47" deck="3"/>
-			<define color="oled_deck_selected" value="#4E3E47" deck="3"/>
-			<define color="textdeck" value="#E9BFD6" deck="3"/>
-			<define color="faderinon" value="#E6B6D0" deck="3"/>
-			<define color="knobfillon" value="#E6B6D0" deck="3"/>
-			<define color="colorbass" value="#4E3E47" deck="3"/>
-			<define color="colormed" value="#9C7C8D" deck="3"/>
-			<define color="colorhigh" value="#E6B6D0" deck="3"/>
-			<define color="scratch1" value="#E6B6D0" deck="3"/>
-			<define color="scratch2" value="#E6B6D0" deck="3"/>
-			<define color="waveform_active3" value="#E6B6D0"/>
-			<define color="waveform_passive3" value="#9C7C8D"/>
-			<define color="deckcolor" value="#B4B9DF" deck="4"/>
-			<define color="deckcolorbright" value="#BDC1E3" deck="4"/>
-			<define color="deckcolordark" value="#7A7E98" deck="4"/>
-			<define color="deckcolor_invert" value="#BDC1E3" deck="4"/>
-			<define color="padbuttonselected" value="#202128" deck="4"/>
-			<define color="buttonon" value="#B4B9DF" deck="4"/>
-			<define color="buttonover" value="#2B2C36" deck="4"/>
-			<define color="buttonselected" value="#202128" deck="4"/>
-			<define color="oled_buttonfill" value="#3D3F4C" deck="4"/>
-			<define color="oled_deck_selected" value="#3D3F4C" deck="4"/>
-			<define color="textdeck" value="#BDC1E3" deck="4"/>
-			<define color="faderinon" value="#B4B9DF" deck="4"/>
-			<define color="knobfillon" value="#B4B9DF" deck="4"/>
-			<define color="colorbass" value="#3D3F4C" deck="4"/>
-			<define color="colormed" value="#7A7E98" deck="4"/>
-			<define color="colorhigh" value="#B4B9DF" deck="4"/>
-			<define color="scratch1" value="#B4B9DF" deck="4"/>
-			<define color="scratch2" value="#B4B9DF" deck="4"/>
-			<define color="waveform_active4" value="#B4B9DF"/>
-			<define color="waveform_passive4" value="#7A7E98"/>
-			<define color="deckcolor" value="#F08D7E" deck="left"/>
-			<define color="faderinon" value="#F08D7E" deck="left"/>
-			<define color="knobfillon" value="#F08D7E" deck="left"/>
-			<define color="faderinleft" value="#F08D7E"/>
-			<define color="deckcolor" value="#F5B59E" deck="right"/>
-			<define color="faderinon" value="#F5B59E" deck="right"/>
-			<define color="knobfillon" value="#F5B59E" deck="right"/>
-			<define color="buttonon" value="#F5B59E" deck="right"/>
-			<define color="oled_buttonfill" value="#533E36" deck="right"/>
-			<define color="faderinright" value="#F5B59E"/>
-			<define color="oled_plugin_over1" value="#3A221E"/>
-			<define color="oled_plugin_selected1" value="#52302B"/>
-			<define color="oled_plugin_down1" value="#432723"/>
-			<define color="oled_plugin_slider1" value="#F08D7E"/>
-			<define color="oled_plugin_disabled1" value="#52302B"/>
-			<define color="oled_plugin_over2" value="#3B2B26"/>
-			<define color="oled_plugin_selected2" value="#533E36"/>
-			<define color="oled_plugin_down2" value="#45332C"/>
-			<define color="oled_plugin_slider2" value="#F5B59E"/>
-			<define color="oled_plugin_disabled2" value="#533E36"/>
+			<define color="deckcolor" value="#E78477" deck="1"/>
+			<define color="deckcolorbright" value="#EA9387" deck="1"/>
+			<define color="deckcolordark" value="#9D5A51" deck="1"/>
+			<define color="deckcolor_invert" value="#EA9387" deck="1"/>
+			<define color="padbuttonselected" value="#2A1815" deck="1"/>
+			<define color="buttonon" value="#E78477" deck="1"/>
+			<define color="buttonover" value="#37201D" deck="1"/>
+			<define color="buttonselected" value="#2A1815" deck="1"/>
+			<define color="oled_buttonfill" value="#4F2D28" deck="1"/>
+			<define color="oled_deck_selected" value="#4F2D28" deck="1"/>
+			<define color="textdeck" value="#EA9387" deck="1"/>
+			<define color="faderinon" value="#E78477" deck="1"/>
+			<define color="knobfillon" value="#E78477" deck="1"/>
+			<define color="colorbass" value="#4F2D28" deck="1"/>
+			<define color="colormed" value="#9D5A51" deck="1"/>
+			<define color="colorhigh" value="#E78477" deck="1"/>
+			<define color="scratch1" value="#E78477" deck="1"/>
+			<define color="scratch2" value="#E78477" deck="1"/>
+			<define color="waveform_active1" value="#E78477"/>
+			<define color="waveform_passive1" value="#9D5A51"/>
+			<define color="deckcolor" value="#F5BE91" deck="2"/>
+			<define color="deckcolorbright" value="#F6C69E" deck="2"/>
+			<define color="deckcolordark" value="#A78163" deck="2"/>
+			<define color="deckcolor_invert" value="#F6C69E" deck="2"/>
+			<define color="padbuttonselected" value="#2C221A" deck="2"/>
+			<define color="buttonon" value="#F5BE91" deck="2"/>
+			<define color="buttonover" value="#3B2E23" deck="2"/>
+			<define color="buttonselected" value="#2C221A" deck="2"/>
+			<define color="oled_buttonfill" value="#534131" deck="2"/>
+			<define color="oled_deck_selected" value="#534131" deck="2"/>
+			<define color="textdeck" value="#F6C69E" deck="2"/>
+			<define color="faderinon" value="#F5BE91" deck="2"/>
+			<define color="knobfillon" value="#F5BE91" deck="2"/>
+			<define color="colorbass" value="#534131" deck="2"/>
+			<define color="colormed" value="#A78163" deck="2"/>
+			<define color="colorhigh" value="#F5BE91" deck="2"/>
+			<define color="scratch1" value="#F5BE91" deck="2"/>
+			<define color="scratch2" value="#F5BE91" deck="2"/>
+			<define color="waveform_active2" value="#F5BE91"/>
+			<define color="waveform_passive2" value="#A78163"/>
+			<define color="deckcolor" value="#D69AC3" deck="3"/>
+			<define color="deckcolorbright" value="#DBA6CA" deck="3"/>
+			<define color="deckcolordark" value="#926985" deck="3"/>
+			<define color="deckcolor_invert" value="#DBA6CA" deck="3"/>
+			<define color="padbuttonselected" value="#271C23" deck="3"/>
+			<define color="buttonon" value="#D69AC3" deck="3"/>
+			<define color="buttonover" value="#33252F" deck="3"/>
+			<define color="buttonselected" value="#271C23" deck="3"/>
+			<define color="oled_buttonfill" value="#493442" deck="3"/>
+			<define color="oled_deck_selected" value="#493442" deck="3"/>
+			<define color="textdeck" value="#DBA6CA" deck="3"/>
+			<define color="faderinon" value="#D69AC3" deck="3"/>
+			<define color="knobfillon" value="#D69AC3" deck="3"/>
+			<define color="colorbass" value="#493442" deck="3"/>
+			<define color="colormed" value="#926985" deck="3"/>
+			<define color="colorhigh" value="#D69AC3" deck="3"/>
+			<define color="scratch1" value="#D69AC3" deck="3"/>
+			<define color="scratch2" value="#D69AC3" deck="3"/>
+			<define color="waveform_active3" value="#D69AC3"/>
+			<define color="waveform_passive3" value="#926985"/>
+			<define color="deckcolor" value="#ABBFE9" deck="4"/>
+			<define color="deckcolorbright" value="#B5C7EC" deck="4"/>
+			<define color="deckcolordark" value="#74829E" deck="4"/>
+			<define color="deckcolor_invert" value="#B5C7EC" deck="4"/>
+			<define color="padbuttonselected" value="#1F222A" deck="4"/>
+			<define color="buttonon" value="#ABBFE9" deck="4"/>
+			<define color="buttonover" value="#292E38" deck="4"/>
+			<define color="buttonselected" value="#1F222A" deck="4"/>
+			<define color="oled_buttonfill" value="#3A414F" deck="4"/>
+			<define color="oled_deck_selected" value="#3A414F" deck="4"/>
+			<define color="textdeck" value="#B5C7EC" deck="4"/>
+			<define color="faderinon" value="#ABBFE9" deck="4"/>
+			<define color="knobfillon" value="#ABBFE9" deck="4"/>
+			<define color="colorbass" value="#3A414F" deck="4"/>
+			<define color="colormed" value="#74829E" deck="4"/>
+			<define color="colorhigh" value="#ABBFE9" deck="4"/>
+			<define color="scratch1" value="#ABBFE9" deck="4"/>
+			<define color="scratch2" value="#ABBFE9" deck="4"/>
+			<define color="waveform_active4" value="#ABBFE9"/>
+			<define color="waveform_passive4" value="#74829E"/>
+			<define color="deckcolor" value="#E78477" deck="left"/>
+			<define color="faderinon" value="#E78477" deck="left"/>
+			<define color="knobfillon" value="#E78477" deck="left"/>
+			<define color="faderinleft" value="#E78477"/>
+			<define color="deckcolor" value="#F5BE91" deck="right"/>
+			<define color="faderinon" value="#F5BE91" deck="right"/>
+			<define color="knobfillon" value="#F5BE91" deck="right"/>
+			<define color="buttonon" value="#F5BE91" deck="right"/>
+			<define color="oled_buttonfill" value="#534131" deck="right"/>
+			<define color="faderinright" value="#F5BE91"/>
+			<define color="oled_plugin_over1" value="#37201D"/>
+			<define color="oled_plugin_selected1" value="#4F2D28"/>
+			<define color="oled_plugin_down1" value="#412521"/>
+			<define color="oled_plugin_slider1" value="#E78477"/>
+			<define color="oled_plugin_disabled1" value="#4F2D28"/>
+			<define color="oled_plugin_over2" value="#3B2E23"/>
+			<define color="oled_plugin_selected2" value="#534131"/>
+			<define color="oled_plugin_down2" value="#453529"/>
+			<define color="oled_plugin_slider2" value="#F5BE91"/>
+			<define color="oled_plugin_disabled2" value="#534131"/>
 		</group>
 		<group name="oled-theme-frost" condition="var_equal '@$oleddecktheme' 6">
-			<define color="deckcolor" value="#99E5F0" deck="1"/>
-			<define color="deckcolorbright" value="#A5E8F2" deck="1"/>
-			<define color="deckcolordark" value="#689CA3" deck="1"/>
-			<define color="deckcolor_invert" value="#A5E8F2" deck="1"/>
-			<define color="padbuttonselected" value="#1C292B" deck="1"/>
-			<define color="buttonon" value="#99E5F0" deck="1"/>
-			<define color="buttonover" value="#25373A" deck="1"/>
-			<define color="buttonselected" value="#1C292B" deck="1"/>
-			<define color="oled_buttonfill" value="#344E52" deck="1"/>
-			<define color="oled_deck_selected" value="#344E52" deck="1"/>
-			<define color="textdeck" value="#A5E8F2" deck="1"/>
-			<define color="faderinon" value="#99E5F0" deck="1"/>
-			<define color="knobfillon" value="#99E5F0" deck="1"/>
-			<define color="colorbass" value="#344E52" deck="1"/>
-			<define color="colormed" value="#689CA3" deck="1"/>
-			<define color="colorhigh" value="#99E5F0" deck="1"/>
-			<define color="scratch1" value="#99E5F0" deck="1"/>
-			<define color="scratch2" value="#99E5F0" deck="1"/>
-			<define color="waveform_active1" value="#99E5F0"/>
-			<define color="waveform_passive1" value="#689CA3"/>
-			<define color="deckcolor" value="#B9F2D8" deck="2"/>
-			<define color="deckcolorbright" value="#C1F4DD" deck="2"/>
-			<define color="deckcolordark" value="#7EA593" deck="2"/>
-			<define color="deckcolor_invert" value="#C1F4DD" deck="2"/>
-			<define color="padbuttonselected" value="#212C27" deck="2"/>
-			<define color="buttonon" value="#B9F2D8" deck="2"/>
-			<define color="buttonover" value="#2C3A34" deck="2"/>
-			<define color="buttonselected" value="#212C27" deck="2"/>
-			<define color="oled_buttonfill" value="#3F5249" deck="2"/>
-			<define color="oled_deck_selected" value="#3F5249" deck="2"/>
-			<define color="textdeck" value="#C1F4DD" deck="2"/>
-			<define color="faderinon" value="#B9F2D8" deck="2"/>
-			<define color="knobfillon" value="#B9F2D8" deck="2"/>
-			<define color="colorbass" value="#3F5249" deck="2"/>
-			<define color="colormed" value="#7EA593" deck="2"/>
-			<define color="colorhigh" value="#B9F2D8" deck="2"/>
-			<define color="scratch1" value="#B9F2D8" deck="2"/>
-			<define color="scratch2" value="#B9F2D8" deck="2"/>
-			<define color="waveform_active2" value="#B9F2D8"/>
-			<define color="waveform_passive2" value="#7EA593"/>
-			<define color="deckcolor" value="#FFB7E7" deck="3"/>
-			<define color="deckcolorbright" value="#FFC0EA" deck="3"/>
-			<define color="deckcolordark" value="#AD7C9D" deck="3"/>
-			<define color="deckcolor_invert" value="#FFC0EA" deck="3"/>
-			<define color="padbuttonselected" value="#2E212A" deck="3"/>
-			<define color="buttonon" value="#FFB7E7" deck="3"/>
-			<define color="buttonover" value="#3D2C37" deck="3"/>
-			<define color="buttonselected" value="#2E212A" deck="3"/>
-			<define color="oled_buttonfill" value="#573E4F" deck="3"/>
-			<define color="oled_deck_selected" value="#573E4F" deck="3"/>
-			<define color="textdeck" value="#FFC0EA" deck="3"/>
-			<define color="faderinon" value="#FFB7E7" deck="3"/>
-			<define color="knobfillon" value="#FFB7E7" deck="3"/>
-			<define color="colorbass" value="#573E4F" deck="3"/>
-			<define color="colormed" value="#AD7C9D" deck="3"/>
-			<define color="colorhigh" value="#FFB7E7" deck="3"/>
-			<define color="scratch1" value="#FFB7E7" deck="3"/>
-			<define color="scratch2" value="#FFB7E7" deck="3"/>
-			<define color="waveform_active3" value="#FFB7E7"/>
-			<define color="waveform_passive3" value="#AD7C9D"/>
-			<define color="deckcolor" value="#C6B0FF" deck="4"/>
-			<define color="deckcolorbright" value="#CDB9FF" deck="4"/>
-			<define color="deckcolordark" value="#8778AD" deck="4"/>
-			<define color="deckcolor_invert" value="#CDB9FF" deck="4"/>
-			<define color="padbuttonselected" value="#24202E" deck="4"/>
-			<define color="buttonon" value="#C6B0FF" deck="4"/>
-			<define color="buttonover" value="#302A3D" deck="4"/>
-			<define color="buttonselected" value="#24202E" deck="4"/>
-			<define color="oled_buttonfill" value="#433C57" deck="4"/>
-			<define color="oled_deck_selected" value="#433C57" deck="4"/>
-			<define color="textdeck" value="#CDB9FF" deck="4"/>
-			<define color="faderinon" value="#C6B0FF" deck="4"/>
-			<define color="knobfillon" value="#C6B0FF" deck="4"/>
-			<define color="colorbass" value="#433C57" deck="4"/>
-			<define color="colormed" value="#8778AD" deck="4"/>
-			<define color="colorhigh" value="#C6B0FF" deck="4"/>
-			<define color="scratch1" value="#C6B0FF" deck="4"/>
-			<define color="scratch2" value="#C6B0FF" deck="4"/>
-			<define color="waveform_active4" value="#C6B0FF"/>
-			<define color="waveform_passive4" value="#8778AD"/>
-			<define color="deckcolor" value="#99E5F0" deck="left"/>
-			<define color="faderinon" value="#99E5F0" deck="left"/>
-			<define color="knobfillon" value="#99E5F0" deck="left"/>
-			<define color="faderinleft" value="#99E5F0"/>
-			<define color="deckcolor" value="#B9F2D8" deck="right"/>
-			<define color="faderinon" value="#B9F2D8" deck="right"/>
-			<define color="knobfillon" value="#B9F2D8" deck="right"/>
-			<define color="buttonon" value="#B9F2D8" deck="right"/>
-			<define color="oled_buttonfill" value="#3F5249" deck="right"/>
-			<define color="faderinright" value="#B9F2D8"/>
-			<define color="oled_plugin_over1" value="#25373A"/>
-			<define color="oled_plugin_selected1" value="#344E52"/>
-			<define color="oled_plugin_down1" value="#2B4043"/>
-			<define color="oled_plugin_slider1" value="#99E5F0"/>
-			<define color="oled_plugin_disabled1" value="#344E52"/>
-			<define color="oled_plugin_over2" value="#2C3A34"/>
-			<define color="oled_plugin_selected2" value="#3F5249"/>
-			<define color="oled_plugin_down2" value="#34443C"/>
-			<define color="oled_plugin_slider2" value="#B9F2D8"/>
-			<define color="oled_plugin_disabled2" value="#3F5249"/>
+			<define color="deckcolor" value="#80D6F2" deck="1"/>
+			<define color="deckcolorbright" value="#8FDBF4" deck="1"/>
+			<define color="deckcolordark" value="#5792A5" deck="1"/>
+			<define color="deckcolor_invert" value="#8FDBF4" deck="1"/>
+			<define color="padbuttonselected" value="#17272C" deck="1"/>
+			<define color="buttonon" value="#80D6F2" deck="1"/>
+			<define color="buttonover" value="#1F333A" deck="1"/>
+			<define color="buttonselected" value="#17272C" deck="1"/>
+			<define color="oled_buttonfill" value="#2C4952" deck="1"/>
+			<define color="oled_deck_selected" value="#2C4952" deck="1"/>
+			<define color="textdeck" value="#8FDBF4" deck="1"/>
+			<define color="faderinon" value="#80D6F2" deck="1"/>
+			<define color="knobfillon" value="#80D6F2" deck="1"/>
+			<define color="colorbass" value="#2C4952" deck="1"/>
+			<define color="colormed" value="#5792A5" deck="1"/>
+			<define color="colorhigh" value="#80D6F2" deck="1"/>
+			<define color="scratch1" value="#80D6F2" deck="1"/>
+			<define color="scratch2" value="#80D6F2" deck="1"/>
+			<define color="waveform_active1" value="#80D6F2"/>
+			<define color="waveform_passive1" value="#5792A5"/>
+			<define color="deckcolor" value="#B8F2CF" deck="2"/>
+			<define color="deckcolorbright" value="#C1F4D5" deck="2"/>
+			<define color="deckcolordark" value="#7DA58D" deck="2"/>
+			<define color="deckcolor_invert" value="#C1F4D5" deck="2"/>
+			<define color="padbuttonselected" value="#212C25" deck="2"/>
+			<define color="buttonon" value="#B8F2CF" deck="2"/>
+			<define color="buttonover" value="#2C3A32" deck="2"/>
+			<define color="buttonselected" value="#212C25" deck="2"/>
+			<define color="oled_buttonfill" value="#3F5246" deck="2"/>
+			<define color="oled_deck_selected" value="#3F5246" deck="2"/>
+			<define color="textdeck" value="#C1F4D5" deck="2"/>
+			<define color="faderinon" value="#B8F2CF" deck="2"/>
+			<define color="knobfillon" value="#B8F2CF" deck="2"/>
+			<define color="colorbass" value="#3F5246" deck="2"/>
+			<define color="colormed" value="#7DA58D" deck="2"/>
+			<define color="colorhigh" value="#B8F2CF" deck="2"/>
+			<define color="scratch1" value="#B8F2CF" deck="2"/>
+			<define color="scratch2" value="#B8F2CF" deck="2"/>
+			<define color="waveform_active2" value="#B8F2CF"/>
+			<define color="waveform_passive2" value="#7DA58D"/>
+			<define color="deckcolor" value="#FFB5DC" deck="3"/>
+			<define color="deckcolorbright" value="#FFBEE0" deck="3"/>
+			<define color="deckcolordark" value="#AD7B96" deck="3"/>
+			<define color="deckcolor_invert" value="#FFBEE0" deck="3"/>
+			<define color="padbuttonselected" value="#2E2128" deck="3"/>
+			<define color="buttonon" value="#FFB5DC" deck="3"/>
+			<define color="buttonover" value="#3D2B35" deck="3"/>
+			<define color="buttonselected" value="#2E2128" deck="3"/>
+			<define color="oled_buttonfill" value="#573E4B" deck="3"/>
+			<define color="oled_deck_selected" value="#573E4B" deck="3"/>
+			<define color="textdeck" value="#FFBEE0" deck="3"/>
+			<define color="faderinon" value="#FFB5DC" deck="3"/>
+			<define color="knobfillon" value="#FFB5DC" deck="3"/>
+			<define color="colorbass" value="#573E4B" deck="3"/>
+			<define color="colormed" value="#AD7B96" deck="3"/>
+			<define color="colorhigh" value="#FFB5DC" deck="3"/>
+			<define color="scratch1" value="#FFB5DC" deck="3"/>
+			<define color="scratch2" value="#FFB5DC" deck="3"/>
+			<define color="waveform_active3" value="#FFB5DC"/>
+			<define color="waveform_passive3" value="#AD7B96"/>
+			<define color="deckcolor" value="#C5ABFA" deck="4"/>
+			<define color="deckcolorbright" value="#CCB5FB" deck="4"/>
+			<define color="deckcolordark" value="#8674AA" deck="4"/>
+			<define color="deckcolor_invert" value="#CCB5FB" deck="4"/>
+			<define color="padbuttonselected" value="#231F2D" deck="4"/>
+			<define color="buttonon" value="#C5ABFA" deck="4"/>
+			<define color="buttonover" value="#2F293C" deck="4"/>
+			<define color="buttonselected" value="#231F2D" deck="4"/>
+			<define color="oled_buttonfill" value="#433A55" deck="4"/>
+			<define color="oled_deck_selected" value="#433A55" deck="4"/>
+			<define color="textdeck" value="#CCB5FB" deck="4"/>
+			<define color="faderinon" value="#C5ABFA" deck="4"/>
+			<define color="knobfillon" value="#C5ABFA" deck="4"/>
+			<define color="colorbass" value="#433A55" deck="4"/>
+			<define color="colormed" value="#8674AA" deck="4"/>
+			<define color="colorhigh" value="#C5ABFA" deck="4"/>
+			<define color="scratch1" value="#C5ABFA" deck="4"/>
+			<define color="scratch2" value="#C5ABFA" deck="4"/>
+			<define color="waveform_active4" value="#C5ABFA"/>
+			<define color="waveform_passive4" value="#8674AA"/>
+			<define color="deckcolor" value="#80D6F2" deck="left"/>
+			<define color="faderinon" value="#80D6F2" deck="left"/>
+			<define color="knobfillon" value="#80D6F2" deck="left"/>
+			<define color="faderinleft" value="#80D6F2"/>
+			<define color="deckcolor" value="#B8F2CF" deck="right"/>
+			<define color="faderinon" value="#B8F2CF" deck="right"/>
+			<define color="knobfillon" value="#B8F2CF" deck="right"/>
+			<define color="buttonon" value="#B8F2CF" deck="right"/>
+			<define color="oled_buttonfill" value="#3F5246" deck="right"/>
+			<define color="faderinright" value="#B8F2CF"/>
+			<define color="oled_plugin_over1" value="#1F333A"/>
+			<define color="oled_plugin_selected1" value="#2C4952"/>
+			<define color="oled_plugin_down1" value="#243C44"/>
+			<define color="oled_plugin_slider1" value="#80D6F2"/>
+			<define color="oled_plugin_disabled1" value="#2C4952"/>
+			<define color="oled_plugin_over2" value="#2C3A32"/>
+			<define color="oled_plugin_selected2" value="#3F5246"/>
+			<define color="oled_plugin_down2" value="#34443A"/>
+			<define color="oled_plugin_slider2" value="#B8F2CF"/>
+			<define color="oled_plugin_disabled2" value="#3F5246"/>
 		</group>
 		<group name="oled-theme-dusk" condition="var_equal '@$oleddecktheme' 7">
-			<define color="deckcolor" value="#D998A3" deck="1"/>
-			<define color="deckcolorbright" value="#DEA4AE" deck="1"/>
-			<define color="deckcolordark" value="#94676F" deck="1"/>
-			<define color="deckcolor_invert" value="#DEA4AE" deck="1"/>
-			<define color="padbuttonselected" value="#271B1D" deck="1"/>
-			<define color="buttonon" value="#D998A3" deck="1"/>
-			<define color="buttonover" value="#342427" deck="1"/>
-			<define color="buttonselected" value="#271B1D" deck="1"/>
-			<define color="oled_buttonfill" value="#4A3437" deck="1"/>
-			<define color="oled_deck_selected" value="#4A3437" deck="1"/>
-			<define color="textdeck" value="#DEA4AE" deck="1"/>
-			<define color="faderinon" value="#D998A3" deck="1"/>
-			<define color="knobfillon" value="#D998A3" deck="1"/>
-			<define color="colorbass" value="#4A3437" deck="1"/>
-			<define color="colormed" value="#94676F" deck="1"/>
-			<define color="colorhigh" value="#D998A3" deck="1"/>
-			<define color="scratch1" value="#D998A3" deck="1"/>
-			<define color="scratch2" value="#D998A3" deck="1"/>
-			<define color="waveform_active1" value="#D998A3"/>
-			<define color="waveform_passive1" value="#94676F"/>
-			<define color="deckcolor" value="#AD96C9" deck="2"/>
-			<define color="deckcolorbright" value="#B7A3CF" deck="2"/>
-			<define color="deckcolordark" value="#766689" deck="2"/>
-			<define color="deckcolor_invert" value="#B7A3CF" deck="2"/>
-			<define color="padbuttonselected" value="#1F1B24" deck="2"/>
-			<define color="buttonon" value="#AD96C9" deck="2"/>
-			<define color="buttonover" value="#2A2430" deck="2"/>
-			<define color="buttonselected" value="#1F1B24" deck="2"/>
-			<define color="oled_buttonfill" value="#3B3344" deck="2"/>
-			<define color="oled_deck_selected" value="#3B3344" deck="2"/>
-			<define color="textdeck" value="#B7A3CF" deck="2"/>
-			<define color="faderinon" value="#AD96C9" deck="2"/>
-			<define color="knobfillon" value="#AD96C9" deck="2"/>
-			<define color="colorbass" value="#3B3344" deck="2"/>
-			<define color="colormed" value="#766689" deck="2"/>
-			<define color="colorhigh" value="#AD96C9" deck="2"/>
-			<define color="scratch1" value="#AD96C9" deck="2"/>
-			<define color="scratch2" value="#AD96C9" deck="2"/>
-			<define color="waveform_active2" value="#AD96C9"/>
-			<define color="waveform_passive2" value="#766689"/>
-			<define color="deckcolor" value="#F18D75" deck="3"/>
-			<define color="deckcolorbright" value="#F39B86" deck="3"/>
-			<define color="deckcolordark" value="#A46050" deck="3"/>
-			<define color="deckcolor_invert" value="#F39B86" deck="3"/>
-			<define color="padbuttonselected" value="#2B1915" deck="3"/>
-			<define color="buttonon" value="#F18D75" deck="3"/>
-			<define color="buttonover" value="#3A221C" deck="3"/>
-			<define color="buttonselected" value="#2B1915" deck="3"/>
-			<define color="oled_buttonfill" value="#523028" deck="3"/>
-			<define color="oled_deck_selected" value="#523028" deck="3"/>
-			<define color="textdeck" value="#F39B86" deck="3"/>
-			<define color="faderinon" value="#F18D75" deck="3"/>
-			<define color="knobfillon" value="#F18D75" deck="3"/>
-			<define color="colorbass" value="#523028" deck="3"/>
-			<define color="colormed" value="#A46050" deck="3"/>
-			<define color="colorhigh" value="#F18D75" deck="3"/>
-			<define color="scratch1" value="#F18D75" deck="3"/>
-			<define color="scratch2" value="#F18D75" deck="3"/>
-			<define color="waveform_active3" value="#F18D75"/>
-			<define color="waveform_passive3" value="#A46050"/>
-			<define color="deckcolor" value="#F6BA9B" deck="4"/>
-			<define color="deckcolorbright" value="#F7C2A7" deck="4"/>
-			<define color="deckcolordark" value="#A77E69" deck="4"/>
-			<define color="deckcolor_invert" value="#F7C2A7" deck="4"/>
-			<define color="padbuttonselected" value="#2C211C" deck="4"/>
-			<define color="buttonon" value="#F6BA9B" deck="4"/>
-			<define color="buttonover" value="#3B2D25" deck="4"/>
-			<define color="buttonselected" value="#2C211C" deck="4"/>
-			<define color="oled_buttonfill" value="#543F35" deck="4"/>
-			<define color="oled_deck_selected" value="#543F35" deck="4"/>
-			<define color="textdeck" value="#F7C2A7" deck="4"/>
-			<define color="faderinon" value="#F6BA9B" deck="4"/>
-			<define color="knobfillon" value="#F6BA9B" deck="4"/>
-			<define color="colorbass" value="#543F35" deck="4"/>
-			<define color="colormed" value="#A77E69" deck="4"/>
-			<define color="colorhigh" value="#F6BA9B" deck="4"/>
-			<define color="scratch1" value="#F6BA9B" deck="4"/>
-			<define color="scratch2" value="#F6BA9B" deck="4"/>
-			<define color="waveform_active4" value="#F6BA9B"/>
-			<define color="waveform_passive4" value="#A77E69"/>
-			<define color="deckcolor" value="#D998A3" deck="left"/>
-			<define color="faderinon" value="#D998A3" deck="left"/>
-			<define color="knobfillon" value="#D998A3" deck="left"/>
-			<define color="faderinleft" value="#D998A3"/>
-			<define color="deckcolor" value="#AD96C9" deck="right"/>
-			<define color="faderinon" value="#AD96C9" deck="right"/>
-			<define color="knobfillon" value="#AD96C9" deck="right"/>
-			<define color="buttonon" value="#AD96C9" deck="right"/>
-			<define color="oled_buttonfill" value="#3B3344" deck="right"/>
-			<define color="faderinright" value="#AD96C9"/>
-			<define color="oled_plugin_over1" value="#342427"/>
-			<define color="oled_plugin_selected1" value="#4A3437"/>
-			<define color="oled_plugin_down1" value="#3D2B2E"/>
-			<define color="oled_plugin_slider1" value="#D998A3"/>
-			<define color="oled_plugin_disabled1" value="#4A3437"/>
-			<define color="oled_plugin_over2" value="#2A2430"/>
-			<define color="oled_plugin_selected2" value="#3B3344"/>
-			<define color="oled_plugin_down2" value="#302A38"/>
-			<define color="oled_plugin_slider2" value="#AD96C9"/>
-			<define color="oled_plugin_disabled2" value="#3B3344"/>
+			<define color="deckcolor" value="#CC87AE" deck="1"/>
+			<define color="deckcolorbright" value="#D295B8" deck="1"/>
+			<define color="deckcolordark" value="#8B5C76" deck="1"/>
+			<define color="deckcolor_invert" value="#D295B8" deck="1"/>
+			<define color="padbuttonselected" value="#25181F" deck="1"/>
+			<define color="buttonon" value="#CC87AE" deck="1"/>
+			<define color="buttonover" value="#31202A" deck="1"/>
+			<define color="buttonselected" value="#25181F" deck="1"/>
+			<define color="oled_buttonfill" value="#452E3B" deck="1"/>
+			<define color="oled_deck_selected" value="#452E3B" deck="1"/>
+			<define color="textdeck" value="#D295B8" deck="1"/>
+			<define color="faderinon" value="#CC87AE" deck="1"/>
+			<define color="knobfillon" value="#CC87AE" deck="1"/>
+			<define color="colorbass" value="#452E3B" deck="1"/>
+			<define color="colormed" value="#8B5C76" deck="1"/>
+			<define color="colorhigh" value="#CC87AE" deck="1"/>
+			<define color="scratch1" value="#CC87AE" deck="1"/>
+			<define color="scratch2" value="#CC87AE" deck="1"/>
+			<define color="waveform_active1" value="#CC87AE"/>
+			<define color="waveform_passive1" value="#8B5C76"/>
+			<define color="deckcolor" value="#9D90D1" deck="2"/>
+			<define color="deckcolorbright" value="#A99DD7" deck="2"/>
+			<define color="deckcolordark" value="#6B628E" deck="2"/>
+			<define color="deckcolor_invert" value="#A99DD7" deck="2"/>
+			<define color="padbuttonselected" value="#1C1A26" deck="2"/>
+			<define color="buttonon" value="#9D90D1" deck="2"/>
+			<define color="buttonover" value="#262332" deck="2"/>
+			<define color="buttonselected" value="#1C1A26" deck="2"/>
+			<define color="oled_buttonfill" value="#353147" deck="2"/>
+			<define color="oled_deck_selected" value="#353147" deck="2"/>
+			<define color="textdeck" value="#A99DD7" deck="2"/>
+			<define color="faderinon" value="#9D90D1" deck="2"/>
+			<define color="knobfillon" value="#9D90D1" deck="2"/>
+			<define color="colorbass" value="#353147" deck="2"/>
+			<define color="colormed" value="#6B628E" deck="2"/>
+			<define color="colorhigh" value="#9D90D1" deck="2"/>
+			<define color="scratch1" value="#9D90D1" deck="2"/>
+			<define color="scratch2" value="#9D90D1" deck="2"/>
+			<define color="waveform_active2" value="#9D90D1"/>
+			<define color="waveform_passive2" value="#6B628E"/>
+			<define color="deckcolor" value="#EF9571" deck="3"/>
+			<define color="deckcolorbright" value="#F1A282" deck="3"/>
+			<define color="deckcolordark" value="#A3654D" deck="3"/>
+			<define color="deckcolor_invert" value="#F1A282" deck="3"/>
+			<define color="padbuttonselected" value="#2B1B14" deck="3"/>
+			<define color="buttonon" value="#EF9571" deck="3"/>
+			<define color="buttonover" value="#39241B" deck="3"/>
+			<define color="buttonselected" value="#2B1B14" deck="3"/>
+			<define color="oled_buttonfill" value="#513326" deck="3"/>
+			<define color="oled_deck_selected" value="#513326" deck="3"/>
+			<define color="textdeck" value="#F1A282" deck="3"/>
+			<define color="faderinon" value="#EF9571" deck="3"/>
+			<define color="knobfillon" value="#EF9571" deck="3"/>
+			<define color="colorbass" value="#513326" deck="3"/>
+			<define color="colormed" value="#A3654D" deck="3"/>
+			<define color="colorhigh" value="#EF9571" deck="3"/>
+			<define color="scratch1" value="#EF9571" deck="3"/>
+			<define color="scratch2" value="#EF9571" deck="3"/>
+			<define color="waveform_active3" value="#EF9571"/>
+			<define color="waveform_passive3" value="#A3654D"/>
+			<define color="deckcolor" value="#F4C8A2" deck="4"/>
+			<define color="deckcolorbright" value="#F5CFAD" deck="4"/>
+			<define color="deckcolordark" value="#A6886E" deck="4"/>
+			<define color="deckcolor_invert" value="#F5CFAD" deck="4"/>
+			<define color="padbuttonselected" value="#2C241D" deck="4"/>
+			<define color="buttonon" value="#F4C8A2" deck="4"/>
+			<define color="buttonover" value="#3B3027" deck="4"/>
+			<define color="buttonselected" value="#2C241D" deck="4"/>
+			<define color="oled_buttonfill" value="#534437" deck="4"/>
+			<define color="oled_deck_selected" value="#534437" deck="4"/>
+			<define color="textdeck" value="#F5CFAD" deck="4"/>
+			<define color="faderinon" value="#F4C8A2" deck="4"/>
+			<define color="knobfillon" value="#F4C8A2" deck="4"/>
+			<define color="colorbass" value="#534437" deck="4"/>
+			<define color="colormed" value="#A6886E" deck="4"/>
+			<define color="colorhigh" value="#F4C8A2" deck="4"/>
+			<define color="scratch1" value="#F4C8A2" deck="4"/>
+			<define color="scratch2" value="#F4C8A2" deck="4"/>
+			<define color="waveform_active4" value="#F4C8A2"/>
+			<define color="waveform_passive4" value="#A6886E"/>
+			<define color="deckcolor" value="#CC87AE" deck="left"/>
+			<define color="faderinon" value="#CC87AE" deck="left"/>
+			<define color="knobfillon" value="#CC87AE" deck="left"/>
+			<define color="faderinleft" value="#CC87AE"/>
+			<define color="deckcolor" value="#9D90D1" deck="right"/>
+			<define color="faderinon" value="#9D90D1" deck="right"/>
+			<define color="knobfillon" value="#9D90D1" deck="right"/>
+			<define color="buttonon" value="#9D90D1" deck="right"/>
+			<define color="oled_buttonfill" value="#353147" deck="right"/>
+			<define color="faderinright" value="#9D90D1"/>
+			<define color="oled_plugin_over1" value="#31202A"/>
+			<define color="oled_plugin_selected1" value="#452E3B"/>
+			<define color="oled_plugin_down1" value="#392631"/>
+			<define color="oled_plugin_slider1" value="#CC87AE"/>
+			<define color="oled_plugin_disabled1" value="#452E3B"/>
+			<define color="oled_plugin_over2" value="#262332"/>
+			<define color="oled_plugin_selected2" value="#353147"/>
+			<define color="oled_plugin_down2" value="#2C283B"/>
+			<define color="oled_plugin_slider2" value="#9D90D1"/>
+			<define color="oled_plugin_disabled2" value="#353147"/>
 		</group>
 		<group name="oled-theme-grove" condition="var_equal '@$oleddecktheme' 8">
-			<define color="deckcolor" value="#5FAB72" deck="1"/>
-			<define color="deckcolorbright" value="#72B583" deck="1"/>
-			<define color="deckcolordark" value="#41744E" deck="1"/>
-			<define color="deckcolor_invert" value="#72B583" deck="1"/>
-			<define color="padbuttonselected" value="#111F15" deck="1"/>
-			<define color="buttonon" value="#5FAB72" deck="1"/>
-			<define color="buttonover" value="#17291B" deck="1"/>
-			<define color="buttonselected" value="#111F15" deck="1"/>
-			<define color="oled_buttonfill" value="#203A27" deck="1"/>
-			<define color="oled_deck_selected" value="#203A27" deck="1"/>
-			<define color="textdeck" value="#72B583" deck="1"/>
-			<define color="faderinon" value="#5FAB72" deck="1"/>
-			<define color="knobfillon" value="#5FAB72" deck="1"/>
-			<define color="colorbass" value="#203A27" deck="1"/>
-			<define color="colormed" value="#41744E" deck="1"/>
-			<define color="colorhigh" value="#5FAB72" deck="1"/>
-			<define color="scratch1" value="#5FAB72" deck="1"/>
-			<define color="scratch2" value="#5FAB72" deck="1"/>
-			<define color="waveform_active1" value="#5FAB72"/>
-			<define color="waveform_passive1" value="#41744E"/>
-			<define color="deckcolor" value="#79CD8F" deck="2"/>
-			<define color="deckcolorbright" value="#89D39C" deck="2"/>
-			<define color="deckcolordark" value="#528B61" deck="2"/>
-			<define color="deckcolor_invert" value="#89D39C" deck="2"/>
-			<define color="padbuttonselected" value="#16251A" deck="2"/>
-			<define color="buttonon" value="#79CD8F" deck="2"/>
-			<define color="buttonover" value="#1D3122" deck="2"/>
-			<define color="buttonselected" value="#16251A" deck="2"/>
-			<define color="oled_buttonfill" value="#294631" deck="2"/>
-			<define color="oled_deck_selected" value="#294631" deck="2"/>
-			<define color="textdeck" value="#89D39C" deck="2"/>
-			<define color="faderinon" value="#79CD8F" deck="2"/>
-			<define color="knobfillon" value="#79CD8F" deck="2"/>
-			<define color="colorbass" value="#294631" deck="2"/>
-			<define color="colormed" value="#528B61" deck="2"/>
-			<define color="colorhigh" value="#79CD8F" deck="2"/>
-			<define color="scratch1" value="#79CD8F" deck="2"/>
-			<define color="scratch2" value="#79CD8F" deck="2"/>
-			<define color="waveform_active2" value="#79CD8F"/>
-			<define color="waveform_passive2" value="#528B61"/>
-			<define color="deckcolor" value="#AAD56D" deck="3"/>
-			<define color="deckcolorbright" value="#B4DA7F" deck="3"/>
-			<define color="deckcolordark" value="#74914A" deck="3"/>
-			<define color="deckcolor_invert" value="#B4DA7F" deck="3"/>
-			<define color="padbuttonselected" value="#1F2614" deck="3"/>
-			<define color="buttonon" value="#AAD56D" deck="3"/>
-			<define color="buttonover" value="#29331A" deck="3"/>
-			<define color="buttonselected" value="#1F2614" deck="3"/>
-			<define color="oled_buttonfill" value="#3A4825" deck="3"/>
-			<define color="oled_deck_selected" value="#3A4825" deck="3"/>
-			<define color="textdeck" value="#B4DA7F" deck="3"/>
-			<define color="faderinon" value="#AAD56D" deck="3"/>
-			<define color="knobfillon" value="#AAD56D" deck="3"/>
-			<define color="colorbass" value="#3A4825" deck="3"/>
-			<define color="colormed" value="#74914A" deck="3"/>
-			<define color="colorhigh" value="#AAD56D" deck="3"/>
-			<define color="scratch1" value="#AAD56D" deck="3"/>
-			<define color="scratch2" value="#AAD56D" deck="3"/>
-			<define color="waveform_active3" value="#AAD56D"/>
-			<define color="waveform_passive3" value="#74914A"/>
-			<define color="deckcolor" value="#D0EAA2" deck="4"/>
-			<define color="deckcolorbright" value="#D6EDAD" deck="4"/>
-			<define color="deckcolordark" value="#8D9F6E" deck="4"/>
-			<define color="deckcolor_invert" value="#D6EDAD" deck="4"/>
-			<define color="padbuttonselected" value="#252A1D" deck="4"/>
-			<define color="buttonon" value="#D0EAA2" deck="4"/>
-			<define color="buttonover" value="#323827" deck="4"/>
-			<define color="buttonselected" value="#252A1D" deck="4"/>
-			<define color="oled_buttonfill" value="#475037" deck="4"/>
-			<define color="oled_deck_selected" value="#475037" deck="4"/>
-			<define color="textdeck" value="#D6EDAD" deck="4"/>
-			<define color="faderinon" value="#D0EAA2" deck="4"/>
-			<define color="knobfillon" value="#D0EAA2" deck="4"/>
-			<define color="colorbass" value="#475037" deck="4"/>
-			<define color="colormed" value="#8D9F6E" deck="4"/>
-			<define color="colorhigh" value="#D0EAA2" deck="4"/>
-			<define color="scratch1" value="#D0EAA2" deck="4"/>
-			<define color="scratch2" value="#D0EAA2" deck="4"/>
-			<define color="waveform_active4" value="#D0EAA2"/>
-			<define color="waveform_passive4" value="#8D9F6E"/>
-			<define color="deckcolor" value="#5FAB72" deck="left"/>
-			<define color="faderinon" value="#5FAB72" deck="left"/>
-			<define color="knobfillon" value="#5FAB72" deck="left"/>
-			<define color="faderinleft" value="#5FAB72"/>
-			<define color="deckcolor" value="#79CD8F" deck="right"/>
-			<define color="faderinon" value="#79CD8F" deck="right"/>
-			<define color="knobfillon" value="#79CD8F" deck="right"/>
-			<define color="buttonon" value="#79CD8F" deck="right"/>
-			<define color="oled_buttonfill" value="#294631" deck="right"/>
-			<define color="faderinright" value="#79CD8F"/>
-			<define color="oled_plugin_over1" value="#17291B"/>
-			<define color="oled_plugin_selected1" value="#203A27"/>
-			<define color="oled_plugin_down1" value="#1B3020"/>
-			<define color="oled_plugin_slider1" value="#5FAB72"/>
-			<define color="oled_plugin_disabled1" value="#203A27"/>
-			<define color="oled_plugin_over2" value="#1D3122"/>
-			<define color="oled_plugin_selected2" value="#294631"/>
-			<define color="oled_plugin_down2" value="#223928"/>
-			<define color="oled_plugin_slider2" value="#79CD8F"/>
-			<define color="oled_plugin_disabled2" value="#294631"/>
+			<define color="deckcolor" value="#57AA92" deck="1"/>
+			<define color="deckcolorbright" value="#6BB49F" deck="1"/>
+			<define color="deckcolordark" value="#3B7463" deck="1"/>
+			<define color="deckcolor_invert" value="#6BB49F" deck="1"/>
+			<define color="padbuttonselected" value="#101F1A" deck="1"/>
+			<define color="buttonon" value="#57AA92" deck="1"/>
+			<define color="buttonover" value="#152923" deck="1"/>
+			<define color="buttonselected" value="#101F1A" deck="1"/>
+			<define color="oled_buttonfill" value="#1E3A32" deck="1"/>
+			<define color="oled_deck_selected" value="#1E3A32" deck="1"/>
+			<define color="textdeck" value="#6BB49F" deck="1"/>
+			<define color="faderinon" value="#57AA92" deck="1"/>
+			<define color="knobfillon" value="#57AA92" deck="1"/>
+			<define color="colorbass" value="#1E3A32" deck="1"/>
+			<define color="colormed" value="#3B7463" deck="1"/>
+			<define color="colorhigh" value="#57AA92" deck="1"/>
+			<define color="scratch1" value="#57AA92" deck="1"/>
+			<define color="scratch2" value="#57AA92" deck="1"/>
+			<define color="waveform_active1" value="#57AA92"/>
+			<define color="waveform_passive1" value="#3B7463"/>
+			<define color="deckcolor" value="#83C46A" deck="2"/>
+			<define color="deckcolorbright" value="#92CB7C" deck="2"/>
+			<define color="deckcolordark" value="#598548" deck="2"/>
+			<define color="deckcolor_invert" value="#92CB7C" deck="2"/>
+			<define color="padbuttonselected" value="#182313" deck="2"/>
+			<define color="buttonon" value="#83C46A" deck="2"/>
+			<define color="buttonover" value="#1F2F19" deck="2"/>
+			<define color="buttonselected" value="#182313" deck="2"/>
+			<define color="oled_buttonfill" value="#2D4324" deck="2"/>
+			<define color="oled_deck_selected" value="#2D4324" deck="2"/>
+			<define color="textdeck" value="#92CB7C" deck="2"/>
+			<define color="faderinon" value="#83C46A" deck="2"/>
+			<define color="knobfillon" value="#83C46A" deck="2"/>
+			<define color="colorbass" value="#2D4324" deck="2"/>
+			<define color="colormed" value="#598548" deck="2"/>
+			<define color="colorhigh" value="#83C46A" deck="2"/>
+			<define color="scratch1" value="#83C46A" deck="2"/>
+			<define color="scratch2" value="#83C46A" deck="2"/>
+			<define color="waveform_active2" value="#83C46A"/>
+			<define color="waveform_passive2" value="#598548"/>
+			<define color="deckcolor" value="#CBD879" deck="3"/>
+			<define color="deckcolorbright" value="#D1DD89" deck="3"/>
+			<define color="deckcolordark" value="#8A9352" deck="3"/>
+			<define color="deckcolor_invert" value="#D1DD89" deck="3"/>
+			<define color="padbuttonselected" value="#252716" deck="3"/>
+			<define color="buttonon" value="#CBD879" deck="3"/>
+			<define color="buttonover" value="#31341D" deck="3"/>
+			<define color="buttonselected" value="#252716" deck="3"/>
+			<define color="oled_buttonfill" value="#454929" deck="3"/>
+			<define color="oled_deck_selected" value="#454929" deck="3"/>
+			<define color="textdeck" value="#D1DD89" deck="3"/>
+			<define color="faderinon" value="#CBD879" deck="3"/>
+			<define color="knobfillon" value="#CBD879" deck="3"/>
+			<define color="colorbass" value="#454929" deck="3"/>
+			<define color="colormed" value="#8A9352" deck="3"/>
+			<define color="colorhigh" value="#CBD879" deck="3"/>
+			<define color="scratch1" value="#CBD879" deck="3"/>
+			<define color="scratch2" value="#CBD879" deck="3"/>
+			<define color="waveform_active3" value="#CBD879"/>
+			<define color="waveform_passive3" value="#8A9352"/>
+			<define color="deckcolor" value="#D7F0BD" deck="4"/>
+			<define color="deckcolorbright" value="#DCF2C5" deck="4"/>
+			<define color="deckcolordark" value="#92A381" deck="4"/>
+			<define color="deckcolor_invert" value="#DCF2C5" deck="4"/>
+			<define color="padbuttonselected" value="#272B22" deck="4"/>
+			<define color="buttonon" value="#D7F0BD" deck="4"/>
+			<define color="buttonover" value="#343A2D" deck="4"/>
+			<define color="buttonselected" value="#272B22" deck="4"/>
+			<define color="oled_buttonfill" value="#495240" deck="4"/>
+			<define color="oled_deck_selected" value="#495240" deck="4"/>
+			<define color="textdeck" value="#DCF2C5" deck="4"/>
+			<define color="faderinon" value="#D7F0BD" deck="4"/>
+			<define color="knobfillon" value="#D7F0BD" deck="4"/>
+			<define color="colorbass" value="#495240" deck="4"/>
+			<define color="colormed" value="#92A381" deck="4"/>
+			<define color="colorhigh" value="#D7F0BD" deck="4"/>
+			<define color="scratch1" value="#D7F0BD" deck="4"/>
+			<define color="scratch2" value="#D7F0BD" deck="4"/>
+			<define color="waveform_active4" value="#D7F0BD"/>
+			<define color="waveform_passive4" value="#92A381"/>
+			<define color="deckcolor" value="#57AA92" deck="left"/>
+			<define color="faderinon" value="#57AA92" deck="left"/>
+			<define color="knobfillon" value="#57AA92" deck="left"/>
+			<define color="faderinleft" value="#57AA92"/>
+			<define color="deckcolor" value="#83C46A" deck="right"/>
+			<define color="faderinon" value="#83C46A" deck="right"/>
+			<define color="knobfillon" value="#83C46A" deck="right"/>
+			<define color="buttonon" value="#83C46A" deck="right"/>
+			<define color="oled_buttonfill" value="#2D4324" deck="right"/>
+			<define color="faderinright" value="#83C46A"/>
+			<define color="oled_plugin_over1" value="#152923"/>
+			<define color="oled_plugin_selected1" value="#1E3A32"/>
+			<define color="oled_plugin_down1" value="#183029"/>
+			<define color="oled_plugin_slider1" value="#57AA92"/>
+			<define color="oled_plugin_disabled1" value="#1E3A32"/>
+			<define color="oled_plugin_over2" value="#1F2F19"/>
+			<define color="oled_plugin_selected2" value="#2D4324"/>
+			<define color="oled_plugin_down2" value="#25371E"/>
+			<define color="oled_plugin_slider2" value="#83C46A"/>
+			<define color="oled_plugin_disabled2" value="#2D4324"/>
 		</group>
 		<group name="oled-theme-orchid" condition="var_equal '@$oleddecktheme' 9">
-			<define color="deckcolor" value="#B779B1" deck="1"/>
-			<define color="deckcolorbright" value="#C089BA" deck="1"/>
-			<define color="deckcolordark" value="#7C5278" deck="1"/>
-			<define color="deckcolor_invert" value="#C089BA" deck="1"/>
-			<define color="padbuttonselected" value="#211620" deck="1"/>
-			<define color="buttonon" value="#B779B1" deck="1"/>
-			<define color="buttonover" value="#2C1D2A" deck="1"/>
-			<define color="buttonselected" value="#211620" deck="1"/>
-			<define color="oled_buttonfill" value="#3E293C" deck="1"/>
-			<define color="oled_deck_selected" value="#3E293C" deck="1"/>
-			<define color="textdeck" value="#C089BA" deck="1"/>
-			<define color="faderinon" value="#B779B1" deck="1"/>
-			<define color="knobfillon" value="#B779B1" deck="1"/>
-			<define color="colorbass" value="#3E293C" deck="1"/>
-			<define color="colormed" value="#7C5278" deck="1"/>
-			<define color="colorhigh" value="#B779B1" deck="1"/>
-			<define color="scratch1" value="#B779B1" deck="1"/>
-			<define color="scratch2" value="#B779B1" deck="1"/>
-			<define color="waveform_active1" value="#B779B1"/>
-			<define color="waveform_passive1" value="#7C5278"/>
-			<define color="deckcolor" value="#AB85D0" deck="2"/>
-			<define color="deckcolorbright" value="#B594D6" deck="2"/>
-			<define color="deckcolordark" value="#745A8D" deck="2"/>
-			<define color="deckcolor_invert" value="#B594D6" deck="2"/>
-			<define color="padbuttonselected" value="#1F1825" deck="2"/>
-			<define color="buttonon" value="#AB85D0" deck="2"/>
-			<define color="buttonover" value="#292032" deck="2"/>
-			<define color="buttonselected" value="#1F1825" deck="2"/>
-			<define color="oled_buttonfill" value="#3A2D47" deck="2"/>
-			<define color="oled_deck_selected" value="#3A2D47" deck="2"/>
-			<define color="textdeck" value="#B594D6" deck="2"/>
-			<define color="faderinon" value="#AB85D0" deck="2"/>
-			<define color="knobfillon" value="#AB85D0" deck="2"/>
-			<define color="colorbass" value="#3A2D47" deck="2"/>
-			<define color="colormed" value="#745A8D" deck="2"/>
-			<define color="colorhigh" value="#AB85D0" deck="2"/>
-			<define color="scratch1" value="#AB85D0" deck="2"/>
-			<define color="scratch2" value="#AB85D0" deck="2"/>
-			<define color="waveform_active2" value="#AB85D0"/>
-			<define color="waveform_passive2" value="#745A8D"/>
-			<define color="deckcolor" value="#C6A0EA" deck="3"/>
-			<define color="deckcolorbright" value="#CDABED" deck="3"/>
-			<define color="deckcolordark" value="#876D9F" deck="3"/>
-			<define color="deckcolor_invert" value="#CDABED" deck="3"/>
-			<define color="padbuttonselected" value="#241D2A" deck="3"/>
-			<define color="buttonon" value="#C6A0EA" deck="3"/>
-			<define color="buttonover" value="#302638" deck="3"/>
-			<define color="buttonselected" value="#241D2A" deck="3"/>
-			<define color="oled_buttonfill" value="#433650" deck="3"/>
-			<define color="oled_deck_selected" value="#433650" deck="3"/>
-			<define color="textdeck" value="#CDABED" deck="3"/>
-			<define color="faderinon" value="#C6A0EA" deck="3"/>
-			<define color="knobfillon" value="#C6A0EA" deck="3"/>
-			<define color="colorbass" value="#433650" deck="3"/>
-			<define color="colormed" value="#876D9F" deck="3"/>
-			<define color="colorhigh" value="#C6A0EA" deck="3"/>
-			<define color="scratch1" value="#C6A0EA" deck="3"/>
-			<define color="scratch2" value="#C6A0EA" deck="3"/>
-			<define color="waveform_active3" value="#C6A0EA"/>
-			<define color="waveform_passive3" value="#876D9F"/>
-			<define color="deckcolor" value="#E4C1F4" deck="4"/>
-			<define color="deckcolorbright" value="#E7C8F5" deck="4"/>
-			<define color="deckcolordark" value="#9B83A6" deck="4"/>
-			<define color="deckcolor_invert" value="#E7C8F5" deck="4"/>
-			<define color="padbuttonselected" value="#29232C" deck="4"/>
-			<define color="buttonon" value="#E4C1F4" deck="4"/>
-			<define color="buttonover" value="#372E3B" deck="4"/>
-			<define color="buttonselected" value="#29232C" deck="4"/>
-			<define color="oled_buttonfill" value="#4E4253" deck="4"/>
-			<define color="oled_deck_selected" value="#4E4253" deck="4"/>
-			<define color="textdeck" value="#E7C8F5" deck="4"/>
-			<define color="faderinon" value="#E4C1F4" deck="4"/>
-			<define color="knobfillon" value="#E4C1F4" deck="4"/>
-			<define color="colorbass" value="#4E4253" deck="4"/>
-			<define color="colormed" value="#9B83A6" deck="4"/>
-			<define color="colorhigh" value="#E4C1F4" deck="4"/>
-			<define color="scratch1" value="#E4C1F4" deck="4"/>
-			<define color="scratch2" value="#E4C1F4" deck="4"/>
-			<define color="waveform_active4" value="#E4C1F4"/>
-			<define color="waveform_passive4" value="#9B83A6"/>
-			<define color="deckcolor" value="#B779B1" deck="left"/>
-			<define color="faderinon" value="#B779B1" deck="left"/>
-			<define color="knobfillon" value="#B779B1" deck="left"/>
-			<define color="faderinleft" value="#B779B1"/>
-			<define color="deckcolor" value="#AB85D0" deck="right"/>
-			<define color="faderinon" value="#AB85D0" deck="right"/>
-			<define color="knobfillon" value="#AB85D0" deck="right"/>
-			<define color="buttonon" value="#AB85D0" deck="right"/>
-			<define color="oled_buttonfill" value="#3A2D47" deck="right"/>
-			<define color="faderinright" value="#AB85D0"/>
-			<define color="oled_plugin_over1" value="#2C1D2A"/>
-			<define color="oled_plugin_selected1" value="#3E293C"/>
-			<define color="oled_plugin_down1" value="#332232"/>
-			<define color="oled_plugin_slider1" value="#B779B1"/>
-			<define color="oled_plugin_disabled1" value="#3E293C"/>
-			<define color="oled_plugin_over2" value="#292032"/>
-			<define color="oled_plugin_selected2" value="#3A2D47"/>
-			<define color="oled_plugin_down2" value="#30253A"/>
-			<define color="oled_plugin_slider2" value="#AB85D0"/>
-			<define color="oled_plugin_disabled2" value="#3A2D47"/>
+			<define color="deckcolor" value="#BD72A8" deck="1"/>
+			<define color="deckcolorbright" value="#C583B2" deck="1"/>
+			<define color="deckcolordark" value="#814E72" deck="1"/>
+			<define color="deckcolor_invert" value="#C583B2" deck="1"/>
+			<define color="padbuttonselected" value="#22151E" deck="1"/>
+			<define color="buttonon" value="#BD72A8" deck="1"/>
+			<define color="buttonover" value="#2D1B28" deck="1"/>
+			<define color="buttonselected" value="#22151E" deck="1"/>
+			<define color="oled_buttonfill" value="#402739" deck="1"/>
+			<define color="oled_deck_selected" value="#402739" deck="1"/>
+			<define color="textdeck" value="#C583B2" deck="1"/>
+			<define color="faderinon" value="#BD72A8" deck="1"/>
+			<define color="knobfillon" value="#BD72A8" deck="1"/>
+			<define color="colorbass" value="#402739" deck="1"/>
+			<define color="colormed" value="#814E72" deck="1"/>
+			<define color="colorhigh" value="#BD72A8" deck="1"/>
+			<define color="scratch1" value="#BD72A8" deck="1"/>
+			<define color="scratch2" value="#BD72A8" deck="1"/>
+			<define color="waveform_active1" value="#BD72A8"/>
+			<define color="waveform_passive1" value="#814E72"/>
+			<define color="deckcolor" value="#917CD1" deck="2"/>
+			<define color="deckcolorbright" value="#9E8CD7" deck="2"/>
+			<define color="deckcolordark" value="#63548E" deck="2"/>
+			<define color="deckcolor_invert" value="#9E8CD7" deck="2"/>
+			<define color="padbuttonselected" value="#1A1626" deck="2"/>
+			<define color="buttonon" value="#917CD1" deck="2"/>
+			<define color="buttonover" value="#231E32" deck="2"/>
+			<define color="buttonselected" value="#1A1626" deck="2"/>
+			<define color="oled_buttonfill" value="#312A47" deck="2"/>
+			<define color="oled_deck_selected" value="#312A47" deck="2"/>
+			<define color="textdeck" value="#9E8CD7" deck="2"/>
+			<define color="faderinon" value="#917CD1" deck="2"/>
+			<define color="knobfillon" value="#917CD1" deck="2"/>
+			<define color="colorbass" value="#312A47" deck="2"/>
+			<define color="colormed" value="#63548E" deck="2"/>
+			<define color="colorhigh" value="#917CD1" deck="2"/>
+			<define color="scratch1" value="#917CD1" deck="2"/>
+			<define color="scratch2" value="#917CD1" deck="2"/>
+			<define color="waveform_active2" value="#917CD1"/>
+			<define color="waveform_passive2" value="#63548E"/>
+			<define color="deckcolor" value="#D0A1E9" deck="3"/>
+			<define color="deckcolorbright" value="#D6ACEC" deck="3"/>
+			<define color="deckcolordark" value="#8D6D9E" deck="3"/>
+			<define color="deckcolor_invert" value="#D6ACEC" deck="3"/>
+			<define color="padbuttonselected" value="#251D2A" deck="3"/>
+			<define color="buttonon" value="#D0A1E9" deck="3"/>
+			<define color="buttonover" value="#322738" deck="3"/>
+			<define color="buttonselected" value="#251D2A" deck="3"/>
+			<define color="oled_buttonfill" value="#47374F" deck="3"/>
+			<define color="oled_deck_selected" value="#47374F" deck="3"/>
+			<define color="textdeck" value="#D6ACEC" deck="3"/>
+			<define color="faderinon" value="#D0A1E9" deck="3"/>
+			<define color="knobfillon" value="#D0A1E9" deck="3"/>
+			<define color="colorbass" value="#47374F" deck="3"/>
+			<define color="colormed" value="#8D6D9E" deck="3"/>
+			<define color="colorhigh" value="#D0A1E9" deck="3"/>
+			<define color="scratch1" value="#D0A1E9" deck="3"/>
+			<define color="scratch2" value="#D0A1E9" deck="3"/>
+			<define color="waveform_active3" value="#D0A1E9"/>
+			<define color="waveform_passive3" value="#8D6D9E"/>
+			<define color="deckcolor" value="#EFCFED" deck="4"/>
+			<define color="deckcolorbright" value="#F1D5EF" deck="4"/>
+			<define color="deckcolordark" value="#A38DA1" deck="4"/>
+			<define color="deckcolor_invert" value="#F1D5EF" deck="4"/>
+			<define color="padbuttonselected" value="#2B252B" deck="4"/>
+			<define color="buttonon" value="#EFCFED" deck="4"/>
+			<define color="buttonover" value="#393239" deck="4"/>
+			<define color="buttonselected" value="#2B252B" deck="4"/>
+			<define color="oled_buttonfill" value="#514651" deck="4"/>
+			<define color="oled_deck_selected" value="#514651" deck="4"/>
+			<define color="textdeck" value="#F1D5EF" deck="4"/>
+			<define color="faderinon" value="#EFCFED" deck="4"/>
+			<define color="knobfillon" value="#EFCFED" deck="4"/>
+			<define color="colorbass" value="#514651" deck="4"/>
+			<define color="colormed" value="#A38DA1" deck="4"/>
+			<define color="colorhigh" value="#EFCFED" deck="4"/>
+			<define color="scratch1" value="#EFCFED" deck="4"/>
+			<define color="scratch2" value="#EFCFED" deck="4"/>
+			<define color="waveform_active4" value="#EFCFED"/>
+			<define color="waveform_passive4" value="#A38DA1"/>
+			<define color="deckcolor" value="#BD72A8" deck="left"/>
+			<define color="faderinon" value="#BD72A8" deck="left"/>
+			<define color="knobfillon" value="#BD72A8" deck="left"/>
+			<define color="faderinleft" value="#BD72A8"/>
+			<define color="deckcolor" value="#917CD1" deck="right"/>
+			<define color="faderinon" value="#917CD1" deck="right"/>
+			<define color="knobfillon" value="#917CD1" deck="right"/>
+			<define color="buttonon" value="#917CD1" deck="right"/>
+			<define color="oled_buttonfill" value="#312A47" deck="right"/>
+			<define color="faderinright" value="#917CD1"/>
+			<define color="oled_plugin_over1" value="#2D1B28"/>
+			<define color="oled_plugin_selected1" value="#402739"/>
+			<define color="oled_plugin_down1" value="#35202F"/>
+			<define color="oled_plugin_slider1" value="#BD72A8"/>
+			<define color="oled_plugin_disabled1" value="#402739"/>
+			<define color="oled_plugin_over2" value="#231E32"/>
+			<define color="oled_plugin_selected2" value="#312A47"/>
+			<define color="oled_plugin_down2" value="#29233B"/>
+			<define color="oled_plugin_slider2" value="#917CD1"/>
+			<define color="oled_plugin_disabled2" value="#312A47"/>
 		</group>
 		<group name="oled-theme-ember" condition="var_equal '@$oleddecktheme' 10">
-			<define color="deckcolor" value="#D9784F" deck="1"/>
-			<define color="deckcolorbright" value="#DE8864" deck="1"/>
-			<define color="deckcolordark" value="#945236" deck="1"/>
-			<define color="deckcolor_invert" value="#DE8864" deck="1"/>
-			<define color="padbuttonselected" value="#27160E" deck="1"/>
-			<define color="buttonon" value="#D9784F" deck="1"/>
-			<define color="buttonover" value="#341D13" deck="1"/>
-			<define color="buttonselected" value="#27160E" deck="1"/>
-			<define color="oled_buttonfill" value="#4A291B" deck="1"/>
-			<define color="oled_deck_selected" value="#4A291B" deck="1"/>
-			<define color="textdeck" value="#DE8864" deck="1"/>
-			<define color="faderinon" value="#D9784F" deck="1"/>
-			<define color="knobfillon" value="#D9784F" deck="1"/>
-			<define color="colorbass" value="#4A291B" deck="1"/>
-			<define color="colormed" value="#945236" deck="1"/>
-			<define color="colorhigh" value="#D9784F" deck="1"/>
-			<define color="scratch1" value="#D9784F" deck="1"/>
-			<define color="scratch2" value="#D9784F" deck="1"/>
-			<define color="waveform_active1" value="#D9784F"/>
-			<define color="waveform_passive1" value="#945236"/>
-			<define color="deckcolor" value="#ED9864" deck="2"/>
-			<define color="deckcolorbright" value="#EFA477" deck="2"/>
-			<define color="deckcolordark" value="#A16744" deck="2"/>
-			<define color="deckcolor_invert" value="#EFA477" deck="2"/>
-			<define color="padbuttonselected" value="#2B1B12" deck="2"/>
-			<define color="buttonon" value="#ED9864" deck="2"/>
-			<define color="buttonover" value="#392418" deck="2"/>
-			<define color="buttonselected" value="#2B1B12" deck="2"/>
-			<define color="oled_buttonfill" value="#513422" deck="2"/>
-			<define color="oled_deck_selected" value="#513422" deck="2"/>
-			<define color="textdeck" value="#EFA477" deck="2"/>
-			<define color="faderinon" value="#ED9864" deck="2"/>
-			<define color="knobfillon" value="#ED9864" deck="2"/>
-			<define color="colorbass" value="#513422" deck="2"/>
-			<define color="colormed" value="#A16744" deck="2"/>
-			<define color="colorhigh" value="#ED9864" deck="2"/>
-			<define color="scratch1" value="#ED9864" deck="2"/>
-			<define color="scratch2" value="#ED9864" deck="2"/>
-			<define color="waveform_active2" value="#ED9864"/>
-			<define color="waveform_passive2" value="#A16744"/>
-			<define color="deckcolor" value="#F7B58E" deck="3"/>
-			<define color="deckcolorbright" value="#F8BE9C" deck="3"/>
-			<define color="deckcolordark" value="#A87B61" deck="3"/>
-			<define color="deckcolor_invert" value="#F8BE9C" deck="3"/>
-			<define color="padbuttonselected" value="#2C211A" deck="3"/>
-			<define color="buttonon" value="#F7B58E" deck="3"/>
-			<define color="buttonover" value="#3B2B22" deck="3"/>
-			<define color="buttonselected" value="#2C211A" deck="3"/>
-			<define color="oled_buttonfill" value="#543E30" deck="3"/>
-			<define color="oled_deck_selected" value="#543E30" deck="3"/>
-			<define color="textdeck" value="#F8BE9C" deck="3"/>
-			<define color="faderinon" value="#F7B58E" deck="3"/>
-			<define color="knobfillon" value="#F7B58E" deck="3"/>
-			<define color="colorbass" value="#543E30" deck="3"/>
-			<define color="colormed" value="#A87B61" deck="3"/>
-			<define color="colorhigh" value="#F7B58E" deck="3"/>
-			<define color="scratch1" value="#F7B58E" deck="3"/>
-			<define color="scratch2" value="#F7B58E" deck="3"/>
-			<define color="waveform_active3" value="#F7B58E"/>
-			<define color="waveform_passive3" value="#A87B61"/>
-			<define color="deckcolor" value="#F9D1AD" deck="4"/>
-			<define color="deckcolorbright" value="#FAD7B7" deck="4"/>
-			<define color="deckcolordark" value="#A98E76" deck="4"/>
-			<define color="deckcolor_invert" value="#FAD7B7" deck="4"/>
-			<define color="padbuttonselected" value="#2D261F" deck="4"/>
-			<define color="buttonon" value="#F9D1AD" deck="4"/>
-			<define color="buttonover" value="#3C322A" deck="4"/>
-			<define color="buttonselected" value="#2D261F" deck="4"/>
-			<define color="oled_buttonfill" value="#55473B" deck="4"/>
-			<define color="oled_deck_selected" value="#55473B" deck="4"/>
-			<define color="textdeck" value="#FAD7B7" deck="4"/>
-			<define color="faderinon" value="#F9D1AD" deck="4"/>
-			<define color="knobfillon" value="#F9D1AD" deck="4"/>
-			<define color="colorbass" value="#55473B" deck="4"/>
-			<define color="colormed" value="#A98E76" deck="4"/>
-			<define color="colorhigh" value="#F9D1AD" deck="4"/>
-			<define color="scratch1" value="#F9D1AD" deck="4"/>
-			<define color="scratch2" value="#F9D1AD" deck="4"/>
-			<define color="waveform_active4" value="#F9D1AD"/>
-			<define color="waveform_passive4" value="#A98E76"/>
-			<define color="deckcolor" value="#D9784F" deck="left"/>
-			<define color="faderinon" value="#D9784F" deck="left"/>
-			<define color="knobfillon" value="#D9784F" deck="left"/>
-			<define color="faderinleft" value="#D9784F"/>
-			<define color="deckcolor" value="#ED9864" deck="right"/>
-			<define color="faderinon" value="#ED9864" deck="right"/>
-			<define color="knobfillon" value="#ED9864" deck="right"/>
-			<define color="buttonon" value="#ED9864" deck="right"/>
-			<define color="oled_buttonfill" value="#513422" deck="right"/>
-			<define color="faderinright" value="#ED9864"/>
-			<define color="oled_plugin_over1" value="#341D13"/>
-			<define color="oled_plugin_selected1" value="#4A291B"/>
-			<define color="oled_plugin_down1" value="#3D2216"/>
-			<define color="oled_plugin_slider1" value="#D9784F"/>
-			<define color="oled_plugin_disabled1" value="#4A291B"/>
-			<define color="oled_plugin_over2" value="#392418"/>
-			<define color="oled_plugin_selected2" value="#513422"/>
-			<define color="oled_plugin_down2" value="#422B1C"/>
-			<define color="oled_plugin_slider2" value="#ED9864"/>
-			<define color="oled_plugin_disabled2" value="#513422"/>
+			<define color="deckcolor" value="#D66E59" deck="1"/>
+			<define color="deckcolorbright" value="#DB7F6D" deck="1"/>
+			<define color="deckcolordark" value="#924B3D" deck="1"/>
+			<define color="deckcolor_invert" value="#DB7F6D" deck="1"/>
+			<define color="padbuttonselected" value="#271410" deck="1"/>
+			<define color="buttonon" value="#D66E59" deck="1"/>
+			<define color="buttonover" value="#331A15" deck="1"/>
+			<define color="buttonselected" value="#271410" deck="1"/>
+			<define color="oled_buttonfill" value="#49251E" deck="1"/>
+			<define color="oled_deck_selected" value="#49251E" deck="1"/>
+			<define color="textdeck" value="#DB7F6D" deck="1"/>
+			<define color="faderinon" value="#D66E59" deck="1"/>
+			<define color="knobfillon" value="#D66E59" deck="1"/>
+			<define color="colorbass" value="#49251E" deck="1"/>
+			<define color="colormed" value="#924B3D" deck="1"/>
+			<define color="colorhigh" value="#D66E59" deck="1"/>
+			<define color="scratch1" value="#D66E59" deck="1"/>
+			<define color="scratch2" value="#D66E59" deck="1"/>
+			<define color="waveform_active1" value="#D66E59"/>
+			<define color="waveform_passive1" value="#924B3D"/>
+			<define color="deckcolor" value="#ED9760" deck="2"/>
+			<define color="deckcolorbright" value="#EFA373" deck="2"/>
+			<define color="deckcolordark" value="#A16741" deck="2"/>
+			<define color="deckcolor_invert" value="#EFA373" deck="2"/>
+			<define color="padbuttonselected" value="#2B1B11" deck="2"/>
+			<define color="buttonon" value="#ED9760" deck="2"/>
+			<define color="buttonover" value="#392417" deck="2"/>
+			<define color="buttonselected" value="#2B1B11" deck="2"/>
+			<define color="oled_buttonfill" value="#513321" deck="2"/>
+			<define color="oled_deck_selected" value="#513321" deck="2"/>
+			<define color="textdeck" value="#EFA373" deck="2"/>
+			<define color="faderinon" value="#ED9760" deck="2"/>
+			<define color="knobfillon" value="#ED9760" deck="2"/>
+			<define color="colorbass" value="#513321" deck="2"/>
+			<define color="colormed" value="#A16741" deck="2"/>
+			<define color="colorhigh" value="#ED9760" deck="2"/>
+			<define color="scratch1" value="#ED9760" deck="2"/>
+			<define color="scratch2" value="#ED9760" deck="2"/>
+			<define color="waveform_active2" value="#ED9760"/>
+			<define color="waveform_passive2" value="#A16741"/>
+			<define color="deckcolor" value="#F5BE7C" deck="3"/>
+			<define color="deckcolorbright" value="#F6C68C" deck="3"/>
+			<define color="deckcolordark" value="#A78154" deck="3"/>
+			<define color="deckcolor_invert" value="#F6C68C" deck="3"/>
+			<define color="padbuttonselected" value="#2C2216" deck="3"/>
+			<define color="buttonon" value="#F5BE7C" deck="3"/>
+			<define color="buttonover" value="#3B2E1E" deck="3"/>
+			<define color="buttonselected" value="#2C2216" deck="3"/>
+			<define color="oled_buttonfill" value="#53412A" deck="3"/>
+			<define color="oled_deck_selected" value="#53412A" deck="3"/>
+			<define color="textdeck" value="#F6C68C" deck="3"/>
+			<define color="faderinon" value="#F5BE7C" deck="3"/>
+			<define color="knobfillon" value="#F5BE7C" deck="3"/>
+			<define color="colorbass" value="#53412A" deck="3"/>
+			<define color="colormed" value="#A78154" deck="3"/>
+			<define color="colorhigh" value="#F5BE7C" deck="3"/>
+			<define color="scratch1" value="#F5BE7C" deck="3"/>
+			<define color="scratch2" value="#F5BE7C" deck="3"/>
+			<define color="waveform_active3" value="#F5BE7C"/>
+			<define color="waveform_passive3" value="#A78154"/>
+			<define color="deckcolor" value="#F9E0BA" deck="4"/>
+			<define color="deckcolorbright" value="#FAE4C2" deck="4"/>
+			<define color="deckcolordark" value="#A9987E" deck="4"/>
+			<define color="deckcolor_invert" value="#FAE4C2" deck="4"/>
+			<define color="padbuttonselected" value="#2D2821" deck="4"/>
+			<define color="buttonon" value="#F9E0BA" deck="4"/>
+			<define color="buttonover" value="#3C362D" deck="4"/>
+			<define color="buttonselected" value="#2D2821" deck="4"/>
+			<define color="oled_buttonfill" value="#554C3F" deck="4"/>
+			<define color="oled_deck_selected" value="#554C3F" deck="4"/>
+			<define color="textdeck" value="#FAE4C2" deck="4"/>
+			<define color="faderinon" value="#F9E0BA" deck="4"/>
+			<define color="knobfillon" value="#F9E0BA" deck="4"/>
+			<define color="colorbass" value="#554C3F" deck="4"/>
+			<define color="colormed" value="#A9987E" deck="4"/>
+			<define color="colorhigh" value="#F9E0BA" deck="4"/>
+			<define color="scratch1" value="#F9E0BA" deck="4"/>
+			<define color="scratch2" value="#F9E0BA" deck="4"/>
+			<define color="waveform_active4" value="#F9E0BA"/>
+			<define color="waveform_passive4" value="#A9987E"/>
+			<define color="deckcolor" value="#D66E59" deck="left"/>
+			<define color="faderinon" value="#D66E59" deck="left"/>
+			<define color="knobfillon" value="#D66E59" deck="left"/>
+			<define color="faderinleft" value="#D66E59"/>
+			<define color="deckcolor" value="#ED9760" deck="right"/>
+			<define color="faderinon" value="#ED9760" deck="right"/>
+			<define color="knobfillon" value="#ED9760" deck="right"/>
+			<define color="buttonon" value="#ED9760" deck="right"/>
+			<define color="oled_buttonfill" value="#513321" deck="right"/>
+			<define color="faderinright" value="#ED9760"/>
+			<define color="oled_plugin_over1" value="#331A15"/>
+			<define color="oled_plugin_selected1" value="#49251E"/>
+			<define color="oled_plugin_down1" value="#3C1F19"/>
+			<define color="oled_plugin_slider1" value="#D66E59"/>
+			<define color="oled_plugin_disabled1" value="#49251E"/>
+			<define color="oled_plugin_over2" value="#392417"/>
+			<define color="oled_plugin_selected2" value="#513321"/>
+			<define color="oled_plugin_down2" value="#422A1B"/>
+			<define color="oled_plugin_slider2" value="#ED9760"/>
+			<define color="oled_plugin_disabled2" value="#513321"/>
+		</group>
+		<group name="oled-theme-dracula" condition="var_equal '@$oleddecktheme' 11">
+			<define color="deckcolor" value="#8BE9FD" deck="1"/>
+			<define color="deckcolorbright" value="#99ECFD" deck="1"/>
+			<define color="deckcolordark" value="#5F9EAC" deck="1"/>
+			<define color="deckcolor_invert" value="#99ECFD" deck="1"/>
+			<define color="padbuttonselected" value="#192A2E" deck="1"/>
+			<define color="buttonon" value="#8BE9FD" deck="1"/>
+			<define color="buttonover" value="#21383D" deck="1"/>
+			<define color="buttonselected" value="#192A2E" deck="1"/>
+			<define color="oled_buttonfill" value="#2F4F56" deck="1"/>
+			<define color="oled_deck_selected" value="#2F4F56" deck="1"/>
+			<define color="textdeck" value="#99ECFD" deck="1"/>
+			<define color="faderinon" value="#8BE9FD" deck="1"/>
+			<define color="knobfillon" value="#8BE9FD" deck="1"/>
+			<define color="colorbass" value="#2F4F56" deck="1"/>
+			<define color="colormed" value="#5F9EAC" deck="1"/>
+			<define color="colorhigh" value="#8BE9FD" deck="1"/>
+			<define color="scratch1" value="#8BE9FD" deck="1"/>
+			<define color="scratch2" value="#8BE9FD" deck="1"/>
+			<define color="waveform_active1" value="#8BE9FD"/>
+			<define color="waveform_passive1" value="#5F9EAC"/>
+			<define color="deckcolor" value="#FF79C6" deck="2"/>
+			<define color="deckcolorbright" value="#FF89CD" deck="2"/>
+			<define color="deckcolordark" value="#AD5287" deck="2"/>
+			<define color="deckcolor_invert" value="#FF89CD" deck="2"/>
+			<define color="padbuttonselected" value="#2E1624" deck="2"/>
+			<define color="buttonon" value="#FF79C6" deck="2"/>
+			<define color="buttonover" value="#3D1D30" deck="2"/>
+			<define color="buttonselected" value="#2E1624" deck="2"/>
+			<define color="oled_buttonfill" value="#572943" deck="2"/>
+			<define color="oled_deck_selected" value="#572943" deck="2"/>
+			<define color="textdeck" value="#FF89CD" deck="2"/>
+			<define color="faderinon" value="#FF79C6" deck="2"/>
+			<define color="knobfillon" value="#FF79C6" deck="2"/>
+			<define color="colorbass" value="#572943" deck="2"/>
+			<define color="colormed" value="#AD5287" deck="2"/>
+			<define color="colorhigh" value="#FF79C6" deck="2"/>
+			<define color="scratch1" value="#FF79C6" deck="2"/>
+			<define color="scratch2" value="#FF79C6" deck="2"/>
+			<define color="waveform_active2" value="#FF79C6"/>
+			<define color="waveform_passive2" value="#AD5287"/>
+			<define color="deckcolor" value="#50FA7B" deck="3"/>
+			<define color="deckcolorbright" value="#65FB8B" deck="3"/>
+			<define color="deckcolordark" value="#36AA54" deck="3"/>
+			<define color="deckcolor_invert" value="#65FB8B" deck="3"/>
+			<define color="padbuttonselected" value="#0E2D16" deck="3"/>
+			<define color="buttonon" value="#50FA7B" deck="3"/>
+			<define color="buttonover" value="#133C1E" deck="3"/>
+			<define color="buttonselected" value="#0E2D16" deck="3"/>
+			<define color="oled_buttonfill" value="#1B552A" deck="3"/>
+			<define color="oled_deck_selected" value="#1B552A" deck="3"/>
+			<define color="textdeck" value="#65FB8B" deck="3"/>
+			<define color="faderinon" value="#50FA7B" deck="3"/>
+			<define color="knobfillon" value="#50FA7B" deck="3"/>
+			<define color="colorbass" value="#1B552A" deck="3"/>
+			<define color="colormed" value="#36AA54" deck="3"/>
+			<define color="colorhigh" value="#50FA7B" deck="3"/>
+			<define color="scratch1" value="#50FA7B" deck="3"/>
+			<define color="scratch2" value="#50FA7B" deck="3"/>
+			<define color="waveform_active3" value="#50FA7B"/>
+			<define color="waveform_passive3" value="#36AA54"/>
+			<define color="deckcolor" value="#BD93F9" deck="4"/>
+			<define color="deckcolorbright" value="#C5A0FA" deck="4"/>
+			<define color="deckcolordark" value="#8164A9" deck="4"/>
+			<define color="deckcolor_invert" value="#C5A0FA" deck="4"/>
+			<define color="padbuttonselected" value="#221A2D" deck="4"/>
+			<define color="buttonon" value="#BD93F9" deck="4"/>
+			<define color="buttonover" value="#2D233C" deck="4"/>
+			<define color="buttonselected" value="#221A2D" deck="4"/>
+			<define color="oled_buttonfill" value="#403255" deck="4"/>
+			<define color="oled_deck_selected" value="#403255" deck="4"/>
+			<define color="textdeck" value="#C5A0FA" deck="4"/>
+			<define color="faderinon" value="#BD93F9" deck="4"/>
+			<define color="knobfillon" value="#BD93F9" deck="4"/>
+			<define color="colorbass" value="#403255" deck="4"/>
+			<define color="colormed" value="#8164A9" deck="4"/>
+			<define color="colorhigh" value="#BD93F9" deck="4"/>
+			<define color="scratch1" value="#BD93F9" deck="4"/>
+			<define color="scratch2" value="#BD93F9" deck="4"/>
+			<define color="waveform_active4" value="#BD93F9"/>
+			<define color="waveform_passive4" value="#8164A9"/>
+			<define color="deckcolor" value="#8BE9FD" deck="left"/>
+			<define color="faderinon" value="#8BE9FD" deck="left"/>
+			<define color="knobfillon" value="#8BE9FD" deck="left"/>
+			<define color="faderinleft" value="#8BE9FD"/>
+			<define color="deckcolor" value="#FF79C6" deck="right"/>
+			<define color="faderinon" value="#FF79C6" deck="right"/>
+			<define color="knobfillon" value="#FF79C6" deck="right"/>
+			<define color="buttonon" value="#FF79C6" deck="right"/>
+			<define color="oled_buttonfill" value="#572943" deck="right"/>
+			<define color="faderinright" value="#FF79C6"/>
+			<define color="oled_plugin_over1" value="#21383D"/>
+			<define color="oled_plugin_selected1" value="#2F4F56"/>
+			<define color="oled_plugin_down1" value="#274147"/>
+			<define color="oled_plugin_slider1" value="#8BE9FD"/>
+			<define color="oled_plugin_disabled1" value="#2F4F56"/>
+			<define color="oled_plugin_over2" value="#3D1D30"/>
+			<define color="oled_plugin_selected2" value="#572943"/>
+			<define color="oled_plugin_down2" value="#472237"/>
+			<define color="oled_plugin_slider2" value="#FF79C6"/>
+			<define color="oled_plugin_disabled2" value="#572943"/>
+		</group>
+		<group name="oled-theme-nord" condition="var_equal '@$oleddecktheme' 12">
+			<define color="deckcolor" value="#88C0D0" deck="1"/>
+			<define color="deckcolorbright" value="#96C8D6" deck="1"/>
+			<define color="deckcolordark" value="#5C838D" deck="1"/>
+			<define color="deckcolor_invert" value="#96C8D6" deck="1"/>
+			<define color="padbuttonselected" value="#182325" deck="1"/>
+			<define color="buttonon" value="#88C0D0" deck="1"/>
+			<define color="buttonover" value="#212E32" deck="1"/>
+			<define color="buttonselected" value="#182325" deck="1"/>
+			<define color="oled_buttonfill" value="#2E4147" deck="1"/>
+			<define color="oled_deck_selected" value="#2E4147" deck="1"/>
+			<define color="textdeck" value="#96C8D6" deck="1"/>
+			<define color="faderinon" value="#88C0D0" deck="1"/>
+			<define color="knobfillon" value="#88C0D0" deck="1"/>
+			<define color="colorbass" value="#2E4147" deck="1"/>
+			<define color="colormed" value="#5C838D" deck="1"/>
+			<define color="colorhigh" value="#88C0D0" deck="1"/>
+			<define color="scratch1" value="#88C0D0" deck="1"/>
+			<define color="scratch2" value="#88C0D0" deck="1"/>
+			<define color="waveform_active1" value="#88C0D0"/>
+			<define color="waveform_passive1" value="#5C838D"/>
+			<define color="deckcolor" value="#BF616A" deck="2"/>
+			<define color="deckcolorbright" value="#C7747C" deck="2"/>
+			<define color="deckcolordark" value="#824248" deck="2"/>
+			<define color="deckcolor_invert" value="#C7747C" deck="2"/>
+			<define color="padbuttonselected" value="#221113" deck="2"/>
+			<define color="buttonon" value="#BF616A" deck="2"/>
+			<define color="buttonover" value="#2E1719" deck="2"/>
+			<define color="buttonselected" value="#221113" deck="2"/>
+			<define color="oled_buttonfill" value="#412124" deck="2"/>
+			<define color="oled_deck_selected" value="#412124" deck="2"/>
+			<define color="textdeck" value="#C7747C" deck="2"/>
+			<define color="faderinon" value="#BF616A" deck="2"/>
+			<define color="knobfillon" value="#BF616A" deck="2"/>
+			<define color="colorbass" value="#412124" deck="2"/>
+			<define color="colormed" value="#824248" deck="2"/>
+			<define color="colorhigh" value="#BF616A" deck="2"/>
+			<define color="scratch1" value="#BF616A" deck="2"/>
+			<define color="scratch2" value="#BF616A" deck="2"/>
+			<define color="waveform_active2" value="#BF616A"/>
+			<define color="waveform_passive2" value="#824248"/>
+			<define color="deckcolor" value="#A3BE8C" deck="3"/>
+			<define color="deckcolorbright" value="#AEC69A" deck="3"/>
+			<define color="deckcolordark" value="#6F815F" deck="3"/>
+			<define color="deckcolor_invert" value="#AEC69A" deck="3"/>
+			<define color="padbuttonselected" value="#1D2219" deck="3"/>
+			<define color="buttonon" value="#A3BE8C" deck="3"/>
+			<define color="buttonover" value="#272E22" deck="3"/>
+			<define color="buttonselected" value="#1D2219" deck="3"/>
+			<define color="oled_buttonfill" value="#374130" deck="3"/>
+			<define color="oled_deck_selected" value="#374130" deck="3"/>
+			<define color="textdeck" value="#AEC69A" deck="3"/>
+			<define color="faderinon" value="#A3BE8C" deck="3"/>
+			<define color="knobfillon" value="#A3BE8C" deck="3"/>
+			<define color="colorbass" value="#374130" deck="3"/>
+			<define color="colormed" value="#6F815F" deck="3"/>
+			<define color="colorhigh" value="#A3BE8C" deck="3"/>
+			<define color="scratch1" value="#A3BE8C" deck="3"/>
+			<define color="scratch2" value="#A3BE8C" deck="3"/>
+			<define color="waveform_active3" value="#A3BE8C"/>
+			<define color="waveform_passive3" value="#6F815F"/>
+			<define color="deckcolor" value="#EBCB8B" deck="4"/>
+			<define color="deckcolorbright" value="#EDD199" deck="4"/>
+			<define color="deckcolordark" value="#A08A5F" deck="4"/>
+			<define color="deckcolor_invert" value="#EDD199" deck="4"/>
+			<define color="padbuttonselected" value="#2A2519" deck="4"/>
+			<define color="buttonon" value="#EBCB8B" deck="4"/>
+			<define color="buttonover" value="#383121" deck="4"/>
+			<define color="buttonselected" value="#2A2519" deck="4"/>
+			<define color="oled_buttonfill" value="#50452F" deck="4"/>
+			<define color="oled_deck_selected" value="#50452F" deck="4"/>
+			<define color="textdeck" value="#EDD199" deck="4"/>
+			<define color="faderinon" value="#EBCB8B" deck="4"/>
+			<define color="knobfillon" value="#EBCB8B" deck="4"/>
+			<define color="colorbass" value="#50452F" deck="4"/>
+			<define color="colormed" value="#A08A5F" deck="4"/>
+			<define color="colorhigh" value="#EBCB8B" deck="4"/>
+			<define color="scratch1" value="#EBCB8B" deck="4"/>
+			<define color="scratch2" value="#EBCB8B" deck="4"/>
+			<define color="waveform_active4" value="#EBCB8B"/>
+			<define color="waveform_passive4" value="#A08A5F"/>
+			<define color="deckcolor" value="#88C0D0" deck="left"/>
+			<define color="faderinon" value="#88C0D0" deck="left"/>
+			<define color="knobfillon" value="#88C0D0" deck="left"/>
+			<define color="faderinleft" value="#88C0D0"/>
+			<define color="deckcolor" value="#BF616A" deck="right"/>
+			<define color="faderinon" value="#BF616A" deck="right"/>
+			<define color="knobfillon" value="#BF616A" deck="right"/>
+			<define color="buttonon" value="#BF616A" deck="right"/>
+			<define color="oled_buttonfill" value="#412124" deck="right"/>
+			<define color="faderinright" value="#BF616A"/>
+			<define color="oled_plugin_over1" value="#212E32"/>
+			<define color="oled_plugin_selected1" value="#2E4147"/>
+			<define color="oled_plugin_down1" value="#26363A"/>
+			<define color="oled_plugin_slider1" value="#88C0D0"/>
+			<define color="oled_plugin_disabled1" value="#2E4147"/>
+			<define color="oled_plugin_over2" value="#2E1719"/>
+			<define color="oled_plugin_selected2" value="#412124"/>
+			<define color="oled_plugin_down2" value="#351B1E"/>
+			<define color="oled_plugin_slider2" value="#BF616A"/>
+			<define color="oled_plugin_disabled2" value="#412124"/>
+		</group>
+		<group name="oled-theme-solarized" condition="var_equal '@$oleddecktheme' 13">
+			<define color="deckcolor" value="#268BD2" deck="1"/>
+			<define color="deckcolorbright" value="#4099D7" deck="1"/>
+			<define color="deckcolordark" value="#1A5F8F" deck="1"/>
+			<define color="deckcolor_invert" value="#4099D7" deck="1"/>
+			<define color="padbuttonselected" value="#071926" deck="1"/>
+			<define color="buttonon" value="#268BD2" deck="1"/>
+			<define color="buttonover" value="#092132" deck="1"/>
+			<define color="buttonselected" value="#071926" deck="1"/>
+			<define color="oled_buttonfill" value="#0D2F47" deck="1"/>
+			<define color="oled_deck_selected" value="#0D2F47" deck="1"/>
+			<define color="textdeck" value="#4099D7" deck="1"/>
+			<define color="faderinon" value="#268BD2" deck="1"/>
+			<define color="knobfillon" value="#268BD2" deck="1"/>
+			<define color="colorbass" value="#0D2F47" deck="1"/>
+			<define color="colormed" value="#1A5F8F" deck="1"/>
+			<define color="colorhigh" value="#268BD2" deck="1"/>
+			<define color="scratch1" value="#268BD2" deck="1"/>
+			<define color="scratch2" value="#268BD2" deck="1"/>
+			<define color="waveform_active1" value="#268BD2"/>
+			<define color="waveform_passive1" value="#1A5F8F"/>
+			<define color="deckcolor" value="#DC322F" deck="2"/>
+			<define color="deckcolorbright" value="#E04B48" deck="2"/>
+			<define color="deckcolordark" value="#962220" deck="2"/>
+			<define color="deckcolor_invert" value="#E04B48" deck="2"/>
+			<define color="padbuttonselected" value="#280908" deck="2"/>
+			<define color="buttonon" value="#DC322F" deck="2"/>
+			<define color="buttonover" value="#350C0B" deck="2"/>
+			<define color="buttonselected" value="#280908" deck="2"/>
+			<define color="oled_buttonfill" value="#4B1110" deck="2"/>
+			<define color="oled_deck_selected" value="#4B1110" deck="2"/>
+			<define color="textdeck" value="#E04B48" deck="2"/>
+			<define color="faderinon" value="#DC322F" deck="2"/>
+			<define color="knobfillon" value="#DC322F" deck="2"/>
+			<define color="colorbass" value="#4B1110" deck="2"/>
+			<define color="colormed" value="#962220" deck="2"/>
+			<define color="colorhigh" value="#DC322F" deck="2"/>
+			<define color="scratch1" value="#DC322F" deck="2"/>
+			<define color="scratch2" value="#DC322F" deck="2"/>
+			<define color="waveform_active2" value="#DC322F"/>
+			<define color="waveform_passive2" value="#962220"/>
+			<define color="deckcolor" value="#2AA198" deck="3"/>
+			<define color="deckcolorbright" value="#44ACA4" deck="3"/>
+			<define color="deckcolordark" value="#1D6D67" deck="3"/>
+			<define color="deckcolor_invert" value="#44ACA4" deck="3"/>
+			<define color="padbuttonselected" value="#081D1B" deck="3"/>
+			<define color="buttonon" value="#2AA198" deck="3"/>
+			<define color="buttonover" value="#0A2724" deck="3"/>
+			<define color="buttonselected" value="#081D1B" deck="3"/>
+			<define color="oled_buttonfill" value="#0E3734" deck="3"/>
+			<define color="oled_deck_selected" value="#0E3734" deck="3"/>
+			<define color="textdeck" value="#44ACA4" deck="3"/>
+			<define color="faderinon" value="#2AA198" deck="3"/>
+			<define color="knobfillon" value="#2AA198" deck="3"/>
+			<define color="colorbass" value="#0E3734" deck="3"/>
+			<define color="colormed" value="#1D6D67" deck="3"/>
+			<define color="colorhigh" value="#2AA198" deck="3"/>
+			<define color="scratch1" value="#2AA198" deck="3"/>
+			<define color="scratch2" value="#2AA198" deck="3"/>
+			<define color="waveform_active3" value="#2AA198"/>
+			<define color="waveform_passive3" value="#1D6D67"/>
+			<define color="deckcolor" value="#B58900" deck="4"/>
+			<define color="deckcolorbright" value="#BE971F" deck="4"/>
+			<define color="deckcolordark" value="#7B5D00" deck="4"/>
+			<define color="deckcolor_invert" value="#BE971F" deck="4"/>
+			<define color="padbuttonselected" value="#211900" deck="4"/>
+			<define color="buttonon" value="#B58900" deck="4"/>
+			<define color="buttonover" value="#2B2100" deck="4"/>
+			<define color="buttonselected" value="#211900" deck="4"/>
+			<define color="oled_buttonfill" value="#3E2F00" deck="4"/>
+			<define color="oled_deck_selected" value="#3E2F00" deck="4"/>
+			<define color="textdeck" value="#BE971F" deck="4"/>
+			<define color="faderinon" value="#B58900" deck="4"/>
+			<define color="knobfillon" value="#B58900" deck="4"/>
+			<define color="colorbass" value="#3E2F00" deck="4"/>
+			<define color="colormed" value="#7B5D00" deck="4"/>
+			<define color="colorhigh" value="#B58900" deck="4"/>
+			<define color="scratch1" value="#B58900" deck="4"/>
+			<define color="scratch2" value="#B58900" deck="4"/>
+			<define color="waveform_active4" value="#B58900"/>
+			<define color="waveform_passive4" value="#7B5D00"/>
+			<define color="deckcolor" value="#268BD2" deck="left"/>
+			<define color="faderinon" value="#268BD2" deck="left"/>
+			<define color="knobfillon" value="#268BD2" deck="left"/>
+			<define color="faderinleft" value="#268BD2"/>
+			<define color="deckcolor" value="#DC322F" deck="right"/>
+			<define color="faderinon" value="#DC322F" deck="right"/>
+			<define color="knobfillon" value="#DC322F" deck="right"/>
+			<define color="buttonon" value="#DC322F" deck="right"/>
+			<define color="oled_buttonfill" value="#4B1110" deck="right"/>
+			<define color="faderinright" value="#DC322F"/>
+			<define color="oled_plugin_over1" value="#092132"/>
+			<define color="oled_plugin_selected1" value="#0D2F47"/>
+			<define color="oled_plugin_down1" value="#0B273B"/>
+			<define color="oled_plugin_slider1" value="#268BD2"/>
+			<define color="oled_plugin_disabled1" value="#0D2F47"/>
+			<define color="oled_plugin_over2" value="#350C0B"/>
+			<define color="oled_plugin_selected2" value="#4B1110"/>
+			<define color="oled_plugin_down2" value="#3E0E0D"/>
+			<define color="oled_plugin_slider2" value="#DC322F"/>
+			<define color="oled_plugin_disabled2" value="#4B1110"/>
 		</group>
 		<!-- END OLED DECK THEMES -->
 
@@ -2403,6 +2709,9 @@
 						<item text="Grove" localize="false" action="set '@$oleddecktheme' 8 & load_skin" check="var_equal '@$oleddecktheme' 8"/>
 						<item text="Orchid" localize="false" action="set '@$oleddecktheme' 9 & load_skin" check="var_equal '@$oleddecktheme' 9"/>
 						<item text="Ember" localize="false" action="set '@$oleddecktheme' 10 & load_skin" check="var_equal '@$oleddecktheme' 10"/>
+						<item text="Dracula" localize="false" action="set '@$oleddecktheme' 11 & load_skin" check="var_equal '@$oleddecktheme' 11"/>
+						<item text="Nord" localize="false" action="set '@$oleddecktheme' 12 & load_skin" check="var_equal '@$oleddecktheme' 12"/>
+						<item text="Solarized" localize="false" action="set '@$oleddecktheme' 13 & load_skin" check="var_equal '@$oleddecktheme' 13"/>
 					</submenu>
 					<submenu text="Waveform Display" localize="true">
 						<item text="Beats" localize="true" action="setting skinWaveformType 0" check="setting skinWaveformType 0"/>
@@ -2581,6 +2890,9 @@
 						<item text="Grove" localize="false" action="set '@$oleddecktheme' 8 & load_skin" check="var_equal '@$oleddecktheme' 8"/>
 						<item text="Orchid" localize="false" action="set '@$oleddecktheme' 9 & load_skin" check="var_equal '@$oleddecktheme' 9"/>
 						<item text="Ember" localize="false" action="set '@$oleddecktheme' 10 & load_skin" check="var_equal '@$oleddecktheme' 10"/>
+						<item text="Dracula" localize="false" action="set '@$oleddecktheme' 11 & load_skin" check="var_equal '@$oleddecktheme' 11"/>
+						<item text="Nord" localize="false" action="set '@$oleddecktheme' 12 & load_skin" check="var_equal '@$oleddecktheme' 12"/>
+						<item text="Solarized" localize="false" action="set '@$oleddecktheme' 13 & load_skin" check="var_equal '@$oleddecktheme' 13"/>
 					</submenu>
 					<submenu text="Waveform Display" localize="true">
 						<item text="Beats" localize="true" action="setting skinWaveformType 0" check="setting skinWaveformType 0"/>

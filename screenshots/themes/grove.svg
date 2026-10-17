@@ -10,58 +10,58 @@
 <g transform="translate(43,50)">
 <circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#5FAB72" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#57AA92" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
 <circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
-<rect x="79" y="13" width="6" height="57" fill="#41744E" transform="rotate(-60 82 82)"/>
-<circle cx="82" cy="82" r="6" fill="#5FAB72"/>
-<text x="82" y="61" fill="#72B583" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
+<rect x="79" y="13" width="6" height="57" fill="#3B7463" transform="rotate(-60 82 82)"/>
+<circle cx="82" cy="82" r="6" fill="#57AA92"/>
+<text x="82" y="61" fill="#6BB49F" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
 <text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
 <text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
 <text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
 <text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">A  ·  #5FAB72</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">A  ·  #57AA92</text>
 </g>
 <g transform="translate(260,50)">
 <circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#79CD8F" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#83C46A" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
 <circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
-<rect x="79" y="13" width="6" height="57" fill="#528B61" transform="rotate(-60 82 82)"/>
-<circle cx="82" cy="82" r="6" fill="#79CD8F"/>
-<text x="82" y="61" fill="#89D39C" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
+<rect x="79" y="13" width="6" height="57" fill="#598548" transform="rotate(-60 82 82)"/>
+<circle cx="82" cy="82" r="6" fill="#83C46A"/>
+<text x="82" y="61" fill="#92CB7C" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
 <text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
 <text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
 <text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
 <text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">B  ·  #79CD8F</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">B  ·  #83C46A</text>
 </g>
 <g transform="translate(477,50)">
 <circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#AAD56D" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#CBD879" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
 <circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
-<rect x="79" y="13" width="6" height="57" fill="#74914A" transform="rotate(-60 82 82)"/>
-<circle cx="82" cy="82" r="6" fill="#AAD56D"/>
-<text x="82" y="61" fill="#B4DA7F" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
+<rect x="79" y="13" width="6" height="57" fill="#8A9352" transform="rotate(-60 82 82)"/>
+<circle cx="82" cy="82" r="6" fill="#CBD879"/>
+<text x="82" y="61" fill="#D1DD89" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
 <text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
 <text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
 <text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
 <text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">C  ·  #AAD56D</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">C  ·  #CBD879</text>
 </g>
 <g transform="translate(694,50)">
 <circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#D0EAA2" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#D7F0BD" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
 <circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
-<rect x="79" y="13" width="6" height="57" fill="#8D9F6E" transform="rotate(-60 82 82)"/>
-<circle cx="82" cy="82" r="6" fill="#D0EAA2"/>
-<text x="82" y="61" fill="#D6EDAD" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
+<rect x="79" y="13" width="6" height="57" fill="#92A381" transform="rotate(-60 82 82)"/>
+<circle cx="82" cy="82" r="6" fill="#D7F0BD"/>
+<text x="82" y="61" fill="#DCF2C5" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
 <text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
 <text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
 <text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
 <text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">D  ·  #D0EAA2</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">D  ·  #D7F0BD</text>
 </g>
 </g>
 </svg>

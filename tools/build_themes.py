@@ -8,6 +8,22 @@ ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / 'skin/Pro.xml'
 BEGIN = '\t\t<!-- BEGIN OLED DECK THEMES -->'
 END = '\t\t<!-- END OLED DECK THEMES -->'
+ATOMIX_DEFAULT = ('#156C89', '#AC2F37', '#0D7264', '#A54D30')
+
+
+def validate_themes(themes):
+    """Default is Atomix's palette and must never be customised."""
+    if not themes or themes[0] != {
+        'id': 0, 'name': 'Default', 'slug': 'default', 'colors': list(ATOMIX_DEFAULT)
+    }:
+        raise ValueError('Default must retain the original Atomix palette unchanged.')
+    if [theme['id'] for theme in themes] != list(range(len(themes))):
+        raise ValueError('Theme IDs must be unique and sequential, starting at Default=0.')
+    for theme in themes:
+        if len(theme['colors']) != 4 or not all(
+            re.fullmatch(r'#[0-9A-Fa-f]{6}', value) for value in theme['colors']
+        ):
+            raise ValueError(f'Expected four hex colours for {theme["name"]}.')
 
 
 def mix(value, amount, target=0):
@@ -35,8 +51,7 @@ def definition(name, value, deck=None, indent='\t\t\t'):
 def build():
     text = PATH.read_bytes().decode().replace('\r\n', '\n')
     themes = json.loads((ROOT / 'themes.json').read_text())
-    assert [t['id'] for t in themes] == list(range(len(themes)))
-    assert all(len(t['colors']) == 4 for t in themes)
+    validate_themes(themes)
 
     # Remove the stock surface variants; an old saved scheme cannot leak through.
     for name in ('colorscheme-contrast', 'colorscheme-darkmode', 'colorscheme-lightmode'):

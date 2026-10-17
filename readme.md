@@ -17,7 +17,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Layout, status and Settings | Grouped on the right on macOS. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
-| Deck colours | Default retains the original colours; ten optional palettes recolour the decks and associated controls. |
+| Deck colours | Default retains the original colours; thirteen optional palettes recolour the decks and associated controls. |
 | Remaining controls | Original behaviour. |
 
 ## Install
@@ -29,6 +29,8 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 ## Deck colours
 
 All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D**, using the skin’s palette values.
+
+Accent palettes: [Dracula](https://draculatheme.com/contribute) · [Nord](https://www.nordtheme.com/docs/colors-and-palettes/) · [Solarized](https://ethanschoonover.com/solarized/).
 
 ![Default — decks A, B, C, D](screenshots/themes/default.png)
 
@@ -52,8 +54,8 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 
 ![Ember — decks A, B, C, D](screenshots/themes/ember.png)
 
-## Fullscreen notch layout
+![Dracula — decks A, B, C, D](screenshots/themes/dracula.png)
 
-A/C left of the notch, B/D right; no top beat bars.
+![Nord — decks A, B, C, D](screenshots/themes/nord.png)
 
-![Pro OLED fullscreen interface](screenshots/notch-fullscreen.jpg)
+![Solarized — decks A, B, C, D](screenshots/themes/solarized.png)

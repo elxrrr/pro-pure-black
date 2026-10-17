@@ -14,6 +14,7 @@ from html import escape
 from pathlib import Path
 import re
 import xml.etree.ElementTree as ET
+from build_themes import validate_themes
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -110,6 +111,7 @@ def save(path: Path, contents: str) -> None:
 
 def main() -> None:
     themes = json.loads((ROOT / "themes.json").read_text(encoding="utf-8"))
+    validate_themes(themes)
     seen = set()
     for theme in themes:
         if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", theme["slug"]):
@@ -130,6 +132,12 @@ def main() -> None:
     )
     save(ROOT / "screenshots" / "theme-preview.svg",
          document("Pro OLED — all deck palettes", ROW_HEIGHT * len(themes), sheet))
+    established = [theme for theme in themes if theme.get('source')]
+    if established:
+        rows = '\n'.join(theme_row(theme, index * ROW_HEIGHT, divider=index > 0)
+                         for index, theme in enumerate(established))
+        save(ROOT / 'screenshots' / 'established-themes.svg',
+             document('Pro OLED — Dracula, Nord and Solarized', ROW_HEIGHT * len(established), rows))
     print(f"Rendered and XML-validated {len(themes)} palette previews and one combined sheet.")
 
 
