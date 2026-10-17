@@ -258,7 +258,7 @@
 			<define color="browserback" value="#000000"/>
 			<define color="jogwheelbackground" value="#000000"/>
 			<define color="browserstripe" value="#000000"/>
-			<define color="browser_scrollbar" value="#000000"/>
+			<define color="browser_scrollbar" value="#606060"/>
 			<define color="browsergrid_bg" value="#000000"/>
 			<define color="browser_button" value="#000000"/>
 			<define color="browser_iconbuttonup" value="#000000"/>

@@ -9,6 +9,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Element | Change |
 | --- | --- |
 | Decks, mixer, waveforms and browser | Pure-black backgrounds (`#000000`). |
+| Browser and sidelist scroll indicators | Visible grey (`#606060`) across all palettes. |
 | Phrase-sync indicators and beat counters | Inactive phrase-sync markers `#303030`; inactive beat markers and rings `#484848`; counter text `#B8B8B8`. |
 | Top phrase counters | Circles only in macOS fullscreen: A/C left of the notch, B/D right. |
 | Top beat bars | Hidden in macOS fullscreen on notched displays; retained in windowed view. |
