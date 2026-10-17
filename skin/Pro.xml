@@ -2093,7 +2093,7 @@
 					</panel>
 			</group>
 		</group>
-		<group name="beat_matcher_notch" x="665" y="8" condition="is_mac" visibility="has_notch">
+		<group name="beat_matcher_notch" x="560" y="8" condition="is_mac" visibility="has_notch">
 			<group name="phrase_3" x="-35" y="-2" visibility="var_equal '@$phrasecircle' 1 && var_not_equal '@$4decks' 0">
 				<deck deck="3">
 					<visual source="get_beat_counter" type="circle">
@@ -2143,7 +2143,7 @@
 				</deck>
 			</group>
 
-			<group name="phrase_right" x="+40+33+33+33+40+240" y="-2" visibility="var_equal '@$phrasecircle' 1">
+			<group name="phrase_right" x="+40+33+33+33+40" y="-2" visibility="var_equal '@$phrasecircle' 1">
 				<deck deck="2">
 					<visual source="get_beat_counter" type="circle">
 						<pos x="+0" y="+0"/>
@@ -2167,7 +2167,7 @@
 					</button>
 				</deck>  	
 			</group>
-			<group name="phrase_4" x="+40+33+33+33+40+35+240" y="-2" visibility="var_equal '@$phrasecircle' 1 && var_not_equal '@$4decks' 0">
+			<group name="phrase_4" x="+40+33+33+33+40+35" y="-2" visibility="var_equal '@$phrasecircle' 1 && var_not_equal '@$4decks' 0">
 				<deck deck="4">
 					<visual source="get_beat_counter" type="circle">
 						<pos x="+0" y="+0"/>
