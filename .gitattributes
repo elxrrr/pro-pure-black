@@ -1,0 +1,4 @@
+*.md text eol=lf
+*.xml -text
+*.png binary
+*.jpg binary
