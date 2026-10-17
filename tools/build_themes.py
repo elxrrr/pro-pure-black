@@ -48,6 +48,44 @@ def definition(name, value, deck=None, indent='\t\t\t'):
     return f'{indent}<define color="{name}" value="{value}"{scope}/>'
 
 
+def theme_waveforms(text, themes):
+    """Give Shapes theme shades while leaving Default's native colours unset."""
+    # Recover the original elements before rebuilding, so this stays idempotent.
+    generated = re.compile(
+        r'^(?P<indent>[ \t]*)<!-- BEGIN OLED WAVEFORM -->\n'
+        r'[ \t]*<group condition="[^"]+">\n(?P<original>.*?)\n'
+        r'(?P=indent)</group>\n.*?'
+        r'(?P=indent)<!-- END OLED WAVEFORM -->', re.M | re.S)
+    text = generated.sub(
+        lambda match: '\n'.join(line[1:] for line in match['original'].split('\n')),
+        text)
+    native = ''.join(f"var_equal '@$oleddecktheme' {t['id']} ? false : "
+                     for t in themes[1:]) + 'true'
+    themed = ''.join(f"var_equal '@$oleddecktheme' {t['id']} ? true : "
+                     for t in themes[1:]) + 'false'
+    colours = (' colorVocal="oled_wavevocal" colorInstru="oled_waveinstru"'
+               ' colorBeat="oled_wavebeat"')
+
+    def variants(match):
+        indent, original = match['indent'], match[0]
+        custom = original.replace('>', colours + '>', 1)
+        def nested(element):
+            return '\n'.join('\t' + re.sub(r'^[ \t]+',
+                lambda prefix: prefix[0].replace(' ', ''), line.rstrip())
+                for line in element.split('\n'))
+        return (f'{indent}<!-- BEGIN OLED WAVEFORM -->\n'
+                f'{indent}<group condition="{native}">\n{nested(original)}\n'
+                f'{indent}</group>\n'
+                f'{indent}<group condition="{themed}">\n{nested(custom)}\n'
+                f'{indent}</group>\n{indent}<!-- END OLED WAVEFORM -->')
+
+    text, count = re.subn(
+        r'^(?P<indent>[ \t]*)<(?P<tag>scratchwave|songpos)\b[^>]*>.*?</(?P=tag)>',
+        variants, text, flags=re.M | re.S)
+    assert count == 16, f'Expected 12 scratch waves and 4 deck overviews, got {count}'
+    return text
+
+
 def build():
     text = PATH.read_bytes().decode().replace('\r\n', '\n')
     themes = json.loads((ROOT / 'themes.json').read_text())
@@ -117,6 +155,8 @@ def build():
                 'oled_deck_selected': mix(base, .66), 'textdeck': bright,
                 'faderinon': base, 'knobfillon': base, 'colorbass': mix(base, .66),
                 'colormed': dark, 'colorhigh': base, 'scratch1': base, 'scratch2': base,
+                'oled_wavevocal': dark, 'oled_waveinstru': base,
+                'oled_wavebeat': mix(base, .35, 255),
             }
             for name, value in roles.items():
                 lines.append(definition(name, value, deck))
@@ -149,6 +189,7 @@ def build():
     text, count = re.subn(r'<submenu text="(?:Color Scheme|Deck Colours)"[^>]*>.*?</submenu>', lambda _: menu, text, flags=re.S)
     assert count == 2
     assert '@$oledcolorscheme' not in text
+    text = theme_waveforms(text, themes)
     text = re.sub(r'\n[ \t]*\n(?:[ \t]*\n)+', '\n\n', text)
     text = re.sub(r'(^[ \t]*(?:over|selected|down)_deck[12]="oled_plugin_[^"]+")[ \t]+$', r'\1', text, flags=re.M)
     PATH.write_bytes(text.replace('\n', '\r\n').encode())

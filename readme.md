@@ -13,6 +13,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Top phrase counters | Circles only in macOS fullscreen: A/C left of the notch, B/D right. |
 | Top beat bars | Hidden in macOS fullscreen on notched displays; retained in windowed view. |
 | Waveform zoom slider | Hidden; scrollwheel zoom retained. |
+| Shape waveforms | Vocal, instrumental and beat layers follow the selected deck colour using darker and lighter shades. Default retains the original waveform colours. |
 | Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. |
 | Sandbox, Shoutout, Event Scheduler and account box | Hidden from the toolbar. |
 | Layout, status and Settings | Grouped on the right on macOS. |

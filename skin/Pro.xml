@@ -360,6 +360,9 @@
 			<define color="colorhigh" value="#E56A9C" deck="1"/>
 			<define color="scratch1" value="#E56A9C" deck="1"/>
 			<define color="scratch2" value="#E56A9C" deck="1"/>
+			<define color="oled_wavevocal" value="#9C486A" deck="1"/>
+			<define color="oled_waveinstru" value="#E56A9C" deck="1"/>
+			<define color="oled_wavebeat" value="#EE9EBF" deck="1"/>
 			<define color="waveform_active1" value="#E56A9C"/>
 			<define color="waveform_passive1" value="#9C486A"/>
 			<define color="deckcolor" value="#F5AD9D" deck="2"/>
@@ -380,6 +383,9 @@
 			<define color="colorhigh" value="#F5AD9D" deck="2"/>
 			<define color="scratch1" value="#F5AD9D" deck="2"/>
 			<define color="scratch2" value="#F5AD9D" deck="2"/>
+			<define color="oled_wavevocal" value="#A7766B" deck="2"/>
+			<define color="oled_waveinstru" value="#F5AD9D" deck="2"/>
+			<define color="oled_wavebeat" value="#F8CABF" deck="2"/>
 			<define color="waveform_active2" value="#F5AD9D"/>
 			<define color="waveform_passive2" value="#A7766B"/>
 			<define color="deckcolor" value="#CC98E5" deck="3"/>
@@ -400,6 +406,9 @@
 			<define color="colorhigh" value="#CC98E5" deck="3"/>
 			<define color="scratch1" value="#CC98E5" deck="3"/>
 			<define color="scratch2" value="#CC98E5" deck="3"/>
+			<define color="oled_wavevocal" value="#8B679C" deck="3"/>
+			<define color="oled_waveinstru" value="#CC98E5" deck="3"/>
+			<define color="oled_wavebeat" value="#DEBCEE" deck="3"/>
 			<define color="waveform_active3" value="#CC98E5"/>
 			<define color="waveform_passive3" value="#8B679C"/>
 			<define color="deckcolor" value="#F8D7E8" deck="4"/>
@@ -420,6 +429,9 @@
 			<define color="colorhigh" value="#F8D7E8" deck="4"/>
 			<define color="scratch1" value="#F8D7E8" deck="4"/>
 			<define color="scratch2" value="#F8D7E8" deck="4"/>
+			<define color="oled_wavevocal" value="#A9929E" deck="4"/>
+			<define color="oled_waveinstru" value="#F8D7E8" deck="4"/>
+			<define color="oled_wavebeat" value="#FAE5F0" deck="4"/>
 			<define color="waveform_active4" value="#F8D7E8"/>
 			<define color="waveform_passive4" value="#A9929E"/>
 			<define color="deckcolor" value="#E56A9C" deck="left"/>
@@ -462,6 +474,9 @@
 			<define color="colorhigh" value="#5C91D8" deck="1"/>
 			<define color="scratch1" value="#5C91D8" deck="1"/>
 			<define color="scratch2" value="#5C91D8" deck="1"/>
+			<define color="oled_wavevocal" value="#3F6393" deck="1"/>
+			<define color="oled_waveinstru" value="#5C91D8" deck="1"/>
+			<define color="oled_wavebeat" value="#95B8E6" deck="1"/>
 			<define color="waveform_active1" value="#5C91D8"/>
 			<define color="waveform_passive1" value="#3F6393"/>
 			<define color="deckcolor" value="#78D0E3" deck="2"/>
@@ -482,6 +497,9 @@
 			<define color="colorhigh" value="#78D0E3" deck="2"/>
 			<define color="scratch1" value="#78D0E3" deck="2"/>
 			<define color="scratch2" value="#78D0E3" deck="2"/>
+			<define color="oled_wavevocal" value="#528D9A" deck="2"/>
+			<define color="oled_waveinstru" value="#78D0E3" deck="2"/>
+			<define color="oled_wavebeat" value="#A7E0ED" deck="2"/>
 			<define color="waveform_active2" value="#78D0E3"/>
 			<define color="waveform_passive2" value="#528D9A"/>
 			<define color="deckcolor" value="#B09CE8" deck="3"/>
@@ -502,6 +520,9 @@
 			<define color="colorhigh" value="#B09CE8" deck="3"/>
 			<define color="scratch1" value="#B09CE8" deck="3"/>
 			<define color="scratch2" value="#B09CE8" deck="3"/>
+			<define color="oled_wavevocal" value="#786A9E" deck="3"/>
+			<define color="oled_waveinstru" value="#B09CE8" deck="3"/>
+			<define color="oled_wavebeat" value="#CCBFF0" deck="3"/>
 			<define color="waveform_active3" value="#B09CE8"/>
 			<define color="waveform_passive3" value="#786A9E"/>
 			<define color="deckcolor" value="#D0E7FC" deck="4"/>
@@ -522,6 +543,9 @@
 			<define color="colorhigh" value="#D0E7FC" deck="4"/>
 			<define color="scratch1" value="#D0E7FC" deck="4"/>
 			<define color="scratch2" value="#D0E7FC" deck="4"/>
+			<define color="oled_wavevocal" value="#8D9DAB" deck="4"/>
+			<define color="oled_waveinstru" value="#D0E7FC" deck="4"/>
+			<define color="oled_wavebeat" value="#E0EFFD" deck="4"/>
 			<define color="waveform_active4" value="#D0E7FC"/>
 			<define color="waveform_passive4" value="#8D9DAB"/>
 			<define color="deckcolor" value="#5C91D8" deck="left"/>
@@ -564,6 +588,9 @@
 			<define color="colorhigh" value="#9A71E2" deck="1"/>
 			<define color="scratch1" value="#9A71E2" deck="1"/>
 			<define color="scratch2" value="#9A71E2" deck="1"/>
+			<define color="oled_wavevocal" value="#694D9A" deck="1"/>
+			<define color="oled_waveinstru" value="#9A71E2" deck="1"/>
+			<define color="oled_wavebeat" value="#BDA3EC" deck="1"/>
 			<define color="waveform_active1" value="#9A71E2"/>
 			<define color="waveform_passive1" value="#694D9A"/>
 			<define color="deckcolor" value="#D574B7" deck="2"/>
@@ -584,6 +611,9 @@
 			<define color="colorhigh" value="#D574B7" deck="2"/>
 			<define color="scratch1" value="#D574B7" deck="2"/>
 			<define color="scratch2" value="#D574B7" deck="2"/>
+			<define color="oled_wavevocal" value="#914F7C" deck="2"/>
+			<define color="oled_waveinstru" value="#D574B7" deck="2"/>
+			<define color="oled_wavebeat" value="#E4A5D0" deck="2"/>
 			<define color="waveform_active2" value="#D574B7"/>
 			<define color="waveform_passive2" value="#914F7C"/>
 			<define color="deckcolor" value="#C1A3F4" deck="3"/>
@@ -604,6 +634,9 @@
 			<define color="colorhigh" value="#C1A3F4" deck="3"/>
 			<define color="scratch1" value="#C1A3F4" deck="3"/>
 			<define color="scratch2" value="#C1A3F4" deck="3"/>
+			<define color="oled_wavevocal" value="#836FA6" deck="3"/>
+			<define color="oled_waveinstru" value="#C1A3F4" deck="3"/>
+			<define color="oled_wavebeat" value="#D7C3F8" deck="3"/>
 			<define color="waveform_active3" value="#C1A3F4"/>
 			<define color="waveform_passive3" value="#836FA6"/>
 			<define color="deckcolor" value="#F1C3E9" deck="4"/>
@@ -624,6 +657,9 @@
 			<define color="colorhigh" value="#F1C3E9" deck="4"/>
 			<define color="scratch1" value="#F1C3E9" deck="4"/>
 			<define color="scratch2" value="#F1C3E9" deck="4"/>
+			<define color="oled_wavevocal" value="#A4859E" deck="4"/>
+			<define color="oled_waveinstru" value="#F1C3E9" deck="4"/>
+			<define color="oled_wavebeat" value="#F6D8F1" deck="4"/>
 			<define color="waveform_active4" value="#F1C3E9"/>
 			<define color="waveform_passive4" value="#A4859E"/>
 			<define color="deckcolor" value="#9A71E2" deck="left"/>
@@ -666,6 +702,9 @@
 			<define color="colorhigh" value="#A776C2" deck="1"/>
 			<define color="scratch1" value="#A776C2" deck="1"/>
 			<define color="scratch2" value="#A776C2" deck="1"/>
+			<define color="oled_wavevocal" value="#725084" deck="1"/>
+			<define color="oled_waveinstru" value="#A776C2" deck="1"/>
+			<define color="oled_wavebeat" value="#C6A6D7" deck="1"/>
 			<define color="waveform_active1" value="#A776C2"/>
 			<define color="waveform_passive1" value="#725084"/>
 			<define color="deckcolor" value="#F078A4" deck="2"/>
@@ -686,6 +725,9 @@
 			<define color="colorhigh" value="#F078A4" deck="2"/>
 			<define color="scratch1" value="#F078A4" deck="2"/>
 			<define color="scratch2" value="#F078A4" deck="2"/>
+			<define color="oled_wavevocal" value="#A35270" deck="2"/>
+			<define color="oled_waveinstru" value="#F078A4" deck="2"/>
+			<define color="oled_wavebeat" value="#F5A7C4" deck="2"/>
 			<define color="waveform_active2" value="#F078A4"/>
 			<define color="waveform_passive2" value="#A35270"/>
 			<define color="deckcolor" value="#F3AF63" deck="3"/>
@@ -706,6 +748,9 @@
 			<define color="colorhigh" value="#F3AF63" deck="3"/>
 			<define color="scratch1" value="#F3AF63" deck="3"/>
 			<define color="scratch2" value="#F3AF63" deck="3"/>
+			<define color="oled_wavevocal" value="#A57743" deck="3"/>
+			<define color="oled_waveinstru" value="#F3AF63" deck="3"/>
+			<define color="oled_wavebeat" value="#F7CB9A" deck="3"/>
 			<define color="waveform_active3" value="#F3AF63"/>
 			<define color="waveform_passive3" value="#A57743"/>
 			<define color="deckcolor" value="#7DACF0" deck="4"/>
@@ -726,6 +771,9 @@
 			<define color="colorhigh" value="#7DACF0" deck="4"/>
 			<define color="scratch1" value="#7DACF0" deck="4"/>
 			<define color="scratch2" value="#7DACF0" deck="4"/>
+			<define color="oled_wavevocal" value="#5575A3" deck="4"/>
+			<define color="oled_waveinstru" value="#7DACF0" deck="4"/>
+			<define color="oled_wavebeat" value="#AAC9F5" deck="4"/>
 			<define color="waveform_active4" value="#7DACF0"/>
 			<define color="waveform_passive4" value="#5575A3"/>
 			<define color="deckcolor" value="#A776C2" deck="left"/>
@@ -768,6 +816,9 @@
 			<define color="colorhigh" value="#E78477" deck="1"/>
 			<define color="scratch1" value="#E78477" deck="1"/>
 			<define color="scratch2" value="#E78477" deck="1"/>
+			<define color="oled_wavevocal" value="#9D5A51" deck="1"/>
+			<define color="oled_waveinstru" value="#E78477" deck="1"/>
+			<define color="oled_wavebeat" value="#EFAFA7" deck="1"/>
 			<define color="waveform_active1" value="#E78477"/>
 			<define color="waveform_passive1" value="#9D5A51"/>
 			<define color="deckcolor" value="#F5BE91" deck="2"/>
@@ -788,6 +839,9 @@
 			<define color="colorhigh" value="#F5BE91" deck="2"/>
 			<define color="scratch1" value="#F5BE91" deck="2"/>
 			<define color="scratch2" value="#F5BE91" deck="2"/>
+			<define color="oled_wavevocal" value="#A78163" deck="2"/>
+			<define color="oled_waveinstru" value="#F5BE91" deck="2"/>
+			<define color="oled_wavebeat" value="#F8D5B8" deck="2"/>
 			<define color="waveform_active2" value="#F5BE91"/>
 			<define color="waveform_passive2" value="#A78163"/>
 			<define color="deckcolor" value="#D69AC3" deck="3"/>
@@ -808,6 +862,9 @@
 			<define color="colorhigh" value="#D69AC3" deck="3"/>
 			<define color="scratch1" value="#D69AC3" deck="3"/>
 			<define color="scratch2" value="#D69AC3" deck="3"/>
+			<define color="oled_wavevocal" value="#926985" deck="3"/>
+			<define color="oled_waveinstru" value="#D69AC3" deck="3"/>
+			<define color="oled_wavebeat" value="#E4BDD8" deck="3"/>
 			<define color="waveform_active3" value="#D69AC3"/>
 			<define color="waveform_passive3" value="#926985"/>
 			<define color="deckcolor" value="#ABBFE9" deck="4"/>
@@ -828,6 +885,9 @@
 			<define color="colorhigh" value="#ABBFE9" deck="4"/>
 			<define color="scratch1" value="#ABBFE9" deck="4"/>
 			<define color="scratch2" value="#ABBFE9" deck="4"/>
+			<define color="oled_wavevocal" value="#74829E" deck="4"/>
+			<define color="oled_waveinstru" value="#ABBFE9" deck="4"/>
+			<define color="oled_wavebeat" value="#C8D5F1" deck="4"/>
 			<define color="waveform_active4" value="#ABBFE9"/>
 			<define color="waveform_passive4" value="#74829E"/>
 			<define color="deckcolor" value="#E78477" deck="left"/>
@@ -870,6 +930,9 @@
 			<define color="colorhigh" value="#80D6F2" deck="1"/>
 			<define color="scratch1" value="#80D6F2" deck="1"/>
 			<define color="scratch2" value="#80D6F2" deck="1"/>
+			<define color="oled_wavevocal" value="#5792A5" deck="1"/>
+			<define color="oled_waveinstru" value="#80D6F2" deck="1"/>
+			<define color="oled_wavebeat" value="#ACE4F7" deck="1"/>
 			<define color="waveform_active1" value="#80D6F2"/>
 			<define color="waveform_passive1" value="#5792A5"/>
 			<define color="deckcolor" value="#B8F2CF" deck="2"/>
@@ -890,6 +953,9 @@
 			<define color="colorhigh" value="#B8F2CF" deck="2"/>
 			<define color="scratch1" value="#B8F2CF" deck="2"/>
 			<define color="scratch2" value="#B8F2CF" deck="2"/>
+			<define color="oled_wavevocal" value="#7DA58D" deck="2"/>
+			<define color="oled_waveinstru" value="#B8F2CF" deck="2"/>
+			<define color="oled_wavebeat" value="#D1F7E0" deck="2"/>
 			<define color="waveform_active2" value="#B8F2CF"/>
 			<define color="waveform_passive2" value="#7DA58D"/>
 			<define color="deckcolor" value="#FFB5DC" deck="3"/>
@@ -910,6 +976,9 @@
 			<define color="colorhigh" value="#FFB5DC" deck="3"/>
 			<define color="scratch1" value="#FFB5DC" deck="3"/>
 			<define color="scratch2" value="#FFB5DC" deck="3"/>
+			<define color="oled_wavevocal" value="#AD7B96" deck="3"/>
+			<define color="oled_waveinstru" value="#FFB5DC" deck="3"/>
+			<define color="oled_wavebeat" value="#FFCFE8" deck="3"/>
 			<define color="waveform_active3" value="#FFB5DC"/>
 			<define color="waveform_passive3" value="#AD7B96"/>
 			<define color="deckcolor" value="#C5ABFA" deck="4"/>
@@ -930,6 +999,9 @@
 			<define color="colorhigh" value="#C5ABFA" deck="4"/>
 			<define color="scratch1" value="#C5ABFA" deck="4"/>
 			<define color="scratch2" value="#C5ABFA" deck="4"/>
+			<define color="oled_wavevocal" value="#8674AA" deck="4"/>
+			<define color="oled_waveinstru" value="#C5ABFA" deck="4"/>
+			<define color="oled_wavebeat" value="#D9C8FC" deck="4"/>
 			<define color="waveform_active4" value="#C5ABFA"/>
 			<define color="waveform_passive4" value="#8674AA"/>
 			<define color="deckcolor" value="#80D6F2" deck="left"/>
@@ -972,6 +1044,9 @@
 			<define color="colorhigh" value="#CC87AE" deck="1"/>
 			<define color="scratch1" value="#CC87AE" deck="1"/>
 			<define color="scratch2" value="#CC87AE" deck="1"/>
+			<define color="oled_wavevocal" value="#8B5C76" deck="1"/>
+			<define color="oled_waveinstru" value="#CC87AE" deck="1"/>
+			<define color="oled_wavebeat" value="#DEB1CA" deck="1"/>
 			<define color="waveform_active1" value="#CC87AE"/>
 			<define color="waveform_passive1" value="#8B5C76"/>
 			<define color="deckcolor" value="#9D90D1" deck="2"/>
@@ -992,6 +1067,9 @@
 			<define color="colorhigh" value="#9D90D1" deck="2"/>
 			<define color="scratch1" value="#9D90D1" deck="2"/>
 			<define color="scratch2" value="#9D90D1" deck="2"/>
+			<define color="oled_wavevocal" value="#6B628E" deck="2"/>
+			<define color="oled_waveinstru" value="#9D90D1" deck="2"/>
+			<define color="oled_wavebeat" value="#BFB7E1" deck="2"/>
 			<define color="waveform_active2" value="#9D90D1"/>
 			<define color="waveform_passive2" value="#6B628E"/>
 			<define color="deckcolor" value="#EF9571" deck="3"/>
@@ -1012,6 +1090,9 @@
 			<define color="colorhigh" value="#EF9571" deck="3"/>
 			<define color="scratch1" value="#EF9571" deck="3"/>
 			<define color="scratch2" value="#EF9571" deck="3"/>
+			<define color="oled_wavevocal" value="#A3654D" deck="3"/>
+			<define color="oled_waveinstru" value="#EF9571" deck="3"/>
+			<define color="oled_wavebeat" value="#F5BAA3" deck="3"/>
 			<define color="waveform_active3" value="#EF9571"/>
 			<define color="waveform_passive3" value="#A3654D"/>
 			<define color="deckcolor" value="#F4C8A2" deck="4"/>
@@ -1032,6 +1113,9 @@
 			<define color="colorhigh" value="#F4C8A2" deck="4"/>
 			<define color="scratch1" value="#F4C8A2" deck="4"/>
 			<define color="scratch2" value="#F4C8A2" deck="4"/>
+			<define color="oled_wavevocal" value="#A6886E" deck="4"/>
+			<define color="oled_waveinstru" value="#F4C8A2" deck="4"/>
+			<define color="oled_wavebeat" value="#F8DBC3" deck="4"/>
 			<define color="waveform_active4" value="#F4C8A2"/>
 			<define color="waveform_passive4" value="#A6886E"/>
 			<define color="deckcolor" value="#CC87AE" deck="left"/>
@@ -1074,6 +1158,9 @@
 			<define color="colorhigh" value="#57AA92" deck="1"/>
 			<define color="scratch1" value="#57AA92" deck="1"/>
 			<define color="scratch2" value="#57AA92" deck="1"/>
+			<define color="oled_wavevocal" value="#3B7463" deck="1"/>
+			<define color="oled_waveinstru" value="#57AA92" deck="1"/>
+			<define color="oled_wavebeat" value="#92C8B8" deck="1"/>
 			<define color="waveform_active1" value="#57AA92"/>
 			<define color="waveform_passive1" value="#3B7463"/>
 			<define color="deckcolor" value="#83C46A" deck="2"/>
@@ -1094,6 +1181,9 @@
 			<define color="colorhigh" value="#83C46A" deck="2"/>
 			<define color="scratch1" value="#83C46A" deck="2"/>
 			<define color="scratch2" value="#83C46A" deck="2"/>
+			<define color="oled_wavevocal" value="#598548" deck="2"/>
+			<define color="oled_waveinstru" value="#83C46A" deck="2"/>
+			<define color="oled_wavebeat" value="#AED99E" deck="2"/>
 			<define color="waveform_active2" value="#83C46A"/>
 			<define color="waveform_passive2" value="#598548"/>
 			<define color="deckcolor" value="#CBD879" deck="3"/>
@@ -1114,6 +1204,9 @@
 			<define color="colorhigh" value="#CBD879" deck="3"/>
 			<define color="scratch1" value="#CBD879" deck="3"/>
 			<define color="scratch2" value="#CBD879" deck="3"/>
+			<define color="oled_wavevocal" value="#8A9352" deck="3"/>
+			<define color="oled_waveinstru" value="#CBD879" deck="3"/>
+			<define color="oled_wavebeat" value="#DDE6A8" deck="3"/>
 			<define color="waveform_active3" value="#CBD879"/>
 			<define color="waveform_passive3" value="#8A9352"/>
 			<define color="deckcolor" value="#D7F0BD" deck="4"/>
@@ -1134,6 +1227,9 @@
 			<define color="colorhigh" value="#D7F0BD" deck="4"/>
 			<define color="scratch1" value="#D7F0BD" deck="4"/>
 			<define color="scratch2" value="#D7F0BD" deck="4"/>
+			<define color="oled_wavevocal" value="#92A381" deck="4"/>
+			<define color="oled_waveinstru" value="#D7F0BD" deck="4"/>
+			<define color="oled_wavebeat" value="#E5F5D4" deck="4"/>
 			<define color="waveform_active4" value="#D7F0BD"/>
 			<define color="waveform_passive4" value="#92A381"/>
 			<define color="deckcolor" value="#57AA92" deck="left"/>
@@ -1176,6 +1272,9 @@
 			<define color="colorhigh" value="#BD72A8" deck="1"/>
 			<define color="scratch1" value="#BD72A8" deck="1"/>
 			<define color="scratch2" value="#BD72A8" deck="1"/>
+			<define color="oled_wavevocal" value="#814E72" deck="1"/>
+			<define color="oled_waveinstru" value="#BD72A8" deck="1"/>
+			<define color="oled_wavebeat" value="#D4A3C6" deck="1"/>
 			<define color="waveform_active1" value="#BD72A8"/>
 			<define color="waveform_passive1" value="#814E72"/>
 			<define color="deckcolor" value="#917CD1" deck="2"/>
@@ -1196,6 +1295,9 @@
 			<define color="colorhigh" value="#917CD1" deck="2"/>
 			<define color="scratch1" value="#917CD1" deck="2"/>
 			<define color="scratch2" value="#917CD1" deck="2"/>
+			<define color="oled_wavevocal" value="#63548E" deck="2"/>
+			<define color="oled_waveinstru" value="#917CD1" deck="2"/>
+			<define color="oled_wavebeat" value="#B8AAE1" deck="2"/>
 			<define color="waveform_active2" value="#917CD1"/>
 			<define color="waveform_passive2" value="#63548E"/>
 			<define color="deckcolor" value="#D0A1E9" deck="3"/>
@@ -1216,6 +1318,9 @@
 			<define color="colorhigh" value="#D0A1E9" deck="3"/>
 			<define color="scratch1" value="#D0A1E9" deck="3"/>
 			<define color="scratch2" value="#D0A1E9" deck="3"/>
+			<define color="oled_wavevocal" value="#8D6D9E" deck="3"/>
+			<define color="oled_waveinstru" value="#D0A1E9" deck="3"/>
+			<define color="oled_wavebeat" value="#E0C2F1" deck="3"/>
 			<define color="waveform_active3" value="#D0A1E9"/>
 			<define color="waveform_passive3" value="#8D6D9E"/>
 			<define color="deckcolor" value="#EFCFED" deck="4"/>
@@ -1236,6 +1341,9 @@
 			<define color="colorhigh" value="#EFCFED" deck="4"/>
 			<define color="scratch1" value="#EFCFED" deck="4"/>
 			<define color="scratch2" value="#EFCFED" deck="4"/>
+			<define color="oled_wavevocal" value="#A38DA1" deck="4"/>
+			<define color="oled_waveinstru" value="#EFCFED" deck="4"/>
+			<define color="oled_wavebeat" value="#F5E0F3" deck="4"/>
 			<define color="waveform_active4" value="#EFCFED"/>
 			<define color="waveform_passive4" value="#A38DA1"/>
 			<define color="deckcolor" value="#BD72A8" deck="left"/>
@@ -1278,6 +1386,9 @@
 			<define color="colorhigh" value="#D66E59" deck="1"/>
 			<define color="scratch1" value="#D66E59" deck="1"/>
 			<define color="scratch2" value="#D66E59" deck="1"/>
+			<define color="oled_wavevocal" value="#924B3D" deck="1"/>
+			<define color="oled_waveinstru" value="#D66E59" deck="1"/>
+			<define color="oled_wavebeat" value="#E4A193" deck="1"/>
 			<define color="waveform_active1" value="#D66E59"/>
 			<define color="waveform_passive1" value="#924B3D"/>
 			<define color="deckcolor" value="#ED9760" deck="2"/>
@@ -1298,6 +1409,9 @@
 			<define color="colorhigh" value="#ED9760" deck="2"/>
 			<define color="scratch1" value="#ED9760" deck="2"/>
 			<define color="scratch2" value="#ED9760" deck="2"/>
+			<define color="oled_wavevocal" value="#A16741" deck="2"/>
+			<define color="oled_waveinstru" value="#ED9760" deck="2"/>
+			<define color="oled_wavebeat" value="#F3BB98" deck="2"/>
 			<define color="waveform_active2" value="#ED9760"/>
 			<define color="waveform_passive2" value="#A16741"/>
 			<define color="deckcolor" value="#F5BE7C" deck="3"/>
@@ -1318,6 +1432,9 @@
 			<define color="colorhigh" value="#F5BE7C" deck="3"/>
 			<define color="scratch1" value="#F5BE7C" deck="3"/>
 			<define color="scratch2" value="#F5BE7C" deck="3"/>
+			<define color="oled_wavevocal" value="#A78154" deck="3"/>
+			<define color="oled_waveinstru" value="#F5BE7C" deck="3"/>
+			<define color="oled_wavebeat" value="#F8D5AA" deck="3"/>
 			<define color="waveform_active3" value="#F5BE7C"/>
 			<define color="waveform_passive3" value="#A78154"/>
 			<define color="deckcolor" value="#F9E0BA" deck="4"/>
@@ -1338,6 +1455,9 @@
 			<define color="colorhigh" value="#F9E0BA" deck="4"/>
 			<define color="scratch1" value="#F9E0BA" deck="4"/>
 			<define color="scratch2" value="#F9E0BA" deck="4"/>
+			<define color="oled_wavevocal" value="#A9987E" deck="4"/>
+			<define color="oled_waveinstru" value="#F9E0BA" deck="4"/>
+			<define color="oled_wavebeat" value="#FBEBD2" deck="4"/>
 			<define color="waveform_active4" value="#F9E0BA"/>
 			<define color="waveform_passive4" value="#A9987E"/>
 			<define color="deckcolor" value="#D66E59" deck="left"/>
@@ -3254,9 +3374,18 @@
 						</group>
 					
 				</group>
-				<songpos class="songpos">
-					<pos x="+24+2+1" y="+90-34+1"/>
-				</songpos>
+				<!-- BEGIN OLED WAVEFORM -->
+				<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+					<songpos class="songpos">
+						<pos x="+24+2+1" y="+90-34+1"/>
+					</songpos>
+				</group>
+				<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+					<songpos class="songpos" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+						<pos x="+24+2+1" y="+90-34+1"/>
+					</songpos>
+				</group>
+				<!-- END OLED WAVEFORM -->
 			</group>
 
 			<group name="area_fx" x="+10" y="+10+90+10">
@@ -4184,9 +4313,18 @@
 							</button>
 						</group>
 				</group>
-				<songpos class="songpos">
-					<pos x="+1+85+85+2" y="+90-34+1"/>
-				</songpos>
+				<!-- BEGIN OLED WAVEFORM -->
+				<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+					<songpos class="songpos">
+						<pos x="+1+85+85+2" y="+90-34+1"/>
+					</songpos>
+				</group>
+				<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+					<songpos class="songpos" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+						<pos x="+1+85+85+2" y="+90-34+1"/>
+					</songpos>
+				</group>
+				<!-- END OLED WAVEFORM -->
 			</group>
 
 			<group name="area_custom" x="+306-24+10" y="+10+90+10">
@@ -5054,9 +5192,18 @@
 								</button>
 							</group>
 					</group>
-					<songpos class="songpos" width="753-170">
-						<pos x="+1" y="+70-34+1"/>
-					</songpos>
+					<!-- BEGIN OLED WAVEFORM -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<songpos class="songpos" width="753-170">
+							<pos x="+1" y="+70-34+1"/>
+						</songpos>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<songpos class="songpos" width="753-170" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+							<pos x="+1" y="+70-34+1"/>
+						</songpos>
+					</group>
+					<!-- END OLED WAVEFORM -->
 				</group><!-- end deck info -->
 				<group name="toggle_area" x="+0" y="+5+70+5">
 					<button class="mini_tab" y="+2" height="40-5" orientation="horizontal" action="skin_panelgroup 'minideck_group_[PANELNAME]' +1" text="&gt;"/>
@@ -5306,9 +5453,18 @@
 								</button>
 							</group>
 					</group>
-					<songpos class="songpos" width="753-170">
-						<pos x="+170+1" y="+70-34+1"/>
-					</songpos>
+					<!-- BEGIN OLED WAVEFORM -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<songpos class="songpos" width="753-170">
+							<pos x="+170+1" y="+70-34+1"/>
+						</songpos>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<songpos class="songpos" width="753-170" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+							<pos x="+170+1" y="+70-34+1"/>
+						</songpos>
+					</group>
+					<!-- END OLED WAVEFORM -->
 				</group><!-- end deck info -->
 				<group name="toggle_area" x="+60+268" y="+5+70+5">
 					<button class="mini_tab" x="+160+275" y="+0" height="40-5" orientation="horizontal" action="skin_panelgroup 'minideck_group_[PANELNAME]' +1" text="&lt;"/>
@@ -5572,21 +5728,42 @@
 			</rhythmzone>
 		</panel>
 		<panel name="fullwave4" visibility="not setting skinWaveformType 0 && var_equal '@$4waveforms' 1 && var_not_equal '@$4decks' 0">
-				<scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2">
-					<pos x="0" y="+45+12"/>
-					<size width="1920" height="43-24"/>
-					<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="down"/>
-					<gridlines width="1" color="darkgray" transparency="0.5"/>
-					<cue y="-12" height="15">
-						<mask x="307" y="0" width="15" height="15"/>
-						<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-					</cue>
-					<overlay>
-						<pos x="960" y="-12"/>
-						<size width="1" height="43" />
-						<background color="needle" shape="square" />
-				 	</overlay>
-				</scratchwave>
+				<!-- BEGIN OLED WAVEFORM -->
+				<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+					<scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2">
+						<pos x="0" y="+45+12"/>
+						<size width="1920" height="43-24"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="down"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="15">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12"/>
+							<size width="1" height="43" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+					<scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+						<pos x="0" y="+45+12"/>
+						<size width="1920" height="43-24"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="down"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="15">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12"/>
+							<size width="1" height="43" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<!-- END OLED WAVEFORM -->
 				<dropzone deck="1">
 					<pos x="+0" y="+45"/>
 					<size width="1920" height="43"/>
@@ -5594,21 +5771,42 @@
 				</dropzone>
 
 				<group y="+43">
-					<scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2">
-						<pos x="0" y="+45+12"/>
-						<size width="1920" height="43-24"/>
-						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="both"/>
-						<gridlines width="1" color="darkgray" transparency="0.5"/>
-						<cue y="-12" height="15">
-							<mask x="307" y="0" width="15" height="15"/>
-							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-						</cue>
-						<overlay>
-							<pos x="960" y="-12"/>
-							<size width="1" height="43" />
-							<background color="needle" shape="square" />
-					 	</overlay>
-					</scratchwave>
+					<!-- BEGIN OLED WAVEFORM -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2">
+							<pos x="0" y="+45+12"/>
+							<size width="1920" height="43-24"/>
+							<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="both"/>
+							<gridlines width="1" color="darkgray" transparency="0.5"/>
+							<cue y="-12" height="15">
+								<mask x="307" y="0" width="15" height="15"/>
+								<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+							</cue>
+							<overlay>
+								<pos x="960" y="-12"/>
+								<size width="1" height="43" />
+								<background color="needle" shape="square" />
+							</overlay>
+						</scratchwave>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+							<pos x="0" y="+45+12"/>
+							<size width="1920" height="43-24"/>
+							<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="both"/>
+							<gridlines width="1" color="darkgray" transparency="0.5"/>
+							<cue y="-12" height="15">
+								<mask x="307" y="0" width="15" height="15"/>
+								<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+							</cue>
+							<overlay>
+								<pos x="960" y="-12"/>
+								<size width="1" height="43" />
+								<background color="needle" shape="square" />
+							</overlay>
+						</scratchwave>
+					</group>
+					<!-- END OLED WAVEFORM -->
 					<dropzone deck="2">
 						<pos x="+0" y="+45"/>
 						<size width="1920" height="43"/>
@@ -5616,21 +5814,42 @@
 					</dropzone>
 				</group>
 				<group y="+43+43">
-					<scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2">
-						<pos x="0" y="+45+12"/>
-						<size width="1920" height="43-24"/>
-						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="both"/>
-						<gridlines width="1" color="darkgray" transparency="0.5"/>
-						<cue y="-12" height="15">
-							<mask x="307" y="0" width="15" height="15"/>
-							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-						</cue>
-						<overlay>
-							<pos x="960" y="-12"/>
-							<size width="1" height="43" />
-							<background color="needle" shape="square" />
-					 	</overlay>
-					</scratchwave>
+					<!-- BEGIN OLED WAVEFORM -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2">
+							<pos x="0" y="+45+12"/>
+							<size width="1920" height="43-24"/>
+							<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="both"/>
+							<gridlines width="1" color="darkgray" transparency="0.5"/>
+							<cue y="-12" height="15">
+								<mask x="307" y="0" width="15" height="15"/>
+								<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+							</cue>
+							<overlay>
+								<pos x="960" y="-12"/>
+								<size width="1" height="43" />
+								<background color="needle" shape="square" />
+							</overlay>
+						</scratchwave>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+							<pos x="0" y="+45+12"/>
+							<size width="1920" height="43-24"/>
+							<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="both"/>
+							<gridlines width="1" color="darkgray" transparency="0.5"/>
+							<cue y="-12" height="15">
+								<mask x="307" y="0" width="15" height="15"/>
+								<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+							</cue>
+							<overlay>
+								<pos x="960" y="-12"/>
+								<size width="1" height="43" />
+								<background color="needle" shape="square" />
+							</overlay>
+						</scratchwave>
+					</group>
+					<!-- END OLED WAVEFORM -->
 					<dropzone deck="3">
 						<pos x="+0" y="+45"/>
 						<size width="1920" height="43"/>
@@ -5638,21 +5857,42 @@
 					</dropzone>
 				</group>
 				<group y="+43+43+43">
-					<scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2">
-						<pos x="0" y="+45+12"/>
-						<size width="1920" height="43-24"/>
-						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="up"/>
-						<gridlines width="1" color="darkgray" transparency="0.5"/>
-						<cue y="-12" height="15">
-							<mask x="307" y="0" width="15" height="15"/>
-							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-						</cue>
-						<overlay>
-							<pos x="960" y="-12"/>
-							<size width="1" height="43" />
-							<background color="needle" shape="square" />
-						 </overlay>
-					</scratchwave>
+					<!-- BEGIN OLED WAVEFORM -->
+					<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+						<scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2">
+							<pos x="0" y="+45+12"/>
+							<size width="1920" height="43-24"/>
+							<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="up"/>
+							<gridlines width="1" color="darkgray" transparency="0.5"/>
+							<cue y="-12" height="15">
+								<mask x="307" y="0" width="15" height="15"/>
+								<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+							</cue>
+							<overlay>
+								<pos x="960" y="-12"/>
+								<size width="1" height="43" />
+								<background color="needle" shape="square" />
+							</overlay>
+						</scratchwave>
+					</group>
+					<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+						<scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+							<pos x="0" y="+45+12"/>
+							<size width="1920" height="43-24"/>
+							<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-12" shapemirrored="up"/>
+							<gridlines width="1" color="darkgray" transparency="0.5"/>
+							<cue y="-12" height="15">
+								<mask x="307" y="0" width="15" height="15"/>
+								<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+							</cue>
+							<overlay>
+								<pos x="960" y="-12"/>
+								<size width="1" height="43" />
+								<background color="needle" shape="square" />
+							</overlay>
+						</scratchwave>
+					</group>
+					<!-- END OLED WAVEFORM -->
 					<dropzone deck="4">
 						<pos x="+0" y="+45"/>
 						<size width="1920" height="43"/>
@@ -5663,21 +5903,42 @@
 		<panel name="fullwave2" visibility="not setting skinWaveformType 0 && var_equal '@$4decks' 0 ? true : var_equal '@$4waveforms' 0">
 
 			<group visibility="not deck 3 leftdeck">
-				<scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2">
-					<pos x="0" y="+45+12"/>
-					<size width="1920" height="84-24"/>
-					<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="down"/>
-					<gridlines width="1" color="darkgray" transparency="0.5"/>
-					<cue y="-12" height="84">
-						<mask x="307" y="0" width="15" height="15"/>
-						<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-					</cue>
-					<overlay>
-						<pos x="960" y="-12-2"/>
-						<size width="1" height="84+4" />
-						<background color="needle" shape="square" />
-					 </overlay>
-				</scratchwave>
+				<!-- BEGIN OLED WAVEFORM -->
+				<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+					<scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2">
+						<pos x="0" y="+45+12"/>
+						<size width="1920" height="84-24"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="down"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12-2"/>
+							<size width="1" height="84+4" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+					<scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+						<pos x="0" y="+45+12"/>
+						<size width="1920" height="84-24"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="down"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12-2"/>
+							<size width="1" height="84+4" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<!-- END OLED WAVEFORM -->
 				<dropzone deck="1">
 					<pos x="+0" y="+45"/>
 					<size width="1920" height="84"/>
@@ -5685,21 +5946,42 @@
 				</dropzone>
 			</group>
 			<group visibility="deck 3 leftdeck">
-				<scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2">
-					<pos x="0" y="+45+12"/>
-					<size width="1920" height="84-24"/>
-					<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="down"/>
-					<gridlines width="1" color="darkgray" transparency="0.5"/>
-					<cue y="-12" height="84">
-						<mask x="307" y="0" width="15" height="15"/>
-						<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-					</cue>
-					<overlay>
-						<pos x="960" y="-12-2"/>
-						<size width="1" height="84+4" />
-						<background color="needle" shape="square" />
-					 </overlay>
-				</scratchwave>
+				<!-- BEGIN OLED WAVEFORM -->
+				<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+					<scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2">
+						<pos x="0" y="+45+12"/>
+						<size width="1920" height="84-24"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="down"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12-2"/>
+							<size width="1" height="84+4" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+					<scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+						<pos x="0" y="+45+12"/>
+						<size width="1920" height="84-24"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="down"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12-2"/>
+							<size width="1" height="84+4" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<!-- END OLED WAVEFORM -->
 				<dropzone deck="3">
 					<pos x="+0" y="+45"/>
 					<size width="1920" height="84"/>
@@ -5707,21 +5989,42 @@
 				</dropzone>
 			</group>
 			<group visibility="not deck 4 rightdeck">
-				<scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2">
-					<pos x="0" y="+45+84+2+12"/>
-					<size width="1920" height="84-25"/>
-					<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="up"/>
-					<gridlines width="1" color="darkgray" transparency="0.5"/>
-					<cue y="-12" height="84">
-						<mask x="307" y="0" width="15" height="15"/>
-						<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-					</cue>
-					<overlay>
-						<pos x="960" y="-12"/>
-						<size width="1" height="84" />
-						<background color="needle" shape="square" />
-					 </overlay>	
-				</scratchwave>
+				<!-- BEGIN OLED WAVEFORM -->
+				<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+					<scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2">
+						<pos x="0" y="+45+84+2+12"/>
+						<size width="1920" height="84-25"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="up"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12"/>
+							<size width="1" height="84" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+					<scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+						<pos x="0" y="+45+84+2+12"/>
+						<size width="1920" height="84-25"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="up"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12"/>
+							<size width="1" height="84" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<!-- END OLED WAVEFORM -->
 				<dropzone deck="2">
 					<pos x="+0" y="+45+84"/>
 					<size width="1920" height="84"/>
@@ -5729,21 +6032,42 @@
 				</dropzone>
 			</group>
 			<group visibility="deck 4 rightdeck">
-				<scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2">
-					<pos x="0" y="+45+84+2+12"/>
-					<size width="1920" height="84-25"/>
-					<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="up"/>
-					<gridlines width="1" color="darkgray" transparency="0.5"/>
-					<cue y="-12" height="84">
-						<mask x="307" y="0" width="15" height="15"/>
-						<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
-					</cue>
-					<overlay>
-						<pos x="960" y="-12"/>
-						<size width="1" height="84" />
-						<background color="needle" shape="square" />
-					 </overlay>				
-				</scratchwave>
+				<!-- BEGIN OLED WAVEFORM -->
+				<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+					<scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2">
+						<pos x="0" y="+45+84+2+12"/>
+						<size width="1920" height="84-25"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="up"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12"/>
+							<size width="1" height="84" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+					<scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+						<pos x="0" y="+45+84+2+12"/>
+						<size width="1920" height="84-25"/>
+						<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-13" shapemirrored="up"/>
+						<gridlines width="1" color="darkgray" transparency="0.5"/>
+						<cue y="-12" height="84">
+							<mask x="307" y="0" width="15" height="15"/>
+							<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+						</cue>
+						<overlay>
+							<pos x="960" y="-12"/>
+							<size width="1" height="84" />
+							<background color="needle" shape="square" />
+						</overlay>
+					</scratchwave>
+				</group>
+				<!-- END OLED WAVEFORM -->
 				<dropzone deck="4">
 					<pos x="+0" y="+45+84"/>
 					<size width="1920" height="84"/>
@@ -6615,22 +6939,44 @@
 						<off shape="square" color="dark" border_size="1" border="bordercolor"/>
 					</visual>
 					<panel visibility="not deck 3 leftdeck">
-						<scratchwave deck="1" orientation="vertical" color="scratch1" color2="scratch2">
-							<pos x="+20" y="+2"/>
-							<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-							<size width="135-40" height="210-4"/>
-							<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
-							<gridlines width="1" color="darkgray" transparency="0.5"/>
-							<cue y="-19" height="12">
-								<mask x="307" y="5" width="12" height="12"/>
-							</cue>
-							<overlay>
-								<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-								<pos x="-20" y="+105"/>
-								<size width="135" height="1"/>
-								<background color="needle" shape="square"/>
-						 	</overlay>
-						</scratchwave>
+						<!-- BEGIN OLED WAVEFORM -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<scratchwave deck="1" orientation="vertical" color="scratch1" color2="scratch2">
+								<pos x="+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="-19" height="12">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<scratchwave deck="1" orientation="vertical" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+								<pos x="+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="-19" height="12">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<!-- END OLED WAVEFORM -->
 						<dropzone deck="1">
 							<pos x="+0" y="+0"/>
 							<size width="135" height="210+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
@@ -6639,22 +6985,44 @@
 						</dropzone>
 					</panel>
 					<panel visibility="deck 3 leftdeck">
-						<scratchwave deck="3" orientation="vertical" color="scratch1" color2="scratch2">
-							<pos x="+20" y="+2"/>
-							<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-							<size width="135-40" height="210-4"/>
-							<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
-							<gridlines width="1" color="darkgray" transparency="0.5"/>
-							<cue y="-19" height="12">
-								<mask x="307" y="5" width="12" height="12"/>
-							</cue>
-							<overlay>
-								<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-								<pos x="-20" y="+105"/>
-								<size width="135" height="1"/>
-								<background color="needle" shape="square"/>
-						 	</overlay>
-						</scratchwave>
+						<!-- BEGIN OLED WAVEFORM -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<scratchwave deck="3" orientation="vertical" color="scratch1" color2="scratch2">
+								<pos x="+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="-19" height="12">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<scratchwave deck="3" orientation="vertical" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+								<pos x="+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="-19" height="12">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<!-- END OLED WAVEFORM -->
 						<dropzone deck="3">
 							<pos x="+0" y="+0"/>
 							<size width="135" height="210+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
@@ -6663,22 +7031,44 @@
 						</dropzone>
 					</panel>
 					<panel visibility="not deck 4 rightdeck">
-						<scratchwave deck="2" orientation="vertical" color="scratch1" color2="scratch2">
-							<pos x="+135+20" y="+2"/>
-							<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-							<size width="135-40" height="210-4"/>
-							<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
-							<gridlines width="1" color="darkgray" transparency="0.5"/>
-							<cue y="+19" height="12" mirrored="true">
-								<mask x="307" y="5" width="12" height="12"/>
-							</cue>
-							<overlay>
-								<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-								<pos x="-20" y="+105"/>
-								<size width="135" height="1"/>
-								<background color="needle" shape="square"/>
-						 	</overlay>
-						</scratchwave>
+						<!-- BEGIN OLED WAVEFORM -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<scratchwave deck="2" orientation="vertical" color="scratch1" color2="scratch2">
+								<pos x="+135+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="+19" height="12" mirrored="true">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<scratchwave deck="2" orientation="vertical" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+								<pos x="+135+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="+19" height="12" mirrored="true">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<!-- END OLED WAVEFORM -->
 						<dropzone deck="2">
 							<pos x="+135" y="+0"/>
 							<size width="135" height="210+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
@@ -6687,22 +7077,44 @@
 						</dropzone>
 					</panel>
 					<panel visibility="deck 4 rightdeck">
-						<scratchwave deck="4" orientation="vertical" color="scratch1" color2="scratch2">
-							<pos x="+135+20" y="+2"/>
-							<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-							<size width="135-40" height="210-4"/>
-							<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
-							<gridlines width="1" color="darkgray" transparency="0.5"/>
-							<cue y="+19" height="12" mirrored="true">
-								<mask x="307" y="5" width="12" height="12"/>
-							</cue>
-							<overlay>
-								<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
-								<pos x="-20" y="+105"/>
-								<size width="135" height="1"/>
-								<background color="needle" shape="square"/>
-						 	</overlay>
-						</scratchwave>
+						<!-- BEGIN OLED WAVEFORM -->
+						<group condition="var_equal '@$oleddecktheme' 1 ? false : var_equal '@$oleddecktheme' 2 ? false : var_equal '@$oleddecktheme' 3 ? false : var_equal '@$oleddecktheme' 4 ? false : var_equal '@$oleddecktheme' 5 ? false : var_equal '@$oleddecktheme' 6 ? false : var_equal '@$oleddecktheme' 7 ? false : var_equal '@$oleddecktheme' 8 ? false : var_equal '@$oleddecktheme' 9 ? false : var_equal '@$oleddecktheme' 10 ? false : true">
+							<scratchwave deck="4" orientation="vertical" color="scratch1" color2="scratch2">
+								<pos x="+135+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="+19" height="12" mirrored="true">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<group condition="var_equal '@$oleddecktheme' 1 ? true : var_equal '@$oleddecktheme' 2 ? true : var_equal '@$oleddecktheme' 3 ? true : var_equal '@$oleddecktheme' 4 ? true : var_equal '@$oleddecktheme' 5 ? true : var_equal '@$oleddecktheme' 6 ? true : var_equal '@$oleddecktheme' 7 ? true : var_equal '@$oleddecktheme' 8 ? true : var_equal '@$oleddecktheme' 9 ? true : var_equal '@$oleddecktheme' 10 ? true : false">
+							<scratchwave deck="4" orientation="vertical" color="scratch1" color2="scratch2" colorVocal="oled_wavevocal" colorInstru="oled_waveinstru" colorBeat="oled_wavebeat">
+								<pos x="+135+20" y="+2"/>
+								<size width="135-40" height="210-4+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+								<size width="135-40" height="210-4"/>
+								<grid pos="-19" background="no" backgroundshaded="no" height="8" size="1" mainsize="4" maincolor="deckcolor" color="darkgray" mirrored="true"/>
+								<gridlines width="1" color="darkgray" transparency="0.5"/>
+								<cue y="+19" height="12" mirrored="true">
+									<mask x="307" y="5" width="12" height="12"/>
+								</cue>
+								<overlay>
+									<pos x="-20" y="+105+65" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
+									<pos x="-20" y="+105"/>
+									<size width="135" height="1"/>
+									<background color="needle" shape="square"/>
+								</overlay>
+							</scratchwave>
+						</group>
+						<!-- END OLED WAVEFORM -->
 						<dropzone deck="4">
 							<pos x="+135" y="+0"/>
 							<size width="135" height="210+130" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0"/>
