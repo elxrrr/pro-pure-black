@@ -4,15 +4,17 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 
 ![Pro OLED decks and toolbar](screenshots/decks-and-toolbar.jpg)
 
-## Features
+## Changes
 
-- Black backgrounds across the decks, mixer, waveforms and browser.
-- Visible grey phrase-sync indicators, beat counters and jog-wheel details.
-- Sandbox, Shoutout, Event Scheduler and the account box hidden from the toolbar.
-- Layout, status and Settings grouped on the right on macOS.
-- Tap, Edit and beat-grid controls always visible; clicking BPM does not toggle them.
-- A small VirtualDJ logo beside the window controls.
-- Original deck colours and remaining controls retained.
+| Type | Element | Change |
+| --- | --- | --- |
+| Modified | Decks, mixer, waveforms and browser | Pure-black backgrounds. |
+| Modified | Phrase-sync indicators, beat counters and jog wheels | Grey details for visibility against black. |
+| Removed | Toolbar | Sandbox, Shoutout, Event Scheduler and account box. |
+| Moved | Layout, status and Settings | Grouped on the right on macOS. |
+| Modified | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
+| Resized | VirtualDJ logo | Small 72 × 17 logo beside the window controls. |
+| Retained | Deck colours and remaining controls | Original colours and behaviour. |
 
 ## Install
 
