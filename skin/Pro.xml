@@ -5,14 +5,7 @@
 	<nbdecks value="2" condition="var_equal '@$4decks' 0"/>
 	<nbdecks value="4" condition="var_not_equal '@$4decks' 0"/>
 
-	<background x="64" y="64" width="32" height="32" repeat="true" condition="var_equal '@$oledcolorscheme' 0"/>
-	<background x="1817" y="210" width="100" height="100" repeat="true" condition="var_equal '@$oledcolorscheme' 1"/>
-	<background x="1817" y="106" width="100" height="100" repeat="true" condition="var_equal '@$oledcolorscheme' 2"/>
-	<background x="1817" y="312" width="100" height="100" repeat="true" condition="var_equal '@$oledcolorscheme' 3"/>
-
-	<customicons file="icons_daylight.png" nb="64" nbx="16" condition="var_equal '@$oledcolorscheme' 2"/>
-
-
+	<background x="64" y="64" width="32" height="32" repeat="true"/>
 
 	<group name="class_defines">
 
@@ -65,7 +58,6 @@
 			<define color="buttonselected" value="#53181e" deck="2"/>
 			<define color="buttonselected" value="#16322f" deck="3"/>
 			<define color="buttonselected" value="#4a271d" deck="4"/>
-
 
 			<!-- Texts -->
 			<define color="textdeck" value="#1e7b96" deck="1"/>
@@ -244,242 +236,11 @@
 			<define color="colormed" value="#896526" deck="sandbox"/> 
 			<define color="colorhigh" value="#c0892a" deck="sandbox"/> 
 			<define color="colorplayed" value="black"/>
-			
 
 		</group>
-
-		<group name="colorscheme-contrast" condition="var_equal '@$oledcolorscheme' 1">
-
-			<!-- generic -->
-			<define color="white" value="#e3e3e3"/>
-			<define color="black" value="#0d0e10"/>
-			<define color="darker" value="#0d0e10"/>
-			<define color="dark" value="#131314"/>
-
-			<!-- backgrounds -->
-			<define color="display" value="#0d0e10"/>
-			<define color="waveformbackground" value="#0d0e10"/>
-			<define color="browserback" value="#0d0e10"/>
-			<define color="dropdown" value="#111012"/>
-			<define color="mixerbackground" value="#2b2c2d"/>
-			<define color="faderbackground" value="#232325"/>
-			<define color="decktabs" value="#1f2021"/>
- 			<define color="topmenu" value="#262628"/>
-			<define color="vubackground" value="#262628"/>
-			<define color="background" value="#272729"/>
-			<define color="background2" value="#262628"/>
-			<define color="jogwheelbackground" value="#232325"/>
-
-			<!-- buttons-->
-			<define color="buttonoff" value="#1d1d1f"/>
-			<define color="knobcolor1" value="#323336"/>
-			<define color="knobcolor2" value="#292a2d"/>
-			<define color="knobfilloff" value="#1c1b1d"/> 
-
-			<define color="bordercolor" value="#0c0a0d"/>
-			<define color="bordercolor2" value="#141315"/>
-
-			<define color="textdarker" value="#6a6a6a"/>
-			<define color="textdark" value="#797979"/>
-			<define color="textoff3" value="#9b9b9b"/>
-			<define color="textoff2" value="#a6a6a6"/>
-			<define color="textoff" value="#cccccc"/>
-			<define color="textover" value="#d7d7d7"/>
-			<define color="texton" value="#ebebeb"/>
-			<define color="textbright" value="#f3f3f3"/>
-
-		</group>
-
-		<group name="colorscheme-darkmode" condition="var_equal '@$oledcolorscheme' 3">
-
-			<!-- generic -->
-			<define color="white" value="#e3e3e3"/>
-			<define color="black" value="black"/>
-			<define color="darker" value="#0c0a0d"/>
-			<define color="dark" value="#131314"/>
-
-			<!-- Texts -->
-			<define color="textdarkdark" value="#515151"/>
-			<define color="textdarker" value="#6a6a6a"/>
-			<define color="textdark" value="#6a6a6a"/>
-			<define color="textoff3" value="#6a6a6a"/>
-			<define color="textoff2" value="#848484"/> 
-			<define color="textoff" value="#c6c6c6"/> 
-			<define color="textover" value="#d1d1d1"/>
-			<define color="textselected" value="#b9b9b9"/>
-			<define color="texton" value="black"/>
-			<define color="textbright" value="#d4d4d4"/>
-			<define color="textbrowser" value="#c6c6c6"/>
-
-			<!-- backgrounds -->
-			<define color="display" value="#0d0e10"/> 
-			<define color="waveformbackground" value="#0a0b0d"/>
-			<define color="browserback" value="#111012"/>
-			<define color="decktabs" value="#212223"/>
-			<define color="dropdown" value="#111012"/> 
-			<define color="mixerbackground" value="#1f2021"/>
-			<define color="faderbackground" value="#1f2021"/>  
- 			<define color="topmenu" value="#262628"/> 
-			<define color="vubackground" value="#262628"/>
-			<define color="jogwheelbackground" value="#1f2021"/>
-			<define color="background" value="#131314"/>
-			<define color="background2" value="#262628"/>
-
-			<!-- buttons-->
-			<define color="buttonoff" value="#232425"/> 
-			<define color="knobcolor1" value="#323336"/>
-			<define color="knobcolor2" value="#2d2e31"/>
-			<define color="faderlines" value="#282828"/>
-			<define color="knobcolor1" value="#232425"/>
-			<define color="knobcolor2" value="#1f2021"/>
-			<define color="knobfilloff" value="#2d2e31"/> 
-			<define color="bordercolor" value="#3a393b"/>
-			<define color="bordercolor2" value="#313032"/>
-		</group>
-
-		<group name="colorscheme-lightmode" condition="var_equal '@$oledcolorscheme' 2">
-
-			<!-- generic -->
-			<define color="white" value="#000000"/>
-			<define color="black" value="#ffffff"/>
-			<define color="darker" value="#f1eff1"/>
-			<define color="dark" value="#e4e2e4"/>
-
-			<define color="gray" value="#575757"/> 
-			<define color="graydark" value="#999999"/>
-			<define color="graydarker" value="#393939"/>
-			<define color="dimmed" value="#949191"/>  
-
-			<!-- background areas -->
-			<define color="background" value="#dddddd"/>  
-			<define color="background2" value="#d7d7d7"/>
-			<define color="background3" value="#f1eff1"/>
-			<define color="background_lighter" value="#cfcfcf"/>
-			<define color="deckinfolines" value="#343536"/>
-			<define color="decktabs" value="#e8e8e8"/>
-
-			<define color="hightlight" value="#505050"/>
-			<define color="shadow" value="#505050"/>
-
-			<define color="dropdown" value="#eeeeee"/>
-			<define color="dropdownon" value="#b8b7b9"/>
-			<define color="display" value="#eeeeee"/>
-			<define color="waveformbackground" value="#f3f3f3"/>
-			<define color="browserback" value="#ebebeb"/>
-			<define color="mixerbackground" value="#e5e5e5"/>
-			<define color="faderbackground" value="#e5e5e5"/> 
-			<define color="bordercolor" value="#6b6c6d"/>
-			<define color="bordercolor2" value="#7c7c7e"/>
-			<define color="bordercolor3" value="#7e7e80"/>
-			<define color="topmenu" value="#e4e2e4"/>
-			<define color="jogwheelbackground" value="#cfcfcf"/>
-			<define color="needle" value="#7c7c7e"/>
-
-			<define color="pitchlock_off" value="#b2acac"/>
-
-			<!-- text -->
-			<define color="textdarkdark" value="#828282"/>
-			<define color="textdarker" value="#353535"/> 
-			<define color="textdark" value="#474747"/>
-			<define color="textoff" value="black"/>
-			<define color="textoff2" value="black"/>
-			<define color="textoff3" value="black"/>
-			<define color="textover" value="black"/>
-			<define color="texton" value="white"/>
-			<define color="textbright" value="black"/>
-			<define color="textselected" value="white"/>
-			<define color="textbrowser" value="black"/> 
-
-			<define color="artist" value="black"/> 
-			<define color="feat" value="black"/> 
-			<define color="title" value="black"/>
-			<define color="remix" value="black"/>
-
-			<!-- buttons-->
-			<define color="buttonoff" value="#eeeeee"/> 
-
-			<define color="buttonover" value="#8cbbd0" deck="1"/>
-			<define color="buttonover" value="#d2979b" deck="2"/>
-			<define color="buttonover" value="#89c4b9" deck="3"/>
-			<define color="buttonover" value="#f5c5ab" deck="4"/>
-
-			<define color="buttonover" value="#aa9abf" deck="master"/>
-			<define color="mbuttonover" value="#aa9abf"/>
-
-			<define color="padbuttonselected" value="#1c313a" deck="1"/>
-			<define color="padbuttonselected" value="#bb6369" deck="2"/>
-			<define color="padbuttonselected" value="#08322c" deck="3"/> 
-			<define color="padbuttonselected" value="#48281e" deck="4"/>
-
-
-			<define color="buttonon_invert" value="#156c89" deck="1"/>
-			<define color="buttonon_invert" value="#ac2f37" deck="2"/>
-			<define color="buttonon_invert" value="#0d7264" deck="3"/>
-			<define color="buttonon_invert" value="#a54d30" deck="4"/>
-
-			<define color="deckcolor_invert" value="white" deck="1"/>
-			<define color="deckcolor_invert" value="white" deck="2"/>
-			<define color="deckcolor_invert" value="white" deck="3"/>
-			<define color="deckcolor_invert" value="white" deck="4"/>
-
-			<!-- browser --> 
-			<define color="browserstripe" value="#f9f9f9"/>
-			<define color="browserover" value="#c5c5c5"/> 
-			<define color="browseroverstripe" value="#c5c5c5"/>  
-			<define color="browseroverfocus" value="#4b4b4b"/>    
-			<define color="browser_selected" value="#777777"/> 
-
-			<define color="browser_scrollbar" value="#a7a7a7"/> 
-			<define color="browser_scrollbtn" value="#f1eff1"/> 
-			<define color="browser_seperatortab" value="#919191"/> 
-
-			<!-- sideview buttons -->
-			<define color="browser_toolbarbutton" value="#f9f9f9"/> 
-			<define color="browser_toolbarbuttonover" value="#f0f0f0"/> 
-
-			<!-- browser sampler pads -->
-			<define color="browser_button" value="#dbd9dc"/>
-			<define color="browser_buttonactive" value="#f9f9f9"/>
-			<define color="browser_buttonselected" value="#f9f9f9"/>
-
-			<!-- browser grid -->
-			<define color="browsergrid_bg" value="#f6f6f6"/>
-			<define color="browsergrid_over" value="#c5c5c5"/>
-			<define color="browsergrid_selected" value="#777777"/>
-			<define color="browsergrid_focus" value="#4b4b4b"/>
-
-
-			<!-- browser icon buttons -->
-			<define color="browser_iconbuttonup" value="#e2e2e2"/>
-			<define color="browser_iconbuttonover" value="#eeeeee"/>
-			<define color="browser_iconbuttondown" value="#f9f9f9"/>
-			<define color="browser_iconbuttonselected" value="#f8f8f8"/>
-			<define color="browser_iconbuttonactive" value="#3b8976"/>
-
-			<!-- waveforms -->
-
-			<!-- Faders and  Knobs -->
-			<define color="faderback" value="#f0f2f5"/>
-			<define color="faderinoff" value="white"/>
-			<define color="faderlines" value="#bcbcbc"/>
-			<define color="faderinon" value="#1e7695" deck="left"/> 
-			<define color="faderinon" value="#bb3536" deck="right"/> 
-			<define color="faderinleft" value="#1e7695" />
-			<define color="faderinright" value="#bb3536" />
-			<define color="knobcolor1" value="#f9f9f9"/>
-			<define color="knobcolor2" value="#d6d4d6"/>
-			<define color="knobfader" value="#848484"/>
-			<define color="knobfilloff" value="#ababab"/>  
-			<define color="knobfillon" value="#1e7695" deck="left"/>
-			<define color="knobfillon" value="#bb3536" deck="right"/>
-			<define color="knobfillmaster" value="#3a7677" />
-			<define color="knobfillongray" value="#606060" />
-
-		</group>
-
 
 		<!-- OLED surfaces; outlines and interaction states retain contrast. -->
-		<group name="colorscheme-oled" condition="var_equal '@$oledcolorscheme' 0">
+		<group name="colorscheme-oled">
 			<define color="black" value="#000000"/>
 			<define color="darker" value="#000000"/>
 			<define color="dark" value="#000000"/>
@@ -533,38 +294,1078 @@
 			<define color="knobfilloff2" value="#262626"/>
 		</group>
 
-
 		<!-- Dedicated indicator colours: preserve black surfaces. -->
-		<define color="oled_beat_idle" value="darker"/>
-		<define color="oled_beat_idle" value="#484848" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_small_beat_idle" value="mixerbackground"/>
-		<define color="oled_small_beat_idle" value="#484848" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_phrase_idle" value="darker"/>
-		<define color="oled_phrase_idle" value="#303030" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_phrase_ring" value="dark"/>
-		<define color="oled_phrase_ring" value="#484848" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_phrase_text" value="textoff2"/>
-		<define color="oled_phrase_text" value="#b8b8b8" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_sync_text" value="textdark"/>
-		<define color="oled_sync_text" value="#b8b8b8" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_jog_ring" value="mixerbackground"/>
-		<define color="oled_jog_ring" value="#484848" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_jog_ring_darker" value="darker"/>
-		<define color="oled_jog_ring_darker" value="#484848" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_jog_border" value="black"/>
-		<define color="oled_jog_border" value="#484848" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_jog_mark" value="darker"/>
-		<define color="oled_jog_mark" value="#a6a6a6" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_jog_label" value="textdark"/>
-		<define color="oled_jog_label" value="#b0b0b0" condition="var_equal '@$oledcolorscheme' 0"/>
-		<define color="oled_jog_time" value="textoff3"/>
-		<define color="oled_jog_time" value="#b0b0b0" condition="var_equal '@$oledcolorscheme' 0"/>
+
+		<define color="oled_beat_idle" value="#484848"/>
+
+		<define color="oled_small_beat_idle" value="#484848"/>
+
+		<define color="oled_phrase_idle" value="#303030"/>
+
+		<define color="oled_phrase_ring" value="#484848"/>
+
+		<define color="oled_phrase_text" value="#b8b8b8"/>
+
+		<define color="oled_sync_text" value="#b8b8b8"/>
+
+		<define color="oled_jog_ring" value="#484848"/>
+
+		<define color="oled_jog_ring_darker" value="#484848"/>
+
+		<define color="oled_jog_border" value="#484848"/>
+
+		<define color="oled_jog_mark" value="#a6a6a6"/>
+
+		<define color="oled_jog_label" value="#b0b0b0"/>
+
+		<define color="oled_jog_time" value="#b0b0b0"/>
+
+		<!-- BEGIN OLED DECK THEMES -->
+		<define color="oled_plugin_over1" value="#1C7B97"/>
+		<define color="oled_plugin_selected1" value="#136C8A"/>
+		<define color="oled_plugin_down1" value="#0B485D"/>
+		<define color="oled_plugin_over2" value="#B73B42"/>
+		<define color="oled_plugin_selected2" value="#AD3237"/>
+		<define color="oled_plugin_down2" value="#821A1F"/>
+		<define color="oled_plugin_slider1" value="#136C8A"/>
+		<define color="oled_plugin_disabled1" value="#0A3F50"/>
+		<define color="oled_plugin_slider2" value="#AD3237"/>
+		<define color="oled_plugin_disabled2" value="#761318"/>
+		<define color="oled_buttonfill" value="#156C89" deck="1"/>
+		<define color="oled_deck_selected" value="#0D5269" deck="1"/>
+		<define color="oled_buttonfill" value="#AC2F37" deck="2"/>
+		<define color="oled_deck_selected" value="#8E1E25" deck="2"/>
+		<define color="oled_buttonfill" value="#0D7264" deck="3"/>
+		<define color="oled_deck_selected" value="#0B544A" deck="3"/>
+		<define color="oled_buttonfill" value="#A54D30" deck="4"/>
+		<define color="oled_deck_selected" value="#84341A" deck="4"/>
+		<define color="oled_buttonfill" value="#B03239" deck="right"/>
+		<define color="oled_buttonfill" value="#4F5076" deck="master"/>
+		<group name="oled-theme-pastel-pink" condition="var_equal '@$oleddecktheme' 1">
+			<define color="deckcolor" value="#E879A1" deck="1"/>
+			<define color="deckcolorbright" value="#EB89AC" deck="1"/>
+			<define color="deckcolordark" value="#9E526D" deck="1"/>
+			<define color="deckcolor_invert" value="#EB89AC" deck="1"/>
+			<define color="padbuttonselected" value="#2A161D" deck="1"/>
+			<define color="buttonon" value="#E879A1" deck="1"/>
+			<define color="buttonover" value="#381D27" deck="1"/>
+			<define color="buttonselected" value="#2A161D" deck="1"/>
+			<define color="oled_buttonfill" value="#4F2937" deck="1"/>
+			<define color="oled_deck_selected" value="#4F2937" deck="1"/>
+			<define color="textdeck" value="#EB89AC" deck="1"/>
+			<define color="faderinon" value="#E879A1" deck="1"/>
+			<define color="knobfillon" value="#E879A1" deck="1"/>
+			<define color="colorbass" value="#4F2937" deck="1"/>
+			<define color="colormed" value="#9E526D" deck="1"/>
+			<define color="colorhigh" value="#E879A1" deck="1"/>
+			<define color="scratch1" value="#E879A1" deck="1"/>
+			<define color="scratch2" value="#E879A1" deck="1"/>
+			<define color="waveform_active1" value="#E879A1"/>
+			<define color="waveform_passive1" value="#9E526D"/>
+			<define color="deckcolor" value="#F4A0BC" deck="2"/>
+			<define color="deckcolorbright" value="#F5ABC4" deck="2"/>
+			<define color="deckcolordark" value="#A66D80" deck="2"/>
+			<define color="deckcolor_invert" value="#F5ABC4" deck="2"/>
+			<define color="padbuttonselected" value="#2C1D22" deck="2"/>
+			<define color="buttonon" value="#F4A0BC" deck="2"/>
+			<define color="buttonover" value="#3B262D" deck="2"/>
+			<define color="buttonselected" value="#2C1D22" deck="2"/>
+			<define color="oled_buttonfill" value="#533640" deck="2"/>
+			<define color="oled_deck_selected" value="#533640" deck="2"/>
+			<define color="textdeck" value="#F5ABC4" deck="2"/>
+			<define color="faderinon" value="#F4A0BC" deck="2"/>
+			<define color="knobfillon" value="#F4A0BC" deck="2"/>
+			<define color="colorbass" value="#533640" deck="2"/>
+			<define color="colormed" value="#A66D80" deck="2"/>
+			<define color="colorhigh" value="#F4A0BC" deck="2"/>
+			<define color="scratch1" value="#F4A0BC" deck="2"/>
+			<define color="scratch2" value="#F4A0BC" deck="2"/>
+			<define color="waveform_active2" value="#F4A0BC"/>
+			<define color="waveform_passive2" value="#A66D80"/>
+			<define color="deckcolor" value="#E8B1DF" deck="3"/>
+			<define color="deckcolorbright" value="#EBBAE3" deck="3"/>
+			<define color="deckcolordark" value="#9E7898" deck="3"/>
+			<define color="deckcolor_invert" value="#EBBAE3" deck="3"/>
+			<define color="padbuttonselected" value="#2A2028" deck="3"/>
+			<define color="buttonon" value="#E8B1DF" deck="3"/>
+			<define color="buttonover" value="#382A36" deck="3"/>
+			<define color="buttonselected" value="#2A2028" deck="3"/>
+			<define color="oled_buttonfill" value="#4F3C4C" deck="3"/>
+			<define color="oled_deck_selected" value="#4F3C4C" deck="3"/>
+			<define color="textdeck" value="#EBBAE3" deck="3"/>
+			<define color="faderinon" value="#E8B1DF" deck="3"/>
+			<define color="knobfillon" value="#E8B1DF" deck="3"/>
+			<define color="colorbass" value="#4F3C4C" deck="3"/>
+			<define color="colormed" value="#9E7898" deck="3"/>
+			<define color="colorhigh" value="#E8B1DF" deck="3"/>
+			<define color="scratch1" value="#E8B1DF" deck="3"/>
+			<define color="scratch2" value="#E8B1DF" deck="3"/>
+			<define color="waveform_active3" value="#E8B1DF"/>
+			<define color="waveform_passive3" value="#9E7898"/>
+			<define color="deckcolor" value="#FAD3E3" deck="4"/>
+			<define color="deckcolorbright" value="#FBD8E6" deck="4"/>
+			<define color="deckcolordark" value="#AA8F9A" deck="4"/>
+			<define color="deckcolor_invert" value="#FBD8E6" deck="4"/>
+			<define color="padbuttonselected" value="#2D2629" deck="4"/>
+			<define color="buttonon" value="#FAD3E3" deck="4"/>
+			<define color="buttonover" value="#3C3336" deck="4"/>
+			<define color="buttonselected" value="#2D2629" deck="4"/>
+			<define color="oled_buttonfill" value="#55484D" deck="4"/>
+			<define color="oled_deck_selected" value="#55484D" deck="4"/>
+			<define color="textdeck" value="#FBD8E6" deck="4"/>
+			<define color="faderinon" value="#FAD3E3" deck="4"/>
+			<define color="knobfillon" value="#FAD3E3" deck="4"/>
+			<define color="colorbass" value="#55484D" deck="4"/>
+			<define color="colormed" value="#AA8F9A" deck="4"/>
+			<define color="colorhigh" value="#FAD3E3" deck="4"/>
+			<define color="scratch1" value="#FAD3E3" deck="4"/>
+			<define color="scratch2" value="#FAD3E3" deck="4"/>
+			<define color="waveform_active4" value="#FAD3E3"/>
+			<define color="waveform_passive4" value="#AA8F9A"/>
+			<define color="deckcolor" value="#E879A1" deck="left"/>
+			<define color="faderinon" value="#E879A1" deck="left"/>
+			<define color="knobfillon" value="#E879A1" deck="left"/>
+			<define color="faderinleft" value="#E879A1"/>
+			<define color="deckcolor" value="#F4A0BC" deck="right"/>
+			<define color="faderinon" value="#F4A0BC" deck="right"/>
+			<define color="knobfillon" value="#F4A0BC" deck="right"/>
+			<define color="buttonon" value="#F4A0BC" deck="right"/>
+			<define color="oled_buttonfill" value="#533640" deck="right"/>
+			<define color="faderinright" value="#F4A0BC"/>
+			<define color="oled_plugin_over1" value="#381D27"/>
+			<define color="oled_plugin_selected1" value="#4F2937"/>
+			<define color="oled_plugin_down1" value="#41222D"/>
+			<define color="oled_plugin_slider1" value="#E879A1"/>
+			<define color="oled_plugin_disabled1" value="#4F2937"/>
+			<define color="oled_plugin_over2" value="#3B262D"/>
+			<define color="oled_plugin_selected2" value="#533640"/>
+			<define color="oled_plugin_down2" value="#442D35"/>
+			<define color="oled_plugin_slider2" value="#F4A0BC"/>
+			<define color="oled_plugin_disabled2" value="#533640"/>
+		</group>
+		<group name="oled-theme-pastel-blue" condition="var_equal '@$oleddecktheme' 2">
+			<define color="deckcolor" value="#6D9FDC" deck="1"/>
+			<define color="deckcolorbright" value="#7FABE0" deck="1"/>
+			<define color="deckcolordark" value="#4A6C96" deck="1"/>
+			<define color="deckcolor_invert" value="#7FABE0" deck="1"/>
+			<define color="padbuttonselected" value="#141D28" deck="1"/>
+			<define color="buttonon" value="#6D9FDC" deck="1"/>
+			<define color="buttonover" value="#1A2635" deck="1"/>
+			<define color="buttonselected" value="#141D28" deck="1"/>
+			<define color="oled_buttonfill" value="#25364B" deck="1"/>
+			<define color="oled_deck_selected" value="#25364B" deck="1"/>
+			<define color="textdeck" value="#7FABE0" deck="1"/>
+			<define color="faderinon" value="#6D9FDC" deck="1"/>
+			<define color="knobfillon" value="#6D9FDC" deck="1"/>
+			<define color="colorbass" value="#25364B" deck="1"/>
+			<define color="colormed" value="#4A6C96" deck="1"/>
+			<define color="colorhigh" value="#6D9FDC" deck="1"/>
+			<define color="scratch1" value="#6D9FDC" deck="1"/>
+			<define color="scratch2" value="#6D9FDC" deck="1"/>
+			<define color="waveform_active1" value="#6D9FDC"/>
+			<define color="waveform_passive1" value="#4A6C96"/>
+			<define color="deckcolor" value="#8BC2EF" deck="2"/>
+			<define color="deckcolorbright" value="#99C9F1" deck="2"/>
+			<define color="deckcolordark" value="#5F84A3" deck="2"/>
+			<define color="deckcolor_invert" value="#99C9F1" deck="2"/>
+			<define color="padbuttonselected" value="#19232B" deck="2"/>
+			<define color="buttonon" value="#8BC2EF" deck="2"/>
+			<define color="buttonover" value="#212F39" deck="2"/>
+			<define color="buttonselected" value="#19232B" deck="2"/>
+			<define color="oled_buttonfill" value="#2F4251" deck="2"/>
+			<define color="oled_deck_selected" value="#2F4251" deck="2"/>
+			<define color="textdeck" value="#99C9F1" deck="2"/>
+			<define color="faderinon" value="#8BC2EF" deck="2"/>
+			<define color="knobfillon" value="#8BC2EF" deck="2"/>
+			<define color="colorbass" value="#2F4251" deck="2"/>
+			<define color="colormed" value="#5F84A3" deck="2"/>
+			<define color="colorhigh" value="#8BC2EF" deck="2"/>
+			<define color="scratch1" value="#8BC2EF" deck="2"/>
+			<define color="scratch2" value="#8BC2EF" deck="2"/>
+			<define color="waveform_active2" value="#8BC2EF"/>
+			<define color="waveform_passive2" value="#5F84A3"/>
+			<define color="deckcolor" value="#A6B6EF" deck="3"/>
+			<define color="deckcolorbright" value="#B1BFF1" deck="3"/>
+			<define color="deckcolordark" value="#717CA3" deck="3"/>
+			<define color="deckcolor_invert" value="#B1BFF1" deck="3"/>
+			<define color="padbuttonselected" value="#1E212B" deck="3"/>
+			<define color="buttonon" value="#A6B6EF" deck="3"/>
+			<define color="buttonover" value="#282C39" deck="3"/>
+			<define color="buttonselected" value="#1E212B" deck="3"/>
+			<define color="oled_buttonfill" value="#383E51" deck="3"/>
+			<define color="oled_deck_selected" value="#383E51" deck="3"/>
+			<define color="textdeck" value="#B1BFF1" deck="3"/>
+			<define color="faderinon" value="#A6B6EF" deck="3"/>
+			<define color="knobfillon" value="#A6B6EF" deck="3"/>
+			<define color="colorbass" value="#383E51" deck="3"/>
+			<define color="colormed" value="#717CA3" deck="3"/>
+			<define color="colorhigh" value="#A6B6EF" deck="3"/>
+			<define color="scratch1" value="#A6B6EF" deck="3"/>
+			<define color="scratch2" value="#A6B6EF" deck="3"/>
+			<define color="waveform_active3" value="#A6B6EF"/>
+			<define color="waveform_passive3" value="#717CA3"/>
+			<define color="deckcolor" value="#C3E3FA" deck="4"/>
+			<define color="deckcolorbright" value="#CAE6FB" deck="4"/>
+			<define color="deckcolordark" value="#859AAA" deck="4"/>
+			<define color="deckcolor_invert" value="#CAE6FB" deck="4"/>
+			<define color="padbuttonselected" value="#23292D" deck="4"/>
+			<define color="buttonon" value="#C3E3FA" deck="4"/>
+			<define color="buttonover" value="#2F363C" deck="4"/>
+			<define color="buttonselected" value="#23292D" deck="4"/>
+			<define color="oled_buttonfill" value="#424D55" deck="4"/>
+			<define color="oled_deck_selected" value="#424D55" deck="4"/>
+			<define color="textdeck" value="#CAE6FB" deck="4"/>
+			<define color="faderinon" value="#C3E3FA" deck="4"/>
+			<define color="knobfillon" value="#C3E3FA" deck="4"/>
+			<define color="colorbass" value="#424D55" deck="4"/>
+			<define color="colormed" value="#859AAA" deck="4"/>
+			<define color="colorhigh" value="#C3E3FA" deck="4"/>
+			<define color="scratch1" value="#C3E3FA" deck="4"/>
+			<define color="scratch2" value="#C3E3FA" deck="4"/>
+			<define color="waveform_active4" value="#C3E3FA"/>
+			<define color="waveform_passive4" value="#859AAA"/>
+			<define color="deckcolor" value="#6D9FDC" deck="left"/>
+			<define color="faderinon" value="#6D9FDC" deck="left"/>
+			<define color="knobfillon" value="#6D9FDC" deck="left"/>
+			<define color="faderinleft" value="#6D9FDC"/>
+			<define color="deckcolor" value="#8BC2EF" deck="right"/>
+			<define color="faderinon" value="#8BC2EF" deck="right"/>
+			<define color="knobfillon" value="#8BC2EF" deck="right"/>
+			<define color="buttonon" value="#8BC2EF" deck="right"/>
+			<define color="oled_buttonfill" value="#2F4251" deck="right"/>
+			<define color="faderinright" value="#8BC2EF"/>
+			<define color="oled_plugin_over1" value="#1A2635"/>
+			<define color="oled_plugin_selected1" value="#25364B"/>
+			<define color="oled_plugin_down1" value="#1F2D3E"/>
+			<define color="oled_plugin_slider1" value="#6D9FDC"/>
+			<define color="oled_plugin_disabled1" value="#25364B"/>
+			<define color="oled_plugin_over2" value="#212F39"/>
+			<define color="oled_plugin_selected2" value="#2F4251"/>
+			<define color="oled_plugin_down2" value="#273643"/>
+			<define color="oled_plugin_slider2" value="#8BC2EF"/>
+			<define color="oled_plugin_disabled2" value="#2F4251"/>
+		</group>
+		<group name="oled-theme-violet" condition="var_equal '@$oleddecktheme' 3">
+			<define color="deckcolor" value="#9272D4" deck="1"/>
+			<define color="deckcolorbright" value="#9F83D9" deck="1"/>
+			<define color="deckcolordark" value="#634E90" deck="1"/>
+			<define color="deckcolor_invert" value="#9F83D9" deck="1"/>
+			<define color="padbuttonselected" value="#1A1526" deck="1"/>
+			<define color="buttonon" value="#9272D4" deck="1"/>
+			<define color="buttonover" value="#231B33" deck="1"/>
+			<define color="buttonselected" value="#1A1526" deck="1"/>
+			<define color="oled_buttonfill" value="#322748" deck="1"/>
+			<define color="oled_deck_selected" value="#322748" deck="1"/>
+			<define color="textdeck" value="#9F83D9" deck="1"/>
+			<define color="faderinon" value="#9272D4" deck="1"/>
+			<define color="knobfillon" value="#9272D4" deck="1"/>
+			<define color="colorbass" value="#322748" deck="1"/>
+			<define color="colormed" value="#634E90" deck="1"/>
+			<define color="colorhigh" value="#9272D4" deck="1"/>
+			<define color="scratch1" value="#9272D4" deck="1"/>
+			<define color="scratch2" value="#9272D4" deck="1"/>
+			<define color="waveform_active1" value="#9272D4"/>
+			<define color="waveform_passive1" value="#634E90"/>
+			<define color="deckcolor" value="#CD79BD" deck="2"/>
+			<define color="deckcolorbright" value="#D389C5" deck="2"/>
+			<define color="deckcolordark" value="#8B5281" deck="2"/>
+			<define color="deckcolor_invert" value="#D389C5" deck="2"/>
+			<define color="padbuttonselected" value="#251622" deck="2"/>
+			<define color="buttonon" value="#CD79BD" deck="2"/>
+			<define color="buttonover" value="#311D2D" deck="2"/>
+			<define color="buttonselected" value="#251622" deck="2"/>
+			<define color="oled_buttonfill" value="#462940" deck="2"/>
+			<define color="oled_deck_selected" value="#462940" deck="2"/>
+			<define color="textdeck" value="#D389C5" deck="2"/>
+			<define color="faderinon" value="#CD79BD" deck="2"/>
+			<define color="knobfillon" value="#CD79BD" deck="2"/>
+			<define color="colorbass" value="#462940" deck="2"/>
+			<define color="colormed" value="#8B5281" deck="2"/>
+			<define color="colorhigh" value="#CD79BD" deck="2"/>
+			<define color="scratch1" value="#CD79BD" deck="2"/>
+			<define color="scratch2" value="#CD79BD" deck="2"/>
+			<define color="waveform_active2" value="#CD79BD"/>
+			<define color="waveform_passive2" value="#8B5281"/>
+			<define color="deckcolor" value="#B7A0EE" deck="3"/>
+			<define color="deckcolorbright" value="#C0ABF0" deck="3"/>
+			<define color="deckcolordark" value="#7C6DA2" deck="3"/>
+			<define color="deckcolor_invert" value="#C0ABF0" deck="3"/>
+			<define color="padbuttonselected" value="#211D2B" deck="3"/>
+			<define color="buttonon" value="#B7A0EE" deck="3"/>
+			<define color="buttonover" value="#2C2639" deck="3"/>
+			<define color="buttonselected" value="#211D2B" deck="3"/>
+			<define color="oled_buttonfill" value="#3E3651" deck="3"/>
+			<define color="oled_deck_selected" value="#3E3651" deck="3"/>
+			<define color="textdeck" value="#C0ABF0" deck="3"/>
+			<define color="faderinon" value="#B7A0EE" deck="3"/>
+			<define color="knobfillon" value="#B7A0EE" deck="3"/>
+			<define color="colorbass" value="#3E3651" deck="3"/>
+			<define color="colormed" value="#7C6DA2" deck="3"/>
+			<define color="colorhigh" value="#B7A0EE" deck="3"/>
+			<define color="scratch1" value="#B7A0EE" deck="3"/>
+			<define color="scratch2" value="#B7A0EE" deck="3"/>
+			<define color="waveform_active3" value="#B7A0EE"/>
+			<define color="waveform_passive3" value="#7C6DA2"/>
+			<define color="deckcolor" value="#E4B9EA" deck="4"/>
+			<define color="deckcolorbright" value="#E7C1ED" deck="4"/>
+			<define color="deckcolordark" value="#9B7E9F" deck="4"/>
+			<define color="deckcolor_invert" value="#E7C1ED" deck="4"/>
+			<define color="padbuttonselected" value="#29212A" deck="4"/>
+			<define color="buttonon" value="#E4B9EA" deck="4"/>
+			<define color="buttonover" value="#372C38" deck="4"/>
+			<define color="buttonselected" value="#29212A" deck="4"/>
+			<define color="oled_buttonfill" value="#4E3F50" deck="4"/>
+			<define color="oled_deck_selected" value="#4E3F50" deck="4"/>
+			<define color="textdeck" value="#E7C1ED" deck="4"/>
+			<define color="faderinon" value="#E4B9EA" deck="4"/>
+			<define color="knobfillon" value="#E4B9EA" deck="4"/>
+			<define color="colorbass" value="#4E3F50" deck="4"/>
+			<define color="colormed" value="#9B7E9F" deck="4"/>
+			<define color="colorhigh" value="#E4B9EA" deck="4"/>
+			<define color="scratch1" value="#E4B9EA" deck="4"/>
+			<define color="scratch2" value="#E4B9EA" deck="4"/>
+			<define color="waveform_active4" value="#E4B9EA"/>
+			<define color="waveform_passive4" value="#9B7E9F"/>
+			<define color="deckcolor" value="#9272D4" deck="left"/>
+			<define color="faderinon" value="#9272D4" deck="left"/>
+			<define color="knobfillon" value="#9272D4" deck="left"/>
+			<define color="faderinleft" value="#9272D4"/>
+			<define color="deckcolor" value="#CD79BD" deck="right"/>
+			<define color="faderinon" value="#CD79BD" deck="right"/>
+			<define color="knobfillon" value="#CD79BD" deck="right"/>
+			<define color="buttonon" value="#CD79BD" deck="right"/>
+			<define color="oled_buttonfill" value="#462940" deck="right"/>
+			<define color="faderinright" value="#CD79BD"/>
+			<define color="oled_plugin_over1" value="#231B33"/>
+			<define color="oled_plugin_selected1" value="#322748"/>
+			<define color="oled_plugin_down1" value="#29203B"/>
+			<define color="oled_plugin_slider1" value="#9272D4"/>
+			<define color="oled_plugin_disabled1" value="#322748"/>
+			<define color="oled_plugin_over2" value="#311D2D"/>
+			<define color="oled_plugin_selected2" value="#462940"/>
+			<define color="oled_plugin_down2" value="#392235"/>
+			<define color="oled_plugin_slider2" value="#CD79BD"/>
+			<define color="oled_plugin_disabled2" value="#462940"/>
+		</group>
+		<group name="oled-theme-prism" condition="var_equal '@$oleddecktheme' 4">
+			<define color="deckcolor" value="#AA81BC" deck="1"/>
+			<define color="deckcolorbright" value="#B490C4" deck="1"/>
+			<define color="deckcolordark" value="#745880" deck="1"/>
+			<define color="deckcolor_invert" value="#B490C4" deck="1"/>
+			<define color="padbuttonselected" value="#1F1722" deck="1"/>
+			<define color="buttonon" value="#AA81BC" deck="1"/>
+			<define color="buttonover" value="#291F2D" deck="1"/>
+			<define color="buttonselected" value="#1F1722" deck="1"/>
+			<define color="oled_buttonfill" value="#3A2C40" deck="1"/>
+			<define color="oled_deck_selected" value="#3A2C40" deck="1"/>
+			<define color="textdeck" value="#B490C4" deck="1"/>
+			<define color="faderinon" value="#AA81BC" deck="1"/>
+			<define color="knobfillon" value="#AA81BC" deck="1"/>
+			<define color="colorbass" value="#3A2C40" deck="1"/>
+			<define color="colormed" value="#745880" deck="1"/>
+			<define color="colorhigh" value="#AA81BC" deck="1"/>
+			<define color="scratch1" value="#AA81BC" deck="1"/>
+			<define color="scratch2" value="#AA81BC" deck="1"/>
+			<define color="waveform_active1" value="#AA81BC"/>
+			<define color="waveform_passive1" value="#745880"/>
+			<define color="deckcolor" value="#EB709A" deck="2"/>
+			<define color="deckcolorbright" value="#ED81A6" deck="2"/>
+			<define color="deckcolordark" value="#A04C69" deck="2"/>
+			<define color="deckcolor_invert" value="#ED81A6" deck="2"/>
+			<define color="padbuttonselected" value="#2A141C" deck="2"/>
+			<define color="buttonon" value="#EB709A" deck="2"/>
+			<define color="buttonover" value="#381B25" deck="2"/>
+			<define color="buttonselected" value="#2A141C" deck="2"/>
+			<define color="oled_buttonfill" value="#502634" deck="2"/>
+			<define color="oled_deck_selected" value="#502634" deck="2"/>
+			<define color="textdeck" value="#ED81A6" deck="2"/>
+			<define color="faderinon" value="#EB709A" deck="2"/>
+			<define color="knobfillon" value="#EB709A" deck="2"/>
+			<define color="colorbass" value="#502634" deck="2"/>
+			<define color="colormed" value="#A04C69" deck="2"/>
+			<define color="colorhigh" value="#EB709A" deck="2"/>
+			<define color="scratch1" value="#EB709A" deck="2"/>
+			<define color="scratch2" value="#EB709A" deck="2"/>
+			<define color="waveform_active2" value="#EB709A"/>
+			<define color="waveform_passive2" value="#A04C69"/>
+			<define color="deckcolor" value="#F2A65D" deck="3"/>
+			<define color="deckcolorbright" value="#F4B170" deck="3"/>
+			<define color="deckcolordark" value="#A5713F" deck="3"/>
+			<define color="deckcolor_invert" value="#F4B170" deck="3"/>
+			<define color="padbuttonselected" value="#2C1E11" deck="3"/>
+			<define color="buttonon" value="#F2A65D" deck="3"/>
+			<define color="buttonover" value="#3A2816" deck="3"/>
+			<define color="buttonselected" value="#2C1E11" deck="3"/>
+			<define color="oled_buttonfill" value="#523820" deck="3"/>
+			<define color="oled_deck_selected" value="#523820" deck="3"/>
+			<define color="textdeck" value="#F4B170" deck="3"/>
+			<define color="faderinon" value="#F2A65D" deck="3"/>
+			<define color="knobfillon" value="#F2A65D" deck="3"/>
+			<define color="colorbass" value="#523820" deck="3"/>
+			<define color="colormed" value="#A5713F" deck="3"/>
+			<define color="colorhigh" value="#F2A65D" deck="3"/>
+			<define color="scratch1" value="#F2A65D" deck="3"/>
+			<define color="scratch2" value="#F2A65D" deck="3"/>
+			<define color="waveform_active3" value="#F2A65D"/>
+			<define color="waveform_passive3" value="#A5713F"/>
+			<define color="deckcolor" value="#8DA9F5" deck="4"/>
+			<define color="deckcolorbright" value="#9BB3F6" deck="4"/>
+			<define color="deckcolordark" value="#6073A7" deck="4"/>
+			<define color="deckcolor_invert" value="#9BB3F6" deck="4"/>
+			<define color="padbuttonselected" value="#191E2C" deck="4"/>
+			<define color="buttonon" value="#8DA9F5" deck="4"/>
+			<define color="buttonover" value="#22293B" deck="4"/>
+			<define color="buttonselected" value="#191E2C" deck="4"/>
+			<define color="oled_buttonfill" value="#303953" deck="4"/>
+			<define color="oled_deck_selected" value="#303953" deck="4"/>
+			<define color="textdeck" value="#9BB3F6" deck="4"/>
+			<define color="faderinon" value="#8DA9F5" deck="4"/>
+			<define color="knobfillon" value="#8DA9F5" deck="4"/>
+			<define color="colorbass" value="#303953" deck="4"/>
+			<define color="colormed" value="#6073A7" deck="4"/>
+			<define color="colorhigh" value="#8DA9F5" deck="4"/>
+			<define color="scratch1" value="#8DA9F5" deck="4"/>
+			<define color="scratch2" value="#8DA9F5" deck="4"/>
+			<define color="waveform_active4" value="#8DA9F5"/>
+			<define color="waveform_passive4" value="#6073A7"/>
+			<define color="deckcolor" value="#AA81BC" deck="left"/>
+			<define color="faderinon" value="#AA81BC" deck="left"/>
+			<define color="knobfillon" value="#AA81BC" deck="left"/>
+			<define color="faderinleft" value="#AA81BC"/>
+			<define color="deckcolor" value="#EB709A" deck="right"/>
+			<define color="faderinon" value="#EB709A" deck="right"/>
+			<define color="knobfillon" value="#EB709A" deck="right"/>
+			<define color="buttonon" value="#EB709A" deck="right"/>
+			<define color="oled_buttonfill" value="#502634" deck="right"/>
+			<define color="faderinright" value="#EB709A"/>
+			<define color="oled_plugin_over1" value="#291F2D"/>
+			<define color="oled_plugin_selected1" value="#3A2C40"/>
+			<define color="oled_plugin_down1" value="#302435"/>
+			<define color="oled_plugin_slider1" value="#AA81BC"/>
+			<define color="oled_plugin_disabled1" value="#3A2C40"/>
+			<define color="oled_plugin_over2" value="#381B25"/>
+			<define color="oled_plugin_selected2" value="#502634"/>
+			<define color="oled_plugin_down2" value="#421F2B"/>
+			<define color="oled_plugin_slider2" value="#EB709A"/>
+			<define color="oled_plugin_disabled2" value="#502634"/>
+		</group>
+		<group name="oled-theme-blush" condition="var_equal '@$oleddecktheme' 5">
+			<define color="deckcolor" value="#F08D7E" deck="1"/>
+			<define color="deckcolorbright" value="#F29B8D" deck="1"/>
+			<define color="deckcolordark" value="#A36056" deck="1"/>
+			<define color="deckcolor_invert" value="#F29B8D" deck="1"/>
+			<define color="padbuttonselected" value="#2B1917" deck="1"/>
+			<define color="buttonon" value="#F08D7E" deck="1"/>
+			<define color="buttonover" value="#3A221E" deck="1"/>
+			<define color="buttonselected" value="#2B1917" deck="1"/>
+			<define color="oled_buttonfill" value="#52302B" deck="1"/>
+			<define color="oled_deck_selected" value="#52302B" deck="1"/>
+			<define color="textdeck" value="#F29B8D" deck="1"/>
+			<define color="faderinon" value="#F08D7E" deck="1"/>
+			<define color="knobfillon" value="#F08D7E" deck="1"/>
+			<define color="colorbass" value="#52302B" deck="1"/>
+			<define color="colormed" value="#A36056" deck="1"/>
+			<define color="colorhigh" value="#F08D7E" deck="1"/>
+			<define color="scratch1" value="#F08D7E" deck="1"/>
+			<define color="scratch2" value="#F08D7E" deck="1"/>
+			<define color="waveform_active1" value="#F08D7E"/>
+			<define color="waveform_passive1" value="#A36056"/>
+			<define color="deckcolor" value="#F5B59E" deck="2"/>
+			<define color="deckcolorbright" value="#F6BEAA" deck="2"/>
+			<define color="deckcolordark" value="#A77B6B" deck="2"/>
+			<define color="deckcolor_invert" value="#F6BEAA" deck="2"/>
+			<define color="padbuttonselected" value="#2C211C" deck="2"/>
+			<define color="buttonon" value="#F5B59E" deck="2"/>
+			<define color="buttonover" value="#3B2B26" deck="2"/>
+			<define color="buttonselected" value="#2C211C" deck="2"/>
+			<define color="oled_buttonfill" value="#533E36" deck="2"/>
+			<define color="oled_deck_selected" value="#533E36" deck="2"/>
+			<define color="textdeck" value="#F6BEAA" deck="2"/>
+			<define color="faderinon" value="#F5B59E" deck="2"/>
+			<define color="knobfillon" value="#F5B59E" deck="2"/>
+			<define color="colorbass" value="#533E36" deck="2"/>
+			<define color="colormed" value="#A77B6B" deck="2"/>
+			<define color="colorhigh" value="#F5B59E" deck="2"/>
+			<define color="scratch1" value="#F5B59E" deck="2"/>
+			<define color="scratch2" value="#F5B59E" deck="2"/>
+			<define color="waveform_active2" value="#F5B59E"/>
+			<define color="waveform_passive2" value="#A77B6B"/>
+			<define color="deckcolor" value="#E6B6D0" deck="3"/>
+			<define color="deckcolorbright" value="#E9BFD6" deck="3"/>
+			<define color="deckcolordark" value="#9C7C8D" deck="3"/>
+			<define color="deckcolor_invert" value="#E9BFD6" deck="3"/>
+			<define color="padbuttonselected" value="#292125" deck="3"/>
+			<define color="buttonon" value="#E6B6D0" deck="3"/>
+			<define color="buttonover" value="#372C32" deck="3"/>
+			<define color="buttonselected" value="#292125" deck="3"/>
+			<define color="oled_buttonfill" value="#4E3E47" deck="3"/>
+			<define color="oled_deck_selected" value="#4E3E47" deck="3"/>
+			<define color="textdeck" value="#E9BFD6" deck="3"/>
+			<define color="faderinon" value="#E6B6D0" deck="3"/>
+			<define color="knobfillon" value="#E6B6D0" deck="3"/>
+			<define color="colorbass" value="#4E3E47" deck="3"/>
+			<define color="colormed" value="#9C7C8D" deck="3"/>
+			<define color="colorhigh" value="#E6B6D0" deck="3"/>
+			<define color="scratch1" value="#E6B6D0" deck="3"/>
+			<define color="scratch2" value="#E6B6D0" deck="3"/>
+			<define color="waveform_active3" value="#E6B6D0"/>
+			<define color="waveform_passive3" value="#9C7C8D"/>
+			<define color="deckcolor" value="#B4B9DF" deck="4"/>
+			<define color="deckcolorbright" value="#BDC1E3" deck="4"/>
+			<define color="deckcolordark" value="#7A7E98" deck="4"/>
+			<define color="deckcolor_invert" value="#BDC1E3" deck="4"/>
+			<define color="padbuttonselected" value="#202128" deck="4"/>
+			<define color="buttonon" value="#B4B9DF" deck="4"/>
+			<define color="buttonover" value="#2B2C36" deck="4"/>
+			<define color="buttonselected" value="#202128" deck="4"/>
+			<define color="oled_buttonfill" value="#3D3F4C" deck="4"/>
+			<define color="oled_deck_selected" value="#3D3F4C" deck="4"/>
+			<define color="textdeck" value="#BDC1E3" deck="4"/>
+			<define color="faderinon" value="#B4B9DF" deck="4"/>
+			<define color="knobfillon" value="#B4B9DF" deck="4"/>
+			<define color="colorbass" value="#3D3F4C" deck="4"/>
+			<define color="colormed" value="#7A7E98" deck="4"/>
+			<define color="colorhigh" value="#B4B9DF" deck="4"/>
+			<define color="scratch1" value="#B4B9DF" deck="4"/>
+			<define color="scratch2" value="#B4B9DF" deck="4"/>
+			<define color="waveform_active4" value="#B4B9DF"/>
+			<define color="waveform_passive4" value="#7A7E98"/>
+			<define color="deckcolor" value="#F08D7E" deck="left"/>
+			<define color="faderinon" value="#F08D7E" deck="left"/>
+			<define color="knobfillon" value="#F08D7E" deck="left"/>
+			<define color="faderinleft" value="#F08D7E"/>
+			<define color="deckcolor" value="#F5B59E" deck="right"/>
+			<define color="faderinon" value="#F5B59E" deck="right"/>
+			<define color="knobfillon" value="#F5B59E" deck="right"/>
+			<define color="buttonon" value="#F5B59E" deck="right"/>
+			<define color="oled_buttonfill" value="#533E36" deck="right"/>
+			<define color="faderinright" value="#F5B59E"/>
+			<define color="oled_plugin_over1" value="#3A221E"/>
+			<define color="oled_plugin_selected1" value="#52302B"/>
+			<define color="oled_plugin_down1" value="#432723"/>
+			<define color="oled_plugin_slider1" value="#F08D7E"/>
+			<define color="oled_plugin_disabled1" value="#52302B"/>
+			<define color="oled_plugin_over2" value="#3B2B26"/>
+			<define color="oled_plugin_selected2" value="#533E36"/>
+			<define color="oled_plugin_down2" value="#45332C"/>
+			<define color="oled_plugin_slider2" value="#F5B59E"/>
+			<define color="oled_plugin_disabled2" value="#533E36"/>
+		</group>
+		<group name="oled-theme-frost" condition="var_equal '@$oleddecktheme' 6">
+			<define color="deckcolor" value="#99E5F0" deck="1"/>
+			<define color="deckcolorbright" value="#A5E8F2" deck="1"/>
+			<define color="deckcolordark" value="#689CA3" deck="1"/>
+			<define color="deckcolor_invert" value="#A5E8F2" deck="1"/>
+			<define color="padbuttonselected" value="#1C292B" deck="1"/>
+			<define color="buttonon" value="#99E5F0" deck="1"/>
+			<define color="buttonover" value="#25373A" deck="1"/>
+			<define color="buttonselected" value="#1C292B" deck="1"/>
+			<define color="oled_buttonfill" value="#344E52" deck="1"/>
+			<define color="oled_deck_selected" value="#344E52" deck="1"/>
+			<define color="textdeck" value="#A5E8F2" deck="1"/>
+			<define color="faderinon" value="#99E5F0" deck="1"/>
+			<define color="knobfillon" value="#99E5F0" deck="1"/>
+			<define color="colorbass" value="#344E52" deck="1"/>
+			<define color="colormed" value="#689CA3" deck="1"/>
+			<define color="colorhigh" value="#99E5F0" deck="1"/>
+			<define color="scratch1" value="#99E5F0" deck="1"/>
+			<define color="scratch2" value="#99E5F0" deck="1"/>
+			<define color="waveform_active1" value="#99E5F0"/>
+			<define color="waveform_passive1" value="#689CA3"/>
+			<define color="deckcolor" value="#B9F2D8" deck="2"/>
+			<define color="deckcolorbright" value="#C1F4DD" deck="2"/>
+			<define color="deckcolordark" value="#7EA593" deck="2"/>
+			<define color="deckcolor_invert" value="#C1F4DD" deck="2"/>
+			<define color="padbuttonselected" value="#212C27" deck="2"/>
+			<define color="buttonon" value="#B9F2D8" deck="2"/>
+			<define color="buttonover" value="#2C3A34" deck="2"/>
+			<define color="buttonselected" value="#212C27" deck="2"/>
+			<define color="oled_buttonfill" value="#3F5249" deck="2"/>
+			<define color="oled_deck_selected" value="#3F5249" deck="2"/>
+			<define color="textdeck" value="#C1F4DD" deck="2"/>
+			<define color="faderinon" value="#B9F2D8" deck="2"/>
+			<define color="knobfillon" value="#B9F2D8" deck="2"/>
+			<define color="colorbass" value="#3F5249" deck="2"/>
+			<define color="colormed" value="#7EA593" deck="2"/>
+			<define color="colorhigh" value="#B9F2D8" deck="2"/>
+			<define color="scratch1" value="#B9F2D8" deck="2"/>
+			<define color="scratch2" value="#B9F2D8" deck="2"/>
+			<define color="waveform_active2" value="#B9F2D8"/>
+			<define color="waveform_passive2" value="#7EA593"/>
+			<define color="deckcolor" value="#FFB7E7" deck="3"/>
+			<define color="deckcolorbright" value="#FFC0EA" deck="3"/>
+			<define color="deckcolordark" value="#AD7C9D" deck="3"/>
+			<define color="deckcolor_invert" value="#FFC0EA" deck="3"/>
+			<define color="padbuttonselected" value="#2E212A" deck="3"/>
+			<define color="buttonon" value="#FFB7E7" deck="3"/>
+			<define color="buttonover" value="#3D2C37" deck="3"/>
+			<define color="buttonselected" value="#2E212A" deck="3"/>
+			<define color="oled_buttonfill" value="#573E4F" deck="3"/>
+			<define color="oled_deck_selected" value="#573E4F" deck="3"/>
+			<define color="textdeck" value="#FFC0EA" deck="3"/>
+			<define color="faderinon" value="#FFB7E7" deck="3"/>
+			<define color="knobfillon" value="#FFB7E7" deck="3"/>
+			<define color="colorbass" value="#573E4F" deck="3"/>
+			<define color="colormed" value="#AD7C9D" deck="3"/>
+			<define color="colorhigh" value="#FFB7E7" deck="3"/>
+			<define color="scratch1" value="#FFB7E7" deck="3"/>
+			<define color="scratch2" value="#FFB7E7" deck="3"/>
+			<define color="waveform_active3" value="#FFB7E7"/>
+			<define color="waveform_passive3" value="#AD7C9D"/>
+			<define color="deckcolor" value="#C6B0FF" deck="4"/>
+			<define color="deckcolorbright" value="#CDB9FF" deck="4"/>
+			<define color="deckcolordark" value="#8778AD" deck="4"/>
+			<define color="deckcolor_invert" value="#CDB9FF" deck="4"/>
+			<define color="padbuttonselected" value="#24202E" deck="4"/>
+			<define color="buttonon" value="#C6B0FF" deck="4"/>
+			<define color="buttonover" value="#302A3D" deck="4"/>
+			<define color="buttonselected" value="#24202E" deck="4"/>
+			<define color="oled_buttonfill" value="#433C57" deck="4"/>
+			<define color="oled_deck_selected" value="#433C57" deck="4"/>
+			<define color="textdeck" value="#CDB9FF" deck="4"/>
+			<define color="faderinon" value="#C6B0FF" deck="4"/>
+			<define color="knobfillon" value="#C6B0FF" deck="4"/>
+			<define color="colorbass" value="#433C57" deck="4"/>
+			<define color="colormed" value="#8778AD" deck="4"/>
+			<define color="colorhigh" value="#C6B0FF" deck="4"/>
+			<define color="scratch1" value="#C6B0FF" deck="4"/>
+			<define color="scratch2" value="#C6B0FF" deck="4"/>
+			<define color="waveform_active4" value="#C6B0FF"/>
+			<define color="waveform_passive4" value="#8778AD"/>
+			<define color="deckcolor" value="#99E5F0" deck="left"/>
+			<define color="faderinon" value="#99E5F0" deck="left"/>
+			<define color="knobfillon" value="#99E5F0" deck="left"/>
+			<define color="faderinleft" value="#99E5F0"/>
+			<define color="deckcolor" value="#B9F2D8" deck="right"/>
+			<define color="faderinon" value="#B9F2D8" deck="right"/>
+			<define color="knobfillon" value="#B9F2D8" deck="right"/>
+			<define color="buttonon" value="#B9F2D8" deck="right"/>
+			<define color="oled_buttonfill" value="#3F5249" deck="right"/>
+			<define color="faderinright" value="#B9F2D8"/>
+			<define color="oled_plugin_over1" value="#25373A"/>
+			<define color="oled_plugin_selected1" value="#344E52"/>
+			<define color="oled_plugin_down1" value="#2B4043"/>
+			<define color="oled_plugin_slider1" value="#99E5F0"/>
+			<define color="oled_plugin_disabled1" value="#344E52"/>
+			<define color="oled_plugin_over2" value="#2C3A34"/>
+			<define color="oled_plugin_selected2" value="#3F5249"/>
+			<define color="oled_plugin_down2" value="#34443C"/>
+			<define color="oled_plugin_slider2" value="#B9F2D8"/>
+			<define color="oled_plugin_disabled2" value="#3F5249"/>
+		</group>
+		<group name="oled-theme-dusk" condition="var_equal '@$oleddecktheme' 7">
+			<define color="deckcolor" value="#D998A3" deck="1"/>
+			<define color="deckcolorbright" value="#DEA4AE" deck="1"/>
+			<define color="deckcolordark" value="#94676F" deck="1"/>
+			<define color="deckcolor_invert" value="#DEA4AE" deck="1"/>
+			<define color="padbuttonselected" value="#271B1D" deck="1"/>
+			<define color="buttonon" value="#D998A3" deck="1"/>
+			<define color="buttonover" value="#342427" deck="1"/>
+			<define color="buttonselected" value="#271B1D" deck="1"/>
+			<define color="oled_buttonfill" value="#4A3437" deck="1"/>
+			<define color="oled_deck_selected" value="#4A3437" deck="1"/>
+			<define color="textdeck" value="#DEA4AE" deck="1"/>
+			<define color="faderinon" value="#D998A3" deck="1"/>
+			<define color="knobfillon" value="#D998A3" deck="1"/>
+			<define color="colorbass" value="#4A3437" deck="1"/>
+			<define color="colormed" value="#94676F" deck="1"/>
+			<define color="colorhigh" value="#D998A3" deck="1"/>
+			<define color="scratch1" value="#D998A3" deck="1"/>
+			<define color="scratch2" value="#D998A3" deck="1"/>
+			<define color="waveform_active1" value="#D998A3"/>
+			<define color="waveform_passive1" value="#94676F"/>
+			<define color="deckcolor" value="#AD96C9" deck="2"/>
+			<define color="deckcolorbright" value="#B7A3CF" deck="2"/>
+			<define color="deckcolordark" value="#766689" deck="2"/>
+			<define color="deckcolor_invert" value="#B7A3CF" deck="2"/>
+			<define color="padbuttonselected" value="#1F1B24" deck="2"/>
+			<define color="buttonon" value="#AD96C9" deck="2"/>
+			<define color="buttonover" value="#2A2430" deck="2"/>
+			<define color="buttonselected" value="#1F1B24" deck="2"/>
+			<define color="oled_buttonfill" value="#3B3344" deck="2"/>
+			<define color="oled_deck_selected" value="#3B3344" deck="2"/>
+			<define color="textdeck" value="#B7A3CF" deck="2"/>
+			<define color="faderinon" value="#AD96C9" deck="2"/>
+			<define color="knobfillon" value="#AD96C9" deck="2"/>
+			<define color="colorbass" value="#3B3344" deck="2"/>
+			<define color="colormed" value="#766689" deck="2"/>
+			<define color="colorhigh" value="#AD96C9" deck="2"/>
+			<define color="scratch1" value="#AD96C9" deck="2"/>
+			<define color="scratch2" value="#AD96C9" deck="2"/>
+			<define color="waveform_active2" value="#AD96C9"/>
+			<define color="waveform_passive2" value="#766689"/>
+			<define color="deckcolor" value="#F18D75" deck="3"/>
+			<define color="deckcolorbright" value="#F39B86" deck="3"/>
+			<define color="deckcolordark" value="#A46050" deck="3"/>
+			<define color="deckcolor_invert" value="#F39B86" deck="3"/>
+			<define color="padbuttonselected" value="#2B1915" deck="3"/>
+			<define color="buttonon" value="#F18D75" deck="3"/>
+			<define color="buttonover" value="#3A221C" deck="3"/>
+			<define color="buttonselected" value="#2B1915" deck="3"/>
+			<define color="oled_buttonfill" value="#523028" deck="3"/>
+			<define color="oled_deck_selected" value="#523028" deck="3"/>
+			<define color="textdeck" value="#F39B86" deck="3"/>
+			<define color="faderinon" value="#F18D75" deck="3"/>
+			<define color="knobfillon" value="#F18D75" deck="3"/>
+			<define color="colorbass" value="#523028" deck="3"/>
+			<define color="colormed" value="#A46050" deck="3"/>
+			<define color="colorhigh" value="#F18D75" deck="3"/>
+			<define color="scratch1" value="#F18D75" deck="3"/>
+			<define color="scratch2" value="#F18D75" deck="3"/>
+			<define color="waveform_active3" value="#F18D75"/>
+			<define color="waveform_passive3" value="#A46050"/>
+			<define color="deckcolor" value="#F6BA9B" deck="4"/>
+			<define color="deckcolorbright" value="#F7C2A7" deck="4"/>
+			<define color="deckcolordark" value="#A77E69" deck="4"/>
+			<define color="deckcolor_invert" value="#F7C2A7" deck="4"/>
+			<define color="padbuttonselected" value="#2C211C" deck="4"/>
+			<define color="buttonon" value="#F6BA9B" deck="4"/>
+			<define color="buttonover" value="#3B2D25" deck="4"/>
+			<define color="buttonselected" value="#2C211C" deck="4"/>
+			<define color="oled_buttonfill" value="#543F35" deck="4"/>
+			<define color="oled_deck_selected" value="#543F35" deck="4"/>
+			<define color="textdeck" value="#F7C2A7" deck="4"/>
+			<define color="faderinon" value="#F6BA9B" deck="4"/>
+			<define color="knobfillon" value="#F6BA9B" deck="4"/>
+			<define color="colorbass" value="#543F35" deck="4"/>
+			<define color="colormed" value="#A77E69" deck="4"/>
+			<define color="colorhigh" value="#F6BA9B" deck="4"/>
+			<define color="scratch1" value="#F6BA9B" deck="4"/>
+			<define color="scratch2" value="#F6BA9B" deck="4"/>
+			<define color="waveform_active4" value="#F6BA9B"/>
+			<define color="waveform_passive4" value="#A77E69"/>
+			<define color="deckcolor" value="#D998A3" deck="left"/>
+			<define color="faderinon" value="#D998A3" deck="left"/>
+			<define color="knobfillon" value="#D998A3" deck="left"/>
+			<define color="faderinleft" value="#D998A3"/>
+			<define color="deckcolor" value="#AD96C9" deck="right"/>
+			<define color="faderinon" value="#AD96C9" deck="right"/>
+			<define color="knobfillon" value="#AD96C9" deck="right"/>
+			<define color="buttonon" value="#AD96C9" deck="right"/>
+			<define color="oled_buttonfill" value="#3B3344" deck="right"/>
+			<define color="faderinright" value="#AD96C9"/>
+			<define color="oled_plugin_over1" value="#342427"/>
+			<define color="oled_plugin_selected1" value="#4A3437"/>
+			<define color="oled_plugin_down1" value="#3D2B2E"/>
+			<define color="oled_plugin_slider1" value="#D998A3"/>
+			<define color="oled_plugin_disabled1" value="#4A3437"/>
+			<define color="oled_plugin_over2" value="#2A2430"/>
+			<define color="oled_plugin_selected2" value="#3B3344"/>
+			<define color="oled_plugin_down2" value="#302A38"/>
+			<define color="oled_plugin_slider2" value="#AD96C9"/>
+			<define color="oled_plugin_disabled2" value="#3B3344"/>
+		</group>
+		<group name="oled-theme-grove" condition="var_equal '@$oleddecktheme' 8">
+			<define color="deckcolor" value="#5FAB72" deck="1"/>
+			<define color="deckcolorbright" value="#72B583" deck="1"/>
+			<define color="deckcolordark" value="#41744E" deck="1"/>
+			<define color="deckcolor_invert" value="#72B583" deck="1"/>
+			<define color="padbuttonselected" value="#111F15" deck="1"/>
+			<define color="buttonon" value="#5FAB72" deck="1"/>
+			<define color="buttonover" value="#17291B" deck="1"/>
+			<define color="buttonselected" value="#111F15" deck="1"/>
+			<define color="oled_buttonfill" value="#203A27" deck="1"/>
+			<define color="oled_deck_selected" value="#203A27" deck="1"/>
+			<define color="textdeck" value="#72B583" deck="1"/>
+			<define color="faderinon" value="#5FAB72" deck="1"/>
+			<define color="knobfillon" value="#5FAB72" deck="1"/>
+			<define color="colorbass" value="#203A27" deck="1"/>
+			<define color="colormed" value="#41744E" deck="1"/>
+			<define color="colorhigh" value="#5FAB72" deck="1"/>
+			<define color="scratch1" value="#5FAB72" deck="1"/>
+			<define color="scratch2" value="#5FAB72" deck="1"/>
+			<define color="waveform_active1" value="#5FAB72"/>
+			<define color="waveform_passive1" value="#41744E"/>
+			<define color="deckcolor" value="#79CD8F" deck="2"/>
+			<define color="deckcolorbright" value="#89D39C" deck="2"/>
+			<define color="deckcolordark" value="#528B61" deck="2"/>
+			<define color="deckcolor_invert" value="#89D39C" deck="2"/>
+			<define color="padbuttonselected" value="#16251A" deck="2"/>
+			<define color="buttonon" value="#79CD8F" deck="2"/>
+			<define color="buttonover" value="#1D3122" deck="2"/>
+			<define color="buttonselected" value="#16251A" deck="2"/>
+			<define color="oled_buttonfill" value="#294631" deck="2"/>
+			<define color="oled_deck_selected" value="#294631" deck="2"/>
+			<define color="textdeck" value="#89D39C" deck="2"/>
+			<define color="faderinon" value="#79CD8F" deck="2"/>
+			<define color="knobfillon" value="#79CD8F" deck="2"/>
+			<define color="colorbass" value="#294631" deck="2"/>
+			<define color="colormed" value="#528B61" deck="2"/>
+			<define color="colorhigh" value="#79CD8F" deck="2"/>
+			<define color="scratch1" value="#79CD8F" deck="2"/>
+			<define color="scratch2" value="#79CD8F" deck="2"/>
+			<define color="waveform_active2" value="#79CD8F"/>
+			<define color="waveform_passive2" value="#528B61"/>
+			<define color="deckcolor" value="#AAD56D" deck="3"/>
+			<define color="deckcolorbright" value="#B4DA7F" deck="3"/>
+			<define color="deckcolordark" value="#74914A" deck="3"/>
+			<define color="deckcolor_invert" value="#B4DA7F" deck="3"/>
+			<define color="padbuttonselected" value="#1F2614" deck="3"/>
+			<define color="buttonon" value="#AAD56D" deck="3"/>
+			<define color="buttonover" value="#29331A" deck="3"/>
+			<define color="buttonselected" value="#1F2614" deck="3"/>
+			<define color="oled_buttonfill" value="#3A4825" deck="3"/>
+			<define color="oled_deck_selected" value="#3A4825" deck="3"/>
+			<define color="textdeck" value="#B4DA7F" deck="3"/>
+			<define color="faderinon" value="#AAD56D" deck="3"/>
+			<define color="knobfillon" value="#AAD56D" deck="3"/>
+			<define color="colorbass" value="#3A4825" deck="3"/>
+			<define color="colormed" value="#74914A" deck="3"/>
+			<define color="colorhigh" value="#AAD56D" deck="3"/>
+			<define color="scratch1" value="#AAD56D" deck="3"/>
+			<define color="scratch2" value="#AAD56D" deck="3"/>
+			<define color="waveform_active3" value="#AAD56D"/>
+			<define color="waveform_passive3" value="#74914A"/>
+			<define color="deckcolor" value="#D0EAA2" deck="4"/>
+			<define color="deckcolorbright" value="#D6EDAD" deck="4"/>
+			<define color="deckcolordark" value="#8D9F6E" deck="4"/>
+			<define color="deckcolor_invert" value="#D6EDAD" deck="4"/>
+			<define color="padbuttonselected" value="#252A1D" deck="4"/>
+			<define color="buttonon" value="#D0EAA2" deck="4"/>
+			<define color="buttonover" value="#323827" deck="4"/>
+			<define color="buttonselected" value="#252A1D" deck="4"/>
+			<define color="oled_buttonfill" value="#475037" deck="4"/>
+			<define color="oled_deck_selected" value="#475037" deck="4"/>
+			<define color="textdeck" value="#D6EDAD" deck="4"/>
+			<define color="faderinon" value="#D0EAA2" deck="4"/>
+			<define color="knobfillon" value="#D0EAA2" deck="4"/>
+			<define color="colorbass" value="#475037" deck="4"/>
+			<define color="colormed" value="#8D9F6E" deck="4"/>
+			<define color="colorhigh" value="#D0EAA2" deck="4"/>
+			<define color="scratch1" value="#D0EAA2" deck="4"/>
+			<define color="scratch2" value="#D0EAA2" deck="4"/>
+			<define color="waveform_active4" value="#D0EAA2"/>
+			<define color="waveform_passive4" value="#8D9F6E"/>
+			<define color="deckcolor" value="#5FAB72" deck="left"/>
+			<define color="faderinon" value="#5FAB72" deck="left"/>
+			<define color="knobfillon" value="#5FAB72" deck="left"/>
+			<define color="faderinleft" value="#5FAB72"/>
+			<define color="deckcolor" value="#79CD8F" deck="right"/>
+			<define color="faderinon" value="#79CD8F" deck="right"/>
+			<define color="knobfillon" value="#79CD8F" deck="right"/>
+			<define color="buttonon" value="#79CD8F" deck="right"/>
+			<define color="oled_buttonfill" value="#294631" deck="right"/>
+			<define color="faderinright" value="#79CD8F"/>
+			<define color="oled_plugin_over1" value="#17291B"/>
+			<define color="oled_plugin_selected1" value="#203A27"/>
+			<define color="oled_plugin_down1" value="#1B3020"/>
+			<define color="oled_plugin_slider1" value="#5FAB72"/>
+			<define color="oled_plugin_disabled1" value="#203A27"/>
+			<define color="oled_plugin_over2" value="#1D3122"/>
+			<define color="oled_plugin_selected2" value="#294631"/>
+			<define color="oled_plugin_down2" value="#223928"/>
+			<define color="oled_plugin_slider2" value="#79CD8F"/>
+			<define color="oled_plugin_disabled2" value="#294631"/>
+		</group>
+		<group name="oled-theme-orchid" condition="var_equal '@$oleddecktheme' 9">
+			<define color="deckcolor" value="#B779B1" deck="1"/>
+			<define color="deckcolorbright" value="#C089BA" deck="1"/>
+			<define color="deckcolordark" value="#7C5278" deck="1"/>
+			<define color="deckcolor_invert" value="#C089BA" deck="1"/>
+			<define color="padbuttonselected" value="#211620" deck="1"/>
+			<define color="buttonon" value="#B779B1" deck="1"/>
+			<define color="buttonover" value="#2C1D2A" deck="1"/>
+			<define color="buttonselected" value="#211620" deck="1"/>
+			<define color="oled_buttonfill" value="#3E293C" deck="1"/>
+			<define color="oled_deck_selected" value="#3E293C" deck="1"/>
+			<define color="textdeck" value="#C089BA" deck="1"/>
+			<define color="faderinon" value="#B779B1" deck="1"/>
+			<define color="knobfillon" value="#B779B1" deck="1"/>
+			<define color="colorbass" value="#3E293C" deck="1"/>
+			<define color="colormed" value="#7C5278" deck="1"/>
+			<define color="colorhigh" value="#B779B1" deck="1"/>
+			<define color="scratch1" value="#B779B1" deck="1"/>
+			<define color="scratch2" value="#B779B1" deck="1"/>
+			<define color="waveform_active1" value="#B779B1"/>
+			<define color="waveform_passive1" value="#7C5278"/>
+			<define color="deckcolor" value="#AB85D0" deck="2"/>
+			<define color="deckcolorbright" value="#B594D6" deck="2"/>
+			<define color="deckcolordark" value="#745A8D" deck="2"/>
+			<define color="deckcolor_invert" value="#B594D6" deck="2"/>
+			<define color="padbuttonselected" value="#1F1825" deck="2"/>
+			<define color="buttonon" value="#AB85D0" deck="2"/>
+			<define color="buttonover" value="#292032" deck="2"/>
+			<define color="buttonselected" value="#1F1825" deck="2"/>
+			<define color="oled_buttonfill" value="#3A2D47" deck="2"/>
+			<define color="oled_deck_selected" value="#3A2D47" deck="2"/>
+			<define color="textdeck" value="#B594D6" deck="2"/>
+			<define color="faderinon" value="#AB85D0" deck="2"/>
+			<define color="knobfillon" value="#AB85D0" deck="2"/>
+			<define color="colorbass" value="#3A2D47" deck="2"/>
+			<define color="colormed" value="#745A8D" deck="2"/>
+			<define color="colorhigh" value="#AB85D0" deck="2"/>
+			<define color="scratch1" value="#AB85D0" deck="2"/>
+			<define color="scratch2" value="#AB85D0" deck="2"/>
+			<define color="waveform_active2" value="#AB85D0"/>
+			<define color="waveform_passive2" value="#745A8D"/>
+			<define color="deckcolor" value="#C6A0EA" deck="3"/>
+			<define color="deckcolorbright" value="#CDABED" deck="3"/>
+			<define color="deckcolordark" value="#876D9F" deck="3"/>
+			<define color="deckcolor_invert" value="#CDABED" deck="3"/>
+			<define color="padbuttonselected" value="#241D2A" deck="3"/>
+			<define color="buttonon" value="#C6A0EA" deck="3"/>
+			<define color="buttonover" value="#302638" deck="3"/>
+			<define color="buttonselected" value="#241D2A" deck="3"/>
+			<define color="oled_buttonfill" value="#433650" deck="3"/>
+			<define color="oled_deck_selected" value="#433650" deck="3"/>
+			<define color="textdeck" value="#CDABED" deck="3"/>
+			<define color="faderinon" value="#C6A0EA" deck="3"/>
+			<define color="knobfillon" value="#C6A0EA" deck="3"/>
+			<define color="colorbass" value="#433650" deck="3"/>
+			<define color="colormed" value="#876D9F" deck="3"/>
+			<define color="colorhigh" value="#C6A0EA" deck="3"/>
+			<define color="scratch1" value="#C6A0EA" deck="3"/>
+			<define color="scratch2" value="#C6A0EA" deck="3"/>
+			<define color="waveform_active3" value="#C6A0EA"/>
+			<define color="waveform_passive3" value="#876D9F"/>
+			<define color="deckcolor" value="#E4C1F4" deck="4"/>
+			<define color="deckcolorbright" value="#E7C8F5" deck="4"/>
+			<define color="deckcolordark" value="#9B83A6" deck="4"/>
+			<define color="deckcolor_invert" value="#E7C8F5" deck="4"/>
+			<define color="padbuttonselected" value="#29232C" deck="4"/>
+			<define color="buttonon" value="#E4C1F4" deck="4"/>
+			<define color="buttonover" value="#372E3B" deck="4"/>
+			<define color="buttonselected" value="#29232C" deck="4"/>
+			<define color="oled_buttonfill" value="#4E4253" deck="4"/>
+			<define color="oled_deck_selected" value="#4E4253" deck="4"/>
+			<define color="textdeck" value="#E7C8F5" deck="4"/>
+			<define color="faderinon" value="#E4C1F4" deck="4"/>
+			<define color="knobfillon" value="#E4C1F4" deck="4"/>
+			<define color="colorbass" value="#4E4253" deck="4"/>
+			<define color="colormed" value="#9B83A6" deck="4"/>
+			<define color="colorhigh" value="#E4C1F4" deck="4"/>
+			<define color="scratch1" value="#E4C1F4" deck="4"/>
+			<define color="scratch2" value="#E4C1F4" deck="4"/>
+			<define color="waveform_active4" value="#E4C1F4"/>
+			<define color="waveform_passive4" value="#9B83A6"/>
+			<define color="deckcolor" value="#B779B1" deck="left"/>
+			<define color="faderinon" value="#B779B1" deck="left"/>
+			<define color="knobfillon" value="#B779B1" deck="left"/>
+			<define color="faderinleft" value="#B779B1"/>
+			<define color="deckcolor" value="#AB85D0" deck="right"/>
+			<define color="faderinon" value="#AB85D0" deck="right"/>
+			<define color="knobfillon" value="#AB85D0" deck="right"/>
+			<define color="buttonon" value="#AB85D0" deck="right"/>
+			<define color="oled_buttonfill" value="#3A2D47" deck="right"/>
+			<define color="faderinright" value="#AB85D0"/>
+			<define color="oled_plugin_over1" value="#2C1D2A"/>
+			<define color="oled_plugin_selected1" value="#3E293C"/>
+			<define color="oled_plugin_down1" value="#332232"/>
+			<define color="oled_plugin_slider1" value="#B779B1"/>
+			<define color="oled_plugin_disabled1" value="#3E293C"/>
+			<define color="oled_plugin_over2" value="#292032"/>
+			<define color="oled_plugin_selected2" value="#3A2D47"/>
+			<define color="oled_plugin_down2" value="#30253A"/>
+			<define color="oled_plugin_slider2" value="#AB85D0"/>
+			<define color="oled_plugin_disabled2" value="#3A2D47"/>
+		</group>
+		<group name="oled-theme-ember" condition="var_equal '@$oleddecktheme' 10">
+			<define color="deckcolor" value="#D9784F" deck="1"/>
+			<define color="deckcolorbright" value="#DE8864" deck="1"/>
+			<define color="deckcolordark" value="#945236" deck="1"/>
+			<define color="deckcolor_invert" value="#DE8864" deck="1"/>
+			<define color="padbuttonselected" value="#27160E" deck="1"/>
+			<define color="buttonon" value="#D9784F" deck="1"/>
+			<define color="buttonover" value="#341D13" deck="1"/>
+			<define color="buttonselected" value="#27160E" deck="1"/>
+			<define color="oled_buttonfill" value="#4A291B" deck="1"/>
+			<define color="oled_deck_selected" value="#4A291B" deck="1"/>
+			<define color="textdeck" value="#DE8864" deck="1"/>
+			<define color="faderinon" value="#D9784F" deck="1"/>
+			<define color="knobfillon" value="#D9784F" deck="1"/>
+			<define color="colorbass" value="#4A291B" deck="1"/>
+			<define color="colormed" value="#945236" deck="1"/>
+			<define color="colorhigh" value="#D9784F" deck="1"/>
+			<define color="scratch1" value="#D9784F" deck="1"/>
+			<define color="scratch2" value="#D9784F" deck="1"/>
+			<define color="waveform_active1" value="#D9784F"/>
+			<define color="waveform_passive1" value="#945236"/>
+			<define color="deckcolor" value="#ED9864" deck="2"/>
+			<define color="deckcolorbright" value="#EFA477" deck="2"/>
+			<define color="deckcolordark" value="#A16744" deck="2"/>
+			<define color="deckcolor_invert" value="#EFA477" deck="2"/>
+			<define color="padbuttonselected" value="#2B1B12" deck="2"/>
+			<define color="buttonon" value="#ED9864" deck="2"/>
+			<define color="buttonover" value="#392418" deck="2"/>
+			<define color="buttonselected" value="#2B1B12" deck="2"/>
+			<define color="oled_buttonfill" value="#513422" deck="2"/>
+			<define color="oled_deck_selected" value="#513422" deck="2"/>
+			<define color="textdeck" value="#EFA477" deck="2"/>
+			<define color="faderinon" value="#ED9864" deck="2"/>
+			<define color="knobfillon" value="#ED9864" deck="2"/>
+			<define color="colorbass" value="#513422" deck="2"/>
+			<define color="colormed" value="#A16744" deck="2"/>
+			<define color="colorhigh" value="#ED9864" deck="2"/>
+			<define color="scratch1" value="#ED9864" deck="2"/>
+			<define color="scratch2" value="#ED9864" deck="2"/>
+			<define color="waveform_active2" value="#ED9864"/>
+			<define color="waveform_passive2" value="#A16744"/>
+			<define color="deckcolor" value="#F7B58E" deck="3"/>
+			<define color="deckcolorbright" value="#F8BE9C" deck="3"/>
+			<define color="deckcolordark" value="#A87B61" deck="3"/>
+			<define color="deckcolor_invert" value="#F8BE9C" deck="3"/>
+			<define color="padbuttonselected" value="#2C211A" deck="3"/>
+			<define color="buttonon" value="#F7B58E" deck="3"/>
+			<define color="buttonover" value="#3B2B22" deck="3"/>
+			<define color="buttonselected" value="#2C211A" deck="3"/>
+			<define color="oled_buttonfill" value="#543E30" deck="3"/>
+			<define color="oled_deck_selected" value="#543E30" deck="3"/>
+			<define color="textdeck" value="#F8BE9C" deck="3"/>
+			<define color="faderinon" value="#F7B58E" deck="3"/>
+			<define color="knobfillon" value="#F7B58E" deck="3"/>
+			<define color="colorbass" value="#543E30" deck="3"/>
+			<define color="colormed" value="#A87B61" deck="3"/>
+			<define color="colorhigh" value="#F7B58E" deck="3"/>
+			<define color="scratch1" value="#F7B58E" deck="3"/>
+			<define color="scratch2" value="#F7B58E" deck="3"/>
+			<define color="waveform_active3" value="#F7B58E"/>
+			<define color="waveform_passive3" value="#A87B61"/>
+			<define color="deckcolor" value="#F9D1AD" deck="4"/>
+			<define color="deckcolorbright" value="#FAD7B7" deck="4"/>
+			<define color="deckcolordark" value="#A98E76" deck="4"/>
+			<define color="deckcolor_invert" value="#FAD7B7" deck="4"/>
+			<define color="padbuttonselected" value="#2D261F" deck="4"/>
+			<define color="buttonon" value="#F9D1AD" deck="4"/>
+			<define color="buttonover" value="#3C322A" deck="4"/>
+			<define color="buttonselected" value="#2D261F" deck="4"/>
+			<define color="oled_buttonfill" value="#55473B" deck="4"/>
+			<define color="oled_deck_selected" value="#55473B" deck="4"/>
+			<define color="textdeck" value="#FAD7B7" deck="4"/>
+			<define color="faderinon" value="#F9D1AD" deck="4"/>
+			<define color="knobfillon" value="#F9D1AD" deck="4"/>
+			<define color="colorbass" value="#55473B" deck="4"/>
+			<define color="colormed" value="#A98E76" deck="4"/>
+			<define color="colorhigh" value="#F9D1AD" deck="4"/>
+			<define color="scratch1" value="#F9D1AD" deck="4"/>
+			<define color="scratch2" value="#F9D1AD" deck="4"/>
+			<define color="waveform_active4" value="#F9D1AD"/>
+			<define color="waveform_passive4" value="#A98E76"/>
+			<define color="deckcolor" value="#D9784F" deck="left"/>
+			<define color="faderinon" value="#D9784F" deck="left"/>
+			<define color="knobfillon" value="#D9784F" deck="left"/>
+			<define color="faderinleft" value="#D9784F"/>
+			<define color="deckcolor" value="#ED9864" deck="right"/>
+			<define color="faderinon" value="#ED9864" deck="right"/>
+			<define color="knobfillon" value="#ED9864" deck="right"/>
+			<define color="buttonon" value="#ED9864" deck="right"/>
+			<define color="oled_buttonfill" value="#513422" deck="right"/>
+			<define color="faderinright" value="#ED9864"/>
+			<define color="oled_plugin_over1" value="#341D13"/>
+			<define color="oled_plugin_selected1" value="#4A291B"/>
+			<define color="oled_plugin_down1" value="#3D2216"/>
+			<define color="oled_plugin_slider1" value="#D9784F"/>
+			<define color="oled_plugin_disabled1" value="#4A291B"/>
+			<define color="oled_plugin_over2" value="#392418"/>
+			<define color="oled_plugin_selected2" value="#513422"/>
+			<define color="oled_plugin_down2" value="#422B1C"/>
+			<define color="oled_plugin_slider2" value="#ED9864"/>
+			<define color="oled_plugin_disabled2" value="#513422"/>
+		</group>
+		<!-- END OLED DECK THEMES -->
 
 		<!--  dialogs & tooltips -->
 		<tooltip size="13" color="textoff2" back="black" shortcut="darkgray" localize="true"/>
-		<dialogs darkmode="true" condition="var_not_equal '@$oledcolorscheme' 2"/>
-		<dialogs darkmode="false" condition="var_equal '@$oledcolorscheme' 2"/>
-
+		<dialogs darkmode="true"/>
 
 		<group name="fader lines">
 			<define class="volume_lines">
@@ -628,8 +1429,8 @@
 				<size width="[WIDTH]" height="[HEIGHT]"/>
 				<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<selected color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<selected color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<text fontsize="[TEXTSIZE]" weight="[WEIGHT]" color="[TEXTCOLOR]" colorover="textover" colorselected="texton" colordown="texton" align="center" action="[TEXTACTION]" text="[TEXT]" localize="true" important="[IMPORTANT]"/>
 				<icon sysicon="[SYSICON]" coloroff="[TEXTCOLOR]" colorover="textover" colordown="texton" colorselected="texton" width="[ICONSIZE]" height="[ICONSIZE]" />
 			</define>
@@ -637,8 +1438,8 @@
 				<size width="[WIDTH]" height="[HEIGHT]"/>
 				<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<selected color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<selected color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<icon x="[ICONX]" y="[ICONY]" coloroff="[TEXTCOLOR]" colorover="textover" colordown="texton" colorselected="texton" width="[ICONSIZE]" height="[ICONSIZE]" />
 			</define>
 
@@ -646,16 +1447,16 @@
 				<size width="[WIDTH]" height="[HEIGHT]"/>
 				<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<selected color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<selected color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<text fontsize="[TEXTSIZE]" weight="[WEIGHT]" color="textoff" colorover="textover" colorselected="texton" colordown="texton" align="center" action="[TEXTACTION]" text="[TEXT]" localize="true" important="[IMPORTANT]"/>
 			</define>
 			<define class="button_main_dark" placeholders="width=62,height=30,text,important,textaction,sysicon,iconsize,textsize=11,weight=normal,textcolor=textoff">
 				<size width="[WIDTH]" height="[HEIGHT]"/>
 				<off color="dropdown" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<selected color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<selected color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<text fontsize="[TEXTSIZE]" weight="[WEIGHT]" color="[TEXTCOLOR]" colorover="textover" colorselected="texton" colordown="texton" align="center" action="[TEXTACTION]" text="[TEXT]" localize="true" important="[IMPORTANT]"/>
 				<icon sysicon="[SYSICON]" coloroff="[TEXTCOLOR]" colorover="textover" colordown="texton" colorselected="texton" width="[ICONSIZE]" height="[ICONSIZE]" />
 			</define>
@@ -673,7 +1474,7 @@
 				<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<selected color="buttonselected" shape="square" border="buttonoff" border_size="1" radius="2"/>
-				<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<text fontsize="[TEXTSIZE]" weight="[WEIGHT]" color="textoff" colorover="textover" colorselected="texton" colordown="texton" align="center" action="[TEXTACTION]" text="[TEXT]" localize="true" important="[IMPORTANT]"/>
 				<icon sysicon="[SYSICON]" coloroff="textoff" colorover="textover" colordown="texton" colorselected="texton" width="[ICONSIZE]" height="[ICONSIZE]"/>
 			</define>
@@ -683,7 +1484,7 @@
 					<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<selected color="padbuttonselected" shape="square" border="buttonon" border_size="1" radius="2"/>
-					<down color="buttonon" shape="square" border="buttonon" border_size="1" radius="2"/>
+					<down color="oled_buttonfill" shape="square" border="buttonon" border_size="1" radius="2"/>
 					<text dx="+4" dy="-3" width="54" fontsize="[TEXTSIZE]" color="textoff2" colorover="textover" colorselected="textselected" colordown="texton" align="center" action="[TEXTACTION]"  important="[IMPORTANT]"/>
 				</button>
 				<visual type="color" source="[SOURCECOLOR]" visibility="0.6" tooltip="">
@@ -697,7 +1498,7 @@
 					<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<selected color="buttonselected" shape="square" border="bordercolor" border_size="1" radius="2"/>
-					<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+					<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<text fontsize="[TEXTSIZE]" weight="[WEIGHT]" color="textoff3" colorover="textover" colorselected="texton" colordown="texton" align="center" action="[TEXTACTION]" text="[TEXT]" localize="true" important="[IMPORTANT]"/>
 				</button>
 				<button action="[ACTION1]" rightclick="edit_poi" novisibility="[ACTION1]">
@@ -705,7 +1506,7 @@
 					<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<selected color="buttonselected" shape="square" border="bordercolor" border_size="1" radius="2"/>
-					<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+					<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				</button>
 				<panel visible="[ACTION1]">
 					<group novisibility="param_equal '`[SOURCECOLOR]`' 'white'"> 
@@ -751,7 +1552,7 @@
 					<off color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<selected color="buttonoff" shape="square" border="bordercolor" border_size="1" radius="2"/>
-					<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+					<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 					<text fontsize="[TEXTSIZE]" weight="[WEIGHT]" color="textoff3" colorover="textover" colorselected="textoff3" colordown="texton" align="center" action="[TEXTACTION]" text="[TEXT]" localize="false" important="[IMPORTANT]"/>
 				</button>
 				<group visibility="[SOURCECOLOR]">
@@ -805,15 +1606,15 @@
 				<size width="40" height="20"/>
 				<off color="darker" shape="square" border="deckinfolines" border_size="1"/>
 				<over color="buttonover" shape="square" border="deckinfolines" border_size="1"/>
-				<selected color="buttonon" shape="square" border="deckinfolines" border_size="1"/>
-				<down color="buttonon" shape="square"/>
+				<selected color="oled_buttonfill" shape="square" border="deckinfolines" border_size="1"/>
+				<down color="oled_buttonfill" shape="square"/>
 				<text dx="5" fontsize="[TEXTSIZE]" width="40-10" weight="normal" color="textdarker" colorover="textover" colorselected="texton" colordown="texton" align="[ALIGN]" action="[TEXTACTION]" text="[TEXT]" localize="true" important="important"/>
 			</define>
 			<define class="button_off" placeholders="width=62,height=30,text,important,textaction,sysicon,iconsize,textsize=12,textcolor=textoff">
 				<size width="[WIDTH]" height="[HEIGHT]"/>
 				<off color="dropdown" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<over color="buttonover" shape="square" border="bordercolor" border_size="1" radius="2"/>
-				<down color="buttonon" shape="square" border="bordercolor" border_size="1" radius="2"/>
+				<down color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" radius="2"/>
 				<selected color="buttonselected" shape="square" border="buttonon" border_size="1" radius="2"/>
 				<text fontsize="[TEXTSIZE]" color="[TEXTCOLOR]" colorover="textover" colordown="texton" align="center" action="[TEXTACTION]" text="[TEXT]" localize="true" important="[IMPORTANT]"/>
 				<icon sysicon="[SYSICON]" color="bright" colorover="brighter" colordown="white" colorselected="white" width="[ICONSIZE]" height="[ICONSIZE]" />
@@ -847,7 +1648,7 @@
 				<size width="13" height="13"/>
 				<off color="background2" shape="square" border="bordercolor" radius="3" border_size="1"/>
 				<over color="buttonover" shape="square" border="bordercolor" radius="3" border_size="1"/>
-				<on color="buttonon" shape="square" border="bordercolor" radius="3" border_size="1" />
+				<on color="oled_buttonfill" shape="square" border="bordercolor" radius="3" border_size="1" />
 				<text fontsize="8" text="[TEXT]" localize="true" align="center" color="textoff3" colorselected="texton" colordown="textover"/>
 			</define>
 			<define class="menu_select">
@@ -861,7 +1662,7 @@
 				<size width="[WIDTH]" height="26"/>
 				<off color="dropdown" shape="square" border="bordercolor" border_size="1" />
 				<over color="buttonover" shape="square" border="bordercolor" border_size="1"/>
-				<on color="buttonon" shape="square" border="bordercolor" border_size="1" />
+				<on color="oled_buttonfill" shape="square" border="bordercolor" border_size="1" />
 				<text dx="+4" width="55" fontsize="10" weight="" color="textoff3" colorover="textover" colorselected="texton" align="center" action="[TEXTACTION]" important="[IMPORTANT]"/>
 			</define>
 			<define class="mixerpanel" placeholders="text">
@@ -885,7 +1686,7 @@
 			</define>
 			<define class="phrase_bar" visibility="loaded" placeholders="height=3">
 				<size width="28-8" height="[HEIGHT]"/>
-				<off shape="square" color="oled_phrase_idle" condition="var_equal '@$oledcolorscheme' 0"/>
+				<off shape="square" color="oled_phrase_idle"/>
 				<on shape="square" color="deckcolor" />
 			</define>
 			<define class="beat_bar_small">
@@ -1123,7 +1924,7 @@
 					<size width="132" height="26"/>
 					<off color="dropdown" shape="square" border="bordercolor" border_size="1"/>
 					<over color="dark" shape="square" border="bordercolor" border_size="1"/>
-					<on color="buttonon" shape="square" border="bordercolor" border_size="1"/>
+					<on color="oled_buttonfill" shape="square" border="bordercolor" border_size="1"/>
 					<text color="textoff3" colorover="textover" colorselected="texton" dx="10" width="131-10-10-26" fontsize="11" align="left" weight="" action="[TEXTACTION]" important="true"/>
 				</button>
 				<button x="+132-26" y="+0" action="[ACTION2]" novisibility="[ACTION1]">
@@ -1142,7 +1943,7 @@
 					<size width="132-40" height="26"/>
 					<off color="dropdown" shape="square" border="bordercolor" border_size="1"/>
 					<over color="dark" shape="square" border="bordercolor" border_size="1"/>
-					<on color="buttonon" shape="square" border="bordercolor" border_size="1"/>
+					<on color="oled_buttonfill" shape="square" border="bordercolor" border_size="1"/>
 					<text color="textoff3" colorover="textover" colorselected="texton" dx="5" width="131-40-5-5-26" fontsize="11" align="left" weight="" action="[TEXTACTION]" important="true"/>
 				</button>
 				<button x="+132-40-26" y="+0" action="[ACTION2]" novisibility="[ACTION1]">
@@ -1161,7 +1962,7 @@
 					<size width="[WIDTH]" height="26"/>
 					<off color="dropdown" shape="square" border="bordercolor" border_size="1"/>
 					<over color="dark" shape="square" border="bordercolor" border_size="1"/>
-					<on color="buttonon" shape="square" border="bordercolor" border_size="1"/>
+					<on color="oled_buttonfill" shape="square" border="bordercolor" border_size="1"/>
 					<text color="textoff3" colorover="textover" colorselected="texton" dx="10" width="[TEXTWIDTH]" fontsize="11" align="left" action="[TEXTACTION]" important="true"/>
 				</button>
 				<group x="[WIDTH]">
@@ -1448,14 +2249,14 @@
 				<prelisten background="background2" />
 				<plugins background="browserback" text="textbrowser" title="background2" titletext="textbright">
 					<buttons 
-						over_deck1="#1c7b97" 
-						selected_deck1="#136c8a" 
-						down_deck1="#0b485d" 
-						over_deck2="#b73b42" 
-						selected_deck2="#ad3237" 
-						down_deck2="#821a1f" 
+						over_deck1="oled_plugin_over1"
+						selected_deck1="oled_plugin_selected1"
+						down_deck1="oled_plugin_down1"
+						over_deck2="oled_plugin_over2"
+						selected_deck2="oled_plugin_selected2"
+						down_deck2="oled_plugin_down2"
 						up="background" over="background2" selected="browser_buttonselected" down="browser_buttonactive" border="bordercolor" border_down="bordercolor" border_selected="bordercolor" border_over="bordercolor"/>
-					<sliders background="knobfilloff" needle="textbrowser" deck1="#136c8a" deck1_disabled="#0a3f50" deck2="#ad3237" deck2_disabled="#761318" on="gray" on_disabled="graydarker"/>
+					<sliders background="knobfilloff" needle="textbrowser" deck1="oled_plugin_slider1" deck1_disabled="oled_plugin_disabled1" deck2="oled_plugin_slider2" deck2_disabled="oled_plugin_disabled2" on="gray" on_disabled="graydarker"/>
 				</plugins>
 			</colors>
 			<button>
@@ -1474,7 +2275,6 @@
 			<fonttoolbar size="14"/>
 		</define>
 
-		
 		<define class="crossfader_mini" orientation="horizontal" frommiddle="true">
 			<size width="93-10" height="5"/>
 			<off width="-10" color="dark" shape="square" radius="2" border="bordercolor2" border_size="1" />
@@ -1486,17 +2286,13 @@
 			</fader>
 		</define>
 
-
 	</group>
-
-
 
 <!-- 	
 		****************************  
 		   	   TOP AREA
 		****************************  
 -->
-
 
 	<group name="grabzones">  
 		<grabzone>
@@ -1595,11 +2391,18 @@
 					<item text="PERFORMANCE" localize="true" action="load_skin 'Default:Performance'" visibility="var_not_equal '@$waveformpos' 3"/>
 					<item text="PERFORMANCE" localize="true" action="load_skin 'Default:Vertical'"  visibility="var_equal '@$waveformpos' 3" />
 					<separator/>
-					<submenu text="Color Scheme" localize="true">
-						<item text="OLED Black" localize="false" action="set '@$oledcolorscheme' 0 & load_skin" check="var_equal '@$oledcolorscheme' 0"/>
-						<item text="Contrast" localize="true" action="set '@$oledcolorscheme' 1 & load_skin" check="var_equal '@$oledcolorscheme' 1"/>
-						<item text="Dark Mode" localize="true" action="set '@$oledcolorscheme' 3 & load_skin" check="var_equal '@$oledcolorscheme' 3"/>
-						<item text="Daylight" localize="true" action="set '@$oledcolorscheme' 2 & load_skin" check="var_equal '@$oledcolorscheme' 2"/>
+					<submenu text="Deck Colours" localize="false">
+						<item text="Default" localize="false" action="set '@$oleddecktheme' 0 & load_skin" check="var_equal '@$oleddecktheme' 0"/>
+						<item text="Pastel Pink" localize="false" action="set '@$oleddecktheme' 1 & load_skin" check="var_equal '@$oleddecktheme' 1"/>
+						<item text="Pastel Blue" localize="false" action="set '@$oleddecktheme' 2 & load_skin" check="var_equal '@$oleddecktheme' 2"/>
+						<item text="Violet" localize="false" action="set '@$oleddecktheme' 3 & load_skin" check="var_equal '@$oleddecktheme' 3"/>
+						<item text="Prism" localize="false" action="set '@$oleddecktheme' 4 & load_skin" check="var_equal '@$oleddecktheme' 4"/>
+						<item text="Blush" localize="false" action="set '@$oleddecktheme' 5 & load_skin" check="var_equal '@$oleddecktheme' 5"/>
+						<item text="Frost" localize="false" action="set '@$oleddecktheme' 6 & load_skin" check="var_equal '@$oleddecktheme' 6"/>
+						<item text="Dusk" localize="false" action="set '@$oleddecktheme' 7 & load_skin" check="var_equal '@$oleddecktheme' 7"/>
+						<item text="Grove" localize="false" action="set '@$oleddecktheme' 8 & load_skin" check="var_equal '@$oleddecktheme' 8"/>
+						<item text="Orchid" localize="false" action="set '@$oleddecktheme' 9 & load_skin" check="var_equal '@$oleddecktheme' 9"/>
+						<item text="Ember" localize="false" action="set '@$oleddecktheme' 10 & load_skin" check="var_equal '@$oleddecktheme' 10"/>
 					</submenu>
 					<submenu text="Waveform Display" localize="true">
 						<item text="Beats" localize="true" action="setting skinWaveformType 0" check="setting skinWaveformType 0"/>
@@ -1659,15 +2462,13 @@
 					<pos x="+55" y="+9"/>
 					<size width="70" height="4"/>
 					<on x="1669" y="0"/>
-					<off x="1669" y="15" condition="var_not_equal '@$oledcolorscheme' 2"/>
-					<off x="1669" y="30" condition="var_equal '@$oledcolorscheme' 2"/>
+					<off x="1669" y="15"/>
 				</visual>
 				<visual source="get_vu_meter_right 'master'" type="linear" orientation="horizontal" granularity="13">
 					<pos x="+55" y="+15"/>
 					<size width="70" height="4"/>
 					<on x="1669" y="0"/>
-					<off x="1669" y="15" condition="var_not_equal '@$oledcolorscheme' 2"/>
-					<off x="1669" y="30" condition="var_equal '@$oledcolorscheme' 2"/>
+					<off x="1669" y="15"/>
 				</visual>
 				<visual type="transparent" source="get_limiter">
 					<pos x="+55+70+3" y="+8"/>
@@ -1722,8 +2523,7 @@
 					<text2 fontsize="13" color="textoff2" align="center" weight="bold" format="%counter" important="true"/>
 				</textzone>
 			</group>
-			
-			
+
 		</group>
 <button action="settings">
 			<pos x="1875" y="8"/>
@@ -1769,11 +2569,18 @@
 					<item text="PERFORMANCE" localize="true" action="load_skin 'Default:Performance'" visibility="var_not_equal '@$waveformpos' 3"/>
 					<item text="PERFORMANCE" localize="true" action="load_skin 'Default:Vertical'"  visibility="var_equal '@$waveformpos' 3" />
 					<separator/>
-					<submenu text="Color Scheme" localize="true">
-						<item text="OLED Black" localize="false" action="set '@$oledcolorscheme' 0 & load_skin" check="var_equal '@$oledcolorscheme' 0"/>
-						<item text="Contrast" localize="true" action="set '@$oledcolorscheme' 1 & load_skin" check="var_equal '@$oledcolorscheme' 1"/>
-						<item text="Dark Mode" localize="true" action="set '@$oledcolorscheme' 3 & load_skin" check="var_equal '@$oledcolorscheme' 3"/>
-						<item text="Daylight" localize="true" action="set '@$oledcolorscheme' 2 & load_skin" check="var_equal '@$oledcolorscheme' 2"/>
+					<submenu text="Deck Colours" localize="false">
+						<item text="Default" localize="false" action="set '@$oleddecktheme' 0 & load_skin" check="var_equal '@$oleddecktheme' 0"/>
+						<item text="Pastel Pink" localize="false" action="set '@$oleddecktheme' 1 & load_skin" check="var_equal '@$oleddecktheme' 1"/>
+						<item text="Pastel Blue" localize="false" action="set '@$oleddecktheme' 2 & load_skin" check="var_equal '@$oleddecktheme' 2"/>
+						<item text="Violet" localize="false" action="set '@$oleddecktheme' 3 & load_skin" check="var_equal '@$oleddecktheme' 3"/>
+						<item text="Prism" localize="false" action="set '@$oleddecktheme' 4 & load_skin" check="var_equal '@$oleddecktheme' 4"/>
+						<item text="Blush" localize="false" action="set '@$oleddecktheme' 5 & load_skin" check="var_equal '@$oleddecktheme' 5"/>
+						<item text="Frost" localize="false" action="set '@$oleddecktheme' 6 & load_skin" check="var_equal '@$oleddecktheme' 6"/>
+						<item text="Dusk" localize="false" action="set '@$oleddecktheme' 7 & load_skin" check="var_equal '@$oleddecktheme' 7"/>
+						<item text="Grove" localize="false" action="set '@$oleddecktheme' 8 & load_skin" check="var_equal '@$oleddecktheme' 8"/>
+						<item text="Orchid" localize="false" action="set '@$oleddecktheme' 9 & load_skin" check="var_equal '@$oleddecktheme' 9"/>
+						<item text="Ember" localize="false" action="set '@$oleddecktheme' 10 & load_skin" check="var_equal '@$oleddecktheme' 10"/>
 					</submenu>
 					<submenu text="Waveform Display" localize="true">
 						<item text="Beats" localize="true" action="setting skinWaveformType 0" check="setting skinWaveformType 0"/>
@@ -1834,15 +2641,13 @@
 					<pos x="+55" y="+9"/>
 					<size width="70" height="4"/>
 					<on x="1669" y="0"/>
-					<off x="1669" y="15" condition="var_not_equal '@$oledcolorscheme' 2"/>
-					<off x="1669" y="30" condition="var_equal '@$oledcolorscheme' 2"/>
+					<off x="1669" y="15"/>
 				</visual>
 				<visual source="get_vu_meter_right 'master'" type="linear" orientation="horizontal" granularity="13">
 					<pos x="+55" y="+15"/>
 					<size width="70" height="4"/>
 					<on x="1669" y="0"/>
-					<off x="1669" y="15" condition="var_not_equal '@$oledcolorscheme' 2"/>
-					<off x="1669" y="30" condition="var_equal '@$oledcolorscheme' 2"/>
+					<off x="1669" y="15"/>
 				</visual>
 				<visual type="transparent" source="get_limiter">
 					<pos x="+55+70+3" y="+8"/>
@@ -1897,16 +2702,10 @@
 					<text2 fontsize="13" color="textoff2" align="center" weight="bold" format="%counter" important="true"/>
 				</textzone>
 			</group>
-			
-			
+
 		</group>
 		</group>
 
-	
-	
-		
-		
-		
 		<group name="beat_matcher" x="858" y="8" visibility="not has_notch">
 			<group name="phrase_3" x="-35" y="-2" visibility="var_equal '@$phrasecircle' 1 && var_not_equal '@$4decks' 0">
 				<deck deck="3">
@@ -2194,19 +2993,15 @@
 		</group>
 	</group>
 
-
 	<!--- DECK DEFINES -->
 
 	<define class="deckselect" action="select">
 		<size width="24" height="90"/>
 		<up color="darker" border="bordercolor" border_size="1" />
 		<over color="buttonover" border="deckcolorbright" border_size="1" />
-		<selected color="deckcolordark" border="deckcolorbright" border_size="1" />
+		<selected color="oled_deck_selected" border="deckcolorbright" border_size="1" />
 		<text fontsize="16" color="textoff" colorover="textover" colorselected="texton" align="center" action="get_deck_letter"/>
 	</define>
-
-
-
 
 	<define class="deckleft" width="799" height="341" placeholders="deck,*panelname">
 		
@@ -2788,8 +3583,7 @@
 						<visual type="linear" orientation="horizontal" source="get_timecode_quality">
 							<pos x="+24+10+26+5" y="+20"/>
 							<size width="54" height="6"/>
-							<off x="1669" y="15" condition="var_not_equal '@$oledcolorscheme' 2"/>
-							<off x="1669" y="30" condition="var_equal '@$oledcolorscheme' 2"/>
+							<off x="1669" y="15"/>
 							<on x="1489" y="0"/>
 						</visual>
 						<button class="button_main" x="+24+10+41" y="+40" width="34" action="timecode_active" text="ON" localize="true"/> 
@@ -2804,8 +3598,7 @@
 						<visual type="linear" orientation="horizontal" source="linein ? get_vu_meter 'linein' : nothing">
 							<pos x="+24+10+26+5" y="+20"/>
 							<size width="54" height="6"/>
-							<off x="1669" y="15" condition="var_not_equal '@$oledcolorscheme' 2"/>
-							<off x="1669" y="30" condition="var_equal '@$oledcolorscheme' 2"/>
+							<off x="1669" y="15"/>
 							<on x="1489" y="0"/>
 						</visual>
 						<button class="button_main" x="+24+10+21" y="+40" width="34" action="get_haslinein ? linein : get_hasmic ? linein 'mic' : linein" text="ON" localize="true"/> 
@@ -2823,8 +3616,7 @@
 							<visual type="linear" orientation="vertical" source="get_timecode_quality">
 								<pos x="+116-6" y="+2"/>
 								<size width="6" height="48"/>
-								<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-								<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+								<off x="1760" y="0"/>
 								<on x="1745" y="6"/>
 							</visual>
 							<button class="button_main" x="+58-17" y="+20" width="34" action="timecode_active" text="ON" localize="true"/> 
@@ -3074,7 +3866,7 @@
 						<size width="22" height="22"/>
 						<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 						<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-						<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+						<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 						<icon x="180" y="131" width="12" height="12" coloroff="textdark" colorover="textover" colordown="texton" colorselected="texton" important="important"/>
 					</button>
 					<button action="load_next" visibility="not loaded">
@@ -3082,7 +3874,7 @@
 						<size width="22" height="22"/>
 						<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 						<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-						<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+						<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 						<icon x="305" y="132" width="12" height="12" coloroff="textdark" colorover="textover" colordown="texton" colorselected="texton"  important="important"/>
 					</button>
 					<button action="vinyl_mode">
@@ -3107,7 +3899,7 @@
 					<size width="22" height="22"/>
 					<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 					<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-					<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+					<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 					<icon sysicon="stop" width="23" height="23" color="textdark" colorover="textover" colordown="texton" colorselected="texton"  important="important"/>
 				</button>
 				<button action="clone_from_deck" visibility="not loaded && loaded 'opposite'">
@@ -3115,7 +3907,7 @@
 					<size width="22" height="22"/>
 					<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 					<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-					<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+					<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 					<icon dx="+0" dy="+0" x="246" y="132" width="12" height="12" coloroff="textdark" colorover="textover" colordown="texton" colorselected="texton"/>
 				</button>
 				<group name="area_pitch" x="+306-10-46-2" y="+2">
@@ -3142,8 +3934,6 @@
 			</panel>
 		</deck>
 	</define>
-
-
 
 	<define class="deckright" height="341" placeholders="deck,*panelname">
  		<pos x="1920-799" y="+43" condition="var_equal '@$waveformpos' 1"/>
@@ -3963,7 +4753,6 @@
 			</group>
 			</group>
 
-		
 			<panel name="area_deckB" x="+0" y="+341-233">
 				<line x="+304" y="+0" width="2"  height="233" color="dark" hightlight="hightlight" shadow="shadow" />
 				<group name="area_jogwheel" x="+48+27+10+15" y="+12">
@@ -4007,7 +4796,7 @@
 						<size width="22" height="22"/>
 						<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 						<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-						<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+						<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 						<icon x="180" y="131" width="12" height="12" coloroff="textdark" colorover="textover" colordown="texton" colorselected="texton"/>
 					</button>
 					<button action="load_next" visibility="not loaded">
@@ -4015,7 +4804,7 @@
 						<size width="22" height="22"/>
 						<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 						<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-						<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+						<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 						<icon x="305" y="132" width="12" height="12" coloroff="textdark" colorover="textover" colordown="texton" colorselected="texton"  important="important"/>
 					</button>
 					<button action="vinyl_mode">
@@ -4040,7 +4829,7 @@
 					<size width="22" height="22"/>
 					<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 					<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-					<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+					<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 					<icon sysicon="stop" width="23" height="23" color="textdark" colorover="textover" colordown="texton" colorselected="texton"  important="important"/>
 				</button>
 				<button action="clone_from_deck" visibility="not loaded && loaded 'opposite'"> 
@@ -4048,7 +4837,7 @@
 					<size width="22" height="22"/>
 					<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 					<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-					<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+					<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 					<icon dx="+0" dy="+0" x="246" y="132" width="12" height="12" coloroff="textdark" colorover="textover" colordown="texton" colorselected="texton"/>
 				</button>
 				<group name="area_pitch" x="+10" y="+2">
@@ -4075,7 +4864,6 @@
 			</panel>
 		</deck>
 	</define>
-
 
 	<define class="leftdeck_mini" placeholders="deck,*panelname,*swapdeck"> 
 
@@ -4311,7 +5099,7 @@
 					<size width="22" height="22"/>
 					<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 					<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-					<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+					<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 					<icon sysicon="stop_button" width="23" height="23" color="textoff3" colorover="textover" colordown="texton" colorselected="texton"  important="important"/>
 				</button>
 				<group name="area_transport" x="+700-69-69-62+9" y="+75+5+2">
@@ -4563,7 +5351,7 @@
 					<size width="22" height="22"/>
 					<off shape="circle" color="buttonoff" border="bordercolor" border_size="1"/>
 					<over shape="circle" color="buttonover" border="bordercolor" border_size="1"/>
-					<down shape="circle" color="buttonon" border="bordercolor" border_size="1"/>
+					<down shape="circle" color="oled_buttonfill" border="bordercolor" border_size="1"/>
 					<icon sysicon="stop_button" width="23" height="23" color="textoff3" colorover="textover" colordown="texton" colorselected="texton"  important="important"/>
 				</button>
 				<group name="area_transport" x="+48+27+5" y="+75+5+2">
@@ -4579,8 +5367,6 @@
 			</deck>
 		</define> <!-- end rightdeck mini -->
 
-
-
 		<define class="mini_mixer" placeholders="*minideck_left=3,*minideck_right=4">
 				<line x="+0" y="+0" width="1" height="120" color="dark" hightlight="hightlight" shadow="shadow"/>
 				<line x="+322-1" y="+0" width="1" height="120" color="dark" hightlight="hightlight" shadow="shadow"/>
@@ -4592,15 +5378,13 @@
 										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
 											<pos x="+0" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1469" y="0"/>
 										</visual>
 										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
 											<pos x="+3+2" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1469" y="0"/>
 										</visual>
 									</group>
@@ -4612,15 +5396,13 @@
 										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
 											<pos x="+0" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1792" y="0"/>
 										</visual>
 										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
 											<pos x="+3+2" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1792" y="0"/>
 										</visual>
 									</group>
@@ -4632,15 +5414,13 @@
 										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
 											<pos x="+0" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1776" y="0"/>
 										</visual>
 										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
 											<pos x="+3+2" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1776" y="0"/>
 										</visual>
 									</group>
@@ -4652,15 +5432,13 @@
 										<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
 											<pos x="+0" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1453" y="0"/>
 										</visual>
 										<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
 											<pos x="+3+2" y="+0"/>
 											<size width="3" height="120-43"/>
-											<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-											<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+											<off x="1760" y="0"/>
 											<on x="1453" y="0"/>
 										</visual>
 									</group>
@@ -4718,10 +5496,7 @@
 				</group>
 		</define>	
 
-
-
 <panel visibility="not browser_zoom">
-
 
 <!-- 	
 		****************************  
@@ -4729,7 +5504,6 @@
 		****************************  
 -->
 
-	
 <line name="lineabove" color="bordercolor"  x="0" y="+43-1" width="1920" height="1" />
 
 	<panel name="topwave">
@@ -4992,7 +5766,6 @@
 
 	<panel name="barcounter" visible="no">
 
-		
 		<group name="barcounter_horz" visibility="var_equal '@$4decks' 0 ? true : var_equal '@$4waveforms' 0">
 			<group name="barcounter_left" x="960-150" y="+43+15">
 				<deck deck="left">
@@ -5083,15 +5856,9 @@
 			</group>
 		</group>
 
-
-
     </panel>
 
-
-
 	</panel>
-
-
 
 <!-- 	
 		****************************  
@@ -5112,7 +5879,6 @@
 		****************************  
 -->
 
-
 <panel x="0" condition="var_not_equal '@$4decks' 0">
 	<pos x="0" y="1080-512-10+1" condition="var_not_equal '@$4mixer' 0"/>
 	<pos x="0" y="1080-512-10+1" condition="var_equal '@$4mixer' 0 && var_not_equal '@$waveformpos' 1"/>
@@ -5132,8 +5898,6 @@
 		<panel class="rightdeck_mini" name="mini_deck4_4d2c" x="+799+322" visibility="not deck 4 rightdeck" deck="4" swapdeck="4" panelname="deck4mini"/>	
 		<panel class="rightdeck_mini" name="mini_deck2_4d2c" x="+799+322" visibility="deck 4 rightdeck" deck="2" swapdeck="2" panelname="deck2mini"/>
 </panel>
-
-
 
 <!-- 	
 		****************************  
@@ -5202,7 +5966,6 @@
 
 			</panel>
 
-		
 		<panel name="audiomixer" group="mixer" visible="yes" x="+1" y="+0" width="1920-799-799-2" height="341" condition="var_equal '@$4mixer' 0 && var_not_equal '@$4decks' 0">
 		<!-- 4-channel-->		
 			<visual name="mixer_center" x="+120+1" y="+25">
@@ -5235,15 +5998,13 @@
 					<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1469" y="0"/>
 					</visual>
 					<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1469" y="0"/>
 					</visual>
 				</group>
@@ -5251,15 +6012,13 @@
 					<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1793" y="0"/>
 					</visual>
 					<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1793" y="0"/>
 					</visual>
 				</group>
@@ -5268,15 +6027,13 @@
 					<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1777" y="0"/>
 					</visual>
 					<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1777" y="0"/>
 					</visual>
 				</group>
@@ -5285,15 +6042,13 @@
 					<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1453" y="0"/>
 					</visual>
 					<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="160"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1453" y="0"/>
 					</visual>
 				</group>
@@ -5445,15 +6200,13 @@
 					<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1793" y="0"/>
 					</visual>
 					<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1793" y="0"/>
 					</visual>
 				</group>
@@ -5461,15 +6214,13 @@
 					<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1469" y="0"/>
 					</visual>
 					<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1469" y="0"/>
 					</visual>
 				</group>
@@ -5477,15 +6228,13 @@
 					<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1777" y="0"/>
 					</visual>
 					<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1777" y="0"/>
 					</visual>
 				</group>
@@ -5493,15 +6242,13 @@
 					<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1453" y="0"/>
 					</visual>
 					<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="180-48"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1453" y="0"/>
 					</visual>
 				</group>
@@ -5661,8 +6408,7 @@
 						<visual source="deck 1 get_level" type="linear" orientation="vertical" direction="up">
 							<pos x="+11" y="+15+2"/>
 							<size width="3" height="153-4"/>
-							<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-							<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+							<off x="1760" y="0"/>
 							<on x="1793" y="1"/>
 						</visual>
 					</group>
@@ -5670,8 +6416,7 @@
 						<visual source="deck 3 get_level" type="linear" orientation="vertical" direction="up">
 							<pos x="+11" y="+15+2"/>
 							<size width="3" height="153-4"/>
-							<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-							<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+							<off x="1760" y="0"/>
 							<on x="1469" y="1"/>
 						</visual>
 					</group>
@@ -5679,8 +6424,7 @@
 						<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
 							<pos x="+320-14" y="+15+2"/>
 							<size width="3" height="153-4"/>
-							<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-							<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+							<off x="1760" y="0"/>
 							<on x="1777" y="1"/>
 						</visual>
 					</group>
@@ -5688,8 +6432,7 @@
 						<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
 							<pos x="+320-14" y="+15+2"/>
 							<size width="3" height="153-4"/>
-							<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-							<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+							<off x="1760" y="0"/>
 							<on x="1453" y="1"/>
 						</visual>
 					</group>
@@ -5792,15 +6535,13 @@
 					<visual deck="3" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1469" y="0"/>
 					</visual>
 					<visual deck="3" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1469" y="0"/>
 					</visual>
 				</group>
@@ -5808,15 +6549,13 @@
 					<visual deck="1" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1793" y="0"/>
 					</visual>
 					<visual deck="1" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1793" y="0"/>
 					</visual>
 				</group>
@@ -5824,15 +6563,13 @@
 					<visual deck="2" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1777" y="0"/>
 					</visual>
 					<visual deck="2" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1777" y="0"/>
 					</visual>
 				</group>
@@ -5840,20 +6577,17 @@
 					<visual deck="4" source="get_level_left" type="linear" orientation="vertical" direction="up">
 						<pos x="+0" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1453" y="0"/>
 					</visual>
 					<visual deck="4" source="get_level_right" type="linear" orientation="vertical" direction="up">
 						<pos x="+3+2" y="+0"/>
 						<size width="3" height="82"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1453" y="0"/>
 					</visual>
 				</group>
 			</group>
-
 
 				<group name="channel_3" x="+10">
 					<deck deck="3">
@@ -5882,7 +6616,6 @@
 			</panel>
 
 		</panel>
-
 
 		<panel name="scratchmixer" x="+1" y="+25" group="mixer" visible="no">
 			
@@ -6009,8 +6742,7 @@
 					<visual source="deck 1 get_level" type="linear" orientation="vertical" direction="up">
 						<pos x="+11" y="+15+2"/>
 						<size width="3" height="153-4"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1793" y="1"/>
 					</visual>
 				</group>
@@ -6018,8 +6750,7 @@
 					<visual source="deck 3 get_level" type="linear" orientation="vertical" direction="up">
 						<pos x="+11" y="+15+2"/>
 						<size width="3" height="153-4"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1469" y="1"/>
 					</visual>
 				</group>
@@ -6027,8 +6758,7 @@
 					<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
 						<pos x="+320-14" y="+15+2"/>
 						<size width="3" height="153-4"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1777" y="1"/>
 					</visual>
 				</group>
@@ -6036,14 +6766,12 @@
 					<visual source="deck 2 get_level" type="linear" orientation="vertical" direction="up">
 						<pos x="+320-14" y="+15+2"/>
 						<size width="3" height="153-4"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1453" y="1"/>
 					</visual>
 				</group>
 
 		</panel>
-
 
 	<panel name="mastermixer" x="+1" y="+25" group="mixer" visible="no">
 
@@ -6053,7 +6781,6 @@
 				<size width="160" height="265"/>
 				<off color="mixerbackground" shape="square" border="bordercolor" border_size="1" />
 			</visual>
-
 
 			<group name="master_vol" x="+0">
 				<button>
@@ -6079,12 +6806,10 @@
 				<visual source="get_vu_meter 'record'" type="linear" orientation="vertical" direction="up">
 					<pos x="+80-15" y="+195+2"/>
 					<size width="4" height="58"/>
-					<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-					<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+					<off x="1760" y="0"/>
 					<on x="1745" y="0"/>
 				</visual>
 			</group>	
-
 
 			<group name="mic" x="+80+80+80+3">
 				<button>
@@ -6110,8 +6835,7 @@
 				<visual source="get_vu_meter 'mic'" type="linear" orientation="vertical" direction="up">
 					<pos x="+8" y="+195+2"/>
 					<size width="4" height="58"/>
-					<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-					<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+					<off x="1760" y="0"/>
 					<on x="1745" y="0"/>
 				</visual>
 			</group>
@@ -6193,8 +6917,7 @@
 					<visual source="get_vu_meter 'record'" type="linear" orientation="vertical" direction="up">
 						<pos x="+24-2" y="+18+80+35+27"/>
 						<size width="4" height="58"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1745" y="0"/>
 					</visual>
 			</group>
@@ -6212,8 +6935,7 @@
 					<visual source="get_vu_meter 'mic'" type="linear" orientation="vertical" direction="up">
 						<pos x="+24-2" y="+18+80+35+27"/>
 						<size width="4" height="58"/>
-						<off x="1760" y="0" condition="var_not_equal '@$oledcolorscheme' 2"/>
-						<off x="1807" y="0" condition="var_equal '@$oledcolorscheme' 2"/>
+						<off x="1760" y="0"/>
 						<on x="1745" y="0"/>
 					</visual>
 			</group>
@@ -6288,10 +7010,6 @@
 		</group>
 </panel>
 
-
-
-
-
 </panel><!-- end browser not zoomed -->
 
 <!-- 	
@@ -6311,21 +7029,17 @@
 		<panel class="rightdeck_mini" name="mini_deck2_browserzoom" x="1920-799" y="+5" visibility="not deck 4 rightdeck" deck="2" swapdeck="4" panelname="deck2mini"/>
 </panel>
 
-
-
 <!-- 	
 		****************************  
 				 BROWSER 
 		****************************  
 -->
 
-
 <visual name="browser_background" visibility="browser_zoom">
 	<pos x="10" y="43+120+4" />
 	<size width="1920-20" height="1080-43-120-5-10"/>
 	<off color="browserback" shape="square" />
 </visual>
-
 
 <group condition="var_equal '@$4decks' 0">
 	<browser class="browser">
@@ -6346,8 +7060,6 @@
 		<zoomed x="10" y="43+120+5" width="1920-20" height="1080-43-120-5-10"/>
 	</browser>
 </group>
-
-
 
 <oninit action="setting_setdefault skinWaveformType 'shapes'"/>
 <oninit action="setting_setdefault coverflow 'no'"/>

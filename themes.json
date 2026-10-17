@@ -1,0 +1,13 @@
+[
+  {"id":0,"name":"Default","slug":"default","colors":["#156C89","#AC2F37","#0D7264","#A54D30"]},
+  {"id":1,"name":"Pastel Pink","slug":"pastel-pink","colors":["#E879A1","#F4A0BC","#E8B1DF","#FAD3E3"]},
+  {"id":2,"name":"Pastel Blue","slug":"pastel-blue","colors":["#6D9FDC","#8BC2EF","#A6B6EF","#C3E3FA"]},
+  {"id":3,"name":"Violet","slug":"violet","colors":["#9272D4","#CD79BD","#B7A0EE","#E4B9EA"]},
+  {"id":4,"name":"Prism","slug":"prism","colors":["#AA81BC","#EB709A","#F2A65D","#8DA9F5"]},
+  {"id":5,"name":"Blush","slug":"blush","colors":["#F08D7E","#F5B59E","#E6B6D0","#B4B9DF"]},
+  {"id":6,"name":"Frost","slug":"frost","colors":["#99E5F0","#B9F2D8","#FFB7E7","#C6B0FF"]},
+  {"id":7,"name":"Dusk","slug":"dusk","colors":["#D998A3","#AD96C9","#F18D75","#F6BA9B"]},
+  {"id":8,"name":"Grove","slug":"grove","colors":["#5FAB72","#79CD8F","#AAD56D","#D0EAA2"]},
+  {"id":9,"name":"Orchid","slug":"orchid","colors":["#B779B1","#AB85D0","#C6A0EA","#E4C1F4"]},
+  {"id":10,"name":"Ember","slug":"ember","colors":["#D9784F","#ED9864","#F7B58E","#F9D1AD"]}
+]
