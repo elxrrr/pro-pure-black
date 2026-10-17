@@ -6,15 +6,16 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 
 ## Changes
 
-| Type | Element | Change |
+| Element | Change | Type |
 | --- | --- | --- |
-| Modified | Decks, mixer, waveforms and browser | Pure-black backgrounds. |
-| Modified | Phrase-sync indicators, beat counters and jog wheels | Grey details for visibility against black. |
-| Removed | Toolbar | Sandbox, Shoutout, Event Scheduler and account box. |
-| Moved | Layout, status and Settings | Grouped on the right on macOS. |
-| Modified | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
-| Resized | VirtualDJ logo | Small 72 × 17 logo beside the window controls. |
-| Retained | Deck colours and remaining controls | Original colours and behaviour. |
+| Decks, mixer, waveforms and browser | Pure-black backgrounds (`#000000`). | Modified |
+| Phrase-sync indicators and beat counters | Inactive phrase-sync markers `#303030`; inactive beat markers and rings `#484848`; counter text `#B8B8B8`. | Modified |
+| Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. | Modified |
+| Sandbox, Shoutout, Event Scheduler and account box | Hidden from the toolbar. | Removed |
+| Layout, status and Settings | Grouped on the right on macOS. | Modified |
+| Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. | Modified |
+| VirtualDJ logo | Reduced to 72 × 17 beside the window controls. | Modified |
+| Deck colours and remaining controls | Original colours and behaviour. | Unchanged |
 
 ## Install
 
