@@ -1570,44 +1570,9 @@
 			</button>
 		</group>
 		
-		<!-- Right-aligned macOS tools; active Sandbox preview expands left. -->
+		<!-- Right-aligned macOS tools. -->
 		<group name="oled_toolbar_mac" condition="is_mac">
-<group name="sandbox" x="1348" y="8">
-			<button action="sandbox" visibility="can_sandbox">
-				<pos x="+0" y="+0"/>
-				<size width="35" height="27"/>
-				<off border_size="1" border="bordercolor" color="topmenu"/>
-				<over border_size="1" border="bordercolor" color="background"/>
-				<selected border_size="1" border="bordercolor" color="background2"/>
-				<icon x="278" y="149" colorup="textoff3" colorselected="texton" colorover="texton" width="15" height="15"/>
-			</button>
-			<button action="sandbox" visibility="not can_sandbox">
-				<pos x="+0" y="+0"/>
-				<size width="35" height="27"/>
-				<off border_size="1" border="bordercolor" color="topmenu"/>
-				<icon x="278" y="149" colorup="textdarker" width="15" height="15"/>
-			</button>
-			<group visibility="sandbox">
-				<button action="sandbox">
-					<pos x="+0" y="+0"/>
-					<size width="35" height="27"/>
-					<off border_size="1" border="bordercolor" color="topmenu"/>
-					<over border_size="1" border="bordercolor" color="background"/>
-					<selected border_size="1" border="bordercolor" color="#896526"/>
-					<on border_size="1" border="bordercolor" color="#896526"/>
-					<icon x="278" y="149" colorup="black" width="15" height="15"/>
-				</button>
-				<visual>
-					<pos x="-172" y="+0"/>
-					<size width="160" height="27"/>
-					<off shape="square" color="display" border_size="1" border="bordercolor"/>
-				</visual>
-				<songpos class="songpos" deck="sandbox">
-					<pos x="-171" y="+1"/>
-					<size width="160-2" height="27-2"/>
-				</songpos>
-			</group>
-		</group>
+
 <group name="layout_options" x="1395" y="8">
 			<group name="layout" x="+0" y="+0">
 				
@@ -1849,42 +1814,7 @@
 				</menu>
 			</group>
 		</group>
-<group name="sandbox" x="115+80+80+135+123+40" y="8">
-			<button action="sandbox" visibility="can_sandbox">
-				<pos x="+0" y="+0"/>
-				<size width="35" height="27"/>
-				<off border_size="1" border="bordercolor" color="topmenu"/>
-				<over border_size="1" border="bordercolor" color="background"/>
-				<selected border_size="1" border="bordercolor" color="background2"/>
-				<icon x="278" y="149" colorup="textoff3" colorselected="texton" colorover="texton" width="15" height="15"/>
-			</button>
-			<button action="sandbox" visibility="not can_sandbox">
-				<pos x="+0" y="+0"/>
-				<size width="35" height="27"/>
-				<off border_size="1" border="bordercolor" color="topmenu"/>
-				<icon x="278" y="149" colorup="textdarker" width="15" height="15"/>
-			</button>
-			<group visibility="sandbox">
-				<button action="sandbox">
-					<pos x="+0" y="+0"/>
-					<size width="35" height="27"/>
-					<off border_size="1" border="bordercolor" color="topmenu"/>
-					<over border_size="1" border="bordercolor" color="background"/>
-					<selected border_size="1" border="bordercolor" color="#896526"/>
-					<on border_size="1" border="bordercolor" color="#896526"/>
-					<icon x="278" y="149" colorup="black" width="15" height="15"/>
-				</button>
-				<visual>
-					<pos x="+35" y="+0"/>
-					<size width="200" height="27"/>
-					<off shape="square" color="display" border_size="1" border="bordercolor"/>
-				</visual>
-				<songpos class="songpos" deck="sandbox">
-					<pos x="+35+1" y="+1"/>
-					<size width="200-2" height="27-2"/>
-				</songpos>
-			</group>
-		</group>
+
 <group name="topbar_status" x="1300" y="8">
 			<visual visibility="is_battery">
 				<size width="360-27" height="27"/>
@@ -2388,21 +2318,8 @@
 						<pos x="+7" y="+7"/>
 						<size width="56-14" height="56-14"/>
 					</cover>
-					<group visibility="not skin_panel 'adjustbpm_area_[PANELNAME]'">
-						<textzone group="horizontal" scroll="no" click="scroll">
-							<pos x="+56" y="+4"/>
-							<size width="753-170-5-56" height="25"/>
-							<text fontsize="18" color="title"  weight="bold" action="get_title_before_remix" important="true"/>
-							<text fontsize="18" color="remix" action="get_remix_after_title" important="true"/>
-						</textzone>
-						<textzone group="horizontal" scroll="no" click="scroll">
-							<pos x="+56" y="+29"/>
-							<size width="753-170-5-56" height="21"/>
-							<text fontsize="15" color="artist" action="get_artist_before_feat" important="true"/>
-							<text fontsize="15" color="feat" action="get_featuring_after_artist" important="true"/>
-						</textzone>
-					</group>
-					<group visibility="skin_panel 'adjustbpm_area_[PANELNAME]'">
+					
+					<group>
 						<textzone group="horizontal" scroll="no" click="scroll">
 							<pos x="+56" y="+4"/>
 							<size width="753-170-5-56-100" height="25"/>
@@ -2417,7 +2334,7 @@
 						</textzone>
 					</group>
 				</group>
-				<panel name="adjustbpm_area_[PANELNAME]" x="+26+753-170-100" y="+0" visible="no">
+				<group name="adjustbpm_area_[PANELNAME]" x="+26+753-170-100" y="+0">
 						<line color="deckinfolines" x="+0" y="+0" width="1" height="90-34"/>
 						<button class="button_deckinfo" x="+8" y="+6" action="edit_bpm" text="EDIT" localize="true"/>
 						<button class="button_deckinfo" x="+8+40+5" y="+6" action="beat_tap" text="TAP" localize="true"/>
@@ -2445,7 +2362,7 @@
 								<icon x="272" y="53" width="10" height="9" align="center" colorover="textover" colordown="texton"/>
 							</button>
 						</group>
-				</panel>
+				</group>
 				<group name="bpm_area" x="+26+753-170" y="+1" visibility="loaded">
 					<group name="small_phrasekeeper" x="+13" y="+12">
 						<visual class="beat_bar_small" x="+0" y="+0" source="goto_bar 1"/>
@@ -2467,12 +2384,12 @@
 							<text fontsize="14" color="textdark" align="center" weight="bold" text="~"/>
 						</textzone>
 					</group>	
-					<textzone action="skin_panel 'adjustbpm_area_[PANELNAME]'" tooltip="`get_bpm 'all'`" visibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
+					<textzone tooltip="`get_bpm 'all'`" visibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
 						<pos x="+170-80-8" y="+1"/>
 						<size width="80" height="34"/>
 						<text fontsize="26" color="textdeck" align="right" weight="bold" format="%Pbpmex"/>
 					</textzone>
-					<textzone action="skin_panel 'adjustbpm_area_[PANELNAME]'" tooltip="`get_bpm 'all'`" novisibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
+					<textzone tooltip="`get_bpm 'all'`" novisibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
 						<pos x="+170-80-8" y="+0"/>
 						<size width="80" height="34"/>
 						<text fontsize="22" color="textdarker" align="right" weight="bold" format="%bpmex"/>
@@ -3337,21 +3254,8 @@
 						<pos x="+753-170-10-56+14" y="+7"/>
 						<size width="56-14" height="56-14"/>
 					</cover>
-					<group visibility="not skin_panel 'adjustbpm_area_[PANELNAME]'">
-						<textzone group="horizontal" scroll="no" align="right" click="scroll">
-							<pos x="+5" y="+4"/>
-							<size width="753-170-10-56" height="25"/>
-							<text fontsize="18" color="title" weight="bold" action="get_title_before_remix" important="true"/>
-							<text fontsize="18" color="remix" action="get_remix_after_title" important="true"/>
-						</textzone>
-						<textzone group="horizontal" scroll="no" align="right" click="scroll">
-							<pos x="+5" y="+29"/>
-							<size width="753-170-10-56" height="21"/>
-							<text fontsize="15" color="artist" action="get_artist_before_feat" important="true"/>
-							<text fontsize="15" color="feat" action="get_featuring_after_artist" important="true"/>
-						</textzone>
-					</group>
-					<group visibility="skin_panel 'adjustbpm_area_[PANELNAME]'" x="+100">
+					
+					<group x="+100">
 						<textzone group="horizontal" scroll="no" align="right" click="scroll">
 							<pos x="+5" y="+4"/>
 							<size width="753-170-10-56-100" height="25"/>
@@ -3366,7 +3270,7 @@
 						</textzone>
 					</group>
 				</group>
-				<panel name="adjustbpm_area_[PANELNAME]" x="+170" y="+0" visible="no">
+				<group name="adjustbpm_area_[PANELNAME]" x="+170" y="+0">
 						<line color="deckinfolines" x="+100" y="+0" width="1" height="90-34"/>
 						<button class="button_deckinfo" x="+8" y="+6" action="beat_tap" text="TAP" localize="true"/>
 						<button class="button_deckinfo" x="+8+40+5" y="+6" action="edit_bpm" text="EDIT" localize="true"/> 
@@ -3394,7 +3298,7 @@
 								<icon x="272" y="53" width="10" height="9" align="center" colorover="titlewhite" colordown="titlewhite"/>
 							</button>
 						</group>
-				</panel>
+				</group>
 				<group name="bpm_area" x="+0" y="+1" visibility="loaded">
 					<group name="small_phrasekeeper" x="+170-10-14-14" y="+12">
 						<visual class="beat_bar_small" x="+0" y="+0" source="goto_bar 1"/>
@@ -3416,12 +3320,12 @@
 							<text fontsize="14" color="textdark" align="center" weight="bold" text="~"/>
 						</textzone>
 					</group>
-					<textzone action="skin_panel 'adjustbpm_area_[PANELNAME]'" tooltip="`get_bpm 'all'`" visibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
+					<textzone tooltip="`get_bpm 'all'`" visibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
 						<pos x="+8" y="+1"/>
 						<size width="80" height="34"/>
 						<text fontsize="26" color="textdeck" align="left" weight="bold" format="%Pbpmex"/>
 					</textzone>²
-					<textzone action="skin_panel 'adjustbpm_area_[PANELNAME]'" tooltip="`get_bpm 'all'`" novisibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
+					<textzone tooltip="`get_bpm 'all'`" novisibility="var_equal '@$spinner' 0 ? yes : has_video_mix active && skin_panel 'videomixer'">
 						<pos x="+8" y="+0"/>
 						<size width="80" height="34"/>
 						<text fontsize="22" color="textdarker" align="left" weight="bold" format="%bpmex"/>
