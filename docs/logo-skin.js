@@ -1,5 +1,6 @@
 import { inspectPng, pngCrc32, LOGO_LIMITS } from './logo-image.js';
 import { ACCOUNT_LEFT_VISIBILITY, ACCOUNT_NORMAL_VISIBILITY } from './toolbar.js';
+import { statusLogoOffset } from './status.js';
 
 export const LOGO_PLACEMENT = Object.freeze({
   mac: Object.freeze({ x: 538, y: 13, statusX: 195 }),
@@ -75,16 +76,18 @@ export async function appendLogoSprite(baseImage, tilePixels) {
   return { image: concatenate(output), spriteY: metadata.height };
 }
 
-export function applyLogoXml(xml, spriteY) {
+export function applyLogoXml(xml, spriteY, options = {}) {
   if (typeof xml !== 'string' || !Number.isSafeInteger(spriteY) || spriteY < 1) throw new TypeError('A valid skin and logo sprite position are required.');
   if (xml.includes(MARKER)) throw new Error('This skin already contains a custom logo.');
   const newline = xml.includes('\r\n') ? '\r\n' : '\n';
   const responsiveAccount = xml.includes('<group name="pureblack_toolbar_account_left"');
+  const offset = statusLogoOffset(options);
   const seen = new Set();
   xml = xml.replace(/<group name="applicationbuttons" condition="is_(mac|pc)">[\s\S]*?<\/logo>/g, (native, platform) => {
     if (seen.has(platform)) throw new Error('The native logo group is duplicated.');
     seen.add(platform);
-    const { x, y } = LOGO_PLACEMENT[platform];
+    const { statusX, y } = LOGO_PLACEMENT[platform];
+    const x = statusX + offset;
     const visual = (name, left, visibility = '') => [
       `<visual name="${name}"${visibility ? ` visibility="${visibility}"` : ''}>`,
       `  <pos x="${left}" y="${y}"/>`,
@@ -97,7 +100,7 @@ export function applyLogoXml(xml, spriteY) {
       visual('pureblack_custom_logo', x,
         platform === 'mac' && responsiveAccount ? ACCOUNT_NORMAL_VISIBILITY : ''),
       ...(platform === 'mac' && responsiveAccount ? [
-        visual('pureblack_custom_logo_account_left', 670, ACCOUNT_LEFT_VISIBILITY),
+        visual('pureblack_custom_logo_account_left', 327 + offset, ACCOUNT_LEFT_VISIBILITY),
       ] : []),
       '<!-- END PURE BLACK CUSTOM LOGO -->',
     ].join(newline);
@@ -114,8 +117,8 @@ export function applyLogoXml(xml, spriteY) {
   return xml;
 }
 
-export async function addLogoToSkin(xml, baseImage, logo) {
+export async function addLogoToSkin(xml, baseImage, logo, options = {}) {
   if (!logo) return { xml, image: baseImage };
   const { image, spriteY } = await appendLogoSprite(baseImage, logo.tilePixels);
-  return { xml: applyLogoXml(xml, spriteY), image };
+  return { xml: applyLogoXml(xml, spriteY, options), image };
 }

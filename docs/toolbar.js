@@ -5,6 +5,8 @@
  * unconditionally when included, so its configurator toggle is predictable.
  */
 
+import { normaliseStatusOptions, statusLayout, statusLogoOffset, configureStatusGroup } from './status.js';
+
 const FEATURES = ['account', 'shoutout', 'scheduler', 'sandbox'];
 export const DEFAULT_TOOLBAR_ORDER = Object.freeze([...FEATURES, 'layout', 'settings']);
 const WIDTHS = { account: 135, shoutout: 35, scheduler: 35, sandbox: 235, layout: 123, settings: 35 };
@@ -36,6 +38,7 @@ function validateOptions(options) {
       throw new TypeError(`Toolbar option ${key} must be on or off.`);
     }
   }
+  normaliseStatusOptions(options);
 }
 
 /** Mirror the Mac runtime branches for the builder's current-window preview. */
@@ -46,11 +49,15 @@ export function resolveToolbarState(options = {}, { width = 1920, notch = false,
   const small = width <= SMALL_WINDOW_MAX_WIDTH;
   const accountLeft = options.account === true && small && !notch && !fullscreen;
   const autoHiddenAccount = FEATURES.every(key => options[key] === true) && small && notch;
+  const status = statusLayout(options);
+  const statusX = accountLeft ? 327 : 195;
   return {
     accountLeft,
     autoHiddenAccount,
-    statusX: accountLeft ? 327 : 195,
-    logoX: accountLeft ? 670 : 538,
+    statusX,
+    statusLayout: status,
+    statusWidth: status.width,
+    logoX: statusX + statusLogoOffset(options),
     rightOptions: { ...options, ...(accountLeft || autoHiddenAccount ? { account: false } : {}) },
   };
 }
@@ -211,6 +218,9 @@ export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
   for (const platform of ['mac', 'pc']) {
     const outer = groupBounds(xml, `pureblack_toolbar_${platform}`);
     let body = xml.slice(outer.bodyStart, outer.close);
+    const originalStatus = groupBounds(body, 'topbar_status');
+    body = body.slice(0, originalStatus.start) +
+      configureStatusGroup(body.slice(originalStatus.start, originalStatus.end), options) + body.slice(originalStatus.end);
     const layout = groupBounds(body, 'layout_options');
     const nativeLayout = body.slice(layout.start, layout.end);
     const settings = [...body.matchAll(/<button action="settings">[\s\S]*?<\/button>/g)];

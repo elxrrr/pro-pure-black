@@ -20,18 +20,20 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Mixer level meters | Follow each deck’s theme colour, retaining segmented bars and `#BEBEBE` peak segments. Default retains the original meters. |
 | Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. |
 | Sandbox, Shoutout, Event Scheduler and account box | Hidden by default; individually configurable in the skin builder. |
-| Builder toolbar | Master, CPU, battery and clock beside the logo on the left; buttons grouped on the right in your chosen order. In narrow Mac windows, Account moves before Master; when the notch layout is active and all controls are included, Account hides to make room. |
+| Builder toolbar | Master, CPU, battery and clock individually configurable beside the logo on the left; CPU and battery off by default. Buttons grouped on the right in your chosen order. In narrow Mac windows, Account moves before Master; when the notch layout is active and all controls are included, Account hides to make room. |
 | Custom logo | Optional transparent PNG, placed after the master/status block. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
-| Deck colours | Default retains the original colours. Pastel and Bold groups each include Red, Orange, Yellow, Green, Blue, Purple, Pink and Greyscale. |
+| Deck colours | Default retains the original colours. A standalone Grayscale palette and Pastel/Bold groups covering Red, Orange, Yellow, Green, Blue, Purple and Pink. |
 | Remaining controls | Original behaviour. |
 
 ## Deck colours
 
-All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D**, using the skin’s palette values.
+All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D**, with contrasting colours within the A/B and C/D pairs. Default retains Atomix’s original order.
 
-<a href="screenshots/themes/default.png"><img src="screenshots/themes/default.png" alt="Default — decks A, B, C, D" width="350"></a>
+| Default | Grayscale |
+| --- | --- |
+| <a href="screenshots/themes/default.png"><img src="screenshots/themes/default.png" alt="Default — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/grayscale.png"><img src="screenshots/themes/grayscale.png" alt="Grayscale — decks A, B, C, D" width="350"></a> |
 
 | Colour | Pastel | Bold |
 | --- | --- | --- |
@@ -42,4 +44,3 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 | Blue | <a href="screenshots/themes/pastel-blue.png"><img src="screenshots/themes/pastel-blue.png" alt="Pastel Blue — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-blue.png"><img src="screenshots/themes/bold-blue.png" alt="Bold Blue — decks A, B, C, D" width="350"></a> |
 | Purple | <a href="screenshots/themes/pastel-purple.png"><img src="screenshots/themes/pastel-purple.png" alt="Pastel Purple — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-purple.png"><img src="screenshots/themes/bold-purple.png" alt="Bold Purple — decks A, B, C, D" width="350"></a> |
 | Pink | <a href="screenshots/themes/pastel-pink.png"><img src="screenshots/themes/pastel-pink.png" alt="Pastel Pink — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-pink.png"><img src="screenshots/themes/bold-pink.png" alt="Bold Pink — decks A, B, C, D" width="350"></a> |
-| Greyscale | <a href="screenshots/themes/pastel-greyscale.png"><img src="screenshots/themes/pastel-greyscale.png" alt="Pastel Greyscale — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-greyscale.png"><img src="screenshots/themes/bold-greyscale.png" alt="Bold Greyscale — decks A, B, C, D" width="350"></a> |

@@ -1,5 +1,6 @@
 import { generateSkinXml, createSkinZip, normaliseThemes, SKIN_README } from './generator.js';
 import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
+import { STATUS_KEYS } from './status.js';
 import { applyWebsiteTheme } from './appearance.js';
 import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
 import { prepareLogo } from './logo-image.js';
@@ -9,6 +10,7 @@ import { renderPalettePreview, renderToolbarPreview, setupPreviewMotion } from '
 const $ = selector => document.querySelector(selector);
 const letters = ['A', 'B', 'C', 'D'];
 const toolbarKeys = ['sandbox', 'shoutout', 'scheduler', 'account'];
+const toolbarToggleKeys = [...toolbarKeys, ...STATUS_KEYS];
 const toolbarLabels = { account: 'Account box', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox', layout: 'Layout', settings: 'Settings' };
 const paletteGroups = [{ id: 'pastel', name: 'Pastel' }, { id: 'bold', name: 'Bold' }];
 const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#156C89', '#AC2F37', '#0D7264', '#A54D30'] };
@@ -31,7 +33,7 @@ function setStatus(message, error = false) {
 }
 
 function toolbarOptions() {
-  return Object.fromEntries(toolbarKeys.map(key => [key, $(`#toolbar-${key}`).checked]));
+  return Object.fromEntries(toolbarToggleKeys.map(key => [key, $(`#toolbar-${key}`).checked]));
 }
 
 function activePreviewTheme() {
@@ -333,7 +335,7 @@ function updateSummary() {
   state.customs.forEach(syncCustomPreset);
   syncPaletteSelection();
   $('#toolbar-count').textContent = `${toolbarCount + 2} included`;
-  $('#download-summary').textContent = `${count} palette${count === 1 ? '' : 's'} · ${toolbarCount} optional control${toolbarCount === 1 ? '' : 's'}`;
+  $('#download-summary').textContent = `${count} palette${count === 1 ? '' : 's'} · ${toolbarCount + 2} controls`;
   $('#download').disabled = !state.assets || state.busy || state.logoBusy;
 }
 
@@ -443,7 +445,7 @@ async function downloadSkin() {
     let xml = generateSkinXml(configuration.assets.xml, configuration.themes);
     xml = applyToolbar(xml, configuration.toolbar, configuration.order);
     let image = configuration.assets.image;
-    if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo));
+    if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo, configuration.toolbar));
     xml = xml.replace(/(<skin\s[^>]*\bname=")[^"]*(")/, '$1Pro Pure Black Custom$2');
     const bytes = createSkinZip([
       { name: 'Pro.xml', data: xml },
@@ -467,7 +469,7 @@ setupToolbarOrder();
 setupDisplayPreview();
 setupLogoUpload();
 resetDraft();
-toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', () => {
+toolbarToggleKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', () => {
   renderToolbar(); updateSummary();
 }));
 $('#add-custom').addEventListener('click', addCustom);

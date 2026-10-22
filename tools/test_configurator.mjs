@@ -40,31 +40,32 @@ test('all existing palettes reproduce the released source exactly', () => {
   assert.equal(generateSkinXml(xml, themes), xml);
 });
 
-test('Pastel and Bold groups retain their identities and export only selected palettes', () => {
-  const names = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Pink', 'Greyscale'];
+test('standalone and grouped palettes retain their identities and export only selected palettes', () => {
+  const names = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Pink'];
   const pastelColors = [
-    ['#CE5954', '#EB8278', '#F9AEA7', '#FEDBD7'],
-    ['#CF752D', '#EA9952', '#F8BD84', '#FEE3C5'],
-    ['#BCA341', '#D3BE58', '#EAD793', '#F9EFC9'],
-    ['#247261', '#5DA260', '#BBC769', '#DAF7E3'],
-    ['#535EA3', '#449AC0', '#B0BBEB', '#DDF3F9'],
-    ['#BD72A8', '#917CD1', '#D0A1E9', '#EFCFED'],
-    ['#C06099', '#E087B2', '#F3B1CF', '#FEDEEC'],
-    ['#636363', '#8F8F8F', '#BEBEBE', '#EEEEEE'],
+    ['#CE5954', '#F9AEA7', '#EB8278', '#FEDBD7'],
+    ['#CF752D', '#F8BD84', '#EA9952', '#FEE3C5'],
+    ['#BCA341', '#EAD793', '#D3BE58', '#F9EFC9'],
+    ['#247261', '#BBC769', '#5DA260', '#DAF7E3'],
+    ['#535EA3', '#B0BBEB', '#449AC0', '#DDF3F9'],
+    ['#BD72A8', '#EFCFED', '#917CD1', '#D0A1E9'],
+    ['#C06099', '#F3B1CF', '#E087B2', '#FEDEEC'],
   ];
-  assert.equal(themes.length, 17);
-  assert.deepEqual(themes[0].colors, ATOMIX_DEFAULT);
-  assert.deepEqual(themes.slice(1, 9).map(theme => theme.colors), pastelColors);
-  for (const [index, group] of ['pastel', 'bold'].entries()) {
-    const palettes = themes.slice(1 + index * 8, 9 + index * 8);
+  assert.equal(themes.length, 16);
+  assert.deepEqual(themes[0], {id: 0, name: 'Default', slug: 'default', colors: ATOMIX_DEFAULT});
+  assert.deepEqual(themes[1], {id: 1, name: 'Grayscale', slug: 'grayscale', colors: ['#5B5B5B', '#C8C8C8', '#909090', '#FFFFFF']});
+  assert.deepEqual(themes.filter(theme => theme.group === 'pastel').map(theme => theme.colors), pastelColors);
+  for (const group of ['pastel', 'bold']) {
+    const palettes = themes.filter(theme => theme.group === group);
+    assert.equal(palettes.length, 7);
     assert.deepEqual(palettes.map(theme => theme.name), names.map(name => `${group === 'pastel' ? 'Pastel' : 'Bold'} ${name}`));
     assert.deepEqual(palettes.map(theme => theme.slug), names.map(name => `${group}-${name.toLowerCase()}`));
     assert.ok(palettes.every(theme => theme.group === group));
   }
-  assert.deepEqual(themes.find(theme => theme.slug === 'bold-yellow').colors, ['#B4870A', '#D3A810', '#F1CB0D', '#FFE97F']);
-  assert.deepEqual(themes.find(theme => theme.slug === 'bold-pink').colors, ['#BE148B', '#F034A3', '#FE79BE', '#FEAFD4']);
+  assert.deepEqual(themes.find(theme => theme.slug === 'bold-yellow').colors, ['#B4870A', '#F1CB0D', '#D3A810', '#FFE97F']);
+  assert.deepEqual(themes.find(theme => theme.slug === 'bold-pink').colors, ['#BE148B', '#FE79BE', '#F034A3', '#FEAFD4']);
   assert.deepEqual(normaliseThemes(themes).map(theme => theme.group), themes.map(theme => theme.group));
-  const selected = [themes[0], ...themes.slice(1, 9), themes.find(theme => theme.slug === 'bold-blue')];
+  const selected = [themes[0], themes[1], ...themes.filter(theme => theme.group === 'pastel'), themes.find(theme => theme.slug === 'bold-blue')];
   const generated = generateSkinXml(xml, selected);
   assert.equal(generatedRegionsRemoved(generated), generatedRegionsRemoved(xml));
   assert.deepEqual([...generated.matchAll(/<group name="pureblack-theme-([^"]+)"/g)].map(match => match[1]), selected.slice(1).map(theme => theme.slug));

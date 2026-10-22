@@ -56,15 +56,35 @@
 .toolbar-preview-viewport:focus-visible + .toolbar-screen-frame { color: var(--accent); --toolbar-frame-stroke: 2px; }
 .toolbar-display-frame { width: var(--toolbar-render-width); max-width: none; flex: 0 0 auto; }
 .toolbar-sim-svg { display: block; width: 100%; height: auto; color: #a6a6a6; fill: currentColor; font-family: Arial, sans-serif; }
-.toolbar-phrase-progress { transform-box: fill-box; transform-origin: center; animation: toolbar-phrase-spin 8s linear infinite; animation-delay: var(--toolbar-delay, 0s); }
-.toolbar-beat-progress { opacity: .5; animation: toolbar-beat-pulse 2s steps(1, end) infinite; animation-delay: var(--toolbar-delay, 0s); }
+/* One clock keeps the 16-beat phrase and left-to-right four-beat bars in sync.
+   Unregistered integer properties switch whole segments and one count at a time. */
+.toolbar-phrase-clock { --phrase-beat: 1; --bar-beat: 1; animation: toolbar-phrase-beats 8s steps(1, end) infinite; }
+.toolbar-phrase-segment { opacity: clamp(0, calc(var(--phrase-beat) - var(--phrase-index)), 1); }
+.toolbar-phrase-count { opacity: clamp(0, min(calc(var(--phrase-beat) - var(--phrase-number) + 1), calc(var(--phrase-number) - var(--phrase-beat) + 1)), 1); font-variant-numeric: tabular-nums; }
+.toolbar-beat-progress { opacity: clamp(0, min(calc(var(--bar-beat) - var(--bar-number) + 1), calc(var(--bar-number) - var(--bar-beat) + 1)), 1); }
 .toolbar-master-fill { background: #000; }
 .toolbar-cpu-fill { transform-box: fill-box; transform-origin: center bottom; transform: scaleY(.4); animation: toolbar-cpu-level 3.2s steps(6, end) infinite; }
 .toolbar-sandbox-strip { animation: toolbar-sandbox-scroll 8s linear infinite; }
 .toolbar-simulation .toolbar-motion { animation-play-state: paused; }
 .toolbar-simulation[data-motion="running"] .toolbar-motion { animation-play-state: running; }
-@keyframes toolbar-phrase-spin { from { transform: rotate(-90deg); } to { transform: rotate(270deg); } }
-@keyframes toolbar-beat-pulse { 0%, 24% { opacity: 1; } 25%, 100% { opacity: .2; } }
+@keyframes toolbar-phrase-beats {
+  0% { --phrase-beat: 1; --bar-beat: 1; }
+  6.25% { --phrase-beat: 2; --bar-beat: 2; }
+  12.5% { --phrase-beat: 3; --bar-beat: 3; }
+  18.75% { --phrase-beat: 4; --bar-beat: 4; }
+  25% { --phrase-beat: 5; --bar-beat: 1; }
+  31.25% { --phrase-beat: 6; --bar-beat: 2; }
+  37.5% { --phrase-beat: 7; --bar-beat: 3; }
+  43.75% { --phrase-beat: 8; --bar-beat: 4; }
+  50% { --phrase-beat: 9; --bar-beat: 1; }
+  56.25% { --phrase-beat: 10; --bar-beat: 2; }
+  62.5% { --phrase-beat: 11; --bar-beat: 3; }
+  68.75% { --phrase-beat: 12; --bar-beat: 4; }
+  75% { --phrase-beat: 13; --bar-beat: 1; }
+  81.25% { --phrase-beat: 14; --bar-beat: 2; }
+  87.5% { --phrase-beat: 15; --bar-beat: 3; }
+  93.75%, 100% { --phrase-beat: 16; --bar-beat: 4; }
+}
 @keyframes toolbar-cpu-level { 0%, 100% { transform: scaleY(.4); } 35% { transform: scaleY(.62); } 70% { transform: scaleY(.27); } }
 @keyframes toolbar-sandbox-scroll { to { transform: translateX(-200px); } }
 @media (max-width: 700px) {

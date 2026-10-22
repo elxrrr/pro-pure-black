@@ -1,5 +1,6 @@
 import { DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
 import { toolbarFit } from './display.js';
+import { statusLayout } from './status.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 const DEFAULT_WAVES = ['#0085F4', '#FF0013', '#00FFBA', '#F94C00'];
@@ -165,37 +166,51 @@ function toolbarControl({ key, x, y, width, height }) {
   return `<g class="toolbar-sim-control toolbar-sim-${key}" data-toolbar-control="${key}" ${nativeBounds(x, y, width, height)} transform="translate(${x} ${y})"><title>${LABELS[key]}${key === 'sandbox' ? ' with active waveform' : ''}</title><rect width="${width}" height="${height}" rx="3" fill="#000" stroke="#303030"/>${content}</g>`;
 }
 
-function toolbarStatus(x = 195) {
+function toolbarStatus(x = 195, options = {}) {
+  const layout = statusLayout(options);
+  if (!layout.width) return '';
+  const { positions } = layout;
   const meters = [8, 15].map((y, channel) => {
     const segments = Array.from({ length: 11 }, (_, cell) => {
-      const bounds = `x="${65 + cell * 6.5}" y="${y}" width="5" height="5"`;
+      const bounds = `x="${55 + cell * 6.5}" y="${y}" width="5" height="5"`;
       return `<rect class="toolbar-master-track" ${bounds} fill="#242424"/><rect class="meter-cell-lit toolbar-master-cell" data-level="${cell + 1}" style="--meter-index:${cell}" ${bounds} fill="#828282"/>`;
     }).join('');
     return `<g class="toolbar-motion toolbar-master-fill meter-sequence" style="--meter-delay:${-channel * .37}s">${segments}</g>`;
   }).join('');
-  return `<g class="toolbar-sim-status" ${nativeBounds(x, 8, 336, 27)} transform="translate(${x} 8)">
-    <rect width="333" height="27" rx="4" fill="#000" stroke="#282828"/>
-    <g class="toolbar-sim-master"><text x="10" y="18" font-size="11">MASTER</text><g class="toolbar-sim-master-bars">${meters}</g><circle cx="144.5" cy="14.5" r="5" fill="none" stroke="#484848"/></g>
-    <path d="M160 4v19m50-19v19m50-19v19" stroke="#282828"/>
-    <g class="toolbar-sim-cpu"><text x="170" y="18" font-size="11">CPU</text><rect x="200" y="6" width="4" height="15" fill="#242424"/><rect class="toolbar-motion toolbar-cpu-fill" x="200" y="6" width="4" height="15" fill="#828282"/></g>
-    <g class="toolbar-sim-battery"><rect x="222" y="9" width="18" height="9" rx="1" fill="none" stroke="#a6a6a6"/><path d="M242 12v3" stroke="#a6a6a6"/><rect x="224" y="11" width="12" height="5" fill="#828282"/><rect x="250" y="6" width="4" height="15" fill="#242424"/><rect x="250" y="9" width="4" height="12" fill="#828282"/></g>
-    <text class="toolbar-sim-clock" x="298" y="18" text-anchor="middle" font-size="13" fill="#bbb">12:34</text>
+  return `<g class="toolbar-sim-status" ${nativeBounds(x, 8, layout.width, 27)} transform="translate(${x} 8)">
+    <rect width="${layout.items.length === 4 ? layout.width - 3 : layout.width}" height="27" rx="4" fill="#000" stroke="#282828"/>
+    ${positions.master === null ? '' : `<g class="toolbar-sim-master" transform="translate(${positions.master} 0)"><text x="0" y="18" font-size="11">MASTER</text><g class="toolbar-sim-master-bars">${meters}</g><circle cx="134.5" cy="14.5" r="5" fill="none" stroke="#484848"/></g>`}
+    ${layout.separators.map(left => `<path d="M${left} 4v19" stroke="#282828"/>`).join('')}
+    ${positions.cpu === null ? '' : `<g class="toolbar-sim-cpu" transform="translate(${positions.cpu} 0)"><text x="0" y="18" font-size="11">CPU</text><rect x="30" y="6" width="4" height="15" fill="#242424"/><rect class="toolbar-motion toolbar-cpu-fill" x="30" y="6" width="4" height="15" fill="#828282"/></g>`}
+    ${positions.battery === null ? '' : `<g class="toolbar-sim-battery" transform="translate(${positions.battery} 0)"><rect x="2" y="9" width="18" height="9" rx="1" fill="none" stroke="#a6a6a6"/><path d="M22 12v3" stroke="#a6a6a6"/><rect x="4" y="11" width="12" height="5" fill="#828282"/><rect x="30" y="6" width="4" height="15" fill="#242424"/><rect x="30" y="9" width="4" height="12" fill="#828282"/></g>`}
+    ${positions.clock === null ? '' : `<text class="toolbar-sim-clock" x="${positions.clock + 38}" y="18" text-anchor="middle" font-size="13" fill="#bbb">12:34</text>`}
   </g>`;
 }
 
 function phraseCircle(deck, x, colour) {
-  return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck} phrase counter</title><circle cx="15" cy="15" r="15" fill="#484848"/><circle class="toolbar-motion toolbar-phrase-progress" cx="15" cy="15" r="12.5" fill="none" stroke="${colour}" stroke-width="5" stroke-dasharray="27 52" style="--toolbar-delay:${-LETTERS.indexOf(deck) * .4}s"/><circle cx="15" cy="15" r="10" fill="#000"/><text x="15" y="19" text-anchor="middle" fill="#a6a6a6" font-size="11">${deck}</text></g>`;
+  const point = angle => {
+    const radians = angle * Math.PI / 180;
+    return `${(15 + Math.sin(radians) * 12.5).toFixed(3)} ${(15 - Math.cos(radians) * 12.5).toFixed(3)}`;
+  };
+  const segments = Array.from({ length: 16 }, (_, beat) => {
+    const path = `M${point(beat * 22.5 + 2.25)}A12.5 12.5 0 0 1 ${point((beat + 1) * 22.5 - 2.25)}`;
+    return `<path d="${path}" fill="none" stroke="#484848" stroke-width="5"/><path class="toolbar-phrase-segment" data-beat="${beat + 1}" style="--phrase-index:${beat}" d="${path}" fill="none" stroke="${colour}" stroke-width="5"/>`;
+  }).join('');
+  const counts = Array.from({ length: 16 }, (_, beat) => `<text class="toolbar-phrase-count" data-count="${beat + 1}" style="--phrase-number:${beat + 1}" x="15" y="19" text-anchor="middle" fill="#b8b8b8" font-size="11">${beat + 1}</text>`).join('');
+  return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck}: 16-beat phrase counter</title><circle cx="15" cy="15" r="15" fill="#000"/>${segments}<circle cx="15" cy="15" r="10" fill="#000"/>${counts}</g>`;
 }
 
 function phrasePreview(notch, colours, offset = 0) {
   const positions = notch ? { A: 760, C: 795, B: 1095, D: 1130 } : { C: 823, A: 858, B: 1037, D: 1072 };
   const circles = Object.entries(positions).map(([deck, x]) => phraseCircle(deck, x + offset, colours[LETTERS.indexOf(deck)])).join('');
-  if (notch) return circles;
-  const bars = colours.map((colour, deck) => Array.from({ length: 4 }, (_, beat) => {
+  const clock = contents => `<g class="toolbar-motion toolbar-phrase-clock">${contents}</g>`;
+  if (notch) return clock(circles);
+  // Native goto_bar 1…4 indicators are the four beats within each measure.
+  const bars = colours.map((colour, deck) => `<g class="toolbar-beat-row" data-beat-deck="${LETTERS[deck]}">${Array.from({ length: 4 }, (_, beat) => {
     const bounds = `x="${898 + offset + beat * 33}" y="${8 + deck * 7}" width="28" height="5" rx="2"`;
-    return `<rect ${bounds} fill="#484848"/><rect class="toolbar-motion toolbar-beat-progress" ${bounds} fill="${colour}" style="--toolbar-delay:${-beat * .5 - deck * .125}s"/>`;
-  }).join('')).join('');
-  return `${circles}<g class="toolbar-sim-beat-bars" ${nativeBounds(898 + offset, 8, 127, 26)}>${bars}</g>`;
+    return `<rect ${bounds} fill="#484848"/><rect class="toolbar-beat-progress" data-beat="${beat + 1}" ${bounds} fill="${colour}" style="--bar-number:${beat + 1}"/>`;
+  }).join('')}</g>`).join('');
+  return clock(`${circles}<g class="toolbar-sim-beat-bars" ${nativeBounds(898 + offset, 8, 127, 26)}>${bars}</g>`);
 }
 
 function toolbarAvailableWidth(container) {
@@ -269,7 +284,9 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   if (oldViewport) view.scrollLeft = oldViewport.scrollLeft;
   container.setAttribute('role', 'group');
   container.setAttribute('aria-label', 'Toolbar preview');
-  const description = `Approximate toolbar at a fixed control size. Left, from left to right: VirtualDJ logo${leftItem ? ', Account' : ''}, master level, CPU, battery, clock${logo ? ', uploaded logo' : ''}. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.${fit.autoHiddenAccount ? ' Account is hidden to leave space for the notch layout.' : ''}`;
+  const statusNames = { master: 'master level', cpu: 'CPU', battery: 'battery', clock: 'clock' };
+  const statusDescription = statusLayout(options).items.map(item => `, ${statusNames[item.key]}`).join('');
+  const description = `Approximate toolbar at a fixed control size. Left, from left to right: VirtualDJ logo${leftItem ? ', Account' : ''}${statusDescription}${logo ? ', uploaded logo' : ''}. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.${fit.autoHiddenAccount ? ' Account is hidden to leave space for the notch layout.' : ''}`;
   // Frame the native control row around y=21.5 with equal space above and below.
   // At the fixed preview scale, 58 units retain the existing 43.5px outer height.
   const cutout = notch ? `<g class="toolbar-sim-notch" data-native-x="${845 + phraseOffset}" data-native-width="230" transform="translate(${phraseOffset} 0)"><path d="M845 -7.5V22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V-7.5" fill="#000"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>` : '';
@@ -279,7 +296,7 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
       <g class="toolbar-sim-left">
         <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
         ${leftItem ? toolbarControl(leftItem) : ''}
-        ${toolbarStatus(statusX)}
+        ${toolbarStatus(statusX, options)}
         ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(logoX, 13, 72, 17)} x="${logoX}" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"/>` : ''}
       </g>
       <g class="toolbar-sim-phrases">${phrasePreview(notch, colours, phraseOffset)}</g>
