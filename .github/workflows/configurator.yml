@@ -33,7 +33,9 @@ jobs:
       - name: Prepare preview recording
         run: npx playwright install ffmpeg
       - name: Prepare iPhone WebKit checks
-        run: npx playwright install --with-deps webkit
+        run: |
+          sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' /etc/apt/apt-mirrors.txt
+          npx playwright install --with-deps webkit
       - name: Check browser interactions and downloads
         run: npm run browsercheck
         env:
