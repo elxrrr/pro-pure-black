@@ -32,7 +32,7 @@ main { padding-top: 10px; }
 .panel { padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); min-width: 0; }
 .panel + .panel { margin-top: 8px; }
 .configuration-panels { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 8px; margin-top: 8px; }
-.configuration-panels > .panel { margin-top: 0; }
+.configuration-panels > section.panel { margin-top: 0; }
 .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .overall-preview > .panel-heading { flex-wrap: wrap; gap: 6px 20px; }
 .presets-panel > .panel-heading { flex-wrap: wrap; gap: 6px 10px; margin-bottom: 8px; }
