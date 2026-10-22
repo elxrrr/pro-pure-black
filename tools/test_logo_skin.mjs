@@ -102,17 +102,15 @@ test('logo XML retains native logos, CRLF and all unrelated skin content', () =>
   assert.ok(!/(?<!\r)\n/.test(result), 'No bare LF inserted into CRLF source');
   const additions = [...result.matchAll(/<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g)].map(match => match[0]);
   assert.equal(additions.length, 2);
-  for (const [index, x] of [182, 92].entries()) {
+  for (const [index, x] of [538, 443].entries()) {
     assert.match(additions[index], /<visual name="pureblack_custom_logo">/);
     assert.ok(additions[index].includes(`<pos x="${x}" y="13"/>`));
     assert.match(additions[index], /<size width="72" height="17"\/>/);
     assert.match(additions[index], /<off x="0" y="428"\/>/);
   }
-  assert.equal(result.split('<group name="topbar_status" x="276" y="8">').length - 1, 1);
-  assert.equal(result.split('<group name="topbar_status" x="181" y="8">').length - 1, 1);
-  const restored = result.replace(/\r\n<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g, '')
-    .replace('<group name="topbar_status" x="276" y="8">', '<group name="topbar_status" x="195" y="8">')
-    .replace('<group name="topbar_status" x="181" y="8">', '<group name="topbar_status" x="100" y="8">');
+  assert.equal(result.split('<group name="topbar_status" x="195" y="8">').length - 1, 1);
+  assert.equal(result.split('<group name="topbar_status" x="100" y="8">').length - 1, 1);
+  const restored = result.replace(/\r\n<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g, '');
   assert.equal(restored, sourceXml);
   const lf = applyLogoXml(sourceXml.replaceAll('\r\n', '\n'), 428);
   assert.ok(!lf.includes('\r'));

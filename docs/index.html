@@ -32,21 +32,16 @@
     </section>
 
     <section class="panel toolbar-panel" aria-labelledby="toolbar-title">
-      <div class="panel-heading"><h2 id="toolbar-title">Toolbar</h2><span id="toolbar-count" class="count-badge">2 visible</span></div>
+      <div class="panel-heading"><h2 id="toolbar-title">Toolbar</h2><span id="toolbar-count" class="count-badge">2 included</span></div>
       <div class="toolbar-preview-controls">
-        <label class="toolbar-profile-label" for="toolbar-display-profile">Display size <select id="toolbar-display-profile" aria-describedby="toolbar-preview-note"></select></label>
-        <label class="toggle-row toolbar-notch-toggle"><span>Notch preview</span><input type="checkbox" id="toolbar-notch-preview" role="switch" aria-describedby="toolbar-preview-note"><span class="switch" aria-hidden="true"></span></label>
-        <div class="custom-logo-controls"><span class="custom-logo-label">Custom logo</span><label class="custom-logo-picker"><span>Choose PNG</span><input id="custom-logo-upload" type="file" accept="image/png" aria-label="Upload transparent PNG logo" aria-describedby="custom-logo-hint custom-logo-status"></label><button id="custom-logo-remove" type="button" disabled>Remove</button></div>
+        <label class="toolbar-profile-label" for="toolbar-display-profile">Display size <select id="toolbar-display-profile"></select></label>
+        <label class="toggle-row toolbar-notch-toggle"><span>Notch preview</span><input type="checkbox" id="toolbar-notch-preview" role="switch"><span class="switch" aria-hidden="true"></span></label>
+        <div class="custom-logo-controls"><span class="custom-logo-label">Custom logo</span><label class="custom-logo-picker"><span>Choose PNG</span><input id="custom-logo-upload" type="file" accept="image/png" aria-label="Upload transparent PNG logo" aria-describedby="custom-logo-hint custom-logo-status"></label><button id="custom-logo-remove" type="button" disabled>Remove</button><span id="custom-logo-hint">Transparent PNG · 5 MB max.</span></div>
       </div>
-      <div class="custom-logo-upload">
-        <p id="custom-logo-hint">Transparent PNG · 5 MB max. Fits beside the VirtualDJ logo.</p>
-        <p id="custom-logo-details" hidden></p>
-        <p id="custom-logo-status" role="status" aria-live="polite" hidden></p>
-      </div>
+      <p id="custom-logo-status" role="status" aria-live="polite" hidden></p>
       <div id="toolbar-preview"></div>
-      <div class="toolbar-preview-notes"><p id="toolbar-preview-note">Fixed-size preview. VirtualDJ scaling can vary.</p><p id="toolbar-fit-status" role="status" aria-live="polite">Fits this preview.</p></div>
-      <p class="toolbar-order-hint" id="toolbar-order-hint">Left to right. Drag to reorder, or use the arrows.</p>
-      <ol id="toolbar-order" class="toolbar-order" aria-label="Toolbar button order" aria-describedby="toolbar-order-hint"></ol>
+      <div class="toolbar-preview-notes"><p id="toolbar-fit-status" role="status" aria-live="polite" hidden></p></div>
+      <ol id="toolbar-order" class="toolbar-order" aria-label="Toolbar button order"></ol>
       <p id="toolbar-order-status" class="sr-only" role="status" aria-live="polite"></p>
     </section>
 
@@ -67,7 +62,7 @@
   </main>
 
   <footer>
-    <nav aria-label="Project links"><a href="https://github.com/elxrrr/pro-pure-black" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="https://github.com/elxrrr/pro-pure-black/releases/latest">Original skin <span aria-hidden="true">↗</span></a></nav>
+    <nav aria-label="Project links"><a href="https://github.com/elxrrr/pro-pure-black" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="https://github.com/elxrrr/pro-pure-black/tree/main/skin">Skin source <span aria-hidden="true">↗</span></a></nav>
     <span>Made with AI</span>
   </footer>
 </body>

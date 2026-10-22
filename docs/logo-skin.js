@@ -1,8 +1,8 @@
 import { inspectPng, pngCrc32, LOGO_LIMITS } from './logo-image.js';
 
 export const LOGO_PLACEMENT = Object.freeze({
-  mac: Object.freeze({ x: 182, y: 13, statusX: 276 }),
-  pc: Object.freeze({ x: 92, y: 13, statusX: 181 }),
+  mac: Object.freeze({ x: 538, y: 13, statusX: 195 }),
+  pc: Object.freeze({ x: 443, y: 13, statusX: 100 }),
 });
 const MARKER = 'BEGIN PURE BLACK CUSTOM LOGO';
 
@@ -95,10 +95,9 @@ export function applyLogoXml(xml, spriteY) {
     return native + newline + markup;
   });
   if (seen.size !== 2) throw new Error('The skin must contain both native logo groups.');
-  for (const [platform, oldX] of [['mac', 195], ['pc', 100]]) {
-    const before = `<group name="topbar_status" x="${oldX}" y="8">`;
-    if (xml.split(before).length !== 2) throw new Error('The skin status position could not be identified.');
-    xml = xml.replace(before, `<group name="topbar_status" x="${LOGO_PLACEMENT[platform].statusX}" y="8">`);
+  for (const { statusX } of Object.values(LOGO_PLACEMENT)) {
+    const status = `<group name="topbar_status" x="${statusX}" y="8">`;
+    if (xml.split(status).length !== 2) throw new Error('The skin status position could not be identified.');
   }
   return xml;
 }

@@ -165,8 +165,9 @@ function groupBounds(xml, name) {
 }
 
 /** Arrange selected controls without rewriting native menus or VDJScript. */
-export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
+export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER, { compactNotch = false } = {}) {
   if (typeof xml !== 'string') throw new TypeError('Skin template must be text.');
+  if (typeof compactNotch !== 'boolean') throw new TypeError('Compact notch toolbar must be on or off.');
   validateOptions(options);
   order = normaliseToolbarOrder(order);
   if (xml.includes('BEGIN PURE BLACK TOOLBAR') || xml.includes('BEGIN PURE BLACK OPTIONAL TOOLBAR')) {
@@ -194,11 +195,20 @@ export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
     for (const { start, end } of removals.sort((a, b) => b.start - a.start)) {
       body = body.slice(0, start) + body.slice(end);
     }
-    const markup = layouts[platform].map(({ key, x }) => {
+    const renderLayout = items => items.map(({ key, x }) => {
       if (key === 'layout') return nativeLayout.replace(/^(<group name="layout_options" x=")[^"]*(")/, (_, before, after) => before + x + after);
       if (key === 'settings') return nativeSettings.replace(/(<pos x=")[^"]*(" y="8"\/>)/, (_, before, after) => before + x + after);
       return render[key](x);
     }).join(newline).replace(/\r?\n/g, newline);
+    let markup = renderLayout(layouts[platform]);
+    // The selected 13-inch layout keeps Account in the ZIP. VirtualDJ chooses
+    // the appropriate branch live, using the same native notch query as the
+    // phrase counters. Reflow every control so arbitrary ordering leaves no gap.
+    if (platform === 'mac' && compactNotch && FEATURES.every(key => options[key] === true)) {
+      const compact = renderLayout(toolbarLayout({ ...options, account: false }, platform, order));
+      markup = `<group name="pureblack_toolbar_full" visibility="not has_notch">${newline}${markup}${newline}</group>${newline}` +
+        `<group name="pureblack_toolbar_compact" visibility="has_notch">${newline}${compact}${newline}</group>`;
+    }
     const insertion = `${newline}<!-- BEGIN PURE BLACK TOOLBAR -->${newline}${markup}${newline}<!-- END PURE BLACK TOOLBAR -->${newline}`;
     xml = xml.slice(0, outer.bodyStart) + body + insertion + xml.slice(outer.close);
   }

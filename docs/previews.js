@@ -221,7 +221,7 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   if (oldViewport) view.scrollLeft = oldViewport.scrollLeft;
   container.setAttribute('role', 'group');
   container.setAttribute('aria-label', 'Toolbar preview');
-  const description = `Approximate ${device.label} toolbar at a fixed control size. Left: VirtualDJ logo${logo ? ', uploaded logo' : ''}, master level, CPU, battery and clock. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.`;
+  const description = `Approximate ${device.label} toolbar at a fixed control size. Left, from left to right: VirtualDJ logo, master level, CPU, battery, clock${logo ? ', uploaded logo' : ''}. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.`;
   const cutout = notch ? `<g class="toolbar-sim-notch" data-native-x="${845 + phraseOffset}" data-native-width="230" transform="translate(${phraseOffset} 0)"><path d="M845 0v22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V0" fill="#000" stroke="#343438"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>` : '';
   container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
     <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${canvasWidth * fit.scale}px">
@@ -229,8 +229,9 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
       <rect x=".5" y=".5" width="${canvasWidth - 1}" height="83" rx="10" fill="#000" stroke="var(--line)"/>
       <path d="M1 43h${canvasWidth - 2}" stroke="#282828"/>
       <g class="toolbar-sim-left">
-        <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text>${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(182, 13, 72, 17)} x="182" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"/>` : ''}</g>
-        ${toolbarStatus(logo ? 276 : 195)}
+        <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
+        ${toolbarStatus()}
+        ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(538, 13, 72, 17)} x="538" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"/>` : ''}
       </g>
       <g class="toolbar-sim-phrases">${phrasePreview(notch, colours, phraseOffset)}</g>
       <g class="toolbar-sim-right">${items.map(toolbarControl).join('')}</g>

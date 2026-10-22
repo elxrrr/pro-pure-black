@@ -25,16 +25,16 @@ export function getDisplayProfile(id = '14') {
 // skin retains VirtualDJ's own scaling; this is a conservative manual preview.
 export const PREVIEW_SCALE = .75;
 
-export function resolveToolbarOptions(options = {}, { profile = '14' } = {}) {
+export function resolveToolbarOptions(options = {}, { notch = false, profile = '14' } = {}) {
   getDisplayProfile(profile);
-  const autoHiddenAccount = profile === '13' && ['account', 'sandbox', 'shoutout', 'scheduler'].every(key => options[key] === true);
+  const autoHiddenAccount = profile === '13' && notch && ['account', 'sandbox', 'shoutout', 'scheduler'].every(key => options[key] === true);
   return { options: { ...options, ...(autoHiddenAccount ? { account: false } : {}) }, autoHiddenAccount };
 }
 
 export function toolbarFit(options = {}, order = DEFAULT_TOOLBAR_ORDER, { notch = false, profile = '14' } = {}) {
   const display = getDisplayProfile(profile);
   if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
-  const resolved = resolveToolbarOptions(options, { profile });
+  const resolved = resolveToolbarOptions(options, { notch, profile });
   const canvasWidth = display.width / PREVIEW_SCALE;
   const phraseOffset = (canvasWidth - 1920) / 2;
   const items = toolbarLayout(resolved.options, 'mac', order).map(item => ({ ...item, x: item.x + canvasWidth - 1920 }));

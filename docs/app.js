@@ -1,7 +1,7 @@
 import { generateSkinXml, createSkinZip, normaliseThemes } from './generator.js';
 import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
 import { applyWebsiteTheme } from './appearance.js';
-import { DISPLAY_PROFILES, toolbarFit, resolveToolbarOptions } from './display.js';
+import { DISPLAY_PROFILES, toolbarFit } from './display.js';
 import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
 import { prepareLogo } from './logo-image.js';
 import { addLogoToSkin } from './logo-skin.js';
@@ -17,7 +17,7 @@ const state = {
   themes: [originalDefault], selected: new Set(['default']), preview: 'default',
   customs: [], activeCustom: null, nextCustom: 1, assets: null, busy: false,
   toolbarOrder: [...DEFAULT_TOOLBAR_ORDER], notchPreview: false, displayProfile: '14',
-  logo: null, logoBusy: false, accountRequested: false,
+  logo: null, logoBusy: false,
 };
 const hexPattern = /^#[0-9a-f]{6}$/i;
 let toolbarPreviewSignature = '';
@@ -32,11 +32,7 @@ function setStatus(message, error = false) {
 }
 
 function toolbarOptions() {
-  return Object.fromEntries(toolbarKeys.map(key => [key, key === 'account' ? state.accountRequested : $(`#toolbar-${key}`).checked]));
-}
-
-function effectiveToolbarOptions() {
-  return resolveToolbarOptions(toolbarOptions(), displayOptions()).options;
+  return Object.fromEntries(toolbarKeys.map(key => [key, $(`#toolbar-${key}`).checked]));
 }
 
 function activePreviewTheme() {
@@ -61,20 +57,11 @@ function renderToolbar() {
 function updateToolbarFit() {
   const options = toolbarOptions();
   const fit = toolbarFit(options, state.toolbarOrder, displayOptions());
-  const accountUnavailable = resolveToolbarOptions({ ...options, account: true }, displayOptions()).autoHiddenAccount;
-  for (const key of toolbarKeys) {
-    const input = $(`#toolbar-${key}`);
-    input.checked = Boolean(fit.options[key]);
-    input.disabled = key === 'account' && accountUnavailable;
-    input.closest('.toggle-row').classList.toggle('is-unavailable', input.disabled);
-    input.closest('.toolbar-order-row').classList.toggle('is-auto-hidden', key === 'account' && fit.autoHiddenAccount);
-    input.closest('.toggle-row').title = input.disabled ? 'Account hidden when all other controls are enabled on 13″ Air.' : '';
-    if (input.disabled) input.setAttribute('aria-describedby', 'toolbar-fit-status');
-    else input.removeAttribute('aria-describedby');
-  }
   const status = $('#toolbar-fit-status');
-  const message = accountUnavailable ? 'Account hidden for 13″ Air.' : 'Fits this preview.';
+  const message = !fit.fits ? 'Controls overlap in this preview.'
+    : fit.autoHiddenAccount ? 'Account hides automatically in the 13″ notch layout.' : '';
   if (status.textContent !== message) status.textContent = message;
+  status.hidden = !message;
   status.classList.toggle('is-error', !fit.fits);
   return fit;
 }
@@ -96,14 +83,11 @@ function setupDisplayPreview() {
 
 function setLogoStatus(message, error = false) {
   const status = $('#custom-logo-status');
-  status.textContent = message; status.hidden = !message;
+  status.textContent = error ? message : ''; status.hidden = !error || !message;
   status.classList.toggle('is-error', error);
 }
 
 function updateLogoControls() {
-  const details = $('#custom-logo-details');
-  details.hidden = !state.logo;
-  details.textContent = state.logo ? `${state.logo.fileName} · ${state.logo.originalWidth} × ${state.logo.originalHeight}` : '';
   $('#custom-logo-remove').disabled = !state.logo && !state.logoBusy;
   $('#custom-logo-upload').setAttribute('aria-busy', String(state.logoBusy));
 }
@@ -116,13 +100,13 @@ function setupLogoUpload() {
     input.value = '';
     const request = ++logoRequest;
     state.logoBusy = true;
-    setLogoStatus(`Checking ${file.name}…`);
+    setLogoStatus('');
     updateLogoControls(); updateSummary();
     try {
       const logo = await prepareLogo(file);
       if (request !== logoRequest) return;
       state.logo = logo;
-      setLogoStatus('Logo ready.');
+      setLogoStatus('');
       renderToolbar();
     } catch (error) {
       if (request !== logoRequest) return;
@@ -137,7 +121,7 @@ function setupLogoUpload() {
   $('#custom-logo-remove').addEventListener('click', () => {
     logoRequest++;
     state.logo = null; state.logoBusy = false; input.value = '';
-    setLogoStatus('Custom logo removed.');
+    setLogoStatus('');
     updateLogoControls(); renderToolbar(); updateSummary();
   });
   updateLogoControls();
@@ -374,11 +358,11 @@ function validateCustoms() {
 function updateSummary() {
   const valid = validateCustoms();
   const count = state.selected.size + state.customs.filter(custom => custom.included).length;
-  const toolbarCount = Object.values(effectiveToolbarOptions()).filter(Boolean).length;
+  const toolbarCount = Object.values(toolbarOptions()).filter(Boolean).length;
   $('#preset-count').textContent = `${count} included`;
   state.customs.forEach(syncCustomPreset);
   syncPaletteSelection();
-  $('#toolbar-count').textContent = `${toolbarCount + 2} visible`;
+  $('#toolbar-count').textContent = `${toolbarCount + 2} included`;
   $('#download-summary').textContent = `${count} palette${count === 1 ? '' : 's'} · ${toolbarCount} optional control${toolbarCount === 1 ? '' : 's'}`;
   const fit = updateToolbarFit();
   $('#download').disabled = !state.assets || state.busy || state.logoBusy || !valid || !fit.fits;
@@ -502,7 +486,8 @@ async function downloadSkin() {
     updateSummary(); return;
   }
   const configuration = {
-    assets: state.assets, logo: state.logo, toolbar: effectiveToolbarOptions(), order: [...state.toolbarOrder],
+    assets: state.assets, logo: state.logo, toolbar: toolbarOptions(), order: [...state.toolbarOrder],
+    compactNotch: state.displayProfile === '13',
     themes: [...state.themes.filter(theme => theme.slug === 'default' || state.selected.has(theme.slug)),
       ...state.customs.filter(custom => custom.included).map(customTheme)],
   };
@@ -512,7 +497,7 @@ async function downloadSkin() {
   try {
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     let xml = generateSkinXml(configuration.assets.xml, configuration.themes);
-    xml = applyToolbar(xml, configuration.toolbar, configuration.order);
+    xml = applyToolbar(xml, configuration.toolbar, configuration.order, { compactNotch: configuration.compactNotch });
     let image = configuration.assets.image;
     if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo));
     xml = xml.replace(/(<skin\s[^>]*\bname=")[^"]*(")/, '$1Pro Pure Black Custom$2');
@@ -536,8 +521,7 @@ setupPreviewMotion();
 setupToolbarOrder();
 setupDisplayPreview();
 setupLogoUpload();
-toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', event => {
-  if (key === 'account') state.accountRequested = event.target.checked;
+toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', () => {
   renderToolbar(); updateSummary();
 }));
 $('#add-custom').addEventListener('click', addCustom);

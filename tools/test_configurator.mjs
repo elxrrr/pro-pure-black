@@ -197,7 +197,7 @@ test('every toolbar order and toggle combination fits beside the native counters
   }
 });
 
-test('display fit checks preserve control sizes and omit only Account when all controls are requested on 13-inch Air', () => {
+test('display fit checks preserve control sizes and preview only Account omitted on a notched 13-inch Air with all controls requested', () => {
   assert.deepEqual(DISPLAY_PROFILES.map(profile => profile.id), ['13', '14', '15', '16']);
   for (const profile of DISPLAY_PROFILES) {
     assert.equal(getDisplayProfile(profile.id), profile);
@@ -210,7 +210,7 @@ test('display fit checks preserve control sizes and omit only Account when all c
           const shift = canvasWidth - 1920;
           assert.equal(fit.canvasWidth, canvasWidth);
           assert.equal(fit.phraseOffset, shift / 2);
-          const autoHiddenAccount = profile.id === '13' && mask === 15;
+          const autoHiddenAccount = profile.id === '13' && notch && mask === 15;
           assert.equal(fit.autoHiddenAccount, autoHiddenAccount);
           const sourceItems = toolbarLayout(autoHiddenAccount ? {...options, account: false} : options, 'mac', order);
           assert.deepEqual(fit.items.map(item => item.key), sourceItems.map(item => item.key));
@@ -282,6 +282,36 @@ test('toolbar exports preserve native status, menus, actions, colours and automa
   }
 });
 
+test('13-inch exports retain Account in the full Mac layout and reflow only the runtime notch branch', () => {
+  const controls = toolbar => toolbar.match(/<!-- BEGIN PURE BLACK TOOLBAR -->([\s\S]*?)<!-- END PURE BLACK TOOLBAR -->/)[1].trim();
+  for (let mask = 0; mask < 16; mask++) {
+    const options = Object.fromEntries(optional.map((key, bit) => [key, Boolean(mask & (1 << bit))]));
+    for (const order of representativeOrders) {
+      const normal = applyToolbar(xml, options, order);
+      const configured = applyToolbar(xml, options, order, { compactNotch: true });
+      if (mask !== 15) {
+        assert.equal(configured, normal, 'Missing any optional control needs no runtime branch');
+        continue;
+      }
+      assert.equal(withoutToolbar(configured), withoutToolbar(xml));
+      assert.equal(skinGroup(configured, 'pureblack_toolbar_pc'), skinGroup(normal, 'pureblack_toolbar_pc'), 'Windows retains the requested full toolbar');
+      const mac = skinGroup(configured, 'pureblack_toolbar_mac');
+      const full = skinGroup(mac, 'pureblack_toolbar_full');
+      const compact = skinGroup(mac, 'pureblack_toolbar_compact');
+      assert.ok(full.startsWith('<group name="pureblack_toolbar_full" visibility="not has_notch">'));
+      assert.ok(compact.startsWith('<group name="pureblack_toolbar_compact" visibility="has_notch">'));
+      const inner = group => group.slice(group.indexOf('>') + 1, -'</group>'.length).trim();
+      assert.equal(inner(full), controls(skinGroup(normal, 'pureblack_toolbar_mac')));
+      const withoutAccount = applyToolbar(xml, { ...options, account: false }, order);
+      assert.equal(inner(compact), controls(skinGroup(withoutAccount, 'pureblack_toolbar_mac')), 'Compact controls reflow without gaps in any requested order');
+      assert.ok(full.includes('<button action="connect">') && !compact.includes('<button action="connect">'));
+      assert.equal(skinGroup(mac, 'topbar_status'), skinGroup(normal, 'topbar_status'));
+      assert.equal((mac.match(/name="topbar_status"/g) || []).length, 1);
+      assert.ok(!full.includes('topbar_status') && !compact.includes('topbar_status'), 'Status remains outside both runtime branches');
+    }
+  }
+});
+
 test('invalid toolbar values or incomplete, duplicate and unknown orders fail clearly', () => {
   assert.deepEqual(normaliseToolbarOrder(), DEFAULT_TOOLBAR_ORDER);
   for (const order of [null, 'settings', [], DEFAULT_TOOLBAR_ORDER.slice(1), [...DEFAULT_TOOLBAR_ORDER, 'settings'],
@@ -291,6 +321,7 @@ test('invalid toolbar values or incomplete, duplicate and unknown orders fail cl
     assert.throws(() => applyToolbar(xml, {}, order), /order|button|control/i);
   }
   assert.throws(() => applyToolbar(xml, {sandbox: 'true'}), /on or off/);
+  assert.throws(() => applyToolbar(xml, {}, DEFAULT_TOOLBAR_ORDER, { compactNotch: 'true' }), /on or off/);
   assert.throws(() => toolbarLayout({}, 'unknown'), /platform/i);
 });
 
