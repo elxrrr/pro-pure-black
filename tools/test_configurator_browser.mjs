@@ -698,7 +698,9 @@ menus = re.findall(r'<submenu text="Deck Colours"[^>]*>(.*?)</submenu>', xml, re
 assert len(menus) == 2
 for menu in menus:
     assert re.findall(r'<item text="([^"]+)"', menu) == expected
-assert re.findall(r'<group name="pureblack-theme-([^"]+)"', xml) == [name.lower().replace(' ', '-') for name in expected[1:]]
+themes = json.loads((pathlib.Path(sys.argv[3]) / 'themes.json').read_text())
+slugs = {theme['name']: theme['slug'] for theme in themes}
+assert re.findall(r'<group name="pureblack-theme-([^"]+)"', xml) == [slugs[name] for name in expected[1:]]
 source = (pathlib.Path(sys.argv[3]) / 'skin' / 'Pro.xml').read_text()
 normal = xml.replace('\r\n', '\n').replace('name="Pro Pure Black Custom"', 'name="Pro Pure Black"', 1)
 assert normal.split('<!-- BEGIN PURE BLACK DECK THEMES -->')[0] == source.split('<!-- BEGIN PURE BLACK DECK THEMES -->')[0]
