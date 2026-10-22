@@ -7,6 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {test} from 'node:test';
 import {generateSkinXml, normaliseThemes, createSkinZip, ATOMIX_DEFAULT} from '../docs/generator.js';
 import {applyToolbar, toolbarLayout, DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder} from '../docs/toolbar.js';
+import {websiteThemeProperties} from '../docs/appearance.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const xml = readFileSync(join(root, 'skin', 'Pro.xml'), 'utf8');
@@ -215,6 +216,26 @@ test('invalid toolbar values or incomplete, duplicate and unknown orders fail cl
   }
   assert.throws(() => applyToolbar(xml, {sandbox: 'true'}), /on or off/);
   assert.throws(() => toolbarLayout({}, 'unknown'), /platform/i);
+});
+
+test('website accents stay readable for dark custom colours without changing deck colours or black surfaces', () => {
+  const luminance = hex => [1, 3, 5].map(index => parseInt(hex.slice(index, index + 2), 16) / 255)
+    .map(channel => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+    .reduce((sum, channel, index) => sum + channel * [0.2126, 0.7152, 0.0722][index], 0);
+  const palette = themes[0];
+  const before = JSON.stringify(palette);
+  websiteThemeProperties(palette);
+  assert.equal(JSON.stringify(palette), before, 'Website styling must not mutate Atomix Default');
+  for (const colour of ['#000000', '#010203', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF']) {
+    const properties = websiteThemeProperties({...custom, colors: [colour, ...custom.colors.slice(1)]});
+    const accent = properties['--accent'];
+    assert.match(accent, /^#[0-9a-f]{6}$/i);
+    const ink = properties['--accent-ink'];
+    assert.match(ink, /^#0{3}(?:0{3})?$/);
+    assert.ok((luminance(accent) + 0.05) / 0.05 >= 4.5, `Website button contrast fails for ${colour}`);
+    assert.equal(properties['--bg'], undefined, 'Appearance must not tint the black body');
+    assert.equal(properties['--panel'], undefined, 'Appearance must not tint black panels');
+  }
 });
 
 test('exported ZIP passes Python zipfile CRC checks and preserves binary and Unicode data', () => {

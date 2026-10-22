@@ -1,5 +1,6 @@
 import { generateSkinXml, createSkinZip, normaliseThemes } from './generator.js';
 import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
+import { applyWebsiteTheme } from './appearance.js';
 import { renderPalettePreview, renderToolbarPreview, setupPreviewMotion } from './previews.js';
 
 const $ = selector => document.querySelector(selector);
@@ -108,6 +109,7 @@ function setupToolbarOrder() {
 function renderPresetPreview() {
   const custom = state.customs.find(item => item.key === state.preview);
   const theme = custom ? customTheme(custom) : state.themes.find(theme => theme.slug === state.preview) || originalDefault;
+  applyWebsiteTheme(theme);
   $('#preview-title').textContent = theme.name || 'Custom';
   renderPalettePreview($('#preset-preview'), theme);
   document.querySelectorAll('.preset-card').forEach(card => {
@@ -133,8 +135,8 @@ function createPresetCard(theme, custom = null) {
   theme.colors.forEach(colour => { const swatch = document.createElement('i'); swatch.style.setProperty('--swatch', colour); swatches.append(swatch); });
   preview.append(nameRow, swatches);
   preview.addEventListener('click', () => {
-    state.preview = theme.slug; renderPresetPreview();
     if (custom) selectCustom(custom.key);
+    else { state.preview = theme.slug; renderPresetPreview(); }
   });
   const label = document.createElement('label'); label.className = 'preset-checkbox';
   const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = custom ? custom.included : state.selected.has(theme.slug); checkbox.disabled = theme.slug === 'default';
@@ -180,8 +182,16 @@ function selectCustom(key) {
   $('#custom-preview').hidden = !custom;
   $('#custom-preview-heading').hidden = !custom;
   $('#custom-preview-title').textContent = custom ? custom.name.trim() || 'Custom' : '';
-  if (custom) renderPalettePreview($('#custom-preview'), customTheme(custom));
-  else $('#custom-preview').replaceChildren();
+  if (custom) {
+    state.preview = custom.key;
+    renderPalettePreview($('#custom-preview'), customTheme(custom));
+    renderPresetPreview();
+  } else {
+    $('#custom-preview').replaceChildren();
+    if (!state.themes.some(theme => theme.slug === state.preview)) {
+      state.preview = 'default'; renderPresetPreview();
+    }
+  }
   state.customs.forEach(item => {
     item.element.classList.toggle('is-preview', item.key === key);
     item.element.querySelector('.custom-preview-button').setAttribute('aria-pressed', String(item.key === key));
@@ -236,7 +246,6 @@ function createCustomCard(custom) {
   name.value = custom.name;
   name.addEventListener('input', () => {
     custom.name = name.value; selectCustom(custom.key); updateSummary();
-    if (state.preview === custom.key) renderPresetPreview();
   });
   const include = card.querySelector('.custom-include');
   include.addEventListener('change', () => { custom.included = include.checked; updateSummary(); });
@@ -261,7 +270,6 @@ function createCustomCard(custom) {
       custom.included = true; include.checked = true;
       if (hexPattern.test(value.trim())) { custom.colors[index] = value.trim().toUpperCase(); picker.value = custom.colors[index]; }
       selectCustom(custom.key); updateSummary();
-      if (state.preview === custom.key) renderPresetPreview();
     };
     picker.addEventListener('input', () => { hex.value = picker.value.toUpperCase(); changed(hex.value); });
     hex.addEventListener('input', () => changed(hex.value));
@@ -284,7 +292,6 @@ function addCustom() {
   state.customs.push(custom);
   $('#custom-presets').append(createCustomCard(custom));
   $('#presets').append(createPresetCard(customTheme(custom), custom));
-  state.preview = custom.key; renderPresetPreview();
   selectCustom(custom.key); updateSummary();
   custom.element.querySelector('.custom-name').focus();
 }

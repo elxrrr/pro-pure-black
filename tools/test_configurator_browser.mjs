@@ -68,6 +68,26 @@ async function noHorizontalOverflow(page) {
   assert.ok(dimensions.content <= dimensions.viewport + 1, `Horizontal overflow: ${JSON.stringify(dimensions)}`);
 }
 
+async function websiteAccent(page) {
+  return page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim());
+}
+
+async function assertBlackSurfaces(page) {
+  const problems = await page.locator('body, .panel, .preset-card, .custom-card, .toolbar-order-row, .download-panel, .toolbar-simulation, .palette-preview, input[type="text"]').evaluateAll(elements =>
+    elements.flatMap(element => {
+      const style = getComputedStyle(element);
+      let fill = style.backgroundColor;
+      let ancestor = element.parentElement;
+      while ((fill === 'rgba(0, 0, 0, 0)' || fill === 'transparent') && ancestor) {
+        fill = getComputedStyle(ancestor).backgroundColor;
+        ancestor = ancestor.parentElement;
+      }
+      return fill === 'rgb(0, 0, 0)' && style.backgroundImage === 'none' ? []
+        : [`${element.tagName}.${element.className}: ${fill}, ${style.backgroundImage}`];
+    }));
+  assert.deepEqual(problems, [], 'Structural website surfaces must stay pure black');
+}
+
 async function assertDefaultLocked(page) {
   const locked = page.getByRole('checkbox', { name: 'Default is always included' });
   assert.equal(await locked.isChecked(), true);
@@ -179,6 +199,8 @@ try {
   browser = await chromium.launch({ headless: true, channel: process.env.PLAYWRIGHT_CHANNEL || undefined });
   const desktop = await openPage(base, { width: 1440, height: 1050 });
   await assertDefaultLocked(desktop);
+  const defaultAccent = await websiteAccent(desktop);
+  await assertBlackSurfaces(desktop);
   assert.equal(await desktop.locator('#presets input:checked').count(), 7);
   assert.equal(await desktop.locator('#custom-presets .custom-card').count(), 0);
   assert.equal(await desktop.locator('header').count(), 0);
@@ -219,8 +241,21 @@ try {
   await desktop.locator('#select-default').click();
   await desktop.getByRole('button', { name: 'Preview Red', exact: true }).click();
   assert.equal(await desktop.locator('#preview-title').innerText(), 'Red');
+  const redAccent = await websiteAccent(desktop);
+  assert.notEqual(redAccent, defaultAccent, 'Previewing Red must change the website accent');
+  await assertBlackSurfaces(desktop);
   assert.equal(await desktop.locator('#presets input:checked').count(), 1);
   await desktop.getByRole('checkbox', { name: 'Include Red', exact: true }).check();
+  assert.equal(await websiteAccent(desktop), redAccent, 'Inclusion alone must not change website appearance');
+  await desktop.getByRole('button', { name: 'Preview Blue', exact: true }).click();
+  const blueAccent = await websiteAccent(desktop);
+  assert.notEqual(blueAccent, redAccent, 'Previewing Blue must change the website accent');
+  assert.notEqual(blueAccent, defaultAccent);
+  await assertBlackSurfaces(desktop);
+  await desktop.getByRole('button', { name: 'Preview Default', exact: true }).click();
+  assert.equal(await websiteAccent(desktop), defaultAccent, 'Returning to Default restores its website accent');
+  assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), defaults);
+  await desktop.getByRole('button', { name: 'Preview Red', exact: true }).click();
   await assertDefaultLocked(desktop);
 
   // Custom presets are independent and can be added, excluded and removed.
@@ -230,9 +265,11 @@ try {
   const firstTile = desktop.locator('#presets .preset-card[data-slug="custom-1"]');
   assert.equal(await firstTile.count(), 1, 'New custom must appear in the top palette list');
   assert.equal(await firstTile.locator('input').isChecked(), true);
+  const initialCustomAccent = await websiteAccent(desktop);
   // Invalid colours and a duplicate Default name must never produce a ZIP.
   await first.locator('.hex-input[data-deck="A"]').fill('#xyz');
   assert.equal(await desktop.locator('#download').isDisabled(), true);
+  assert.equal(await websiteAccent(desktop), initialCustomAccent, 'Invalid colour input must retain the last valid accent');
   for (const [index, letter] of ['A', 'B', 'C', 'D'].entries()) {
     await first.locator(`.hex-input[data-deck="${letter}"]`).fill(colours[index]);
   }
@@ -242,15 +279,29 @@ try {
   assert.equal(await desktop.locator('#download').isEnabled(), true);
   assert.deepEqual(await desktop.locator('#custom-preview .preview-deck-hex').allTextContents(), colours);
   assert.equal(await firstTile.locator('.preset-name').innerText(), customName);
+  const customAccent = await websiteAccent(desktop);
+  assert.notEqual(customAccent, redAccent, 'Editing the selected custom colours must update website accents');
+  await assertBlackSurfaces(desktop);
   assert.deepEqual(await firstTile.locator('.palette-swatches i').evaluateAll(items => items.map(item => item.style.getPropertyValue('--swatch'))), colours);
   await firstTile.locator('input').uncheck();
   assert.equal(await first.locator('.custom-include').isChecked(), false, 'Top palette inclusion must update the editor');
+  assert.equal(await websiteAccent(desktop), customAccent, 'Excluding a custom must not change its preview appearance');
   await firstTile.locator('.preset-preview').click();
   assert.equal(await desktop.locator('#preview-title').innerText(), customName);
   assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), colours);
   assert.equal(await first.locator('.custom-include').isChecked(), false, 'Preview must not include an excluded custom');
   await first.locator('.custom-include').check();
   assert.equal(await firstTile.locator('input').isChecked(), true, 'Editor inclusion must update the top palette');
+  await desktop.getByRole('button', { name: 'Preview Blue', exact: true }).click();
+  assert.equal(await websiteAccent(desktop), blueAccent);
+  await first.locator('.custom-preview-button').click();
+  assert.equal(await websiteAccent(desktop), customAccent, 'Custom editor Preview must also update website appearance');
+  assert.equal(await desktop.locator('#preview-title').innerText(), customName);
+  await first.locator('.hex-input[data-deck="A"]').fill('#649BE8');
+  assert.notEqual(await websiteAccent(desktop), customAccent, 'Subsequent custom edits must immediately refresh the accent');
+  await first.locator('.hex-input[data-deck="A"]').fill(colours[0]);
+  assert.equal(await websiteAccent(desktop), customAccent);
+  await assertBlackSurfaces(desktop);
 
   await desktop.locator('#add-custom').click();
   const second = desktop.locator('.custom-card[data-custom-id="custom-2"]');
@@ -326,9 +377,10 @@ try {
   await mobile.locator('.custom-card .hex-input[data-deck="A"]').fill(colours[0]);
   assert.equal(await mobile.locator('#download').isEnabled(), true);
   await noHorizontalOverflow(mobile);
+  await assertBlackSurfaces(mobile);
   await mobile.screenshot({ path: join(artifacts, 'mobile.png'), fullPage: true, animations: 'disabled' });
   assert.deepEqual(errors, [], 'Browser errors were emitted.');
-  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, real ZIP download, desktop/mobile layout, no browser errors.');
+  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, palette-linked website accents with black surfaces, real ZIP download, desktop/mobile layout, no browser errors.');
 } catch (error) {
   for (const { page, label } of pages) {
     await page.screenshot({ path: join(artifacts, `${label}-failure.png`), fullPage: true, animations: 'disabled' }).catch(() => {});
