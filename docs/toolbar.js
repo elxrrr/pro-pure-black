@@ -1,11 +1,33 @@
 /**
- * Optional native VirtualDJ toolbar controls.
+ * Ordered native VirtualDJ toolbar controls.
  * Actions, sprites and Sandbox states come from Atomix's default Pro skin.
  * Only placement and the account button's hit area differ. Shoutout is shown
  * unconditionally when included, so its configurator toggle is predictable.
  */
 
 const FEATURES = ['account', 'shoutout', 'scheduler', 'sandbox'];
+export const DEFAULT_TOOLBAR_ORDER = Object.freeze([...FEATURES, 'layout', 'settings']);
+const WIDTHS = { account: 135, shoutout: 35, scheduler: 35, sandbox: 235, layout: 123, settings: 35 };
+
+export function normaliseToolbarOrder(order = DEFAULT_TOOLBAR_ORDER) {
+  if (!Array.isArray(order) || order.length !== DEFAULT_TOOLBAR_ORDER.length ||
+      new Set(order).size !== DEFAULT_TOOLBAR_ORDER.length ||
+      !DEFAULT_TOOLBAR_ORDER.every(key => order.includes(key))) {
+    throw new TypeError('Toolbar order must contain each of the six controls exactly once.');
+  }
+  return [...order];
+}
+
+function validateOptions(options) {
+  if (!options || typeof options !== 'object' || Array.isArray(options)) {
+    throw new TypeError('Toolbar options must be an object.');
+  }
+  for (const key of FEATURES) {
+    if (options[key] !== undefined && typeof options[key] !== 'boolean') {
+      throw new TypeError(`Toolbar option ${key} must be on or off.`);
+    }
+  }
+}
 
 const account = (x) => `<group name="login" x="${x}" y="8">
   <visual>
@@ -83,59 +105,71 @@ const sandbox = (x) => `<group name="sandbox" x="${x}" y="8">
 const render = { account, shoutout, scheduler, sandbox };
 
 /** Reserved widths include the entire active Sandbox waveform and hit areas. */
-export function toolbarLayout(options = {}, platform = 'mac') {
+export function toolbarLayout(options = {}, platform = 'mac', order = DEFAULT_TOOLBAR_ORDER) {
   if (!['mac', 'pc'].includes(platform)) throw new Error('Unknown toolbar platform.');
-  let x = platform === 'mac' ? 195 : 100;
-  const elements = [];
-  for (const key of FEATURES) {
-    if (!options[key]) continue;
-    const width = key === 'account' ? 135 : key === 'sandbox' ? 235 : 35;
-    // Windows keeps its original Layout menu between the optional buttons and
-    // Sandbox. On macOS all four fit before the left notch counters.
-    if (key === 'sandbox' && platform === 'pc') x = 573;
-    elements.push({ key, x, y: 8, width, height: 27 });
+  validateOptions(options);
+  const enabled = normaliseToolbarOrder(order).filter(key => !FEATURES.includes(key) || options[key]);
+  const totalWidth = enabled.reduce((width, key) => width + WIDTHS[key], 0) + (enabled.length - 1) * 10;
+  // Leave 10px before Windows' window controls. Even with every control enabled,
+  // this starts at 1141 (PC) or 1262 (Mac), beyond the respective phrase counters.
+  let x = (platform === 'mac' ? 1910 : 1789) - totalWidth;
+  return enabled.map(key => {
+    const width = WIDTHS[key];
+    const element = { key, x, y: 8, width, height: 27 };
     x += width + 10;
-  }
-  return elements;
+    return element;
+  });
 }
 
 // VirtualDJ accepts a relaxed XML dialect. Insert at a matching group boundary
 // without parsing/reserializing its script attributes or existing source.
-function groupEnd(xml, name) {
+function groupBounds(xml, name) {
   const start = xml.indexOf(`<group name="${name}"`);
   if (start < 0) throw new Error(`Skin toolbar group is missing: ${name}.`);
-  const tags = /<group\b[^>]*>|<\/group>/g;
+  const tags = /<group\b(?:"[^"]*"|'[^']*'|[^'">])*?>|<\/group>/g;
   tags.lastIndex = start;
   let depth = 0;
+  let bodyStart;
   for (let match; (match = tags.exec(xml));) {
     if (match[0] === '</group>') {
       depth -= 1;
-      if (depth === 0) return match.index;
+      if (depth === 0) return { start, bodyStart, close: match.index, end: tags.lastIndex };
     } else if (!match[0].endsWith('/>')) {
+      if (depth === 0) bodyStart = tags.lastIndex;
       depth += 1;
     }
   }
   throw new Error(`Skin toolbar group is incomplete: ${name}.`);
 }
 
-/** Add selected controls to an untouched Pro Pure Black XML template. */
-export function applyToolbar(xml, options = {}) {
+/** Arrange selected controls without rewriting native menus or VDJScript. */
+export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
   if (typeof xml !== 'string') throw new TypeError('Skin template must be text.');
-  for (const key of FEATURES) {
-    if (options[key] !== undefined && typeof options[key] !== 'boolean') {
-      throw new TypeError(`Toolbar option ${key} must be on or off.`);
-    }
-  }
-  if (!FEATURES.some((key) => options[key])) return xml;
-  if (xml.includes('BEGIN PURE BLACK OPTIONAL TOOLBAR')) {
+  validateOptions(options);
+  order = normaliseToolbarOrder(order);
+  if (xml.includes('BEGIN PURE BLACK TOOLBAR') || xml.includes('BEGIN PURE BLACK OPTIONAL TOOLBAR')) {
     throw new Error('Toolbar controls have already been configured.');
   }
   const newline = xml.includes('\r\n') ? '\r\n' : '\n';
   for (const platform of ['mac', 'pc']) {
-    const markup = toolbarLayout(options, platform).map(({ key, x }) => render[key](x)).join('\n');
-    const insertion = `\n<!-- BEGIN PURE BLACK OPTIONAL TOOLBAR -->\n${markup}\n<!-- END PURE BLACK OPTIONAL TOOLBAR -->\n`.replaceAll('\n', newline);
-    const end = groupEnd(xml, `pureblack_toolbar_${platform}`);
-    xml = xml.slice(0, end) + insertion + xml.slice(end);
+    const outer = groupBounds(xml, `pureblack_toolbar_${platform}`);
+    let body = xml.slice(outer.bodyStart, outer.close);
+    const layout = groupBounds(body, 'layout_options');
+    const nativeLayout = body.slice(layout.start, layout.end);
+    const settings = [...body.matchAll(/<button action="settings">[\s\S]*?<\/button>/g)];
+    if (settings.length !== 1) throw new Error('Skin toolbar must contain one Settings button per platform.');
+    const nativeSettings = settings[0][0];
+    const removals = [layout, { start: settings[0].index, end: settings[0].index + nativeSettings.length }];
+    for (const { start, end } of removals.sort((a, b) => b.start - a.start)) {
+      body = body.slice(0, start) + body.slice(end);
+    }
+    const markup = toolbarLayout(options, platform, order).map(({ key, x }) => {
+      if (key === 'layout') return nativeLayout.replace(/^(<group name="layout_options" x=")[^"]*(")/, (_, before, after) => before + x + after);
+      if (key === 'settings') return nativeSettings.replace(/(<pos x=")[^"]*(" y="8"\/>)/, (_, before, after) => before + x + after);
+      return render[key](x);
+    }).join(newline).replace(/\r?\n/g, newline);
+    const insertion = `${newline}<!-- BEGIN PURE BLACK TOOLBAR -->${newline}${markup}${newline}<!-- END PURE BLACK TOOLBAR -->${newline}`;
+    xml = xml.slice(0, outer.bodyStart) + body + insertion + xml.slice(outer.close);
   }
   return xml;
 }

@@ -14,6 +14,7 @@ const colours = ['#E89CBE', '#89BFF0', '#84D6B5', '#F2C48F'];
 const customName = 'Studio <&> Mix';
 const secondColours = ['#CA8CD3', '#82D8D1', '#EDB274', '#C7CFEF'];
 const secondName = 'Second preset';
+const defaultToolbarOrder = ['account', 'shoutout', 'scheduler', 'sandbox', 'layout', 'settings'];
 const errors = [];
 let server;
 let browser;
@@ -83,7 +84,7 @@ async function download(page, filename) {
   assert.match(await page.locator('#status').innerText(), /ZIP|download/i);
 }
 
-function verifyDownloadedZip(filename) {
+function verifyDownloadedZip(filename, toolbarOrder) {
   const result = spawnSync('python3', ['-c', String.raw`
 from html.parser import HTMLParser
 from pathlib import Path
@@ -92,6 +93,7 @@ import json, re, sys, zipfile
 root = Path(sys.argv[1])
 colours = json.loads(sys.argv[3])
 second_colours = json.loads(sys.argv[4])
+toolbar_order = json.loads(sys.argv[5])
 with zipfile.ZipFile(sys.argv[2]) as archive:
     assert archive.testzip() is None, 'ZIP checksum failed'
     assert archive.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png']
@@ -115,8 +117,8 @@ assert 'name="Pro Pure Black Custom"' in xml
 menus = re.findall(r'<submenu text="Deck Colours"[^>]*>(.*?)</submenu>', xml, re.S)
 assert len(menus) == 2
 for menu in menus:
-    assert re.findall(r'<item text="([^"]+)"', menu) == ['Default', 'Pastel Pink', 'Studio &lt;&amp;&gt; Mix', 'Second preset']
-assert 'pureblack-theme-pastel-pink' in xml
+    assert re.findall(r'<item text="([^"]+)"', menu) == ['Default', 'Red', 'Studio &lt;&amp;&gt; Mix', 'Second preset']
+assert 'pureblack-theme-red' in xml
 assert 'pureblack-theme-custom-1' in xml
 assert 'pureblack-theme-custom-2' in xml
 assert 'pureblack-theme-custom-3' not in xml
@@ -131,13 +133,42 @@ for index, palette in enumerate([colours, second_colours], 1):
         for role in [f'waveform_active{deck}', f'pureblack_meter{deck}']:
             assert f'<define color="{role}" value="{colour}"/>' in block
 
+def skin_group(text, name):
+    start = text.index('<group name="' + name + '"')
+    depth = 0
+    for match in re.finditer(r'<group\b[^>]*>|</group>', text[start:]):
+        token = match.group(0)
+        if token == '</group>': depth -= 1
+        elif not token.endswith('/>'): depth += 1
+        if depth == 0: return text[start:start + match.end()]
+    raise AssertionError('Unclosed ' + name)
+
+# Requested order must reach the exported native controls on both platforms.
+widths = dict(account=135, shoutout=35, scheduler=35, sandbox=235, layout=123, settings=35)
+for platform, left, right, status_x in [('mac', 1160, 1910, 195), ('pc', 1102, 1789, 100)]:
+    toolbar = skin_group(xml, 'pureblack_toolbar_' + platform)
+    positions = {}
+    for key in toolbar_order:
+        if key in ['account', 'sandbox', 'layout']:
+            name = {'account': 'login', 'layout': 'layout_options', 'sandbox': 'sandbox'}[key]
+            positions[key] = int(re.search(r'<group name="' + name + r'" x="(\d+)"', toolbar).group(1))
+        else:
+            action = 'eventscheduler' if key == 'scheduler' else key
+            positions[key] = int(re.search(r'<button action="' + action + r'">\s*<pos x="(\d+)"', toolbar).group(1))
+    assert sorted(positions, key=positions.get) == toolbar_order, (platform, positions)
+    assert positions[toolbar_order[0]] > left
+    assert positions[toolbar_order[-1]] + widths[toolbar_order[-1]] == right
+    for before, after in zip(toolbar_order, toolbar_order[1:]):
+        assert positions[before] + widths[before] + 10 <= positions[after]
+    assert f'<group name="topbar_status" x="{status_x}" y="8">' in toolbar
+
 # The untouched source preceding the generated palettes contains the native
 # Atomix colours, original skin controls and fixed black surfaces.
 source = (root / 'skin' / 'Pro.xml').read_text()
 normal = xml.replace('\r\n', '\n').replace('name="Pro Pure Black Custom"', 'name="Pro Pure Black"', 1)
 assert normal.split('<!-- BEGIN PURE BLACK DECK THEMES -->')[0] == source.split('<!-- BEGIN PURE BLACK DECK THEMES -->')[0]
 print('Browser-exported ZIP: valid CRC, exact sprites, two independent custom palettes, all four native toolbar controls, custom deck/waveform/VU colours, unchanged Atomix definitions.')
-`, root, filename, JSON.stringify(colours), JSON.stringify(secondColours)], { encoding: 'utf8', cwd: root });
+`, root, filename, JSON.stringify(colours), JSON.stringify(secondColours), JSON.stringify(toolbarOrder)], { encoding: 'utf8', cwd: root });
   assert.equal(result.status, 0, result.stderr || result.error?.message || result.stdout);
   console.log(result.stdout.trim());
 }
@@ -145,10 +176,10 @@ print('Browser-exported ZIP: valid CRC, exact sprites, two independent custom pa
 await mkdir(artifacts, { recursive: true });
 try {
   const base = process.env.BASE_URL || await localServer();
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({ headless: true, channel: process.env.PLAYWRIGHT_CHANNEL || undefined });
   const desktop = await openPage(base, { width: 1440, height: 1050 });
   await assertDefaultLocked(desktop);
-  assert.equal(await desktop.locator('#presets input:checked').count(), 11);
+  assert.equal(await desktop.locator('#presets input:checked').count(), 7);
   assert.equal(await desktop.locator('#custom-presets .custom-card').count(), 0);
   assert.equal(await desktop.locator('header').count(), 0);
   for (const removed of ['VIRTUALDJ · PRO LAYOUT', 'Black base. Your colours.', 'Pure black, always',
@@ -162,7 +193,14 @@ try {
   assert.equal(await desktop.locator('#preset-preview .preview-deck').count(), 4);
   assert.equal(await desktop.locator('#preset-preview .preview-wave').count(), 4);
   assert.equal(await desktop.locator('#preset-preview .preview-meter').count(), 4);
-  assert.equal(await desktop.locator('#toolbar-preview [data-toolbar-control]').count(), 0);
+  assert.deepEqual(await desktop.locator('#toolbar-preview [data-toolbar-control]').evaluateAll(items => items.map(item => item.dataset.toolbarControl)), ['layout', 'settings']);
+  assert.deepEqual(await desktop.locator('#toolbar-order > [data-toolbar-key]').evaluateAll(items => items.map(item => item.dataset.toolbarKey)), defaultToolbarOrder);
+  assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-left > .toolbar-sim-window + .toolbar-sim-status').count(), 1,
+    'Status must sit beside the VDJ logo on the left');
+  for (const part of ['master', 'cpu', 'battery', 'clock']) assert.equal(await desktop.locator(`#toolbar-preview .toolbar-sim-left .toolbar-sim-${part}`).count(), 1);
+  assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-right [data-toolbar-control]').count(), 2);
+  assert.equal(await desktop.locator('#toolbar-count').innerText(), '2 visible');
+  assert.ok(await desktop.evaluate(() => Boolean(document.querySelector('.custom-panel').compareDocumentPosition(document.querySelector('.toolbar-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)), 'Custom preset editor must precede toolbar controls');
   await desktop.locator('#preset-preview').scrollIntoViewIfNeeded();
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'running');
   // Compositor animations stop when the system asks for reduced motion.
@@ -179,16 +217,19 @@ try {
 
   // Previewing is independent of including a preset in the downloaded skin.
   await desktop.locator('#select-default').click();
-  await desktop.getByRole('button', { name: 'Preview Pastel Pink', exact: true }).click();
-  assert.equal(await desktop.locator('#preview-title').innerText(), 'Pastel Pink');
+  await desktop.getByRole('button', { name: 'Preview Red', exact: true }).click();
+  assert.equal(await desktop.locator('#preview-title').innerText(), 'Red');
   assert.equal(await desktop.locator('#presets input:checked').count(), 1);
-  await desktop.getByRole('checkbox', { name: 'Include Pastel Pink', exact: true }).check();
+  await desktop.getByRole('checkbox', { name: 'Include Red', exact: true }).check();
   await assertDefaultLocked(desktop);
 
   // Custom presets are independent and can be added, excluded and removed.
   await desktop.locator('#add-custom').click();
   const first = desktop.locator('.custom-card[data-custom-id="custom-1"]');
   assert.equal(await first.locator('.custom-include').isChecked(), true);
+  const firstTile = desktop.locator('#presets .preset-card[data-slug="custom-1"]');
+  assert.equal(await firstTile.count(), 1, 'New custom must appear in the top palette list');
+  assert.equal(await firstTile.locator('input').isChecked(), true);
   // Invalid colours and a duplicate Default name must never produce a ZIP.
   await first.locator('.hex-input[data-deck="A"]').fill('#xyz');
   assert.equal(await desktop.locator('#download').isDisabled(), true);
@@ -200,6 +241,16 @@ try {
   await first.locator('.custom-name').fill(customName);
   assert.equal(await desktop.locator('#download').isEnabled(), true);
   assert.deepEqual(await desktop.locator('#custom-preview .preview-deck-hex').allTextContents(), colours);
+  assert.equal(await firstTile.locator('.preset-name').innerText(), customName);
+  assert.deepEqual(await firstTile.locator('.palette-swatches i').evaluateAll(items => items.map(item => item.style.getPropertyValue('--swatch'))), colours);
+  await firstTile.locator('input').uncheck();
+  assert.equal(await first.locator('.custom-include').isChecked(), false, 'Top palette inclusion must update the editor');
+  await firstTile.locator('.preset-preview').click();
+  assert.equal(await desktop.locator('#preview-title').innerText(), customName);
+  assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), colours);
+  assert.equal(await first.locator('.custom-include').isChecked(), false, 'Preview must not include an excluded custom');
+  await first.locator('.custom-include').check();
+  assert.equal(await firstTile.locator('input').isChecked(), true, 'Editor inclusion must update the top palette');
 
   await desktop.locator('#add-custom').click();
   const second = desktop.locator('.custom-card[data-custom-id="custom-2"]');
@@ -219,17 +270,36 @@ try {
   await desktop.locator('#add-custom').click();
   await desktop.locator('.custom-card[data-custom-id="custom-3"] .custom-remove').click();
   assert.equal(await desktop.locator('#custom-presets .custom-card').count(), 2);
+  assert.equal(await desktop.locator('#presets .preset-card[data-slug="custom-3"]').count(), 0, 'Deleting a custom removes its top palette tile');
   await first.locator('.custom-preview-button').click();
   for (const key of ['sandbox', 'shoutout', 'scheduler', 'account']) {
     await desktop.locator(`#toolbar-${key}`).check();
     assert.equal(await desktop.locator(`#toolbar-preview [data-toolbar-control="${key}"]`).count(), 1);
   }
   assert.equal(await desktop.locator('#download-summary').innerText(), '4 palettes · 4 optional controls');
+  assert.equal(await desktop.locator('#toolbar-count').innerText(), '6 visible');
+  const settingsEarlier = desktop.locator('#toolbar-order [data-toolbar-key="settings"] [data-move="-1"]');
+  await settingsEarlier.click();
+  await settingsEarlier.press('Enter');
+  let requestedOrder = ['account', 'shoutout', 'scheduler', 'settings', 'sandbox', 'layout'];
+  assert.deepEqual(await desktop.locator('#toolbar-order > [data-toolbar-key]').evaluateAll(items => items.map(item => item.dataset.toolbarKey)), requestedOrder);
+  assert.equal(await settingsEarlier.evaluate(element => element === document.activeElement), true, 'Keyboard reorder must keep focus');
+  await desktop.locator('#toolbar-order [data-toolbar-key="layout"] .toolbar-drag-handle').dragTo(
+    desktop.locator('#toolbar-order [data-toolbar-key="account"]'), { targetPosition: { x: 20, y: 5 } });
+  requestedOrder = ['layout', 'account', 'shoutout', 'scheduler', 'settings', 'sandbox'];
+  assert.deepEqual(await desktop.locator('#toolbar-order > [data-toolbar-key]').evaluateAll(items => items.map(item => item.dataset.toolbarKey)), requestedOrder);
+  assert.deepEqual(await desktop.locator('#toolbar-preview [data-toolbar-control]').evaluateAll(items => items.map(item => item.dataset.toolbarControl)), requestedOrder);
+  for (const key of ['sandbox', 'shoutout', 'scheduler', 'account']) assert.equal(await desktop.locator(`#toolbar-${key}`).isChecked(), true);
+  // Hidden controls retain their order when switched back on.
+  await desktop.locator('#toolbar-account').uncheck();
+  assert.deepEqual(await desktop.locator('#toolbar-preview [data-toolbar-control]').evaluateAll(items => items.map(item => item.dataset.toolbarControl)), requestedOrder.filter(key => key !== 'account'));
+  await desktop.locator('#toolbar-account').check();
+  assert.deepEqual(await desktop.locator('#toolbar-preview [data-toolbar-control]').evaluateAll(items => items.map(item => item.dataset.toolbarControl)), requestedOrder);
   await noHorizontalOverflow(desktop);
   await desktop.screenshot({ path: join(artifacts, 'desktop-custom.png'), fullPage: true, animations: 'disabled' });
   const archive = join(artifacts, 'pro-pure-black-custom.zip');
   await download(desktop, archive);
-  verifyDownloadedZip(archive);
+  verifyDownloadedZip(archive, requestedOrder);
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'paused');
 
   const mobile = await openPage(base, { width: 390, height: 844 }, true);
@@ -242,12 +312,23 @@ try {
   assert.equal(await mobile.locator('#custom-preview').isVisible(), false);
   await mobile.locator('#add-custom').click();
   assert.equal(await mobile.locator('#custom-preview .preview-deck').count(), 4);
+  assert.equal(await mobile.locator('#presets .preset-card[data-slug="custom-1"]').count(), 0);
+  assert.equal(await mobile.locator('#presets .preset-card[data-slug="custom-2"]').count(), 1);
+  await mobile.locator('#select-default').click();
+  assert.equal(await mobile.locator('.custom-card .custom-include').isChecked(), false);
+  assert.equal(await mobile.locator('#presets input:checked').count(), 1);
+  await mobile.locator('#select-all').click();
+  assert.equal(await mobile.locator('.custom-card .custom-include').isChecked(), true);
+  assert.equal(await mobile.locator('#presets input:checked').count(), 8);
+  await mobile.locator('#toolbar-order [data-toolbar-key="sandbox"] [data-move="-1"]').click();
+  assert.deepEqual(await mobile.locator('#toolbar-order > [data-toolbar-key]').evaluateAll(items => items.map(item => item.dataset.toolbarKey)), ['account', 'shoutout', 'sandbox', 'scheduler', 'layout', 'settings']);
+  assert.equal(await mobile.locator('#toolbar-sandbox').isChecked(), true);
   await mobile.locator('.custom-card .hex-input[data-deck="A"]').fill(colours[0]);
   assert.equal(await mobile.locator('#download').isEnabled(), true);
   await noHorizontalOverflow(mobile);
   await mobile.screenshot({ path: join(artifacts, 'mobile.png'), fullPage: true, animations: 'disabled' });
   assert.deepEqual(errors, [], 'Browser errors were emitted.');
-  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, toolbar toggles, real ZIP download, desktop/mobile layout, no browser errors.');
+  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, real ZIP download, desktop/mobile layout, no browser errors.');
 } catch (error) {
   for (const { page, label } of pages) {
     await page.screenshot({ path: join(artifacts, `${label}-failure.png`), fullPage: true, animations: 'disabled' }).catch(() => {});

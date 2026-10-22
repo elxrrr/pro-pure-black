@@ -1,3 +1,5 @@
+import { DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder } from './toolbar.js';
+
 const LETTERS = ['A', 'B', 'C', 'D'];
 const DEFAULT_WAVES = ['#0085F4', '#FF0013', '#00FFBA', '#F94C00'];
 const DEFAULT_DARKS = ['#0D5269', '#8E1E25', '#0B544A', '#84341A'];
@@ -126,20 +128,33 @@ const ICONS = {
   sandbox: '<path d="M5 4h14M5 20h14M7 4v4l5 4-5 4v4m10-16v4l-5 4 5 4v4"/>',
   settings: '<path d="m9 4 1-2h4l1 2 3 1 2 3-1 3 1 3-2 3-3 1-1 2h-4l-1-2-3-1-2-3 1-3-1-3 2-3z"/><circle cx="12" cy="11" r="3"/>',
 };
-const LABELS = { account: 'Account', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox' };
+const LABELS = { account: 'Account', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox', layout: 'Layout', settings: 'Settings' };
 
 function icon(key) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[key]}</svg>`;
 }
 
-/** Non-interactive toolbar mockup; its optional controls mirror the toggles. */
-export function renderToolbarPreview(container, options = {}) {
+function toolbarControl(key) {
+  const content = key === 'layout' ? 'PRO <span class="toolbar-sim-chevron">⌄</span>'
+    : key === 'settings' ? icon(key) : `${icon(key)}<span>${LABELS[key]}</span>`;
+  return `<span class="toolbar-sim-control toolbar-sim-${key}" data-toolbar-control="${key}" title="${LABELS[key]}">${content}</span>`;
+}
+
+/** Non-interactive toolbar mockup; controls mirror visibility and export order. */
+export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
   if (!container) throw new Error('The toolbar preview container is missing.');
+  const enabled = normaliseToolbarOrder(order).filter(key => key === 'layout' || key === 'settings' || options[key]);
   container.classList.add('toolbar-simulation');
-  const enabled = Object.keys(LABELS).filter(key => options[key]);
   container.setAttribute('role', 'img');
-  container.setAttribute('aria-label', `Simulated toolbar. ${enabled.length ? enabled.map(key => LABELS[key]).join(', ') : 'Optional controls hidden'}. Layout, status and Settings remain visible.`);
-  container.innerHTML = `<div class="toolbar-sim-window" aria-hidden="true"><span class="toolbar-sim-lights"><i></i><i></i><i></i></span><span class="toolbar-sim-logo">VDJ</span></div>
-    <div class="toolbar-sim-optional">${enabled.map(key => `<span class="toolbar-sim-control" data-toolbar-control="${key}" title="${LABELS[key]}">${icon(key)}<span>${LABELS[key]}</span></span>`).join('')}</div>
-    <div class="toolbar-sim-permanent" aria-hidden="true"><span class="toolbar-sim-layout">PRO <span>⌄</span></span><span class="toolbar-sim-status"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="toolbar-sim-settings">${icon('settings')}</span></div>`;
+  container.setAttribute('aria-label', `Simulated toolbar. Left: VirtualDJ logo, master level, CPU, battery and clock. Right, from left to right: ${enabled.map(key => LABELS[key]).join(', ')}.`);
+  container.innerHTML = `<div class="toolbar-sim-left" aria-hidden="true">
+      <div class="toolbar-sim-window"><span class="toolbar-sim-lights"><i></i><i></i><i></i></span><span class="toolbar-sim-logo">VDJ</span></div>
+      <div class="toolbar-sim-status">
+        <span class="toolbar-sim-master"><span>MASTER</span><span class="toolbar-sim-master-bars"><i></i><i></i></span></span>
+        <span class="toolbar-sim-cpu">CPU<i></i></span>
+        <span class="toolbar-sim-battery"><svg viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="3" width="19" height="10" rx="1"/><path d="M23 6v4"/><path d="M4 6h12v4H4z" fill="currentColor" stroke="none"/></svg></span>
+        <span class="toolbar-sim-clock">12:34</span>
+      </div>
+    </div>
+    <div class="toolbar-sim-right" aria-hidden="true">${enabled.map(toolbarControl).join('')}</div>`;
 }

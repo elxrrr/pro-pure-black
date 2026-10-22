@@ -2,7 +2,7 @@
 
 A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black desktop.
 
-**[Build your own skin →](https://elxrrr.github.io/pro-pure-black/)** Toggle toolbar controls, choose palettes and set custom deck colours, then download your ZIP. Default is always included with Atomix’s original colours.
+**[Build your own skin →](https://elxrrr.github.io/pro-pure-black/)** Choose and reorder toolbar buttons, select palettes and add your own four-deck presets, then download your ZIP. Default is always included with Atomix’s original colours.
 
 ![Pro Pure Black fullscreen notch layout](screenshots/notch-layout.jpg)
 
@@ -20,10 +20,10 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Mixer level meters | Follow each deck’s theme colour, retaining segmented bars and `#BEBEBE` peak segments. Default retains the original meters. |
 | Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. |
 | Sandbox, Shoutout, Event Scheduler and account box | Hidden by default; individually configurable in the skin builder. |
-| Layout, status and Settings | Grouped on the right on macOS. |
+| Builder toolbar | Master, CPU, battery and clock beside the logo on the left; buttons grouped on the right in your chosen order. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
-| Deck colours | Default retains the original colours; ten optional palettes recolour the decks and associated controls. |
+| Deck colours | Default retains the original colours; Red, Ember, Grove, Blue, Purple and Greyscale recolour the decks and associated controls. |
 | Remaining controls | Original behaviour. |
 
 ## Install
@@ -38,22 +38,14 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 
 ![Default — decks A, B, C, D](screenshots/themes/default.png)
 
-![Pastel Pink — decks A, B, C, D](screenshots/themes/pastel-pink.png)
+![Red — decks A, B, C, D](screenshots/themes/red.png)
 
-![Pastel Blue — decks A, B, C, D](screenshots/themes/pastel-blue.png)
-
-![Violet — decks A, B, C, D](screenshots/themes/violet.png)
-
-![Prism — decks A, B, C, D](screenshots/themes/prism.png)
-
-![Blush — decks A, B, C, D](screenshots/themes/blush.png)
-
-![Frost — decks A, B, C, D](screenshots/themes/frost.png)
-
-![Dusk — decks A, B, C, D](screenshots/themes/dusk.png)
+![Ember — decks A, B, C, D](screenshots/themes/ember.png)
 
 ![Grove — decks A, B, C, D](screenshots/themes/grove.png)
 
-![Orchid — decks A, B, C, D](screenshots/themes/orchid.png)
+![Blue — decks A, B, C, D](screenshots/themes/blue.png)
 
-![Ember — decks A, B, C, D](screenshots/themes/ember.png)
+![Purple — decks A, B, C, D](screenshots/themes/purple.png)
+
+![Greyscale — decks A, B, C, D](screenshots/themes/greyscale.png)

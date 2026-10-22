@@ -32,24 +32,28 @@
 @keyframes preview-wave-scroll { to { transform: translateX(-50%); } }
 @keyframes preview-level { 0%, 100% { transform: scaleY(.72); } 20% { transform: scaleY(.5); } 38% { transform: scaleY(.91); } 58% { transform: scaleY(.61); } 76% { transform: scaleY(.82); } }
 
-.toolbar-simulation { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; min-height: 66px; padding: 13px; background: #000; border: 1px solid #303036; border-radius: 10px; color: #a6a6a6; min-width: 0; }
-.toolbar-sim-window { display: flex; align-items: center; gap: 13px; flex-shrink: 0; }
+.toolbar-simulation { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 24px; min-height: 66px; padding: 13px; background: #000; border: 1px solid #303036; border-radius: 10px; color: #a6a6a6; min-width: 0; }
+.toolbar-sim-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.toolbar-sim-window { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .toolbar-sim-lights { display: flex; gap: 5px; }
 .toolbar-sim-lights i { width: 7px; height: 7px; background: #bf4744; border-radius: 50%; }
 .toolbar-sim-lights i:nth-child(2) { background: #be8d2f; }
 .toolbar-sim-lights i:nth-child(3) { background: #279637; }
 .toolbar-sim-logo { font: italic 700 11px Arial, sans-serif; color: #959595; letter-spacing: -.8px; }
-.toolbar-sim-optional { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
-.toolbar-sim-optional:empty { display: none; }
+.toolbar-sim-status { display: flex; align-items: center; gap: 7px; min-height: 28px; padding: 4px 7px; border: 1px solid #282828; border-radius: 3px; font: 8px ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+.toolbar-sim-status > span { display: inline-flex; align-items: center; gap: 5px; }
+.toolbar-sim-status > span + span { border-left: 1px solid #282828; padding-left: 7px; }
+.toolbar-sim-master-bars { display: grid; gap: 2px; }
+.toolbar-sim-master-bars i { width: 25px; height: 3px; background: repeating-linear-gradient(to right, #828282 0 3px, #000 3px 4px); }
+.toolbar-sim-master-bars i:last-child { width: 21px; }
+.toolbar-sim-cpu i { width: 3px; height: 12px; background: linear-gradient(to top, #828282 40%, #242424 40%); }
+.toolbar-sim-battery svg { display: block; width: 17px; height: 13px; }
+.toolbar-sim-clock { color: #bbb; }
+.toolbar-sim-right { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; margin-left: auto; min-width: 0; }
 .toolbar-sim-control { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; border: 1px solid #303030; border-radius: 3px; padding: 4px 7px; font-size: 10px; white-space: nowrap; }
-.toolbar-sim-control svg, .toolbar-sim-settings svg { display: block; width: 17px; height: 17px; flex-shrink: 0; }
-.toolbar-sim-permanent { display: flex; align-items: center; gap: 12px; margin-left: auto; }
-.toolbar-sim-layout { display: inline-flex; gap: 30px; align-items: center; border: 1px solid #282828; padding: 4px 8px; border-radius: 3px; font-size: 10px; }
-.toolbar-sim-layout span { color: #7c7c7c; }
-.toolbar-sim-status { display: flex; gap: 2px; padding: 0 2px; }
-.toolbar-sim-status i { width: 4px; height: 12px; background: #484848; }
-.toolbar-sim-status i:nth-child(n+4) { background: #242424; }
-.toolbar-sim-settings { padding: 3px; }
+.toolbar-sim-control svg { display: block; width: 17px; height: 17px; flex-shrink: 0; }
+.toolbar-sim-layout { gap: 30px; }
+.toolbar-sim-chevron { color: #7c7c7c; }
 @media (max-width: 700px) {
   .palette-preview { padding: 11px; gap: 8px; }
   .preview-deck + .preview-deck { padding-left: 8px; }
@@ -59,7 +63,7 @@
   .preview-deck-hex { font-size: 9px; }
   .preview-wave { height: 34px; }
   .toolbar-simulation { gap: 10px; padding: 11px; }
-  .toolbar-sim-optional { order: 3; width: 100%; }
+  .toolbar-sim-right { width: 100%; }
 }
 @media (max-width: 420px) {
   .palette-preview { gap: 6px; padding: 9px; }
@@ -69,6 +73,10 @@
   .preview-meter { width: 4px; flex-basis: 4px; height: 42px; }
   .preview-deck-hex { font-size: 8px; }
   .preview-wave { height: 29px; }
+  .toolbar-sim-left { gap: 8px; }
+  .toolbar-sim-window { gap: 8px; }
+  .toolbar-sim-status { gap: 5px; padding-inline: 5px; }
+  .toolbar-sim-status > span + span { padding-left: 5px; }
   .toolbar-sim-control { font-size: 9px; gap: 5px; padding: 4px 6px; }
 }
 @media (prefers-reduced-motion: reduce) {

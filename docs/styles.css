@@ -55,14 +55,27 @@ main { padding-top: 24px; }
 .preset-checkbox input:focus-visible + .checkbox-face, .custom-enable input:focus-visible + .checkbox-face { outline: 2px solid var(--accent); outline-offset: 3px; }
 .preset-checkbox input:disabled { cursor: default; }
 .preset-checkbox input:disabled + .checkbox-face { opacity: .65; }
-.toggle-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
-.toggle-row { display: flex; align-items: center; justify-content: space-between; position: relative; height: 43px; gap: 10px; padding: 0 12px; border: 1px solid #302a37; border-radius: 8px; background: #000000; color: #d3c9dd; font-size: 12px; cursor: pointer; }
-.toggle-row input { position: absolute; right: 12px; width: 34px; height: 22px; opacity: 0; cursor: pointer; }
+.toolbar-order-hint { margin-top: 16px; color: var(--muted); font-size: 11px; }
+.toolbar-order { display: grid; gap: 7px; list-style: none; margin: 10px 0 0; padding: 0; }
+.toolbar-order-row { display: flex; align-items: center; gap: 10px; min-height: 45px; padding: 4px 8px; border: 1px solid #302a37; border-radius: 8px; background: #000000; color: #d3c9dd; font-size: 12px; }
+.toolbar-order-row.is-dragging { opacity: .45; }
+.toolbar-order-row.is-drop-before { box-shadow: 0 -2px 0 var(--accent); }
+.toolbar-order-row.is-drop-after { box-shadow: 0 2px 0 var(--accent); }
+.toolbar-drag-handle { display: inline-flex; align-items: center; justify-content: center; width: 25px; flex-shrink: 0; align-self: stretch; color: #9b8aa6; cursor: grab; user-select: none; font-size: 22px; line-height: 1; }
+.toolbar-drag-handle:active { cursor: grabbing; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; position: relative; flex: 1; min-width: 0; min-height: 35px; gap: 10px; cursor: pointer; }
+.toggle-row input { position: absolute; right: 0; width: 34px; height: 22px; margin: 0; opacity: 0; cursor: pointer; }
 .switch { display: block; flex-shrink: 0; width: 34px; height: 20px; background: #000000; border: 1px solid #41364a; border-radius: 20px; pointer-events: none; transition: background .15s; }
 .switch:before { content: ""; display: block; width: 12px; height: 12px; margin: 3px; background: #95849f; border-radius: 50%; transition: transform .15s, background .15s; }
 .toggle-row input:checked + .switch { background: var(--accent); border-color: var(--accent); }
 .toggle-row input:checked + .switch:before { background: #32253e; transform: translateX(14px); }
 .toggle-row input:focus-visible + .switch { outline: 2px solid var(--accent); outline-offset: 4px; }
+.toolbar-fixed-name { flex: 1; }
+.toolbar-always { color: #a99bb4; font-size: 10px; }
+.toolbar-move-buttons { display: flex; gap: 3px; margin-left: 4px; flex-shrink: 0; }
+.toolbar-move-buttons button { display: inline-flex; align-items: center; justify-content: center; width: 32px; min-height: 32px; padding: 0; border: 1px solid #403449; border-radius: 5px; background: #000; color: #d6b7ea; font-size: 16px; }
+.toolbar-move-buttons button:hover:not([aria-disabled="true"]) { border-color: #a68ab8; color: #f3ddff; }
+.toolbar-move-buttons button[aria-disabled="true"] { opacity: .3; cursor: default; }
 .add-button { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 5px 12px; border: 1px solid #645170; border-radius: 7px; background: #000000; color: #e5ccf7; font-size: 12px; }
 .add-button span { font-size: 17px; line-height: 1; }
 .add-button:hover { background: #000000; border-color: #b99acb; }
@@ -107,7 +120,6 @@ footer a:hover { color: #f2dcff; }
 [hidden] { display: none !important; }
 @media (max-width: 900px) {
   .preset-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .toggle-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .custom-card { grid-template-columns: minmax(170px, 1fr) minmax(0, 1.4fr); gap: 18px; }
 }
 @media (max-width: 620px) {
@@ -126,8 +138,11 @@ footer a:hover { color: #f2dcff; }
   .preset-checkbox { width: 30px; }
   .text-actions { font-size: 11px; }
   .text-actions button { font-size: 11px; }
-  .toggle-row { padding: 0 10px; font-size: 11px; }
-  .toggle-row input { right: 10px; }
+  .toolbar-order-row { gap: 7px; padding: 5px 6px; font-size: 11px; }
+  .toolbar-drag-handle { width: 19px; }
+  .toolbar-move-buttons { gap: 3px; margin-left: 2px; }
+  .toolbar-move-buttons button { width: 34px; min-height: 36px; }
+  .toolbar-always { font-size: 9px; }
   .custom-card { display: block; padding: 13px; }
   .custom-card-head { gap: 11px; }
   .custom-colours { gap: 10px; margin-top: 17px; }

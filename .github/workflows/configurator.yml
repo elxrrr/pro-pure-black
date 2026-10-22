@@ -28,10 +28,12 @@ jobs:
         run: python3 tools/build_configurator.py --check
       - name: Check generated skins
         run: npm test
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium --only-shell
+      - name: Check installed Chrome
+        run: google-chrome --version
       - name: Check browser interactions and downloads
         run: npm run browsercheck
+        env:
+          PLAYWRIGHT_CHANNEL: chrome
       - name: Save screenshots and exported skin
         if: always()
         uses: actions/upload-artifact@v4

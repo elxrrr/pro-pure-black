@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {test} from 'node:test';
 import {generateSkinXml, normaliseThemes, createSkinZip, ATOMIX_DEFAULT} from '../docs/generator.js';
-import {applyToolbar, toolbarLayout} from '../docs/toolbar.js';
+import {applyToolbar, toolbarLayout, DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder} from '../docs/toolbar.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const xml = readFileSync(join(root, 'skin', 'Pro.xml'), 'utf8');
@@ -55,7 +55,7 @@ test('Default is mandatory and immutable; custom names and colours are validated
 });
 
 test('subsets and custom palettes leave native controls, colours and black surfaces untouched', () => {
-  for (const selection of [[themes[0]], [themes[0], themes[8]], [themes[0], themes[3], custom]]) {
+  for (const selection of [[themes[0]], [themes[0], themes[4]], [themes[0], themes[3], custom]]) {
     const generated = generateSkinXml(xml, selection);
     assert.equal(generatedRegionsRemoved(generated), generatedRegionsRemoved(xml));
     assert.equal(generateSkinXml(generated, selection), generated, 'regeneration is idempotent');
@@ -83,7 +83,7 @@ test('subsets and custom palettes leave native controls, colours and black surfa
 test('custom palette output matches the independent Python skin builder', () => {
   const temporary = mkdtempSync(join(tmpdir(), 'pure-black-palette-'));
   try {
-    const selected = normaliseThemes([themes[0], themes[7], custom]);
+    const selected = normaliseThemes([themes[0], themes[2], custom]);
     writeFileSync(join(temporary, 'Pro.xml'), xml);
     writeFileSync(join(temporary, 'themes.json'), JSON.stringify(selected));
     python(`import importlib.util, pathlib, sys
@@ -110,35 +110,111 @@ test('custom presets have no artificial count limit and retain distinct menu ent
   assert.equal(generatedRegionsRemoved(generated), generatedRegionsRemoved(xml));
 });
 
-test('all sixteen toolbar combinations preserve existing markup and fit native clear regions', () => {
-  assert.equal(applyToolbar(xml, {}), xml);
+// Read complete nested groups independently of the toolbar implementation.
+function skinGroup(text, name) {
+  const start = text.indexOf(`<group name="${name}"`);
+  assert.notEqual(start, -1, `Missing ${name}`);
+  const tags = /<group\b[^>]*>|<\/group>/g;
+  tags.lastIndex = start;
+  let depth = 0;
+  for (let token; (token = tags.exec(text));) {
+    if (token[0] === '</group>') depth--;
+    else if (!token[0].endsWith('/>')) depth++;
+    if (!depth) return text.slice(start, tags.lastIndex);
+  }
+  assert.fail(`Incomplete ${name}`);
+}
+
+function withoutToolbar(text) {
+  for (const platform of ['mac', 'pc']) text = text.replace(skinGroup(text, `pureblack_toolbar_${platform}`), 'TOOLBAR');
+  return text;
+}
+
+function permutations(items) {
+  return items.length === 0 ? [[]] : items.flatMap((item, index) =>
+    permutations(items.filter((_, other) => other !== index)).map(rest => [item, ...rest]));
+}
+
+const orders = permutations(DEFAULT_TOOLBAR_ORDER);
+const representativeOrders = [DEFAULT_TOOLBAR_ORDER, [...DEFAULT_TOOLBAR_ORDER].reverse(),
+  ['layout', 'sandbox', 'settings', 'scheduler', 'account', 'shoutout']];
+
+test('every toolbar order and toggle combination fits beside the native counters and window controls', () => {
+  assert.equal(orders.length, 720);
+  const widths = { account: 135, shoutout: 35, scheduler: 35, sandbox: 235, layout: 123, settings: 35 };
   for (let mask = 0; mask < 16; mask++) {
     const options = Object.fromEntries(optional.map((key, bit) => [key, Boolean(mask & (1 << bit))]));
-    const output = applyToolbar(xml, options);
-    for (const platform of ['mac', 'pc']) {
-      const layout = toolbarLayout(options, platform);
-      assert.deepEqual(layout.map(item => item.key), optional.filter(key => options[key]));
-      for (let index = 0; index < layout.length; index++) {
-        const item = layout[index];
-        assert.equal(item.y, 8);
-        assert.equal(item.height, 27);
-        if (platform === 'mac') {
-          assert.ok(item.x >= 195 && item.x + item.width <= 759, `${mask}: mac ${item.key}`);
-        } else if (item.key === 'sandbox') {
-          assert.ok(item.x >= 573 && item.x + item.width <= 822, `${mask}: pc sandbox`);
-        } else {
-          assert.ok(item.x >= 100 && item.x + item.width <= 359, `${mask}: pc ${item.key}`);
+    for (const order of orders) {
+      for (const platform of ['mac', 'pc']) {
+        const layout = toolbarLayout(options, platform, order);
+        assert.deepEqual(layout.map(item => item.key), order.filter(key => !optional.includes(key) || options[key]));
+        const leftBoundary = platform === 'mac' ? 1160 : 1102;
+        const rightBoundary = platform === 'mac' ? 1910 : 1789;
+        assert.ok(layout[0].x > leftBoundary, `${platform}: controls overlap the beat counters`);
+        assert.equal(layout.at(-1).x + layout.at(-1).width, rightBoundary, `${platform}: controls are not right aligned`);
+        for (let index = 0; index < layout.length; index++) {
+          const item = layout[index];
+          assert.equal(item.width, widths[item.key]);
+          assert.equal(item.y, 8);
+          assert.equal(item.height, 27);
+          if (index) assert.ok(layout[index - 1].x + layout[index - 1].width + 10 <= item.x,
+            `${platform}: ${item.key} overlaps preceding control, including active Sandbox waveform`);
         }
-        if (index) assert.ok(layout[index - 1].x + layout[index - 1].width + 10 <= item.x);
       }
     }
-    const restored = output.replace(/\r?\n<!-- BEGIN PURE BLACK OPTIONAL TOOLBAR -->[\s\S]*?<!-- END PURE BLACK OPTIONAL TOOLBAR -->\r?\n/g, '');
-    assert.equal(restored, xml);
-    for (const [key, action, copies] of [['account', 'connect', 2], ['shoutout', 'shoutout', 2], ['scheduler', 'eventscheduler', 2], ['sandbox', 'sandbox', 6]]) {
-      assert.equal((output.match(new RegExp(`<button action="${action}"`, 'g')) || []).length, options[key] ? copies : 0, `${mask}: ${key}`);
+  }
+});
+
+test('toolbar exports preserve native status, menus, actions, colours and automatic notch layout', () => {
+  for (let mask = 0; mask < 16; mask++) {
+    const options = Object.fromEntries(optional.map((key, bit) => [key, Boolean(mask & (1 << bit))]));
+    for (const order of representativeOrders) {
+      const output = applyToolbar(xml, options, order);
+      assert.equal(withoutToolbar(output), withoutToolbar(xml), 'Only toolbar groups may change');
+      for (const platform of ['mac', 'pc']) {
+        const base = skinGroup(xml, `pureblack_toolbar_${platform}`);
+        const toolbar = skinGroup(output, `pureblack_toolbar_${platform}`);
+        const status = skinGroup(toolbar, 'topbar_status');
+        assert.equal(status, skinGroup(base, 'topbar_status'), 'Native status behavior must be retained');
+        assert.match(status, new RegExp(`^<group name="topbar_status" x="${platform === 'mac' ? 195 : 100}" y="8">`));
+        assert.ok(status.includes('source="get_cpu"') && status.includes('source="get_battery"'));
+        const normalizeX = block => block.replace(/^(<group[^>]* x=")[^"]+/, '$1X');
+        assert.equal(normalizeX(skinGroup(toolbar, 'layout_options')), normalizeX(skinGroup(base, 'layout_options')),
+          'Native Layout menu must remain unchanged');
+        const settings = block => block.match(/<button action="settings">[\s\S]*?<\/button>/)[0]
+          .replace(/(<pos x=")[^"]+/, '$1X');
+        assert.equal(settings(toolbar), settings(base), 'Native Settings action and sprites must remain unchanged');
+        const layout = toolbarLayout(options, platform, order);
+        for (const item of layout) {
+          const start = item.key === 'layout' ? `<group name="layout_options" x="${item.x}"`
+            : item.key === 'account' ? `<group name="login" x="${item.x}"`
+            : item.key === 'sandbox' ? `<group name="sandbox" x="${item.x}"` : null;
+          if (start) assert.ok(toolbar.includes(start), `${platform}: ${item.key} exported position`);
+          else {
+            const action = item.key === 'scheduler' ? 'eventscheduler' : item.key;
+            assert.match(toolbar, new RegExp(`<button action="${action}">\\s*<pos x="${item.x}" y="8"`));
+          }
+        }
+      }
+      for (const [key, action, copies] of [['account', 'connect', 2], ['shoutout', 'shoutout', 2], ['scheduler', 'eventscheduler', 2], ['sandbox', 'sandbox', 6]]) {
+        assert.equal((output.match(new RegExp(`<button action="${action}"`, 'g')) || []).length, options[key] ? copies : 0, `${mask}: ${key}`);
+      }
+      assert.throws(() => applyToolbar(output, options, order), /already/);
+      assert.equal(output.replaceAll('\r\n', '').includes('\n'), false, 'CRLF skin must retain its newline format');
     }
   }
+});
+
+test('invalid toolbar values or incomplete, duplicate and unknown orders fail clearly', () => {
+  assert.deepEqual(normaliseToolbarOrder(), DEFAULT_TOOLBAR_ORDER);
+  for (const order of [null, 'settings', [], DEFAULT_TOOLBAR_ORDER.slice(1), [...DEFAULT_TOOLBAR_ORDER, 'settings'],
+    ['account', 'shoutout', 'scheduler', 'sandbox', 'layout', 'layout'],
+    ['account', 'shoutout', 'scheduler', 'sandbox', 'layout', 'unknown']]) {
+    assert.throws(() => normaliseToolbarOrder(order), /order|button|control/i);
+    assert.throws(() => applyToolbar(xml, {}, order), /order|button|control/i);
+  }
   assert.throws(() => applyToolbar(xml, {sandbox: 'true'}), /on or off/);
+  assert.throws(() => toolbarLayout({}, 'unknown'), /platform/i);
 });
 
 test('exported ZIP passes Python zipfile CRC checks and preserves binary and Unicode data', () => {
