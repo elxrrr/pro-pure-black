@@ -123,6 +123,7 @@ async function assertWholeSquareMeters(page) {
           ? fill.closest('.toolbar-sim-status').querySelector(':scope > rect').getAttribute('fill')
           : getComputedStyle(fill.closest('.preview-meter')).backgroundColor;
         return { horizontal, geometry: initialGeometry, fixed, samples, surface,
+          stableSampleIndices: points.flatMap((point, index) => offsets.includes(point) ? [] : [index]),
           levels: cells.map(cell => Number(cell.dataset.level)),
           transform: getComputedStyle(fill).transform, clip: getComputedStyle(fill).clipPath };
       });
@@ -164,8 +165,11 @@ async function assertWholeSquareMeters(page) {
     const changes = counts.slice(1).map((count, index) => count - counts[index]);
     assert.ok(changes.some(change => change > 0) && changes.some(change => change < 0), 'Meter levels must rise and fall');
     assert.ok(changes.every(change => Math.abs(change) <= 1), 'Levels must switch squares sequentially, one at a time');
-    if (sharedCounts) assert.deepEqual(counts, sharedCounts, 'Deck and master meters must share the same level sequence after their phase delays are removed');
-    else sharedCounts = counts;
+    // Different phase delays can round an exact boundary to opposite sides of
+    // the same step. Compare shared timing just before/after it and in between.
+    const stableCounts = meter.stableSampleIndices.map(index => counts[index]);
+    if (sharedCounts) assert.deepEqual(stableCounts, sharedCounts, 'Deck and master meters must share the same level sequence after their phase delays are removed');
+    else sharedCounts = stableCounts;
   }
 }
 
