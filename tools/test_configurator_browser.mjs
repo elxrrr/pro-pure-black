@@ -72,47 +72,100 @@ async function noHorizontalOverflow(page) {
   assert.ok(dimensions.content <= dimensions.viewport + 1, `Horizontal overflow: ${JSON.stringify(dimensions)}`);
 }
 
-async function meterGeometry(page, selector) {
-  return page.locator(selector).evaluate(preview => ({
-    dividers: [...preview.querySelectorAll('.preview-meter-lines')].map(lines => {
-      const style = getComputedStyle(lines);
-      const fill = getComputedStyle(lines.parentElement.querySelector('.preview-meter-fill'));
-      return { width: style.width, height: style.height, background: style.backgroundImage, transform: style.transform,
-        z: Number(style.zIndex), fillZ: Number(fill.zIndex), fillTransform: fill.transform, timing: fill.animationTimingFunction };
-    }),
-    master: [...preview.querySelectorAll('.toolbar-master-fill rect')].map(rect =>
-      ['x', 'y', 'width', 'height'].map(name => Number(rect.getAttribute(name)))),
-    masterTransforms: [...preview.querySelectorAll('.toolbar-master-fill')].map(fill => getComputedStyle(fill).transform),
-    masterTiming: [...preview.querySelectorAll('.toolbar-master-fill')].map(fill => getComputedStyle(fill).animationTimingFunction),
-  }));
-}
-
-async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-wave-strip', ['.preview-meter-fill', 'clipPath']]) {
+async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-wave-strip', ['.preview-meter-cell', 'opacity']]) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForFunction(selector => document.querySelector(selector).dataset.motion === 'running', selector);
   parts = parts.map(part => typeof part === 'string' ? [part, 'transform'] : part);
-  const fixedMeterGeometry = await meterGeometry(page, selector);
   const before = await page.locator(selector).evaluate((preview, parts) =>
-    parts.map(([part, property]) => getComputedStyle(preview.querySelector(part))[property]), parts);
+    parts.map(([part, property]) => [...preview.querySelectorAll(part)].map(element => getComputedStyle(element)[property])), parts);
+  assert.ok(before.every(values => values.length), 'Every requested animation must exist');
   await page.waitForFunction(({ selector, parts, before }) => parts.every(([part, property], index) =>
-    getComputedStyle(document.querySelector(selector).querySelector(part))[property] !== before[index]),
+    JSON.stringify([...document.querySelector(selector).querySelectorAll(part)].map(element => getComputedStyle(element)[property])) !== JSON.stringify(before[index])),
   { selector, parts, before });
-  assert.deepEqual(await meterGeometry(page, selector), fixedMeterGeometry, 'Meter dividers and artwork must stay fixed while the visible fill changes');
-  for (const divider of fixedMeterGeometry.dividers) {
-    assert.equal(divider.transform, 'none');
-    assert.equal(divider.fillTransform, 'none');
-    assert.ok(divider.z > divider.fillZ, 'Black dividers must remain above the coloured fill');
-    assert.match(divider.background, /rgb\(0,\s*0,\s*0\)|#000|black/);
-    assert.ok(!divider.timing.includes('steps'), 'Audio-style fill should move continuously');
-  }
-  if (fixedMeterGeometry.master.length) {
-    assert.equal(fixedMeterGeometry.master.length, 22);
-    fixedMeterGeometry.master.forEach(([x, y, width, height], index, cells) => {
-      assert.equal(width, 5); assert.equal(height, 5);
-      if (index % 11) assert.equal(x - cells[index - 1][0], 6.5, 'Master cells retain their black gaps');
+}
+
+async function assertWholeSquareMeters(page) {
+  // Seek the actual CSS animations around every keyframe and between changes,
+  // so fractional fills or skipped squares cannot hide between wall-clock samples.
+  const meters = await page.locator('.preview-meter-fill, .toolbar-master-fill').evaluateAll(async fills => {
+    const records = fills.map(fill => {
+      const animation = fill.getAnimations()[0];
+      if (!animation) throw new Error('Each meter needs an animated level sequence');
+      const cells = [...fill.querySelectorAll('.meter-cell-lit')];
+      const timing = animation.effect.getTiming();
+      return { fill, cells, animation, timing, inlineName: fill.style.getPropertyValue('animation-name') };
     });
-    assert.ok(fixedMeterGeometry.masterTransforms.every(value => value === 'none'));
-    assert.ok(fixedMeterGeometry.masterTiming.every(value => !value.includes('steps')));
+    records.forEach(({ animation }) => animation.pause());
+    await Promise.all(records.map(({ animation }) => animation.ready));
+    try {
+      return records.map(({ fill, cells, animation, timing }) => {
+        const horizontal = fill.classList.contains('toolbar-master-fill');
+        const geometry = () => cells.map(cell => {
+          const box = cell.getBoundingClientRect(), style = getComputedStyle(cell);
+          return { x: box.x, y: box.y, width: box.width, height: box.height,
+            transform: style.transform, clip: style.clipPath };
+        });
+        const initialGeometry = geometry();
+        const offsets = [...new Set([0, 1, ...animation.effect.getKeyframes().map(frame => frame.computedOffset)])].sort((a, b) => a - b);
+        const points = [...new Set(offsets.flatMap((offset, index) => [
+          Math.max(0, offset - .00001), offset, Math.min(1, offset + .00001),
+          ...(index ? [(offset + offsets[index - 1]) / 2] : []),
+        ]))].sort((a, b) => a - b);
+        let fixed = true;
+        const samples = points.map(point => {
+          // The extra cycle keeps negative deck phase delays in the active interval.
+          animation.currentTime = Number(timing.delay) + Number(timing.duration) * (1 + point);
+          const values = cells.map(cell => Number(getComputedStyle(cell).opacity));
+          fixed &&= JSON.stringify(geometry()) === JSON.stringify(initialGeometry);
+          return values;
+        });
+        const surface = horizontal
+          ? fill.closest('.toolbar-sim-status').querySelector(':scope > rect').getAttribute('fill')
+          : getComputedStyle(fill.closest('.preview-meter')).backgroundColor;
+        return { horizontal, geometry: initialGeometry, fixed, samples, surface,
+          levels: cells.map(cell => Number(cell.dataset.level)),
+          transform: getComputedStyle(fill).transform, clip: getComputedStyle(fill).clipPath };
+      });
+    } finally {
+      // Recreate CSS-owned animations so seeking cannot override later reduced-
+      // motion or off-screen pause rules through the Web Animations API.
+      records.forEach(({ fill }) => { fill.style.animationName = 'none'; });
+      records.forEach(({ fill }) => getComputedStyle(fill).animationName);
+      records.forEach(({ fill, inlineName }) => {
+        if (inlineName) fill.style.animationName = inlineName;
+        else fill.style.removeProperty('animation-name');
+      });
+    }
+  });
+  assert.equal(meters.length, 6, 'Four deck meters and both master channels use whole-square levels');
+  let sharedCounts;
+  for (const meter of meters) {
+    assert.deepEqual(meter.levels, Array.from({ length: 11 }, (_, index) => index + 1));
+    assert.equal(meter.fixed, true, 'Meter cells and black gaps must stay fixed throughout the animation');
+    assert.equal(meter.transform, 'none');
+    assert.equal(meter.clip, 'none');
+    assert.match(meter.surface, /^(#000|rgb\(0,\s*0,\s*0\))$/);
+    meter.geometry.forEach((cell, index, cells) => {
+      assert.ok(Math.abs(cell.width - cell.height) < .05 && cell.width > 0, 'Every illuminated cell is a complete square');
+      assert.equal(cell.transform, 'none');
+      assert.equal(cell.clip, 'none');
+      if (index) {
+        const previous = cells[index - 1];
+        const gap = meter.horizontal ? cell.x - previous.x - previous.width : previous.y - cell.y - cell.height;
+        assert.ok(gap > .1, 'Squares remain separated by black gaps');
+      }
+    });
+    const counts = meter.samples.map(values => {
+      assert.ok(values.every(value => value === 0 || value === 1), 'A square must be completely lit or completely off');
+      const count = values.reduce((sum, value) => sum + value, 0);
+      assert.deepEqual(values, values.map((_, index) => Number(index < count)), 'Lit squares must be contiguous from the base');
+      return count;
+    });
+    const changes = counts.slice(1).map((count, index) => count - counts[index]);
+    assert.ok(changes.some(change => change > 0) && changes.some(change => change < 0), 'Meter levels must rise and fall');
+    assert.ok(changes.every(change => Math.abs(change) <= 1), 'Levels must switch squares sequentially, one at a time');
+    if (sharedCounts) assert.deepEqual(counts, sharedCounts, 'Deck and master meters must share the same level sequence after their phase delays are removed');
+    else sharedCounts = counts;
   }
 }
 
@@ -247,9 +300,18 @@ async function assertPaletteGroup(page, group, checked, indeterminate = false) {
 }
 
 async function assertSharedPreview(page) {
+  assert.equal(await page.locator('.overall-preview > .panel-heading > h1#preview-title').innerText(), 'Preview');
+  assert.equal(await page.locator('h2#presets-title').innerText(), 'Colour presets');
+  assert.deepEqual(await page.locator('#preview-title').evaluate(title => {
+    const style = getComputedStyle(title); return [style.fontSize, style.fontWeight];
+  }), await page.locator('#presets-title').evaluate(title => {
+    const style = getComputedStyle(title); return [style.fontSize, style.fontWeight];
+  }), 'The shared Preview heading must match the Colour presets heading');
   assert.equal(await page.locator('.overall-preview #toolbar-preview + #preset-preview').count(), 1);
   assert.equal(await page.locator('.palette-preview').count(), 1);
   assert.equal(await page.locator('.toolbar-sim-svg').count(), 1);
+  assert.equal(await page.locator('.toolbar-sim-svg > rect, .toolbar-sim-svg > path').count(), 0,
+    'The toolbar must not add a second outer frame or an empty outlined strip below its controls');
   assert.ok(await page.evaluate(() => Boolean(document.querySelector('.overall-preview').compareDocumentPosition(document.querySelector('.presets-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)));
   const rows = await page.locator('#preset-preview .preview-wave').evaluateAll(elements => elements.map(element => {
     const rect = element.getBoundingClientRect(); return { y: rect.y, width: rect.width, height: rect.height };
@@ -285,6 +347,7 @@ async function checkIphone17(base, engine) {
   await draft.getByRole('button', { name: 'Random', exact: true }).tap();
   const palette = await draft.locator('.hex-input').evaluateAll(inputs => inputs.map(input => input.value));
   await assertAnimatedPreview(page, '#preset-preview');
+  await assertWholeSquareMeters(page);
   await page.locator('#add-custom').tap();
   const saved = page.locator('#presets .preset-card[data-slug="custom-1"]');
   assert.equal(await saved.locator('input').isChecked(), true);
@@ -328,7 +391,7 @@ async function toolbarConfiguration(page) {
     toggles: [...document.querySelectorAll('#toolbar-order input')].map(input => [input.id, input.checked]),
     presets: [...document.querySelectorAll('#presets input')].map(input => [input.getAttribute('aria-label'), input.checked]),
     customInputs: [...document.querySelectorAll('#custom-presets input')].map(input => [input.type, input.value, input.checked]),
-    preview: document.querySelector('#preview-title').textContent,
+    preview: document.querySelector('#preset-preview').getAttribute('aria-label'),
   }));
 }
 
@@ -593,11 +656,12 @@ try {
   await assertSharedPreview(desktop);
   await assertToolbarScrolling(desktop);
   await assertLogoControlLayout(desktop);
-  await assertAnimatedPreview(desktop, '#toolbar-preview', ['.toolbar-phrase-progress', ['.toolbar-master-fill', 'clipPath'], '.toolbar-cpu-fill']);
+  await assertAnimatedPreview(desktop, '#toolbar-preview', ['.toolbar-phrase-progress', ['.toolbar-master-cell', 'opacity'], '.toolbar-cpu-fill']);
   assert.ok(await desktop.evaluate(() => Boolean(document.querySelector('.custom-panel').compareDocumentPosition(document.querySelector('.toolbar-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)), 'Custom preset editor must precede toolbar controls');
   await desktop.locator('#preset-preview').scrollIntoViewIfNeeded();
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'running');
   await assertAnimatedPreview(desktop, '#preset-preview');
+  await assertWholeSquareMeters(desktop);
   // Compositor animations stop when the system asks for reduced motion.
   await desktop.emulateMedia({ reducedMotion: 'reduce' });
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'paused');
@@ -635,7 +699,9 @@ try {
   // Previewing is independent of including a preset in the downloaded skin.
   await desktop.locator('#select-default').click();
   await desktop.getByRole('button', { name: 'Preview Pastel Red', exact: true }).click();
-  assert.equal(await desktop.locator('#preview-title').innerText(), 'Pastel Red');
+  assert.equal(await desktop.locator('#preview-title').innerText(), 'Preview');
+  assert.equal(await desktop.getByRole('button', { name: 'Preview Pastel Red', exact: true }).getAttribute('aria-pressed'), 'true');
+  assert.match(await desktop.locator('#preset-preview').getAttribute('aria-label'), /^Pastel Red:/);
   const redAccent = await websiteAccent(desktop);
   assert.notEqual(redAccent, defaultAccent, 'Previewing Red must change the website accent');
   await assertBlackSurfaces(desktop);
@@ -667,8 +733,10 @@ try {
   assert.ok(randomised.every(color => /^#[0-9A-F]{6}$/.test(color)));
   assert.deepEqual(await draft.locator('.colour-picker').evaluateAll(inputs => inputs.map(input => input.value.toUpperCase())), randomised);
   assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), randomised);
+  assert.equal(await desktop.locator('#preview-title').innerText(), 'Preview', 'Draft colours must not replace the static panel heading');
   assert.equal(await desktop.locator('#presets .preset-card[data-slug^="custom-"]').count(), 0, 'Editing a draft does not save or include it');
   await assertAnimatedPreview(desktop, '#preset-preview');
+  await assertWholeSquareMeters(desktop);
   const initialCustomAccent = await websiteAccent(desktop);
   await draft.locator('.hex-input[data-deck="A"]').fill('#xyz');
   assert.equal(await desktop.locator('#add-custom').isDisabled(), true);

@@ -192,7 +192,6 @@ function setupToolbarOrder() {
 function renderPresetPreview() {
   const theme = activePreviewTheme();
   applyWebsiteTheme(theme);
-  $('#preview-title').textContent = theme.name || 'Custom';
   renderPalettePreview($('#preset-preview'), theme);
   document.querySelectorAll('.preset-card').forEach(card => {
     const active = card.dataset.slug === state.preview;

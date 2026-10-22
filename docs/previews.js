@@ -85,11 +85,15 @@ function jog() {
 }
 
 function level(defaultPalette, index) {
-  // Default uses the exact native meter pixels, not the custom colour rule.
-  const fill = defaultPalette
-    ? `<svg class="preview-native-level" viewBox="${DEFAULT_METERS[index]} 0 3 160" preserveAspectRatio="none"><image href="./assets/gfx-pro.png" width="1920" height="428"/></svg>`
-    : '<span class="preview-colour-level"></span>';
-  return `<div class="preview-meter" aria-hidden="true"><div class="preview-meter-track"></div><div class="preview-motion preview-meter-fill">${fill}</div><span class="preview-meter-lines"></span></div>`;
+  const cells = Array.from({ length: 11 }, (_, cell) => {
+    // Sample solid interiors of the native sprite, retaining its exact colours
+    // and grey peak without importing the sprite's transparent row dividers.
+    const fill = defaultPalette
+      ? `<svg class="preview-native-level" viewBox="${DEFAULT_METERS[index] + 1} ${cell === 10 ? 1 : 13} 1 1" preserveAspectRatio="none"><image href="./assets/gfx-pro.png" width="1920" height="428"/></svg>`
+      : `<span class="preview-colour-level${cell === 10 ? ' preview-level-peak' : ''}"></span>`;
+    return `<span class="preview-meter-track"><span class="meter-cell-lit preview-meter-cell" data-level="${cell + 1}" style="--meter-index:${cell}">${fill}</span></span>`;
+  }).join('');
+  return `<div class="preview-meter" aria-hidden="true"><div class="preview-motion preview-meter-fill meter-sequence" style="--meter-delay:${-index * .37}s">${cells}</div></div>`;
 }
 
 /** Illustrative jog, waveform and level preview using the skin's palette rules. */
@@ -163,8 +167,11 @@ function toolbarControl({ key, x, y, width, height }) {
 
 function toolbarStatus(x = 195) {
   const meters = [8, 15].map((y, channel) => {
-    const segments = Array.from({ length: 11 }, (_, i) => `<rect x="${65 + i * 6.5}" y="${y}" width="5" height="5"/>`).join('');
-    return `<g fill="#242424">${segments}</g><g class="toolbar-motion toolbar-master-fill" fill="#828282" style="--toolbar-delay:${-channel * .37}s">${segments}</g>`;
+    const segments = Array.from({ length: 11 }, (_, cell) => {
+      const bounds = `x="${65 + cell * 6.5}" y="${y}" width="5" height="5"`;
+      return `<rect class="toolbar-master-track" ${bounds} fill="#242424"/><rect class="meter-cell-lit toolbar-master-cell" data-level="${cell + 1}" style="--meter-index:${cell}" ${bounds} fill="#828282"/>`;
+    }).join('');
+    return `<g class="toolbar-motion toolbar-master-fill meter-sequence" style="--meter-delay:${-channel * .37}s">${segments}</g>`;
   }).join('');
   return `<g class="toolbar-sim-status" ${nativeBounds(x, 8, 336, 27)} transform="translate(${x} 8)">
     <rect width="333" height="27" rx="4" fill="#000" stroke="#282828"/>
@@ -235,8 +242,6 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
     <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${renderWidth}px">
     <svg class="toolbar-sim-svg" viewBox="0 0 ${canvasWidth} 50" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect x=".5" y=".5" width="${canvasWidth - 1}" height="49" rx="10" fill="#000" stroke="var(--line)"/>
-      <path d="M1 43h${canvasWidth - 2}" stroke="#282828"/>
       <g class="toolbar-sim-left">
         <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
         ${leftItem ? toolbarControl(leftItem) : ''}
