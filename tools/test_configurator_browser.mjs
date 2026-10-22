@@ -382,15 +382,16 @@ async function assertLogoControlLayout(page, mobile = false) {
   const main = await page.locator('main').boundingBox();
   const viewport = page.viewportSize().width;
   assert.ok(main.width >= viewport - 48 && main.width < viewport, 'The builder uses the available viewport width');
-  const display = await page.locator('.toolbar-notch-toggle').boundingBox();
-  const logo = await page.locator('.custom-logo-controls').boundingBox();
-  assert.ok(display && logo);
-  if (mobile) assert.ok(logo.x >= display.x + display.width || logo.y >= display.y + display.height, 'Logo controls remain separate from Notch on mobile');
-  else {
-    assert.ok(logo.x > display.x + display.width, 'Logo controls sit to the right of display controls');
-    assert.ok(Math.abs(logo.y + logo.height / 2 - display.y - display.height / 2) < 2,
-      'Logo and display controls share one desktop line');
-  }
+  assert.equal(await page.locator('.custom-logo-controls > #toolbar-notch-preview + #logo-tint + .custom-logo-picker + #custom-logo-remove').count(), 1,
+    'Notch, Tint, Add Logo and Remove stay adjacent in that order');
+  const controls = await page.locator('#toolbar-notch-preview, #logo-tint, .custom-logo-picker, #custom-logo-remove').evaluateAll(elements =>
+    elements.map(element => { const box = element.getBoundingClientRect(); return { left: box.left, right: box.right, top: box.top, bottom: box.bottom, centre: box.top + box.height / 2 }; }));
+  controls.slice(1).forEach((control, index) => {
+    const previous = controls[index];
+    const sameRow = control.left >= previous.right && Math.abs(control.centre - previous.centre) <= 1;
+    assert.ok(sameRow || (mobile && index > 0 && control.top >= previous.bottom),
+      'Notch sits immediately left of Tint; the control group wraps in order only on narrow screens');
+  });
   assert.equal(await page.locator('.custom-logo-label').count(), 0);
   assert.equal(await page.locator('.custom-logo-controls').evaluate(element => getComputedStyle(element).borderLeftWidth), '0px');
   assert.equal(await page.locator('.custom-logo-picker > span').innerText(), 'Add Logo...');
@@ -437,6 +438,23 @@ async function assertConfigurationLayout(page, wide) {
     assert.ok(Math.abs(custom.y - toolbar.y) <= 1 && custom.x + custom.width <= toolbar.x,
       'Custom presets and toolbar controls share one desktop row');
     assert.ok(Math.abs(custom.height - toolbar.height) <= 1, 'Desktop configuration panels have matching outer heights');
+    const filling = await page.locator('.custom-panel').evaluate(panel => {
+      const box = panel.getBoundingClientRect(), style = getComputedStyle(panel);
+      const innerBottom = box.bottom - parseFloat(style.borderBottomWidth) - parseFloat(style.paddingBottom);
+      return [...panel.querySelectorAll('.colour-field')].map(field => {
+        const label = field.querySelector('.colour-field-label').getBoundingClientRect();
+        const swatch = field.querySelector('.colour-swatch-wrap').getBoundingClientRect();
+        const hex = field.querySelector('.hex-input').getBoundingClientRect();
+        return { height: swatch.height, bottomGap: innerBottom - hex.bottom,
+          beforeSwatch: swatch.top - label.bottom, afterSwatch: hex.top - swatch.bottom };
+      });
+    });
+    assert.equal(filling.length, 4);
+    assert.ok(filling.every(field => field.height >= 32 && Math.abs(field.bottomGap) <= 1 &&
+      field.beforeSwatch >= 0 && field.beforeSwatch <= 8 && Math.abs(field.afterSwatch) <= 1),
+    'Colour swatches fill the available height and hex inputs finish at the panel padding');
+    assert.ok(Math.max(...filling.map(field => field.height)) - Math.min(...filling.map(field => field.height)) <= 1,
+      'All four custom swatches share the available height evenly');
   } else {
     assert.ok(toolbar.y >= custom.y + custom.height, 'Configuration panels stack on narrow screens');
   }
@@ -721,12 +739,24 @@ async function assertDefaultLocked(page) {
 }
 
 async function download(page, filename) {
+  const button = page.getByRole('button', { name: 'Download skin', exact: true });
+  assert.equal(await button.getAttribute('id'), 'download');
+  assert.equal(await button.getAttribute('title'), 'Download skin');
+  assert.equal((await button.innerText()).trim(), '', 'Download uses only its icon');
+  assert.equal(await button.locator('svg').count(), 1);
+  const box = await button.boundingBox();
+  assert.ok(box.width >= 40 && Math.abs(box.width - box.height) <= 1, 'Download is a square touch target');
   const pending = page.waitForEvent('download');
-  await page.locator('#download').click();
+  await button.click();
   const result = await pending;
   assert.equal(result.suggestedFilename(), 'pro-pure-black-custom.zip');
   assert.equal(await result.failure(), null);
   await result.saveAs(filename);
+  await page.waitForFunction(() => {
+    const button = document.querySelector('#download');
+    return button.getAttribute('aria-busy') === 'false' && button.getAttribute('aria-label') === 'Download skin';
+  });
+  assert.equal((await button.innerText()).trim(), '', 'Download stays icon-only after generating a ZIP');
   assert.equal(await page.locator('#status').isVisible(), false, 'Successful downloads must not add a status message');
 }
 

@@ -446,7 +446,8 @@ async function downloadSkin() {
       ...state.customs.filter(custom => custom.included).map(customTheme)],
   };
   state.busy = true; updateSummary();
-  $('#download span').textContent = 'Building…';
+  $('#download').setAttribute('aria-busy', 'true');
+  $('#download').setAttribute('aria-label', 'Building skin…');
   setStatus('');
   try {
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
@@ -467,7 +468,10 @@ async function downloadSkin() {
   } catch (error) {
     setStatus(`Could not build the skin. ${error.message}`, true);
   } finally {
-    state.busy = false; $('#download span').textContent = 'Download skin'; updateSummary();
+    state.busy = false;
+    $('#download').setAttribute('aria-busy', 'false');
+    $('#download').setAttribute('aria-label', 'Download skin');
+    updateSummary();
   }
 }
 
