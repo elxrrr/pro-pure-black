@@ -229,10 +229,17 @@ async function checkIphone17(base, engine) {
   const page = await openPage(base, iphone17, true, engine);
   const label = engine.browserType().name();
   assert.equal(await page.evaluate(() => window.devicePixelRatio), 3);
-  assert.equal(await page.evaluate(() => navigator.maxTouchPoints > 0), true);
+  // WebKit's emulated touch input does not update navigator.maxTouchPoints.
+  // Verify the dispatched touch event and its actual UI result instead.
+  await page.evaluate(() => {
+    document.addEventListener('touchstart', () => {
+      document.documentElement.dataset.touchObserved = 'true';
+    }, { once: true, passive: true });
+  });
   await assertDefaultLocked(page);
   await assertSharedPreview(page);
   await page.locator('#select-default').tap();
+  assert.equal(await page.locator('html').getAttribute('data-touch-observed'), 'true');
   await page.locator('#select-bold').tap();
   assert.equal(await page.locator('#presets .preset-card input:checked').count(), 9);
   await page.getByRole('checkbox', { name: 'Include Bold Pink', exact: true }).tap();
