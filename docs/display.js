@@ -25,18 +25,26 @@ export function getDisplayProfile(id = '14') {
 // skin retains VirtualDJ's own scaling; this is a conservative manual preview.
 export const PREVIEW_SCALE = .75;
 
+export function resolveToolbarOptions(options = {}, { profile = '14' } = {}) {
+  getDisplayProfile(profile);
+  const autoHiddenAccount = profile === '13' && ['account', 'sandbox', 'shoutout', 'scheduler'].every(key => options[key] === true);
+  return { options: { ...options, ...(autoHiddenAccount ? { account: false } : {}) }, autoHiddenAccount };
+}
+
 export function toolbarFit(options = {}, order = DEFAULT_TOOLBAR_ORDER, { notch = false, profile = '14' } = {}) {
   const display = getDisplayProfile(profile);
   if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
+  const resolved = resolveToolbarOptions(options, { profile });
   const canvasWidth = display.width / PREVIEW_SCALE;
   const phraseOffset = (canvasWidth - 1920) / 2;
-  const items = toolbarLayout(options, 'mac', order).map(item => ({ ...item, x: item.x + canvasWidth - 1920 }));
+  const items = toolbarLayout(resolved.options, 'mac', order).map(item => ({ ...item, x: item.x + canvasWidth - 1920 }));
   const phraseEnd = (notch ? 1160 : 1102) + phraseOffset;
   const rightBoundary = canvasWidth - 10;
   const gap = items[0].x - phraseEnd;
   const minGap = 10;
   const requiredWidth = items.at(-1).x + items.at(-1).width - items[0].x;
   return {
+    ...resolved,
     fits: gap >= minGap,
     items, gap, requiredWidth, availableWidth: rightBoundary - phraseEnd - minGap,
     phraseEnd, rightBoundary, minGap, canvasWidth, phraseOffset,

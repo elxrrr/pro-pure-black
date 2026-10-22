@@ -1,10 +1,17 @@
 [
   {"id":0,"name":"Default","slug":"default","colors":["#156C89","#AC2F37","#0D7264","#A54D30"]},
-  {"id":1,"name":"Red","slug":"red","colors":["#CD657B","#E58C8D","#F1B3AE","#F8D9D5"]},
-  {"id":2,"name":"Orange","slug":"orange","colors":["#D66E59","#ED9760","#F5BE7C","#F9E0BA"]},
-  {"id":3,"name":"Yellow","slug":"yellow","colors":["#C59041","#E0AE57","#ECCD8C","#F3E7C6"]},
-  {"id":4,"name":"Green","slug":"green","colors":["#57AA92","#83C46A","#CBD879","#D7F0BD"]},
-  {"id":5,"name":"Blue","slug":"blue","colors":["#5F8FC7","#82B4D6","#AECFEE","#DEEAF8"]},
-  {"id":6,"name":"Purple","slug":"purple","colors":["#BD72A8","#917CD1","#D0A1E9","#EFCFED"]},
-  {"id":7,"name":"Greyscale","slug":"greyscale","colors":["#8F8F8F","#AEAEAE","#CACACA","#E4E4E4"]}
+  {"id":1,"name":"Pastel Red","slug":"pastel-red","group":"pastel","colors":["#A4435F","#DD6B5B","#EBA6C6","#FFE8E9"]},
+  {"id":2,"name":"Pastel Orange","slug":"pastel-orange","group":"pastel","colors":["#A14D2F","#CC7D1B","#F4A988","#FBEDD1"]},
+  {"id":3,"name":"Pastel Yellow","slug":"pastel-yellow","group":"pastel","colors":["#816422","#BD8630","#D5BF36","#F9EFC9"]},
+  {"id":4,"name":"Pastel Green","slug":"pastel-green","group":"pastel","colors":["#247261","#5DA260","#BBC769","#DAF7E3"]},
+  {"id":5,"name":"Pastel Blue","slug":"pastel-blue","group":"pastel","colors":["#535EA3","#449AC0","#B0BBEB","#DDF3F9"]},
+  {"id":6,"name":"Pastel Purple","slug":"pastel-purple","group":"pastel","colors":["#BD72A8","#917CD1","#D0A1E9","#EFCFED"]},
+  {"id":7,"name":"Pastel Greyscale","slug":"pastel-greyscale","group":"pastel","colors":["#636363","#8F8F8F","#BEBEBE","#EEEEEE"]},
+  {"id":8,"name":"Bold Red","slug":"bold-red","group":"bold","colors":["#C61E54","#F93534","#FC65B6","#FEA28B"]},
+  {"id":9,"name":"Bold Orange","slug":"bold-orange","group":"bold","colors":["#C73E1A","#E76D07","#FF9E22","#FFD16B"]},
+  {"id":10,"name":"Bold Yellow","slug":"bold-yellow","group":"bold","colors":["#B96F09","#DB9407","#F9BD05","#FEE06B"]},
+  {"id":11,"name":"Bold Green","slug":"bold-green","group":"bold","colors":["#048568","#20B339","#8BCF23","#D5E43F"]},
+  {"id":12,"name":"Bold Blue","slug":"bold-blue","group":"bold","colors":["#4C4BE9","#0A8FF3","#03BFF1","#59E4F3"]},
+  {"id":13,"name":"Bold Purple","slug":"bold-purple","group":"bold","colors":["#7A40DA","#B93CE6","#F151C7","#C4A4FE"]},
+  {"id":14,"name":"Bold Greyscale","slug":"bold-greyscale","group":"bold","colors":["#5B5B5B","#909090","#C8C8C8","#FFFFFF"]}
 ]

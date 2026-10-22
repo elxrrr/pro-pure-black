@@ -1,7 +1,7 @@
 import { generateSkinXml, createSkinZip, normaliseThemes } from './generator.js';
 import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
 import { applyWebsiteTheme } from './appearance.js';
-import { DISPLAY_PROFILES, toolbarFit } from './display.js';
+import { DISPLAY_PROFILES, toolbarFit, resolveToolbarOptions } from './display.js';
 import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
 import { prepareLogo } from './logo-image.js';
 import { addLogoToSkin } from './logo-skin.js';
@@ -11,12 +11,13 @@ const $ = selector => document.querySelector(selector);
 const letters = ['A', 'B', 'C', 'D'];
 const toolbarKeys = ['sandbox', 'shoutout', 'scheduler', 'account'];
 const toolbarLabels = { account: 'Account box', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox', layout: 'Layout', settings: 'Settings' };
+const paletteGroups = [{ id: 'pastel', name: 'Pastel' }, { id: 'bold', name: 'Bold' }];
 const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#156C89', '#AC2F37', '#0D7264', '#A54D30'] };
 const state = {
   themes: [originalDefault], selected: new Set(['default']), preview: 'default',
   customs: [], activeCustom: null, nextCustom: 1, assets: null, busy: false,
   toolbarOrder: [...DEFAULT_TOOLBAR_ORDER], notchPreview: false, displayProfile: '14',
-  logo: null, logoBusy: false,
+  logo: null, logoBusy: false, accountRequested: false,
 };
 const hexPattern = /^#[0-9a-f]{6}$/i;
 let toolbarPreviewSignature = '';
@@ -31,7 +32,11 @@ function setStatus(message, error = false) {
 }
 
 function toolbarOptions() {
-  return Object.fromEntries(toolbarKeys.map(key => [key, $(`#toolbar-${key}`).checked]));
+  return Object.fromEntries(toolbarKeys.map(key => [key, key === 'account' ? state.accountRequested : $(`#toolbar-${key}`).checked]));
+}
+
+function effectiveToolbarOptions() {
+  return resolveToolbarOptions(toolbarOptions(), displayOptions()).options;
 }
 
 function activePreviewTheme() {
@@ -56,17 +61,19 @@ function renderToolbar() {
 function updateToolbarFit() {
   const options = toolbarOptions();
   const fit = toolbarFit(options, state.toolbarOrder, displayOptions());
+  const accountUnavailable = resolveToolbarOptions({ ...options, account: true }, displayOptions()).autoHiddenAccount;
   for (const key of toolbarKeys) {
     const input = $(`#toolbar-${key}`);
-    // Included controls always remain available to remove, even after a resize.
-    input.disabled = !options[key] && !toolbarFit({ ...options, [key]: true }, state.toolbarOrder, displayOptions()).fits;
+    input.checked = Boolean(fit.options[key]);
+    input.disabled = key === 'account' && accountUnavailable;
     input.closest('.toggle-row').classList.toggle('is-unavailable', input.disabled);
-    input.closest('.toggle-row').title = input.disabled ? 'Not enough room beside the phrase counters.' : '';
+    input.closest('.toolbar-order-row').classList.toggle('is-auto-hidden', key === 'account' && fit.autoHiddenAccount);
+    input.closest('.toggle-row').title = input.disabled ? 'Account hidden when all other controls are enabled on 13″ Air.' : '';
     if (input.disabled) input.setAttribute('aria-describedby', 'toolbar-fit-status');
     else input.removeAttribute('aria-describedby');
   }
   const status = $('#toolbar-fit-status');
-  const message = fit.fits ? 'Fits this preview.' : 'Selected controls overlap the phrase counters. Hide a control to continue.';
+  const message = accountUnavailable ? 'Account hidden for 13″ Air.' : 'Fits this preview.';
   if (status.textContent !== message) status.textContent = message;
   status.classList.toggle('is-error', !fit.fits);
   return fit;
@@ -221,6 +228,11 @@ function renderPresetPreview() {
     card.classList.toggle('is-preview', active);
     card.querySelector('.preset-preview').setAttribute('aria-pressed', String(active));
   });
+  state.customs.forEach(custom => {
+    const active = custom.key === state.preview;
+    custom.element.classList.toggle('is-preview', active);
+    custom.element.querySelector('.custom-preview-button').setAttribute('aria-pressed', String(active));
+  });
   renderToolbar();
 }
 
@@ -231,7 +243,9 @@ function createPresetCard(theme, custom = null) {
   preview.type = 'button'; preview.className = 'preset-preview';
   preview.setAttribute('aria-label', `Preview ${theme.name || 'Custom'}`);
   const nameRow = document.createElement('span'); nameRow.className = 'preset-name-row';
-  const name = document.createElement('span'); name.className = 'preset-name'; name.textContent = theme.name || 'Custom';
+  const name = document.createElement('span'); name.className = 'preset-name';
+  const groupName = paletteGroups.find(group => group.id === theme.group)?.name;
+  name.textContent = groupName && theme.name.startsWith(`${groupName} `) ? theme.name.slice(groupName.length + 1) : theme.name || 'Custom';
   nameRow.append(name);
   if (theme.slug === 'default') {
     const locked = document.createElement('span'); locked.className = 'locked-label'; locked.textContent = 'LOCKED'; nameRow.append(locked);
@@ -260,11 +274,47 @@ function createPresetCard(theme, custom = null) {
 }
 
 function renderPresets() {
-  $('#presets').replaceChildren(
-    ...state.themes.map(theme => createPresetCard(theme)),
-    ...state.customs.map(custom => createPresetCard(customTheme(custom), custom)),
-  );
+  const personal = document.createElement('div'); personal.id = 'personal-presets'; personal.className = 'preset-grid';
+  personal.append(...state.themes.filter(theme => !theme.group).map(theme => createPresetCard(theme)),
+    ...state.customs.map(custom => createPresetCard(customTheme(custom), custom)));
+  const groups = paletteGroups.flatMap(group => {
+    const themes = state.themes.filter(theme => theme.group === group.id);
+    if (!themes.length) return [];
+    const section = document.createElement('section'); section.className = 'palette-group'; section.dataset.paletteGroup = group.id;
+    section.setAttribute('aria-labelledby', `palette-group-${group.id}`);
+    const heading = document.createElement('div'); heading.className = 'palette-group-heading';
+    const title = document.createElement('h2'); title.id = `palette-group-${group.id}`; title.className = 'palette-group-title'; title.textContent = group.name;
+    const label = document.createElement('label'); label.className = 'palette-group-select';
+    const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.id = `select-${group.id}`; checkbox.dataset.selectGroup = group.id;
+    checkbox.setAttribute('aria-label', `Include all ${group.name} palettes`);
+    checkbox.addEventListener('change', () => {
+      themes.forEach(theme => checkbox.checked ? state.selected.add(theme.slug) : state.selected.delete(theme.slug));
+      updateSummary();
+    });
+    label.append(checkbox, document.createTextNode('All'));
+    heading.append(title, label);
+    const grid = document.createElement('div'); grid.className = 'preset-grid';
+    grid.append(...themes.map(theme => createPresetCard(theme)));
+    section.append(heading, grid); return section;
+  });
+  $('#presets').replaceChildren(personal, ...groups);
+  syncPaletteSelection();
   renderPresetPreview();
+}
+
+function syncPaletteSelection() {
+  for (const theme of state.themes) {
+    const input = document.querySelector(`#presets [data-slug="${theme.slug}"] input`);
+    if (input) input.checked = state.selected.has(theme.slug);
+  }
+  for (const group of paletteGroups) {
+    const input = $(`#select-${group.id}`);
+    if (!input) continue;
+    const themes = state.themes.filter(theme => theme.group === group.id);
+    const selected = themes.filter(theme => state.selected.has(theme.slug)).length;
+    input.checked = selected === themes.length;
+    input.indeterminate = selected > 0 && selected < themes.length;
+  }
 }
 
 function syncCustomPreset(custom) {
@@ -284,23 +334,14 @@ function customTheme(custom) {
 function selectCustom(key) {
   state.activeCustom = key;
   const custom = state.customs.find(item => item.key === key);
-  $('#custom-preview').hidden = !custom;
-  $('#custom-preview-heading').hidden = !custom;
-  $('#custom-preview-title').textContent = custom ? custom.name.trim() || 'Custom' : '';
   if (custom) {
     state.preview = custom.key;
-    renderPalettePreview($('#custom-preview'), customTheme(custom));
     renderPresetPreview();
   } else {
-    $('#custom-preview').replaceChildren();
     if (!state.themes.some(theme => theme.slug === state.preview)) {
       state.preview = 'default'; renderPresetPreview();
     }
   }
-  state.customs.forEach(item => {
-    item.element.classList.toggle('is-preview', item.key === key);
-    item.element.querySelector('.custom-preview-button').setAttribute('aria-pressed', String(item.key === key));
-  });
 }
 
 function validateCustoms() {
@@ -333,9 +374,10 @@ function validateCustoms() {
 function updateSummary() {
   const valid = validateCustoms();
   const count = state.selected.size + state.customs.filter(custom => custom.included).length;
-  const toolbarCount = Object.values(toolbarOptions()).filter(Boolean).length;
+  const toolbarCount = Object.values(effectiveToolbarOptions()).filter(Boolean).length;
   $('#preset-count').textContent = `${count} included`;
   state.customs.forEach(syncCustomPreset);
+  syncPaletteSelection();
   $('#toolbar-count').textContent = `${toolbarCount + 2} visible`;
   $('#download-summary').textContent = `${count} palette${count === 1 ? '' : 's'} · ${toolbarCount} optional control${toolbarCount === 1 ? '' : 's'}`;
   const fit = updateToolbarFit();
@@ -405,7 +447,7 @@ function addCustom() {
   const custom = { key: `custom-${number}`, name: `Custom ${number}`, colors, rawColors: [...colors], included: true };
   state.customs.push(custom);
   $('#custom-presets').append(createCustomCard(custom));
-  $('#presets').append(createPresetCard(customTheme(custom), custom));
+  $('#personal-presets').append(createPresetCard(customTheme(custom), custom));
   selectCustom(custom.key); updateSummary();
   custom.element.querySelector('.custom-name').focus();
 }
@@ -460,7 +502,7 @@ async function downloadSkin() {
     updateSummary(); return;
   }
   const configuration = {
-    assets: state.assets, logo: state.logo, toolbar: toolbarOptions(), order: [...state.toolbarOrder],
+    assets: state.assets, logo: state.logo, toolbar: effectiveToolbarOptions(), order: [...state.toolbarOrder],
     themes: [...state.themes.filter(theme => theme.slug === 'default' || state.selected.has(theme.slug)),
       ...state.customs.filter(custom => custom.included).map(customTheme)],
   };
@@ -494,7 +536,8 @@ setupPreviewMotion();
 setupToolbarOrder();
 setupDisplayPreview();
 setupLogoUpload();
-toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', () => {
+toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', event => {
+  if (key === 'account') state.accountRequested = event.target.checked;
   renderToolbar(); updateSummary();
 }));
 $('#add-custom').addEventListener('click', addCustom);

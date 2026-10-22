@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="245" viewBox="0 0 900 245" role="img" aria-labelledby="title desc">
-<title id="title">Pro Pure Black — Greyscale</title>
+<title id="title">Pro Pure Black — Pastel Greyscale</title>
 <desc id="desc">Rendered palette preview based on the Pro Pure Black jog-wheel layout. Four decks, A through D, shown left to right. Backgrounds remain pure black. This is an illustration, not an application screenshot.</desc>
 <style>text{font-family:Arial,Helvetica,sans-serif;font-variant-numeric:tabular-nums}</style>
 <rect width="900" height="245" fill="#000000"/>
 <g transform="translate(0,0)">
-<text x="24" y="28" fill="#E6E6E6" font-size="20" text-anchor="start" font-weight="600">Greyscale</text>
+<text x="24" y="28" fill="#E6E6E6" font-size="20" text-anchor="start" font-weight="600">Pastel Greyscale</text>
 <text x="876" y="27" fill="#808080" font-size="11" text-anchor="end" font-weight="400">Palette preview</text>
 <g transform="translate(43,50)">
+<circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#636363" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
+<circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
+<rect x="79" y="13" width="6" height="57" fill="#434343" transform="rotate(-60 82 82)"/>
+<circle cx="82" cy="82" r="6" fill="#636363"/>
+<text x="82" y="61" fill="#767676" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
+<text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
+<text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
+<text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
+<text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">A  ·  #636363</text>
+</g>
+<g transform="translate(260,50)">
 <circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#8F8F8F" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
@@ -19,49 +33,35 @@
 <text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
 <text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
 <text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">A  ·  #8F8F8F</text>
-</g>
-<g transform="translate(260,50)">
-<circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#AEAEAE" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
-<circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
-<rect x="79" y="13" width="6" height="57" fill="#767676" transform="rotate(-60 82 82)"/>
-<circle cx="82" cy="82" r="6" fill="#AEAEAE"/>
-<text x="82" y="61" fill="#B8B8B8" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
-<text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
-<text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
-<text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
-<text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">B  ·  #AEAEAE</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">B  ·  #8F8F8F</text>
 </g>
 <g transform="translate(477,50)">
 <circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#CACACA" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#BEBEBE" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
 <circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
-<rect x="79" y="13" width="6" height="57" fill="#898989" transform="rotate(-60 82 82)"/>
-<circle cx="82" cy="82" r="6" fill="#CACACA"/>
-<text x="82" y="61" fill="#D0D0D0" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
+<rect x="79" y="13" width="6" height="57" fill="#818181" transform="rotate(-60 82 82)"/>
+<circle cx="82" cy="82" r="6" fill="#BEBEBE"/>
+<text x="82" y="61" fill="#C6C6C6" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
 <text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
 <text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
 <text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
 <text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">C  ·  #CACACA</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">C  ·  #BEBEBE</text>
 </g>
 <g transform="translate(694,50)">
 <circle cx="82" cy="82" r="81" fill="#000000" stroke="#484848" stroke-width="2"/>
 <circle cx="82" cy="82" r="76" fill="none" stroke="#484848" stroke-width="8"/>
-<circle cx="82" cy="82" r="76" fill="none" stroke="#E4E4E4" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
+<circle cx="82" cy="82" r="76" fill="none" stroke="#EEEEEE" stroke-width="8" stroke-dasharray="339.0407 138.4814" transform="rotate(-90 82 82)"/>
 <circle cx="82" cy="82" r="71.5" fill="#000000" stroke="#000000"/>
-<rect x="79" y="13" width="6" height="57" fill="#9B9B9B" transform="rotate(-60 82 82)"/>
-<circle cx="82" cy="82" r="6" fill="#E4E4E4"/>
-<text x="82" y="61" fill="#E7E7E7" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
+<rect x="79" y="13" width="6" height="57" fill="#A2A2A2" transform="rotate(-60 82 82)"/>
+<circle cx="82" cy="82" r="6" fill="#EEEEEE"/>
+<text x="82" y="61" fill="#F0F0F0" font-size="30" text-anchor="middle" font-weight="700">128.00</text>
 <text x="41" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">+0.0%</text>
 <text x="123" y="85" fill="#B0B0B0" font-size="14" text-anchor="middle" font-weight="400">±8%</text>
 <text x="82" y="115" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">02:47.8</text>
 <text x="82" y="136" fill="#B0B0B0" font-size="18" text-anchor="middle" font-weight="400">−03:13.5</text>
-<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">D  ·  #E4E4E4</text>
+<text x="82" y="187" fill="#B0B0B0" font-size="13" text-anchor="middle" font-weight="400">D  ·  #EEEEEE</text>
 </g>
 </g>
 </svg>

@@ -150,11 +150,11 @@ function toolbarControl({ key, x, y, width, height }) {
   } else if (key === 'account') {
     content = `${toolbarIcon(key, 5, 5, 16)}<text x="26" y="18" font-size="11">ACCOUNT</text>`;
   } else if (key === 'sandbox') {
-    const wave = Array.from({ length: 64 }, (_, i) => {
-      const height = 3 + Math.round(Math.abs(Math.sin(i * .61)) * 14);
-      return `<rect x="${37 + i * 3}" y="${(27 - height) / 2}" width="2" height="${height}" fill="#484848"/>`;
+    const wave = Array.from({ length: 128 }, (_, i) => {
+      const height = 3 + Math.round(Math.abs(Math.sin((i % 64) * .61)) * 14);
+      return `<rect x="${1 + i * 3.125}" y="${(27 - height) / 2}" width="2" height="${height}" fill="#484848"/>`;
     }).join('');
-    content = `${toolbarIcon(key)}<path d="M35 0v27" stroke="#303030"/><g class="toolbar-sim-sandbox-wave" data-native-width="200">${wave}<path d="M93 1v25" stroke="#a6a6a6"/></g>`;
+    content = `${toolbarIcon(key)}<path d="M35 0v27" stroke="#303030"/><svg class="toolbar-sim-sandbox-wave" data-native-width="200" x="35" y="0" width="200" height="27" viewBox="0 0 200 27" overflow="hidden"><g class="toolbar-motion toolbar-sandbox-strip">${wave}</g><path d="M58 1v25" stroke="#a6a6a6"/></svg>`;
   } else {
     content = toolbarIcon(key, key === 'settings' ? 5 : 8, key === 'settings' ? 1 : 4, key === 'settings' ? 25 : 19);
   }
@@ -162,28 +162,32 @@ function toolbarControl({ key, x, y, width, height }) {
 }
 
 function toolbarStatus(x = 195) {
-  const meters = [9, 15].map((y, channel) => Array.from({ length: 13 }, (_, i) =>
-    `<rect x="${65 + i * 5.4}" y="${y}" width="4" height="4" fill="${i < 9 - channel ? '#828282' : '#242424'}"/>`).join('')).join('');
+  const meters = [9, 15].map((y, channel) => {
+    const segments = Array.from({ length: 13 }, (_, i) => `<rect x="${65 + i * 5.4}" y="${y}" width="4" height="4"/>`).join('');
+    return `<g fill="#242424">${segments}</g><g class="toolbar-motion toolbar-master-fill" fill="#828282" style="--toolbar-delay:${-channel * .37}s">${segments}</g>`;
+  }).join('');
   return `<g class="toolbar-sim-status" ${nativeBounds(x, 8, 336, 27)} transform="translate(${x} 8)">
     <rect width="333" height="27" rx="4" fill="#000" stroke="#282828"/>
     <g class="toolbar-sim-master"><text x="10" y="18" font-size="11">MASTER</text><g class="toolbar-sim-master-bars">${meters}</g><circle cx="144.5" cy="14.5" r="5" fill="none" stroke="#484848"/></g>
     <path d="M160 4v19m50-19v19m50-19v19" stroke="#282828"/>
-    <g class="toolbar-sim-cpu"><text x="170" y="18" font-size="11">CPU</text><rect x="200" y="6" width="4" height="15" fill="#242424"/><rect x="200" y="15" width="4" height="6" fill="#828282"/></g>
+    <g class="toolbar-sim-cpu"><text x="170" y="18" font-size="11">CPU</text><rect x="200" y="6" width="4" height="15" fill="#242424"/><rect class="toolbar-motion toolbar-cpu-fill" x="200" y="6" width="4" height="15" fill="#828282"/></g>
     <g class="toolbar-sim-battery"><rect x="222" y="9" width="18" height="9" rx="1" fill="none" stroke="#a6a6a6"/><path d="M242 12v3" stroke="#a6a6a6"/><rect x="224" y="11" width="12" height="5" fill="#828282"/><rect x="250" y="6" width="4" height="15" fill="#242424"/><rect x="250" y="9" width="4" height="12" fill="#828282"/></g>
     <text class="toolbar-sim-clock" x="298" y="18" text-anchor="middle" font-size="13" fill="#bbb">12:34</text>
   </g>`;
 }
 
 function phraseCircle(deck, x, colour) {
-  return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck} phrase counter</title><circle cx="15" cy="15" r="15" fill="#484848"/><circle cx="15" cy="15" r="12.5" fill="none" stroke="${colour}" stroke-width="5" stroke-dasharray="27 52" transform="rotate(-90 15 15)"/><circle cx="15" cy="15" r="10" fill="#000"/><text x="15" y="19" text-anchor="middle" fill="#a6a6a6" font-size="11">${deck}</text></g>`;
+  return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck} phrase counter</title><circle cx="15" cy="15" r="15" fill="#484848"/><circle class="toolbar-motion toolbar-phrase-progress" cx="15" cy="15" r="12.5" fill="none" stroke="${colour}" stroke-width="5" stroke-dasharray="27 52" style="--toolbar-delay:${-LETTERS.indexOf(deck) * .4}s"/><circle cx="15" cy="15" r="10" fill="#000"/><text x="15" y="19" text-anchor="middle" fill="#a6a6a6" font-size="11">${deck}</text></g>`;
 }
 
 function phrasePreview(notch, colours, offset = 0) {
   const positions = notch ? { A: 760, C: 795, B: 1095, D: 1130 } : { C: 823, A: 858, B: 1037, D: 1072 };
   const circles = Object.entries(positions).map(([deck, x]) => phraseCircle(deck, x + offset, colours[LETTERS.indexOf(deck)])).join('');
   if (notch) return circles;
-  const bars = colours.map((colour, deck) => Array.from({ length: 4 }, (_, beat) =>
-    `<rect x="${898 + offset + beat * 33}" y="${8 + deck * 7}" width="28" height="5" rx="2" fill="${beat <= deck % 3 ? colour : '#484848'}"/>`).join('')).join('');
+  const bars = colours.map((colour, deck) => Array.from({ length: 4 }, (_, beat) => {
+    const bounds = `x="${898 + offset + beat * 33}" y="${8 + deck * 7}" width="28" height="5" rx="2"`;
+    return `<rect ${bounds} fill="#484848"/><rect class="toolbar-motion toolbar-beat-progress" ${bounds} fill="${colour}" style="--toolbar-delay:${-beat * .5 - deck * .125}s"/>`;
+  }).join('')).join('');
   return `${circles}<g class="toolbar-sim-beat-bars" ${nativeBounds(898 + offset, 8, 127, 26)}>${bars}</g>`;
 }
 
@@ -210,18 +214,17 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   container.dataset.canvasWidth = canvasWidth;
   let view = toolbarViews.get(container);
   if (!view) {
-    view = { zoomed: false, scrollLeft: null, id: `toolbar-detail-${++nextToolbarView}` };
+    view = { scrollLeft: null, id: `toolbar-detail-${++nextToolbarView}` };
     toolbarViews.set(container, view);
   }
   const oldViewport = container.querySelector('.toolbar-preview-viewport');
-  if (view.zoomed && oldViewport) view.scrollLeft = oldViewport.scrollLeft;
+  if (oldViewport) view.scrollLeft = oldViewport.scrollLeft;
   container.setAttribute('role', 'group');
   container.setAttribute('aria-label', 'Toolbar preview');
   const description = `Approximate ${device.label} toolbar at a fixed control size. Left: VirtualDJ logo${logo ? ', uploaded logo' : ''}, master level, CPU, battery and clock. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.`;
   const cutout = notch ? `<g class="toolbar-sim-notch" data-native-x="${845 + phraseOffset}" data-native-width="230" transform="translate(${phraseOffset} 0)"><path d="M845 0v22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V0" fill="#000" stroke="#343438"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>` : '';
-  container.innerHTML = `<div class="toolbar-preview-tools"><button class="toolbar-preview-zoom" type="button" aria-controls="${view.id}">Zoom</button></div>
-    <div class="toolbar-preview-viewport" id="${view.id}" role="region" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
-    <div class="toolbar-display-frame" style="--display-ratio:${device.width / 1728};--canvas-width:${canvasWidth}px">
+  container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
+    <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${canvasWidth * fit.scale}px">
     <svg class="toolbar-sim-svg" viewBox="0 0 ${canvasWidth} 84" xmlns="http://www.w3.org/2000/svg" role="img">
       <rect x=".5" y=".5" width="${canvasWidth - 1}" height="83" rx="10" fill="#000" stroke="var(--line)"/>
       <path d="M1 43h${canvasWidth - 2}" stroke="#282828"/>
@@ -238,28 +241,10 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   container.querySelector('.toolbar-sim-svg').setAttribute('aria-label', description);
   if (logo) container.querySelector('[data-custom-logo]').setAttribute('href', logo);
   const viewport = container.querySelector('.toolbar-preview-viewport');
-  const zoomButton = container.querySelector('.toolbar-preview-zoom');
-  const updateZoom = () => {
-    container.dataset.zoomed = String(view.zoomed);
-    zoomButton.textContent = view.zoomed ? 'Fit' : 'Zoom';
-    zoomButton.setAttribute('aria-label', view.zoomed ? 'Fit toolbar preview' : 'Zoom toolbar preview');
-    viewport.tabIndex = view.zoomed ? 0 : -1;
-    if (view.zoomed) {
-      // Native-size inspection starts at the phrase counters; subsequent renders
-      // and Fit/Zoom changes retain the user's chosen horizontal position.
-      viewport.scrollLeft = view.scrollLeft ?? Math.max(0, (canvasWidth - viewport.clientWidth) / 2);
-      view.scrollLeft = viewport.scrollLeft;
-    } else {
-      viewport.scrollLeft = 0;
-    }
-  };
-  zoomButton.addEventListener('click', () => {
-    if (view.zoomed) view.scrollLeft = viewport.scrollLeft;
-    view.zoomed = !view.zoomed;
-    updateZoom();
-  });
-  viewport.addEventListener('scroll', () => {
-    if (view.zoomed) view.scrollLeft = viewport.scrollLeft;
-  }, { passive: true });
-  updateZoom();
+  // Keep controls readable at one fixed scale. Panning stays local to the preview
+  // and retains the user's chosen position through palette and toolbar changes.
+  viewport.scrollLeft = view.scrollLeft ?? Math.max(0, (canvasWidth * fit.scale - viewport.clientWidth) / 2);
+  view.scrollLeft = viewport.scrollLeft;
+  viewport.addEventListener('scroll', () => { view.scrollLeft = viewport.scrollLeft; }, { passive: true });
+  watch(container);
 }

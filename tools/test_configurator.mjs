@@ -40,6 +40,36 @@ test('all existing palettes reproduce the released source exactly', () => {
   assert.equal(generateSkinXml(xml, themes), xml);
 });
 
+test('Pastel and Bold groups retain their identities and export only selected palettes', () => {
+  const names = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Greyscale'];
+  const pastelColors = [
+    ['#A4435F', '#DD6B5B', '#EBA6C6', '#FFE8E9'],
+    ['#A14D2F', '#CC7D1B', '#F4A988', '#FBEDD1'],
+    ['#816422', '#BD8630', '#D5BF36', '#F9EFC9'],
+    ['#247261', '#5DA260', '#BBC769', '#DAF7E3'],
+    ['#535EA3', '#449AC0', '#B0BBEB', '#DDF3F9'],
+    ['#BD72A8', '#917CD1', '#D0A1E9', '#EFCFED'],
+    ['#636363', '#8F8F8F', '#BEBEBE', '#EEEEEE'],
+  ];
+  assert.equal(themes.length, 15);
+  assert.deepEqual(themes[0].colors, ATOMIX_DEFAULT);
+  assert.deepEqual(themes.slice(1, 8).map(theme => theme.colors), pastelColors);
+  for (const [index, group] of ['pastel', 'bold'].entries()) {
+    const palettes = themes.slice(1 + index * 7, 8 + index * 7);
+    assert.deepEqual(palettes.map(theme => theme.name), names.map(name => `${group === 'pastel' ? 'Pastel' : 'Bold'} ${name}`));
+    assert.deepEqual(palettes.map(theme => theme.slug), names.map(name => `${group}-${name.toLowerCase()}`));
+    assert.ok(palettes.every(theme => theme.group === group));
+  }
+  assert.deepEqual(normaliseThemes(themes).map(theme => theme.group), themes.map(theme => theme.group));
+  const selected = [themes[0], ...themes.slice(1, 8), themes.find(theme => theme.slug === 'bold-blue')];
+  const generated = generateSkinXml(xml, selected);
+  assert.equal(generatedRegionsRemoved(generated), generatedRegionsRemoved(xml));
+  assert.deepEqual([...generated.matchAll(/<group name="pureblack-theme-([^"]+)"/g)].map(match => match[1]), selected.slice(1).map(theme => theme.slug));
+  for (const menu of generated.matchAll(/<submenu text="Deck Colours"[^>]*>([\s\S]*?)<\/submenu>/g)) {
+    assert.deepEqual([...menu[1].matchAll(/<item text="([^"]+)"/g)].map(match => match[1]), selected.map(theme => theme.name));
+  }
+});
+
 test('Default is mandatory and immutable; custom names and colours are validated', () => {
   for (const invalid of [[], [null], themes.slice(1), [{...themes[0], colors: ['#FFFFFF', ...ATOMIX_DEFAULT.slice(1)]}]]) {
     assert.throws(() => generateSkinXml(xml, invalid), /Default/);
@@ -167,7 +197,7 @@ test('every toolbar order and toggle combination fits beside the native counters
   }
 });
 
-test('display fit checks preserve control sizes and detect narrow-screen overlap, including the active Sandbox width', () => {
+test('display fit checks preserve control sizes and omit only Account when all controls are requested on 13-inch Air', () => {
   assert.deepEqual(DISPLAY_PROFILES.map(profile => profile.id), ['13', '14', '15', '16']);
   for (const profile of DISPLAY_PROFILES) {
     assert.equal(getDisplayProfile(profile.id), profile);
@@ -180,21 +210,23 @@ test('display fit checks preserve control sizes and detect narrow-screen overlap
           const shift = canvasWidth - 1920;
           assert.equal(fit.canvasWidth, canvasWidth);
           assert.equal(fit.phraseOffset, shift / 2);
-          const sourceItems = toolbarLayout(options, 'mac', order);
+          const autoHiddenAccount = profile.id === '13' && mask === 15;
+          assert.equal(fit.autoHiddenAccount, autoHiddenAccount);
+          const sourceItems = toolbarLayout(autoHiddenAccount ? {...options, account: false} : options, 'mac', order);
+          assert.deepEqual(fit.items.map(item => item.key), sourceItems.map(item => item.key));
           for (const [index, item] of fit.items.entries()) {
             const {x, ...rest} = item;
             const {x: sourceX, ...sourceRest} = sourceItems[index];
             assert.deepEqual(rest, sourceRest, 'Profile changes must retain native control dimensions');
             assert.ok(Math.abs(x - sourceX - shift) < .000001);
           }
-          assert.equal(fit.fits, !(profile.id === '13' && notch && mask === 15),
-            'All controls overlap only the notched 13-inch preview; other combinations retain adequate space');
+          assert.equal(fit.fits, true, 'Automatic Account omission must keep every requested combination usable');
           assert.equal(fit.requiredWidth, fit.items.at(-1).x + fit.items.at(-1).width - fit.items[0].x);
           assert.equal(fit.gap, fit.items[0].x - ((notch ? 1160 : 1102) + shift / 2));
           assert.equal(fit.gap >= fit.minGap && fit.requiredWidth <= fit.availableWidth, fit.fits);
           assert.equal(fit.scale, .75);
           if (options.sandbox) assert.equal(fit.items.find(item => item.key === 'sandbox').width, 235);
-          if (mask === 15) assert.ok(Math.abs(fit.requiredWidth - 648) < .000001);
+          if (mask === 15) assert.ok(Math.abs(fit.requiredWidth - (autoHiddenAccount ? 503 : 648)) < .000001);
         }
       }
     }

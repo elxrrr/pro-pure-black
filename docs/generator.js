@@ -35,7 +35,11 @@ export function normaliseThemes(themes) {
     }
     names.add(name.toLowerCase());
     slugs.add(slug);
-    return {id, name, slug, colors: theme.colors.map(value => value.toUpperCase())};
+    if (theme.group !== undefined && !['pastel', 'bold'].includes(theme.group)) {
+      throw new Error('Choose a supported palette group.');
+    }
+    return {id, name, slug, colors: theme.colors.map(value => value.toUpperCase()),
+      ...(theme.group ? {group: theme.group} : {})};
   });
 }
 
