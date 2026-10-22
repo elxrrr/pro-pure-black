@@ -72,15 +72,48 @@ async function noHorizontalOverflow(page) {
   assert.ok(dimensions.content <= dimensions.viewport + 1, `Horizontal overflow: ${JSON.stringify(dimensions)}`);
 }
 
-async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-wave-strip', '.preview-meter-fill']) {
+async function meterGeometry(page, selector) {
+  return page.locator(selector).evaluate(preview => ({
+    dividers: [...preview.querySelectorAll('.preview-meter-lines')].map(lines => {
+      const style = getComputedStyle(lines);
+      const fill = getComputedStyle(lines.parentElement.querySelector('.preview-meter-fill'));
+      return { width: style.width, height: style.height, background: style.backgroundImage, transform: style.transform,
+        z: Number(style.zIndex), fillZ: Number(fill.zIndex), fillTransform: fill.transform, timing: fill.animationTimingFunction };
+    }),
+    master: [...preview.querySelectorAll('.toolbar-master-fill rect')].map(rect =>
+      ['x', 'y', 'width', 'height'].map(name => Number(rect.getAttribute(name)))),
+    masterTransforms: [...preview.querySelectorAll('.toolbar-master-fill')].map(fill => getComputedStyle(fill).transform),
+    masterTiming: [...preview.querySelectorAll('.toolbar-master-fill')].map(fill => getComputedStyle(fill).animationTimingFunction),
+  }));
+}
+
+async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-wave-strip', ['.preview-meter-fill', 'clipPath']]) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForFunction(selector => document.querySelector(selector).dataset.motion === 'running', selector);
   parts = parts.map(part => typeof part === 'string' ? [part, 'transform'] : part);
+  const fixedMeterGeometry = await meterGeometry(page, selector);
   const before = await page.locator(selector).evaluate((preview, parts) =>
     parts.map(([part, property]) => getComputedStyle(preview.querySelector(part))[property]), parts);
   await page.waitForFunction(({ selector, parts, before }) => parts.every(([part, property], index) =>
     getComputedStyle(document.querySelector(selector).querySelector(part))[property] !== before[index]),
   { selector, parts, before });
+  assert.deepEqual(await meterGeometry(page, selector), fixedMeterGeometry, 'Meter dividers and artwork must stay fixed while the visible fill changes');
+  for (const divider of fixedMeterGeometry.dividers) {
+    assert.equal(divider.transform, 'none');
+    assert.equal(divider.fillTransform, 'none');
+    assert.ok(divider.z > divider.fillZ, 'Black dividers must remain above the coloured fill');
+    assert.match(divider.background, /rgb\(0,\s*0,\s*0\)|#000|black/);
+    assert.ok(!divider.timing.includes('steps'), 'Audio-style fill should move continuously');
+  }
+  if (fixedMeterGeometry.master.length) {
+    assert.equal(fixedMeterGeometry.master.length, 22);
+    fixedMeterGeometry.master.forEach(([x, y, width, height], index, cells) => {
+      assert.equal(width, 5); assert.equal(height, 5);
+      if (index % 11) assert.equal(x - cells[index - 1][0], 6.5, 'Master cells retain their black gaps');
+    });
+    assert.ok(fixedMeterGeometry.masterTransforms.every(value => value === 'none'));
+    assert.ok(fixedMeterGeometry.masterTiming.every(value => !value.includes('steps')));
+  }
 }
 
 async function recordAnimatedPreview(base) {
@@ -204,6 +237,8 @@ async function assertLogoControlLayout(page, mobile = false) {
   }
   assert.equal(await page.locator('#custom-logo-hint').evaluate(hint => hint.previousElementSibling?.id), 'custom-logo-remove',
     'The PNG hint stays inline after Remove');
+  assert.match(await page.locator('#custom-logo-hint').innerText(), /144 × 34 px/);
+  assert.match(await page.locator('#custom-logo-hint').innerText(), /5 MB max/);
   assert.equal(await page.locator('#toolbar-preview-note, #toolbar-order-hint, #custom-logo-details, #toolbar-display-profile').count(), 0);
 }
 
@@ -362,7 +397,11 @@ second_colours = json.loads(sys.argv[4])
 toolbar_order = json.loads(sys.argv[5])
 with zipfile.ZipFile(sys.argv[2]) as archive:
     assert archive.testzip() is None, 'ZIP checksum failed'
-    assert archive.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png']
+    assert archive.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png', 'README.txt']
+    readme = archive.read('README.txt').decode('utf-8')
+    assert 'Copy this ZIP, still zipped' in readme
+    assert '~/Library/Application Support/VirtualDJ/Skins' in readme
+    assert r'%LOCALAPPDATA%\VirtualDJ\Skins' in readme
     for image in ('gfx-pro.png', 'icons_daylight.png'):
         assert archive.read(image) == (root / 'skin' / image).read_bytes()
     xml = archive.read('Pro.xml').decode('utf-8')
@@ -461,16 +500,17 @@ print('Browser-exported ZIP: valid CRC, exact sprites, two independent custom pa
 
 function verifyLogoZip(filename, originalFilename) {
   const result = spawnSync('python3', ['-c', String.raw`
-import re, struct, sys, zipfile
+import re, struct, sys, zipfile, zlib
 with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as original:
     assert added.testzip() is None
-    assert added.namelist() == original.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png']
+    assert added.namelist() == original.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png', 'README.txt']
     assert added.read('icons_daylight.png') == original.read('icons_daylight.png')
+    assert added.read('README.txt') == original.read('README.txt')
     source_png = original.read('gfx-pro.png')
     logo_png = added.read('gfx-pro.png')
     assert logo_png[:8] == source_png[:8] == b'\x89PNG\r\n\x1a\n'
     width, height = struct.unpack('>II', source_png[16:24])
-    assert struct.unpack('>II', logo_png[16:24]) == (width, height + 17)
+    assert struct.unpack('>II', logo_png[16:24]) == (width, height + 34)
     assert logo_png[24:26] == bytes([8, 6]), 'Appended sprite must remain lossless 8-bit RGBA'
     source_xml = original.read('Pro.xml').decode()
     logo_xml = added.read('Pro.xml').decode()
@@ -479,13 +519,29 @@ with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as orig
     logo_visuals = [visual for visual in visuals if f'<off x="0" y="{height}"' in visual]
     assert len(logo_visuals) == 3
     assert all('<size width="72" height="17"' in visual for visual in logo_visuals)
+    assert all(f'<off x="0" y="{height}" width="144" height="34"' in visual for visual in logo_visuals)
     assert any('<pos x="538" y="13"' in visual for visual in logo_visuals)
     assert any('<pos x="443" y="13"' in visual for visual in logo_visuals)
     assert any('<pos x="670" y="13"' in visual for visual in logo_visuals)
     assert '<group name="topbar_status" x="195" y="8">' in logo_xml
     assert '<group name="topbar_status" x="100" y="8">' in logo_xml
     assert '<group name="topbar_status" x="327" y="8">' in logo_xml
-print('Logo ZIP: valid CRC, native logo retained, 72×17 tile appended, both platform positions and status offsets correct.')
+    chunks = []
+    offset = 8
+    while offset < len(logo_png):
+        length = struct.unpack('>I', logo_png[offset:offset+4])[0]
+        if logo_png[offset+4:offset+8] == b'IDAT': chunks.append(logo_png[offset+8:offset+8+length])
+        offset += length + 12
+    rows = zlib.decompress(b''.join(chunks))
+    stride = width * 4 + 1
+    visible = []
+    for y in range(34):
+        row = rows[(height+y)*stride:(height+y+1)*stride]
+        assert row[0] == 0
+        visible.extend((x, y) for x in range(144) if row[1+x*4+3])
+    assert max(x for x, y in visible) - min(x for x, y in visible) + 1 == 144, 'Transparent margins must not shrink exported artwork'
+    assert 26 <= max(y for x, y in visible) - min(y for x, y in visible) + 1 <= 29
+print('Logo ZIP: valid CRC, native logo retained, cropped artwork in a 144×34 sprite displayed at 72×17, correct responsive positions.')
 `, filename, originalFilename], { encoding: 'utf8', cwd: root });
   assert.equal(result.status, 0, result.stderr || result.error?.message || result.stdout);
   console.log(result.stdout.trim());
@@ -518,22 +574,7 @@ try {
   assert.match(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black/tree/main/skin"]').innerText(), /^Skin source/);
   assert.equal(await desktop.locator('footer a[href*="releases/latest"]').count(), 0);
   assert.match(await desktop.locator('footer').innerText(), /Made with AI/i);
-  await desktop.locator('#skin-folder-paths summary').click();
-  const macPath = '~/Library/Application Support/VirtualDJ/Skins';
-  const windowsPath = String.raw`%LOCALAPPDATA%\VirtualDJ\Skins`;
-  assert.equal(await desktop.locator('#skin-path-macos').innerText(), macPath);
-  assert.equal(await desktop.locator('#skin-path-windows').innerText(), windowsPath);
-  await desktop.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true,
-    value: { writeText: async value => { window.copiedSkinPath = value; } } }));
-  await desktop.locator('[data-copy-path="macos"]').click();
-  await desktop.waitForFunction(() => document.querySelector('#path-copy-status').textContent.toLowerCase().includes('copied'));
-  assert.equal(await desktop.evaluate(() => window.copiedSkinPath), macPath);
-  await desktop.evaluate(() => { navigator.clipboard.writeText = async () => { throw new Error('Clipboard permission denied'); }; });
-  await desktop.locator('[data-copy-path="windows"]').click();
-  await desktop.waitForFunction(() => document.querySelector('#path-copy-status').textContent.toLowerCase().includes('manually'));
-  assert.equal(await desktop.evaluate(() => window.getSelection().toString()), windowsPath);
-  assert.equal(await desktop.locator('a[href^="file:"]').count(), 0);
-  await desktop.locator('#skin-folder-paths summary').click();
+  assert.equal(await desktop.locator('#skin-folder-paths, [data-copy-path], #skin-path-macos, #skin-path-windows').count(), 0);
   assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), defaults);
   assert.equal(await desktop.locator('#preset-preview .preview-deck').count(), 4);
   assert.equal(await desktop.locator('#preset-preview .preview-wave').count(), 4);
@@ -766,6 +807,25 @@ try {
   assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-status').getAttribute('data-native-x'), '327');
   const validLogoUrl = await logoImage.getAttribute('href');
   assert.match(validLogoUrl, /^data:image\/png;base64,/);
+  const artwork = await desktop.evaluate(async url => {
+    const image = new Image();
+    await new Promise((resolve, reject) => { image.onload = resolve; image.onerror = reject; image.src = url; });
+    const canvas = document.createElement('canvas');
+    canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+    const context = canvas.getContext('2d'); context.drawImage(image, 0, 0);
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    let left = canvas.width, right = -1, top = canvas.height, bottom = -1;
+    for (let y = 0; y < canvas.height; y++) for (let x = 0; x < canvas.width; x++) {
+      if (pixels[(y * canvas.width + x) * 4 + 3]) {
+        left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y);
+      }
+    }
+    return { width: canvas.width, height: canvas.height, left, right, top, bottom };
+  }, validLogoUrl);
+  assert.equal(artwork.width, 432); assert.equal(artwork.height, 102);
+  assert.equal(artwork.right - artwork.left + 1, 432, 'Transparent source padding must not shrink the visible logo');
+  assert.ok(artwork.bottom - artwork.top + 1 >= 80 && artwork.bottom - artwork.top + 1 <= 84, 'Cropping preserves the artwork aspect ratio');
+  assert.ok(Math.abs((artwork.top + artwork.bottom) / 2 - 50.5) <= 1, 'Artwork remains vertically centered');
   await uploadLogo(desktop, 'opaque-replacement.png', logos.opaque);
   assert.match(await desktop.locator('#custom-logo-status').innerText(), /Previous logo kept\./);
   assert.equal(await logoImage.getAttribute('href'), validLogoUrl);
@@ -809,7 +869,7 @@ try {
   await checkIphone17(base, safari);
   await recordAnimatedPreview(base);
   assert.deepEqual(errors, [], 'Browser errors were emitted.');
-  console.log('Passed: locked Default, mixed Pastel/Bold group selection, one shared animated preview, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, palette-linked website accents with black surfaces, responsive toolbar placement in narrow, wide and notched windows, fixed custom starts and new random palettes, clipboard fallback, validated transparent logos with safe removal, preview-independent exports with native window-state runtime layouts, real ZIP download, desktop and iPhone 17-sized Chromium/WebKit layout, no browser errors.');
+  console.log('Passed: locked Default, mixed Pastel/Bold group selection, one shared animated preview, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, palette-linked website accents with black surfaces, responsive toolbar placement in narrow, wide and notched windows, fixed custom starts and new random palettes, installation README in the ZIP, validated transparent logos with safe removal, preview-independent exports with native window-state runtime layouts, real ZIP download, desktop and iPhone 17-sized Chromium/WebKit layout, no browser errors.');
 } catch (error) {
   for (const { page, label } of pages) {
     await page.screenshot({ path: join(artifacts, `${label}-failure.png`), fullPage: true, animations: 'disabled' }).catch(() => {});

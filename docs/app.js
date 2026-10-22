@@ -1,4 +1,4 @@
-import { generateSkinXml, createSkinZip, normaliseThemes } from './generator.js';
+import { generateSkinXml, createSkinZip, normaliseThemes, SKIN_README } from './generator.js';
 import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
 import { applyWebsiteTheme } from './appearance.js';
 import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
@@ -405,25 +405,6 @@ function addCustom() {
   state.draft.element.querySelector('.custom-name').focus();
 }
 
-async function copySkinPath(button) {
-  const platform = button.dataset.copyPath;
-  const path = $(`#skin-path-${platform}`);
-  const status = $('#path-copy-status');
-  try {
-    if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable.');
-    await navigator.clipboard.writeText(path.textContent);
-    status.textContent = `${platform === 'macos' ? 'macOS' : 'Windows'} path copied.`;
-  } catch {
-    // Clipboard access may be unavailable or denied; leave the exact path selectable.
-    path.tabIndex = -1; path.focus({ preventScroll: true });
-    const selection = window.getSelection();
-    const range = document.createRange(); range.selectNodeContents(path);
-    selection?.removeAllRanges(); selection?.addRange(range);
-    status.textContent = 'Path selected. Copy it manually.';
-  }
-  status.hidden = false;
-}
-
 async function fetchAsset(name, binary = false) {
   const response = await fetch(new URL(`./assets/${name}`, import.meta.url));
   if (!response.ok) throw new Error(`Could not load ${name} (${response.status}).`);
@@ -469,6 +450,7 @@ async function downloadSkin() {
       { name: 'Pro.xml', data: xml },
       { name: 'gfx-pro.png', data: image },
       { name: 'icons_daylight.png', data: configuration.assets.icons },
+      { name: 'README.txt', data: SKIN_README },
     ]);
     const url = URL.createObjectURL(new Blob([bytes], { type: 'application/zip' }));
     const link = document.createElement('a'); link.href = url; link.download = 'pro-pure-black-custom.zip'; document.body.append(link); link.click(); link.remove();
@@ -500,7 +482,6 @@ $('#select-default').addEventListener('click', () => {
   state.customs.forEach(custom => { custom.included = false; });
   renderPresets(); updateSummary();
 });
-document.querySelectorAll('[data-copy-path]').forEach(button => button.addEventListener('click', () => copySkinPath(button)));
 $('#download').addEventListener('click', downloadSkin);
 $('#retry').addEventListener('click', loadAssets);
 renderPresets();

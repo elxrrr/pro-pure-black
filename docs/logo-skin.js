@@ -38,7 +38,7 @@ export async function appendLogoSprite(baseImage, tilePixels) {
     throw new Error('The skin sprite format does not support a custom logo.');
   }
   if (!(tilePixels instanceof Uint8Array) || tilePixels.length !== LOGO_LIMITS.tileWidth * LOGO_LIMITS.tileHeight * 4) {
-    throw new TypeError('The logo must contain a prepared 72 × 17 RGBA tile.');
+    throw new TypeError('The logo must contain a prepared 144 × 34 RGBA tile.');
   }
   const bytes = baseImage instanceof Uint8Array ? baseImage : new Uint8Array(baseImage);
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
@@ -88,8 +88,8 @@ export function applyLogoXml(xml, spriteY) {
     const visual = (name, left, visibility = '') => [
       `<visual name="${name}"${visibility ? ` visibility="${visibility}"` : ''}>`,
       `  <pos x="${left}" y="${y}"/>`,
-      '  <size width="72" height="17"/>',
-      `  <off x="0" y="${spriteY}"/>`,
+      `  <size width="${LOGO_LIMITS.displayWidth}" height="${LOGO_LIMITS.displayHeight}"/>`,
+      `  <off x="0" y="${spriteY}" width="${LOGO_LIMITS.tileWidth}" height="${LOGO_LIMITS.tileHeight}"/>`,
       '</visual>',
     ].join(newline);
     const markup = [

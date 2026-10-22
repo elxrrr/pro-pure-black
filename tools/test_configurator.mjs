@@ -5,7 +5,7 @@ import {join, dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {test} from 'node:test';
-import {generateSkinXml, normaliseThemes, createSkinZip, ATOMIX_DEFAULT} from '../docs/generator.js';
+import {generateSkinXml, normaliseThemes, createSkinZip, ATOMIX_DEFAULT, SKIN_README} from '../docs/generator.js';
 import {applyToolbar, toolbarLayout, DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder, measureToolbarFit, resolveToolbarState, SMALL_WINDOW_MAX_WIDTH} from '../docs/toolbar.js';
 import {websiteThemeProperties} from '../docs/appearance.js';
 import {toolbarFit, MIN_PREVIEW_WIDTH} from '../docs/display.js';
@@ -376,6 +376,7 @@ test('exported ZIP passes Python zipfile CRC checks and preserves binary and Uni
     const sprite = readFileSync(join(root, 'skin', 'gfx-pro.png'));
     const files = [{name: 'Pro.xml', data: skin}, {name: 'gfx-pro.png', data: sprite},
       {name: 'icons_daylight.png', data: readFileSync(join(root, 'skin', 'icons_daylight.png'))},
+      {name: 'README.txt', data: SKIN_README},
       {name: 'é.txt', data: 'Pure black ✨'}, {name: 'empty.txt', data: new ArrayBuffer(0)}];
     const zipped = createSkinZip(files);
     assert.ok(zipped instanceof Uint8Array);
@@ -386,10 +387,15 @@ test('exported ZIP passes Python zipfile CRC checks and preserves binary and Uni
 root = pathlib.Path(sys.argv[1])
 with zipfile.ZipFile(root / 'skin.zip') as archive:
     assert archive.testzip() is None
-    assert archive.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png', 'é.txt', 'empty.txt']
+    assert archive.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png', 'README.txt', 'é.txt', 'empty.txt']
     assert archive.read('Pro.xml') == (root / 'expected.xml').read_bytes()
     assert archive.read('gfx-pro.png') == pathlib.Path('skin/gfx-pro.png').read_bytes()
     assert archive.read('icons_daylight.png') == pathlib.Path('skin/icons_daylight.png').read_bytes()
+    readme = archive.read('README.txt').decode()
+    assert "Copy this ZIP, still zipped, into VirtualDJ's Skins folder:" in readme
+    assert 'macOS: ~/Library/Application Support/VirtualDJ/Skins' in readme
+    assert 'Windows: %LOCALAPPDATA%' + chr(92) + 'VirtualDJ' + chr(92) + 'Skins' in readme
+    assert 'Documents' not in readme
     assert archive.read('é.txt').decode() == 'Pure black ✨'
     assert archive.read('empty.txt') == b''
 `, [temporary]);

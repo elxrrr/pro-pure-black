@@ -140,16 +140,6 @@ main { padding-top: 18px; }
 .field-error, .custom-error { grid-column: 1 / -1; color: #ffb0be; font-size: 12px; margin: 0; }
 .download-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 20px; margin-top: 14px; padding: 12px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: #000000; }
 .download-panel > strong { grid-column: 1; align-self: center; font-size: 13px; font-weight: 550; color: var(--accent-text); }
-.skin-folder-paths { grid-column: 1 / -1; min-width: 0; }
-.skin-folder-paths summary { width: fit-content; cursor: pointer; color: var(--muted); font-size: 11px; }
-.skin-folder-paths summary:hover { color: var(--accent-text-strong); }
-.skin-paths { display: grid; gap: 7px; margin-top: 11px; }
-.skin-path-row { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 10px; font-size: 11px; }
-.skin-path-platform { color: var(--muted); }
-.skin-path-row code { font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--accent-text); overflow-wrap: anywhere; user-select: text; }
-.skin-path-row button { padding: 4px 7px; border: 1px solid var(--accent-line); border-radius: 5px; background: #000; color: var(--accent-text); font-size: 10px; white-space: nowrap; }
-.skin-path-row button:hover { border-color: var(--accent-line-strong); color: var(--accent-text-strong); }
-.path-copy-status { margin-top: 8px; color: var(--accent-text); font-size: 11px; }
 .download-button { display: flex; grid-column: 2; grid-row: 1; align-self: center; align-items: center; justify-content: center; flex-shrink: 0; gap: 9px; min-width: 150px; min-height: 36px; padding: 8px 15px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 650; white-space: nowrap; }
 .download-button:hover:not(:disabled) { background: var(--accent-hover); }
 .status-row { display: flex; align-items: center; gap: 12px; }
@@ -212,7 +202,6 @@ footer a:hover { color: var(--accent-text-strong); }
   .field-error, .custom-error { margin-top: 12px; }
   .download-panel { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 16px; border-radius: 12px; }
   .download-button { grid-column: 1; grid-row: auto; min-height: 42px; }
-  .skin-path-row { grid-template-columns: 47px minmax(0, 1fr) auto; gap: 7px; }
   footer { gap: 10px; padding: 22px 0; font-size: 10px; }
   footer nav { gap: 17px; }
   footer a { gap: 5px; }

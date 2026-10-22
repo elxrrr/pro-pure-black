@@ -16,12 +16,13 @@
 .preview-jog { width: 100%; min-width: 0; position: relative; aspect-ratio: 1; }
 .preview-jog svg { display: block; width: 100%; height: 100%; }
 .preview-rotor { position: absolute; inset: 0; animation: preview-spin 9s linear infinite; transform-origin: center; }
-.preview-meter { width: 7px; height: 84px; flex: 0 0 7px; position: relative; overflow: hidden; background: #19191b; }
-.preview-meter-track { position: absolute; inset: 0; background: #19191b; }
-.preview-meter-fill { position: absolute; inset: 0; transform: scaleY(.72); transform-origin: center bottom; animation: preview-level 2.4s ease-in-out infinite; animation-delay: var(--motion-delay); }
+.preview-meter { width: 7px; height: 84px; flex: 0 0 7px; position: relative; isolation: isolate; overflow: hidden; background: #000; }
+.preview-meter-track { position: absolute; inset: 0; z-index: 0; background: #19191b; }
+/* Reveal stationary artwork: colours and black segment gaps never scale. */
+.preview-meter-fill { position: absolute; inset: 0; z-index: 1; clip-path: inset(28% 0 0 0); animation: preview-level 2.4s ease-in-out infinite; animation-delay: var(--motion-delay); }
 .preview-colour-level { display: block; width: 100%; height: 100%; background: linear-gradient(to bottom, #bebebe 0 10%, var(--deck-color) 10% 100%); }
 .preview-native-level { display: block; width: 100%; height: 100%; }
-.preview-meter-lines { position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0 4px, #000 4px 6px); }
+.preview-meter-lines { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: repeating-linear-gradient(to bottom, transparent 0 4px, #000 4px 6px); }
 .preview-wave { height: 34px; position: relative; overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #000; }
 .preview-wave-strip { position: absolute; inset: 0 auto 0 0; width: 200%; animation: preview-wave-scroll 8s linear infinite; animation-delay: var(--motion-delay); }
 .preview-wave-strip svg { display: block; width: 100%; height: 100%; }
@@ -30,7 +31,7 @@
 .palette-preview[data-motion="running"] .preview-motion { animation-play-state: running; }
 @keyframes preview-spin { to { transform: rotate(360deg); } }
 @keyframes preview-wave-scroll { to { transform: translateX(-50%); } }
-@keyframes preview-level { 0%, 100% { transform: scaleY(.72); } 20% { transform: scaleY(.5); } 38% { transform: scaleY(.91); } 58% { transform: scaleY(.61); } 76% { transform: scaleY(.82); } }
+@keyframes preview-level { 0%, 100% { clip-path: inset(28% 0 0 0); } 20% { clip-path: inset(50% 0 0 0); } 38% { clip-path: inset(9% 0 0 0); } 58% { clip-path: inset(39% 0 0 0); } 76% { clip-path: inset(18% 0 0 0); } }
 
 .toolbar-simulation { padding: 12px; background: #000; border: 1px solid var(--line); border-radius: 10px; min-width: 0; overflow: hidden; }
 .overall-preview .toolbar-simulation { padding: 0 0 4px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
@@ -41,7 +42,8 @@
 .toolbar-sim-svg { display: block; width: 100%; height: auto; color: #a6a6a6; fill: currentColor; font-family: Arial, sans-serif; }
 .toolbar-phrase-progress { transform-box: fill-box; transform-origin: center; animation: toolbar-phrase-spin 8s linear infinite; animation-delay: var(--toolbar-delay, 0s); }
 .toolbar-beat-progress { opacity: .5; animation: toolbar-beat-pulse 2s steps(1, end) infinite; animation-delay: var(--toolbar-delay, 0s); }
-.toolbar-master-fill { clip-path: inset(0 37.142857% 0 0); animation: toolbar-master-level 1.9s steps(1, end) infinite; animation-delay: var(--toolbar-delay, 0s); }
+/* Only the reveal edge moves; the two rows of square segments stay fixed. */
+.toolbar-master-fill { clip-path: inset(0 37.142857% 0 0); animation: toolbar-master-level 1.9s ease-in-out infinite; animation-delay: var(--toolbar-delay, 0s); }
 .toolbar-cpu-fill { transform-box: fill-box; transform-origin: center bottom; transform: scaleY(.4); animation: toolbar-cpu-level 3.2s steps(6, end) infinite; }
 .toolbar-sandbox-strip { animation: toolbar-sandbox-scroll 8s linear infinite; }
 .toolbar-simulation .toolbar-motion { animation-play-state: paused; }

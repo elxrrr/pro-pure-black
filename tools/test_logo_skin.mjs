@@ -7,7 +7,7 @@ import { applyToolbar } from '../docs/toolbar.js';
 
 const sprite = new Uint8Array(await readFile(new URL('../docs/assets/gfx-pro.png', import.meta.url)));
 const sourceXml = await readFile(new URL('../docs/assets/Pro.xml', import.meta.url), 'utf8');
-const tile = Uint8Array.from({length: 72 * 17 * 4}, (_, index) => {
+const tile = Uint8Array.from({length: 144 * 34 * 4}, (_, index) => {
   const channel = index % 4, pixel = Math.floor(index / 4);
   return channel === 3 ? (pixel % 3 === 0 ? 0 : 255) : (pixel * (channel + 1) + 37) % 256;
 });
@@ -74,7 +74,7 @@ test('appended logo preserves every original scanline and ancillary chunk', asyn
   const output = parsePng(result.image);
   assert.equal(result.spriteY, 428);
   assert.equal(output.width, original.width);
-  assert.equal(output.height, 445);
+  assert.equal(output.height, 462);
   assert.deepEqual(output.chunks[0].data.subarray(8), original.chunks[0].data.subarray(8), 'Pixel format is unchanged');
   const ancillary = png => png.chunks.filter(item => item.type[0] === item.type[0].toLowerCase()).map(item => item.raw);
   assert.ok(ancillary(original).length > 0, 'The real sprite contains metadata to preserve');
@@ -84,11 +84,11 @@ test('appended logo preserves every original scanline and ancillary chunk', asyn
   const stride = output.width * 4 + 1;
   assert.equal(after.length, output.height * stride);
   assert.deepEqual(after.subarray(0, before.length), before, 'Original filtered scanlines remain byte-for-byte intact');
-  for (let row = 0; row < 17; row++) {
+  for (let row = 0; row < 34; row++) {
     const start = before.length + row * stride;
     assert.equal(after[start], 0, 'New rows use the independent None filter');
-    assert.deepEqual(after.subarray(start + 1, start + 1 + 72 * 4), Buffer.from(tile.subarray(row * 72 * 4, (row + 1) * 72 * 4)));
-    assert.ok(after.subarray(start + 1 + 72 * 4, start + stride).every(byte => byte === 0), 'Rest of each new row stays transparent');
+    assert.deepEqual(after.subarray(start + 1, start + 1 + 144 * 4), Buffer.from(tile.subarray(row * 144 * 4, (row + 1) * 144 * 4)));
+    assert.ok(after.subarray(start + 1 + 144 * 4, start + stride).every(byte => byte === 0), 'Rest of each new row stays transparent');
   }
   assert.deepEqual(input, originalBytes);
   assert.deepEqual(tile, originalTile);
@@ -107,7 +107,7 @@ test('logo XML retains native logos, CRLF and all unrelated skin content', () =>
     assert.match(additions[index], /<visual name="pureblack_custom_logo">/);
     assert.ok(additions[index].includes(`<pos x="${x}" y="13"/>`));
     assert.match(additions[index], /<size width="72" height="17"\/>/);
-    assert.match(additions[index], /<off x="0" y="428"\/>/);
+    assert.match(additions[index], /<off x="0" y="428" width="144" height="34"\/>/);
   }
   assert.equal(result.split('<group name="topbar_status" x="195" y="8">').length - 1, 1);
   assert.equal(result.split('<group name="topbar_status" x="100" y="8">').length - 1, 1);
@@ -117,11 +117,17 @@ test('logo XML retains native logos, CRLF and all unrelated skin content', () =>
   assert.ok(!lf.includes('\r'));
 });
 
-test('combined logo export points both native visuals at the appended tile', async () => {
+test('combined logo export scales the 2× tile to the native logo bounds on both platforms', async () => {
   const result = await addLogoToSkin(sourceXml, sprite, {tilePixels: tile});
-  assert.equal(parsePng(result.image).height, 445);
-  assert.equal(result.xml.match(/<off x="0" y="428"\/>/g).length, 2);
+  assert.equal(parsePng(result.image).height, 462);
+  assert.equal(result.xml.match(/<off x="0" y="428" width="144" height="34"\/>/g).length, 2);
   assert.equal(result.xml.match(/BEGIN PURE BLACK CUSTOM LOGO/g).length, 2);
+  for (const platform of ['mac', 'pc']) {
+    const group = result.xml.match(new RegExp(`<group name="applicationbuttons" condition="is_${platform}">[\\s\\S]*?<!-- END PURE BLACK CUSTOM LOGO -->`))[0];
+    const nativeSize = group.match(/<logo>[\s\S]*?(<size[^>]*\/>)/)[1];
+    const customSize = group.match(/<visual name="pureblack_custom_logo">[\s\S]*?(<size[^>]*\/>)/)[1];
+    assert.equal(customSize, nativeSize, `${platform}: custom and native logo display bounds must match`);
+  }
 });
 
 test('custom logo follows the responsive Mac status block without moving the Windows logo', () => {
@@ -139,7 +145,7 @@ test('custom logo follows the responsive Mac status block without moving the Win
     assert.ok(macVisuals[1].includes('<pos x="670" y="13"/>'));
     for (const visual of macVisuals) {
       assert.ok(visual.includes('<size width="72" height="17"/>'));
-      assert.ok(visual.includes('<off x="0" y="428"/>'));
+      assert.ok(visual.includes('<off x="0" y="428" width="144" height="34"/>'));
     }
     assert.equal((additions[1].match(/<visual/g) || []).length, 1);
     assert.ok(additions[1].includes('<pos x="443" y="13"/>'));
@@ -152,19 +158,19 @@ test('custom logo follows the responsive Mac status block without moving the Win
   }
   const noAccount = applyLogoXml(applyToolbar(sourceXml, {account: false, sandbox: true}), 428);
   assert.ok(!noAccount.includes('name="pureblack_custom_logo_account_left"'));
-  assert.equal((noAccount.match(/<off x="0" y="428"\/>/g) || []).length, 2);
+  assert.equal((noAccount.match(/<off x="0" y="428" width="144" height="34"\/>/g) || []).length, 2);
 });
 
 test('sprite writer rejects invalid, unsupported and incomplete input', async () => {
   await assert.rejects(appendLogoSprite(Buffer.from('not PNG'), tile), /not a PNG/);
-  for (const invalid of [null, [], new Uint8Array(72 * 17 * 4 - 1)]) {
-    await assert.rejects(appendLogoSprite(sprite, invalid), /prepared 72 × 17 RGBA tile/);
+  for (const invalid of [null, [], new Uint8Array(144 * 34 * 4 - 1)]) {
+    await assert.rejects(appendLogoSprite(sprite, invalid), /prepared 144 × 34 RGBA tile/);
   }
   for (const [offset, value] of [[8, 16], [9, 2], [12, 1]]) {
     const unsupported = replaceChunk('IHDR', data => { const header = Buffer.from(data); header[offset] = value; return chunk('IHDR', header); });
     await assert.rejects(appendLogoSprite(unsupported, tile), /sprite format/);
   }
-  const narrow = replaceChunk('IHDR', data => { const header = Buffer.from(data); header.writeUInt32BE(71); return chunk('IHDR', header); });
+  const narrow = replaceChunk('IHDR', data => { const header = Buffer.from(data); header.writeUInt32BE(143); return chunk('IHDR', header); });
   await assert.rejects(appendLogoSprite(narrow, tile), /sprite format/);
   const incomplete = replaceChunk('IDAT', () => chunk('IDAT', deflateSync(Buffer.from([0, 1, 2]))));
   await assert.rejects(appendLogoSprite(incomplete, tile), /image data is incomplete/);

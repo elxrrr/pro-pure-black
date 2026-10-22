@@ -2,10 +2,12 @@ export const LOGO_LIMITS = Object.freeze({
   maxBytes: 5 * 1024 * 1024,
   maxDimension: 4096,
   maxPixels: 16_000_000,
+  displayWidth: 72,
+  displayHeight: 17,
   outputWidth: 432,
   outputHeight: 102,
-  tileWidth: 72,
-  tileHeight: 17,
+  tileWidth: 144,
+  tileHeight: 34,
 });
 
 const SIGNATURE = [137, 80, 78, 71, 13, 10, 26, 10];
@@ -119,13 +121,14 @@ function canvas(width, height, readPixels = false) {
   return {element, context};
 }
 
-function fittedCanvas(source, width, height, readPixels = false) {
+function fittedCanvas(source, bounds, width, height, readPixels = false) {
   const output = canvas(width, height, readPixels);
-  const scale = Math.min(width / source.width, height / source.height);
-  const drawWidth = source.width * scale, drawHeight = source.height * scale;
+  const scale = Math.min(width / bounds.width, height / bounds.height);
+  const drawWidth = bounds.width * scale, drawHeight = bounds.height * scale;
   output.context.imageSmoothingEnabled = true;
   output.context.imageSmoothingQuality = 'high';
-  output.context.drawImage(source, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
+  output.context.drawImage(source, bounds.x, bounds.y, bounds.width, bounds.height,
+    (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
   return output;
 }
 
@@ -145,17 +148,26 @@ export async function prepareLogo(file) {
     const source = canvas(info.width, info.height, true);
     source.context.drawImage(decoded, 0, 0);
     const pixels = source.context.getImageData(0, 0, info.width, info.height).data;
-    let visible = false, transparent = false;
-    for (let index = 3; index < pixels.length && !(visible && transparent); index += 4) {
-      visible ||= pixels[index] > 0;
-      transparent ||= pixels[index] < 255;
+    let transparent = false;
+    let minX = info.width, minY = info.height, maxX = -1, maxY = -1;
+    for (let pixel = 0; pixel < info.width * info.height; pixel++) {
+      const alpha = pixels[pixel * 4 + 3];
+      transparent ||= alpha < 255;
+      // Remove only completely transparent margins. Keep every visible pixel,
+      // including faint antialiased edges, and preserve the artwork's aspect.
+      if (alpha > 0) {
+        const x = pixel % info.width, y = Math.floor(pixel / info.width);
+        minX = Math.min(minX, x); minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+      }
     }
-    if (!visible) throw new Error('This PNG is fully transparent. Choose an image with a visible logo.');
+    if (maxX < 0) throw new Error('This PNG is fully transparent. Choose an image with a visible logo.');
     if (!transparent) throw new Error('This PNG has no transparent background. Choose a PNG with transparency.');
 
+    const bounds = {x: minX, y: minY, width: maxX - minX + 1, height: maxY - minY + 1};
     const width = LOGO_LIMITS.outputWidth, height = LOGO_LIMITS.outputHeight;
-    const output = fittedCanvas(source.element, width, height);
-    const tile = fittedCanvas(source.element, LOGO_LIMITS.tileWidth, LOGO_LIMITS.tileHeight, true);
+    const output = fittedCanvas(source.element, bounds, width, height);
+    const tile = fittedCanvas(source.element, bounds, LOGO_LIMITS.tileWidth, LOGO_LIMITS.tileHeight, true);
     const tilePixels = new Uint8Array(tile.context.getImageData(0, 0, LOGO_LIMITS.tileWidth, LOGO_LIMITS.tileHeight).data);
     if (!tilePixels.some((value, index) => index % 4 === 3 && value > 0)) {
       throw new Error('This logo becomes invisible at toolbar size. Choose a less narrow or more visible image.');

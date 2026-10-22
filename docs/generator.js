@@ -1,6 +1,13 @@
 // Keep palette roles in sync with tools/build_themes.py. VirtualDJ skin XML uses
 // its own relaxed dialect, so preserve native markup instead of serialising DOM.
 export const ATOMIX_DEFAULT = Object.freeze(['#156C89', '#AC2F37', '#0D7264', '#A54D30']);
+export const SKIN_README = `Pro Pure Black Custom
+
+Copy this ZIP, still zipped, into VirtualDJ's Skins folder:
+
+macOS: ~/Library/Application Support/VirtualDJ/Skins
+Windows: %LOCALAPPDATA%\\VirtualDJ\\Skins
+`;
 
 const BEGIN = '\t\t<!-- BEGIN PURE BLACK DECK THEMES -->';
 const END = '\t\t<!-- END PURE BLACK DECK THEMES -->';
