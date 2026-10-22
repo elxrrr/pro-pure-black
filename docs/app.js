@@ -1,6 +1,8 @@
 import { generateSkinXml, createSkinZip, normaliseThemes } from './generator.js';
 import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
 import { applyWebsiteTheme } from './appearance.js';
+import { DISPLAY_PROFILES, toolbarFit } from './display.js';
+import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
 import { renderPalettePreview, renderToolbarPreview, setupPreviewMotion } from './previews.js';
 
 const $ = selector => document.querySelector(selector);
@@ -11,9 +13,10 @@ const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#15
 const state = {
   themes: [originalDefault], selected: new Set(['default']), preview: 'default',
   customs: [], activeCustom: null, nextCustom: 1, assets: null, busy: false,
-  toolbarOrder: [...DEFAULT_TOOLBAR_ORDER],
+  toolbarOrder: [...DEFAULT_TOOLBAR_ORDER], notchPreview: false, displayProfile: '14',
 };
 const hexPattern = /^#[0-9a-f]{6}$/i;
+let toolbarPreviewSignature = '';
 
 function setStatus(message, error = false) {
   const status = $('#status');
@@ -27,8 +30,57 @@ function toolbarOptions() {
   return Object.fromEntries(toolbarKeys.map(key => [key, $(`#toolbar-${key}`).checked]));
 }
 
+function activePreviewTheme() {
+  const custom = state.customs.find(item => item.key === state.preview);
+  return custom ? customTheme(custom) : state.themes.find(theme => theme.slug === state.preview) || originalDefault;
+}
+
+function displayOptions() {
+  return { notch: state.notchPreview, profile: state.displayProfile };
+}
+
 function renderToolbar() {
-  renderToolbarPreview($('#toolbar-preview'), toolbarOptions(), state.toolbarOrder);
+  const container = $('#toolbar-preview');
+  const options = toolbarOptions();
+  const display = { ...displayOptions(), colors: activePreviewTheme().colors };
+  const signature = JSON.stringify([options, state.toolbarOrder, display]);
+  if (signature === toolbarPreviewSignature && container.childElementCount) return;
+  renderToolbarPreview(container, options, state.toolbarOrder, display);
+  toolbarPreviewSignature = signature;
+}
+
+function updateToolbarFit() {
+  const options = toolbarOptions();
+  const fit = toolbarFit(options, state.toolbarOrder, displayOptions());
+  for (const key of toolbarKeys) {
+    const input = $(`#toolbar-${key}`);
+    // Included controls always remain available to remove, even after a resize.
+    input.disabled = !options[key] && !toolbarFit({ ...options, [key]: true }, state.toolbarOrder, displayOptions()).fits;
+    input.closest('.toggle-row').classList.toggle('is-unavailable', input.disabled);
+    input.closest('.toggle-row').title = input.disabled ? 'Not enough room beside the phrase counters.' : '';
+    if (input.disabled) input.setAttribute('aria-describedby', 'toolbar-fit-status');
+    else input.removeAttribute('aria-describedby');
+  }
+  const status = $('#toolbar-fit-status');
+  const message = fit.fits ? 'All selected controls fit.' : 'Selected controls overlap the phrase counters. Hide a control to continue.';
+  if (status.textContent !== message) status.textContent = message;
+  status.classList.toggle('is-error', !fit.fits);
+  return fit;
+}
+
+function setupDisplayPreview() {
+  const select = $('#toolbar-display-profile');
+  select.replaceChildren(...DISPLAY_PROFILES.map(profile => {
+    const option = document.createElement('option');
+    option.value = profile.id; option.textContent = profile.label; return option;
+  }));
+  select.value = state.displayProfile;
+  select.addEventListener('change', () => {
+    state.displayProfile = select.value; renderToolbar(); updateSummary();
+  });
+  $('#toolbar-notch-preview').addEventListener('change', event => {
+    state.notchPreview = event.target.checked; renderToolbar(); updateSummary();
+  });
 }
 
 function setupToolbarOrder() {
@@ -59,7 +111,7 @@ function setupToolbarOrder() {
     const from = state.toolbarOrder.indexOf(key);
     if (from < 0 || to < 0 || to >= state.toolbarOrder.length || from === to) return;
     state.toolbarOrder.splice(from, 1); state.toolbarOrder.splice(to, 0, key);
-    refreshOrder(); renderToolbar();
+    refreshOrder(); renderToolbar(); updateSummary();
     $('#toolbar-order-status').textContent = `${toolbarLabels[key]} moved to position ${to + 1} of ${state.toolbarOrder.length}.`;
   }
   function clearDrag() {
@@ -107,8 +159,7 @@ function setupToolbarOrder() {
 }
 
 function renderPresetPreview() {
-  const custom = state.customs.find(item => item.key === state.preview);
-  const theme = custom ? customTheme(custom) : state.themes.find(theme => theme.slug === state.preview) || originalDefault;
+  const theme = activePreviewTheme();
   applyWebsiteTheme(theme);
   $('#preview-title').textContent = theme.name || 'Custom';
   renderPalettePreview($('#preset-preview'), theme);
@@ -117,6 +168,7 @@ function renderPresetPreview() {
     card.classList.toggle('is-preview', active);
     card.querySelector('.preset-preview').setAttribute('aria-pressed', String(active));
   });
+  renderToolbar();
 }
 
 function createPresetCard(theme, custom = null) {
@@ -233,14 +285,15 @@ function updateSummary() {
   state.customs.forEach(syncCustomPreset);
   $('#toolbar-count').textContent = `${toolbarCount + 2} visible`;
   $('#download-summary').textContent = `${count} palette${count === 1 ? '' : 's'} · ${toolbarCount} optional control${toolbarCount === 1 ? '' : 's'}`;
-  $('#download').disabled = !state.assets || state.busy || !valid;
+  const fit = updateToolbarFit();
+  $('#download').disabled = !state.assets || state.busy || !valid || !fit.fits;
 }
 
 function createCustomCard(custom) {
   const card = document.createElement('article');
   card.className = 'custom-card'; card.dataset.customId = custom.key;
   // Only generated keys enter this template; user-provided names use text/value.
-  card.innerHTML = `<div class="custom-card-head"><label class="custom-name-label"><span class="sr-only">Preset name</span><input class="custom-name" type="text" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="${custom.key}-error"></label><div class="custom-actions"><label class="custom-enable"><input type="checkbox" class="custom-include" checked><span class="checkbox-face" aria-hidden="true"></span><span>Include</span></label><button type="button" class="custom-preview-button" aria-pressed="false">Preview</button><button type="button" class="custom-remove">Remove</button></div></div><div class="custom-colours"></div><p class="custom-error field-error" id="${custom.key}-error" role="alert" hidden></p>`;
+  card.innerHTML = `<div class="custom-card-head"><label class="custom-name-label"><span class="sr-only">Preset name</span><input class="custom-name" type="text" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="${custom.key}-error"></label><div class="custom-actions"><label class="custom-enable"><input type="checkbox" class="custom-include" checked><span class="checkbox-face" aria-hidden="true"></span><span>Include</span></label><button type="button" class="custom-preview-button" aria-pressed="false">Preview</button><button type="button" class="custom-randomise">Random</button><button type="button" class="custom-remove">Remove</button></div></div><div class="custom-colours"></div><p class="custom-error field-error" id="${custom.key}-error" role="alert" hidden></p>`;
   custom.element = card;
   const name = card.querySelector('.custom-name');
   name.value = custom.name;
@@ -250,6 +303,16 @@ function createCustomCard(custom) {
   const include = card.querySelector('.custom-include');
   include.addEventListener('change', () => { custom.included = include.checked; updateSummary(); });
   card.querySelector('.custom-preview-button').addEventListener('click', () => selectCustom(custom.key));
+  card.querySelector('.custom-randomise').addEventListener('click', () => {
+    const colors = randomPalette();
+    custom.included = true; include.checked = true;
+    for (let index = 0; index < letters.length; index++) {
+      custom.colors[index] = colors[index]; custom.rawColors[index] = colors[index];
+      card.querySelector(`.colour-picker[data-deck="${letters[index]}"]`).value = colors[index];
+      card.querySelector(`.hex-input[data-deck="${letters[index]}"]`).value = colors[index];
+    }
+    selectCustom(custom.key); updateSummary();
+  });
   card.querySelector('.custom-remove').addEventListener('click', () => {
     const index = state.customs.indexOf(custom);
     state.customs.splice(index, 1); card.remove(); custom.tile?.remove();
@@ -285,15 +348,32 @@ function addCustom() {
   const existingNames = new Set([...state.themes, ...state.customs].map(item => item.name.trim().toLowerCase()));
   let number = state.nextCustom++;
   while (existingNames.has(`custom ${number}`)) number = state.nextCustom++;
-  const active = state.customs.find(custom => custom.key === state.activeCustom);
-  const preset = state.themes.find(theme => theme.slug === state.preview && theme.slug !== 'default');
-  const colors = [...(active?.colors || preset?.colors || ['#E98DB6', '#89BFF0', '#B69BE4', '#F2C48F'])];
+  const colors = [...CUSTOM_START_COLORS];
   const custom = { key: `custom-${number}`, name: `Custom ${number}`, colors, rawColors: [...colors], included: true };
   state.customs.push(custom);
   $('#custom-presets').append(createCustomCard(custom));
   $('#presets').append(createPresetCard(customTheme(custom), custom));
   selectCustom(custom.key); updateSummary();
   custom.element.querySelector('.custom-name').focus();
+}
+
+async function copySkinPath(button) {
+  const platform = button.dataset.copyPath;
+  const path = $(`#skin-path-${platform}`);
+  const status = $('#path-copy-status');
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable.');
+    await navigator.clipboard.writeText(path.textContent);
+    status.textContent = `${platform === 'macos' ? 'macOS' : 'Windows'} path copied.`;
+  } catch {
+    // Clipboard access may be unavailable or denied; leave the exact path selectable.
+    path.tabIndex = -1; path.focus({ preventScroll: true });
+    const selection = window.getSelection();
+    const range = document.createRange(); range.selectNodeContents(path);
+    selection?.removeAllRanges(); selection?.addRange(range);
+    status.textContent = 'Path selected. Copy it manually.';
+  }
+  status.hidden = false;
 }
 
 async function fetchAsset(name, binary = false) {
@@ -322,6 +402,10 @@ async function loadAssets() {
 
 async function downloadSkin() {
   if (!state.assets || !validateCustoms() || state.busy) return;
+  if (!updateToolbarFit().fits) {
+    setStatus('Selected toolbar controls overlap. Hide a control before downloading.', true);
+    updateSummary(); return;
+  }
   state.busy = true; updateSummary();
   $('#download span').textContent = 'Building…';
   setStatus('Building ZIP…');
@@ -350,6 +434,7 @@ async function downloadSkin() {
 
 setupPreviewMotion();
 setupToolbarOrder();
+setupDisplayPreview();
 toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', () => {
   renderToolbar(); updateSummary();
 }));
@@ -364,6 +449,7 @@ $('#select-default').addEventListener('click', () => {
   state.customs.forEach(custom => { custom.included = false; custom.element.querySelector('.custom-include').checked = false; });
   renderPresets(); updateSummary();
 });
+document.querySelectorAll('[data-copy-path]').forEach(button => button.addEventListener('click', () => copySkinPath(button)));
 $('#download').addEventListener('click', downloadSkin);
 $('#retry').addEventListener('click', loadAssets);
 renderPresets();

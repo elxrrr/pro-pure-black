@@ -1,4 +1,5 @@
-import { DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder } from './toolbar.js';
+import { DEFAULT_TOOLBAR_ORDER, toolbarLayout } from './toolbar.js';
+import { getDisplayProfile } from './display.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 const DEFAULT_WAVES = ['#0085F4', '#FF0013', '#00FFBA', '#F94C00'];
@@ -130,31 +131,90 @@ const ICONS = {
 };
 const LABELS = { account: 'Account', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox', layout: 'Layout', settings: 'Settings' };
 
-function icon(key) {
-  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[key]}</svg>`;
+const DEFAULT_TOOLBAR_COLOURS = ['#156C89', '#AC2F37', '#0D7264', '#A54D30'];
+
+function toolbarIcon(key, x = 8, y = 4, size = 19) {
+  return `<svg x="${x}" y="${y}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${ICONS[key]}</svg>`;
 }
 
-function toolbarControl(key) {
-  const content = key === 'layout' ? 'PRO <span class="toolbar-sim-chevron">⌄</span>'
-    : key === 'settings' ? icon(key) : `${icon(key)}<span>${LABELS[key]}</span>`;
-  return `<span class="toolbar-sim-control toolbar-sim-${key}" data-toolbar-control="${key}" title="${LABELS[key]}">${content}</span>`;
+function nativeBounds(x, y, width, height) {
+  return `data-native-x="${x}" data-native-y="${y}" data-native-width="${width}" data-native-height="${height}"`;
 }
 
-/** Non-interactive toolbar mockup; controls mirror visibility and export order. */
-export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
+function toolbarControl({ key, x, y, width, height }) {
+  let content;
+  if (key === 'layout') {
+    content = '<text x="10" y="18" font-size="11">PRO</text><path d="m100 11 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.4"/>';
+  } else if (key === 'account') {
+    content = `${toolbarIcon(key, 5, 5, 16)}<text x="26" y="18" font-size="11">ACCOUNT</text>`;
+  } else if (key === 'sandbox') {
+    const wave = Array.from({ length: 64 }, (_, i) => {
+      const height = 3 + Math.round(Math.abs(Math.sin(i * .61)) * 14);
+      return `<rect x="${37 + i * 3}" y="${(27 - height) / 2}" width="2" height="${height}" fill="#484848"/>`;
+    }).join('');
+    content = `${toolbarIcon(key)}<path d="M35 0v27" stroke="#303030"/><g class="toolbar-sim-sandbox-wave" data-native-width="200">${wave}<path d="M93 1v25" stroke="#a6a6a6"/></g>`;
+  } else {
+    content = toolbarIcon(key, key === 'settings' ? 5 : 8, key === 'settings' ? 1 : 4, key === 'settings' ? 25 : 19);
+  }
+  return `<g class="toolbar-sim-control toolbar-sim-${key}" data-toolbar-control="${key}" ${nativeBounds(x, y, width, height)} transform="translate(${x} ${y})"><title>${LABELS[key]}${key === 'sandbox' ? ' with active waveform' : ''}</title><rect width="${width}" height="${height}" rx="3" fill="#000" stroke="#303030"/>${content}</g>`;
+}
+
+function toolbarStatus() {
+  const meters = [9, 15].map((y, channel) => Array.from({ length: 13 }, (_, i) =>
+    `<rect x="${65 + i * 5.4}" y="${y}" width="4" height="4" fill="${i < 9 - channel ? '#828282' : '#242424'}"/>`).join('')).join('');
+  return `<g class="toolbar-sim-status" ${nativeBounds(195, 8, 336, 27)} transform="translate(195 8)">
+    <rect width="333" height="27" rx="4" fill="#000" stroke="#282828"/>
+    <g class="toolbar-sim-master"><text x="10" y="18" font-size="11">MASTER</text><g class="toolbar-sim-master-bars">${meters}</g><circle cx="144.5" cy="14.5" r="5" fill="none" stroke="#484848"/></g>
+    <path d="M160 4v19m50-19v19m50-19v19" stroke="#282828"/>
+    <g class="toolbar-sim-cpu"><text x="170" y="18" font-size="11">CPU</text><rect x="200" y="6" width="4" height="15" fill="#242424"/><rect x="200" y="15" width="4" height="6" fill="#828282"/></g>
+    <g class="toolbar-sim-battery"><rect x="222" y="9" width="18" height="9" rx="1" fill="none" stroke="#a6a6a6"/><path d="M242 12v3" stroke="#a6a6a6"/><rect x="224" y="11" width="12" height="5" fill="#828282"/><rect x="250" y="6" width="4" height="15" fill="#242424"/><rect x="250" y="9" width="4" height="12" fill="#828282"/></g>
+    <text class="toolbar-sim-clock" x="298" y="18" text-anchor="middle" font-size="13" fill="#bbb">12:34</text>
+  </g>`;
+}
+
+function phraseCircle(deck, x, colour) {
+  return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck} phrase counter</title><circle cx="15" cy="15" r="15" fill="#484848"/><circle cx="15" cy="15" r="12.5" fill="none" stroke="${colour}" stroke-width="5" stroke-dasharray="27 52" transform="rotate(-90 15 15)"/><circle cx="15" cy="15" r="10" fill="#000"/><text x="15" y="19" text-anchor="middle" fill="#a6a6a6" font-size="11">${deck}</text></g>`;
+}
+
+function phrasePreview(notch, colours) {
+  const positions = notch ? { A: 760, C: 795, B: 1095, D: 1130 } : { C: 823, A: 858, B: 1037, D: 1072 };
+  const circles = Object.entries(positions).map(([deck, x]) => phraseCircle(deck, x, colours[LETTERS.indexOf(deck)])).join('');
+  if (notch) return circles;
+  const bars = colours.map((colour, deck) => Array.from({ length: 4 }, (_, beat) =>
+    `<rect x="${898 + beat * 33}" y="${8 + deck * 7}" width="28" height="5" rx="2" fill="${beat <= deck % 3 ? colour : '#484848'}"/>`).join('')).join('');
+  return `${circles}<g class="toolbar-sim-beat-bars" ${nativeBounds(898, 8, 127, 26)}>${bars}</g>`;
+}
+
+/** Proportional native toolbar geometry; display/notch choices affect only this preview. */
+export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER, display = {}) {
   if (!container) throw new Error('The toolbar preview container is missing.');
-  const enabled = normaliseToolbarOrder(order).filter(key => key === 'layout' || key === 'settings' || options[key]);
+  const { notch = false, profile = '14', colors = DEFAULT_TOOLBAR_COLOURS } = display;
+  if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
+  if (!Array.isArray(colors) || colors.length !== 4 || !colors.every(colour => typeof colour === 'string' && /^#[0-9a-f]{6}$/i.test(colour))) {
+    throw new Error('The toolbar preview needs four hex colours.');
+  }
+  const colours = colors.map(colour => colour.toUpperCase());
+  const device = getDisplayProfile(profile);
+  const items = toolbarLayout(options, 'mac', order);
   container.classList.add('toolbar-simulation');
+  container.dataset.profile = device.id;
+  container.dataset.notch = String(notch);
+  container.dataset.displayWidth = device.width;
+  container.dataset.displayHeight = device.height;
   container.setAttribute('role', 'img');
-  container.setAttribute('aria-label', `Simulated toolbar. Left: VirtualDJ logo, master level, CPU, battery and clock. Right, from left to right: ${enabled.map(key => LABELS[key]).join(', ')}.`);
-  container.innerHTML = `<div class="toolbar-sim-left" aria-hidden="true">
-      <div class="toolbar-sim-window"><span class="toolbar-sim-lights"><i></i><i></i><i></i></span><span class="toolbar-sim-logo">VDJ</span></div>
-      <div class="toolbar-sim-status">
-        <span class="toolbar-sim-master"><span>MASTER</span><span class="toolbar-sim-master-bars"><i></i><i></i></span></span>
-        <span class="toolbar-sim-cpu">CPU<i></i></span>
-        <span class="toolbar-sim-battery"><svg viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="3" width="19" height="10" rx="1"/><path d="M23 6v4"/><path d="M4 6h12v4H4z" fill="currentColor" stroke="none"/></svg></span>
-        <span class="toolbar-sim-clock">12:34</span>
-      </div>
-    </div>
-    <div class="toolbar-sim-right" aria-hidden="true">${enabled.map(toolbarControl).join('')}</div>`;
+  container.setAttribute('aria-label', `Approximate ${device.label} fullscreen toolbar. Left: VirtualDJ logo, master level, CPU, battery and clock. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.`);
+  const cutout = notch ? '<g class="toolbar-sim-notch" data-native-x="845" data-native-width="230"><path d="M845 0v22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V0" fill="#000" stroke="#343438"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>' : '';
+  container.innerHTML = `<div class="toolbar-display-frame" style="--display-ratio:${device.width / 1728}">
+    <svg class="toolbar-sim-svg" viewBox="0 0 1920 84" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x=".5" y=".5" width="1919" height="83" rx="10" fill="#000" stroke="var(--line)"/>
+      <path d="M1 43h1918" stroke="#282828"/>
+      <g class="toolbar-sim-left">
+        <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
+        ${toolbarStatus()}
+      </g>
+      <g class="toolbar-sim-phrases">${phrasePreview(notch, colours)}</g>
+      <g class="toolbar-sim-right">${items.map(toolbarControl).join('')}</g>
+      ${cutout}
+    </svg>
+  </div>`;
 }

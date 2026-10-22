@@ -6,8 +6,9 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {test} from 'node:test';
 import {generateSkinXml, normaliseThemes, createSkinZip, ATOMIX_DEFAULT} from '../docs/generator.js';
-import {applyToolbar, toolbarLayout, DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder} from '../docs/toolbar.js';
+import {applyToolbar, toolbarLayout, DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder, measureToolbarFit} from '../docs/toolbar.js';
 import {websiteThemeProperties} from '../docs/appearance.js';
+import {DISPLAY_PROFILES, getDisplayProfile, toolbarFit} from '../docs/display.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const xml = readFileSync(join(root, 'skin', 'Pro.xml'), 'utf8');
@@ -163,6 +164,38 @@ test('every toolbar order and toggle combination fits beside the native counters
         }
       }
     }
+  }
+});
+
+test('display fit checks use the exported geometry across all profiles, including the active Sandbox width', () => {
+  assert.deepEqual(DISPLAY_PROFILES.map(profile => profile.id), ['13', '14', '15', '16']);
+  for (const profile of DISPLAY_PROFILES) {
+    assert.equal(getDisplayProfile(profile.id), profile);
+    for (const notch of [false, true]) {
+      for (let mask = 0; mask < 16; mask++) {
+        const options = Object.fromEntries(optional.map((key, bit) => [key, Boolean(mask & (1 << bit))]));
+        for (const order of representativeOrders) {
+          const fit = toolbarFit(options, order, { notch, profile: profile.id });
+          assert.deepEqual(fit.items, toolbarLayout(options, 'mac', order));
+          assert.equal(fit.fits, true, 'All current controls fit; display size must not invent a count limit');
+          assert.equal(fit.requiredWidth, fit.items.at(-1).x + fit.items.at(-1).width - fit.items[0].x);
+          assert.equal(fit.gap, fit.items[0].x - (notch ? 1160 : 1102));
+          assert.ok(fit.gap >= fit.minGap && fit.requiredWidth <= fit.availableWidth);
+          assert.equal(fit.scale, profile.width / 1920);
+          if (options.sandbox) assert.equal(fit.items.find(item => item.key === 'sandbox').width, 235);
+          if (mask === 15) assert.equal(fit.requiredWidth, 648);
+        }
+      }
+    }
+  }
+  assert.throws(() => toolbarFit({}, DEFAULT_TOOLBAR_ORDER, { profile: 'unknown' }), /display/i);
+  for (const platform of ['mac', 'pc']) {
+    const phraseEnd = platform === 'mac' ? 1160 : 1102;
+    const right = platform === 'mac' ? 1910 : 1789;
+    const fitting = [{ key: 'settings', x: phraseEnd + 10, y: 8, width: right - phraseEnd - 10, height: 27 }];
+    assert.equal(measureToolbarFit(fitting, platform).fits, true, 'Exact safe boundary must fit');
+    assert.equal(measureToolbarFit([{...fitting[0], x: phraseEnd + 9}], platform).fits, false, 'Reject intrusion into the counter gap');
+    assert.equal(measureToolbarFit([{...fitting[0], width: fitting[0].width + 1}], platform).fits, false, 'Reject intrusion into the window controls');
   }
 });
 

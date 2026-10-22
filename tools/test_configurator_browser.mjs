@@ -10,6 +10,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const docs = join(root, 'docs');
 const artifacts = join(root, 'browser-checks');
 const defaults = ['#156C89', '#AC2F37', '#0D7264', '#A54D30'];
+const customStart = ['#E98DB6', '#89BFF0', '#B69BE4', '#F2C48F'];
 const colours = ['#E89CBE', '#89BFF0', '#84D6B5', '#F2C48F'];
 const customName = 'Studio <&> Mix';
 const secondColours = ['#CA8CD3', '#82D8D1', '#EDB274', '#C7CFEF'];
@@ -86,6 +87,59 @@ async function assertBlackSurfaces(page) {
         : [`${element.tagName}.${element.className}: ${fill}, ${style.backgroundImage}`];
     }));
   assert.deepEqual(problems, [], 'Structural website surfaces must stay pure black');
+}
+
+async function assertToolbarPreview(page, { notch, profile, colors, order }) {
+  const preview = await page.locator('#toolbar-preview').evaluate(container => ({
+    profile: container.dataset.profile,
+    notch: container.dataset.notch,
+    width: container.querySelector('.toolbar-sim-svg').viewBox.baseVal.width,
+    notchCount: container.querySelectorAll('.toolbar-sim-notch').length,
+    barsCount: container.querySelectorAll('.toolbar-sim-beat-bars').length,
+    controls: [...container.querySelectorAll('[data-toolbar-control]')].map(item => ({
+      key: item.dataset.toolbarControl, x: Number(item.dataset.nativeX), y: Number(item.dataset.nativeY),
+      width: Number(item.dataset.nativeWidth), height: Number(item.dataset.nativeHeight),
+    })),
+    circles: [...container.querySelectorAll('[data-phrase-deck]')].map(item => ({
+      deck: item.dataset.phraseDeck, x: Number(item.dataset.nativeX), y: Number(item.dataset.nativeY),
+      width: Number(item.dataset.nativeWidth), color: item.dataset.color,
+    })),
+  }));
+  assert.equal(preview.width, 1920, 'Preview must retain native skin coordinates at every device width');
+  assert.equal(preview.profile, String(profile));
+  assert.equal(preview.notch, String(notch));
+  assert.equal(preview.notchCount, notch ? 1 : 0);
+  assert.equal(preview.barsCount, notch ? 0 : 1);
+  assert.deepEqual(preview.controls.map(item => item.key), order);
+  const phrasePositions = notch ? { A: 760, C: 795, B: 1095, D: 1130 } : { C: 823, A: 858, B: 1037, D: 1072 };
+  assert.equal(preview.circles.length, 4);
+  for (const circle of preview.circles) {
+    assert.equal(circle.x, phrasePositions[circle.deck]);
+    assert.equal(circle.y, 6);
+    assert.equal(circle.width, 30);
+    assert.equal(circle.color.toUpperCase(), colors['ABCD'.indexOf(circle.deck)]);
+  }
+  const sortedCircles = [...preview.circles].sort((a, b) => a.x - b.x).map(item => item.deck);
+  assert.deepEqual(sortedCircles, notch ? ['A', 'C', 'B', 'D'] : ['C', 'A', 'B', 'D']);
+  for (let index = 0; index < preview.controls.length; index++) {
+    const item = preview.controls[index];
+    assert.equal(item.y, 8, 'Controls must share one toolbar row instead of wrapping');
+    assert.equal(item.height, 27);
+    if (item.key === 'sandbox') assert.equal(item.width, 235, 'Reserve the complete active Sandbox waveform');
+    if (index) assert.ok(preview.controls[index - 1].x + preview.controls[index - 1].width + 10 <= item.x);
+  }
+  assert.ok(preview.controls[0].x >= (notch ? 1160 : 1102) + 10, 'Right buttons must clear the phrase counters');
+  assert.equal(preview.controls.at(-1).x + preview.controls.at(-1).width, 1910);
+}
+
+async function toolbarConfiguration(page) {
+  return page.evaluate(() => ({
+    order: [...document.querySelectorAll('#toolbar-order > [data-toolbar-key]')].map(item => item.dataset.toolbarKey),
+    toggles: [...document.querySelectorAll('#toolbar-order input')].map(input => [input.id, input.checked]),
+    presets: [...document.querySelectorAll('#presets input')].map(input => [input.getAttribute('aria-label'), input.checked]),
+    customInputs: [...document.querySelectorAll('#custom-presets input')].map(input => [input.type, input.value, input.checked]),
+    preview: document.querySelector('#preview-title').textContent,
+  }));
 }
 
 async function assertDefaultLocked(page) {
@@ -211,6 +265,20 @@ try {
   assert.equal(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black"]').count(), 1);
   assert.equal(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black/releases/latest"]').count(), 1);
   assert.match(await desktop.locator('footer').innerText(), /Made with AI/i);
+  const macPath = '~/Library/Application Support/VirtualDJ/Skins';
+  const windowsPath = String.raw`%LOCALAPPDATA%\VirtualDJ\Skins`;
+  assert.equal(await desktop.locator('#skin-path-macos').innerText(), macPath);
+  assert.equal(await desktop.locator('#skin-path-windows').innerText(), windowsPath);
+  await desktop.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true,
+    value: { writeText: async value => { window.copiedSkinPath = value; } } }));
+  await desktop.locator('[data-copy-path="macos"]').click();
+  await desktop.waitForFunction(() => document.querySelector('#path-copy-status').textContent.toLowerCase().includes('copied'));
+  assert.equal(await desktop.evaluate(() => window.copiedSkinPath), macPath);
+  await desktop.evaluate(() => { navigator.clipboard.writeText = async () => { throw new Error('Clipboard permission denied'); }; });
+  await desktop.locator('[data-copy-path="windows"]').click();
+  await desktop.waitForFunction(() => document.querySelector('#path-copy-status').textContent.toLowerCase().includes('manually'));
+  assert.equal(await desktop.evaluate(() => window.getSelection().toString()), windowsPath);
+  assert.equal(await desktop.locator('a[href^="file:"]').count(), 0);
   assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), defaults);
   assert.equal(await desktop.locator('#preset-preview .preview-deck').count(), 4);
   assert.equal(await desktop.locator('#preset-preview .preview-wave').count(), 4);
@@ -222,6 +290,10 @@ try {
   for (const part of ['master', 'cpu', 'battery', 'clock']) assert.equal(await desktop.locator(`#toolbar-preview .toolbar-sim-left .toolbar-sim-${part}`).count(), 1);
   assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-right [data-toolbar-control]').count(), 2);
   assert.equal(await desktop.locator('#toolbar-count').innerText(), '2 visible');
+  assert.equal(await desktop.locator('#toolbar-notch-preview').isChecked(), false);
+  assert.equal(await desktop.locator('#toolbar-display-profile').inputValue(), '14');
+  assert.deepEqual(await desktop.locator('#toolbar-display-profile option').evaluateAll(items => items.map(item => item.value)), ['13', '14', '15', '16']);
+  await assertToolbarPreview(desktop, { notch: false, profile: '14', colors: defaults, order: ['layout', 'settings'] });
   assert.ok(await desktop.evaluate(() => Boolean(document.querySelector('.custom-panel').compareDocumentPosition(document.querySelector('.toolbar-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)), 'Custom preset editor must precede toolbar controls');
   await desktop.locator('#preset-preview').scrollIntoViewIfNeeded();
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'running');
@@ -265,11 +337,31 @@ try {
   const firstTile = desktop.locator('#presets .preset-card[data-slug="custom-1"]');
   assert.equal(await firstTile.count(), 1, 'New custom must appear in the top palette list');
   assert.equal(await firstTile.locator('input').isChecked(), true);
+  assert.deepEqual(await first.locator('.hex-input').evaluateAll(inputs => inputs.map(input => input.value)), customStart,
+    'A fresh custom starts from the same fixed palette regardless of the selected builtin');
+  await first.locator('.custom-include').uncheck();
+  await first.getByRole('button', { name: 'Random', exact: true }).click();
+  const randomised = await first.locator('.hex-input').evaluateAll(inputs => inputs.map(input => input.value));
+  assert.notEqual(randomised[0], customStart[0], 'Random starts with a new deck A colour');
+  assert.notDeepEqual(randomised.slice(1), customStart.slice(1));
+  assert.equal(new Set(randomised).size, 4);
+  assert.ok(randomised.every(color => /^#[0-9A-F]{6}$/.test(color)));
+  assert.equal(await first.locator('.custom-include').isChecked(), true);
+  assert.equal(await firstTile.locator('input').isChecked(), true);
+  assert.deepEqual(await first.locator('.colour-picker').evaluateAll(inputs => inputs.map(input => input.value.toUpperCase())), randomised);
+  assert.deepEqual(await firstTile.locator('.palette-swatches i').evaluateAll(items => items.map(item => item.style.getPropertyValue('--swatch'))), randomised);
+  assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), randomised);
+  assert.deepEqual(await desktop.locator('#custom-preview .preview-deck-hex').allTextContents(), randomised);
   const initialCustomAccent = await websiteAccent(desktop);
   // Invalid colours and a duplicate Default name must never produce a ZIP.
   await first.locator('.hex-input[data-deck="A"]').fill('#xyz');
   assert.equal(await desktop.locator('#download').isDisabled(), true);
   assert.equal(await websiteAccent(desktop), initialCustomAccent, 'Invalid colour input must retain the last valid accent');
+  await first.getByRole('button', { name: 'Random', exact: true }).click();
+  const repairedPalette = await first.locator('.hex-input').evaluateAll(inputs => inputs.map(input => input.value));
+  assert.ok(repairedPalette.every(color => /^#[0-9A-F]{6}$/.test(color)), 'Random replaces invalid input with a valid new quartet');
+  assert.equal(new Set(repairedPalette).size, 4);
+  assert.equal(await desktop.locator('#download').isEnabled(), true);
   for (const [index, letter] of ['A', 'B', 'C', 'D'].entries()) {
     await first.locator(`.hex-input[data-deck="${letter}"]`).fill(colours[index]);
   }
@@ -305,6 +397,8 @@ try {
 
   await desktop.locator('#add-custom').click();
   const second = desktop.locator('.custom-card[data-custom-id="custom-2"]');
+  assert.deepEqual(await second.locator('.hex-input').evaluateAll(inputs => inputs.map(input => input.value)), customStart,
+    'A new custom must not copy the previous custom palette');
   await second.locator('.custom-name').fill(secondName);
   for (const [index, letter] of ['A', 'B', 'C', 'D'].entries()) {
     await second.locator(`.hex-input[data-deck="${letter}"]`).fill(secondColours[index]);
@@ -329,6 +423,19 @@ try {
   }
   assert.equal(await desktop.locator('#download-summary').innerText(), '4 palettes · 4 optional controls');
   assert.equal(await desktop.locator('#toolbar-count').innerText(), '6 visible');
+  const beforeDisplayChanges = await toolbarConfiguration(desktop);
+  await desktop.locator('#toolbar-notch-preview').check();
+  for (const profile of ['13', '14', '15', '16']) {
+    await desktop.locator('#toolbar-display-profile').selectOption(profile);
+    await assertToolbarPreview(desktop, { notch: true, profile, colors: colours, order: defaultToolbarOrder });
+    assert.equal(await desktop.locator('#download').isEnabled(), true, 'All six controls legitimately fit every profile');
+    assert.equal(await desktop.locator('#toolbar-order input:disabled').count(), 0, 'Do not impose an artificial button limit');
+    assert.match(await desktop.locator('#toolbar-fit-status').innerText(), /fit/i);
+  }
+  assert.deepEqual(await toolbarConfiguration(desktop), beforeDisplayChanges, 'Display preview changes must retain all choices');
+  await desktop.locator('#toolbar-display-profile').selectOption('13');
+  await noHorizontalOverflow(desktop);
+  await desktop.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-notch-13-all-controls.png'), animations: 'disabled' });
   const settingsEarlier = desktop.locator('#toolbar-order [data-toolbar-key="settings"] [data-move="-1"]');
   await settingsEarlier.click();
   await settingsEarlier.press('Enter');
@@ -346,11 +453,23 @@ try {
   assert.deepEqual(await desktop.locator('#toolbar-preview [data-toolbar-control]').evaluateAll(items => items.map(item => item.dataset.toolbarControl)), requestedOrder.filter(key => key !== 'account'));
   await desktop.locator('#toolbar-account').check();
   assert.deepEqual(await desktop.locator('#toolbar-preview [data-toolbar-control]').evaluateAll(items => items.map(item => item.dataset.toolbarControl)), requestedOrder);
+  await desktop.locator('#toolbar-display-profile').selectOption('16');
+  await assertToolbarPreview(desktop, { notch: true, profile: '16', colors: colours, order: requestedOrder });
+  await desktop.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-notch-16-reordered.png'), animations: 'disabled' });
   await noHorizontalOverflow(desktop);
   await desktop.screenshot({ path: join(artifacts, 'desktop-custom.png'), fullPage: true, animations: 'disabled' });
   const archive = join(artifacts, 'pro-pure-black-custom.zip');
   await download(desktop, archive);
   verifyDownloadedZip(archive, requestedOrder);
+  // Profile and notch are illustrative preview settings; exported detection stays automatic.
+  const beforePreviewOnlyChanges = await toolbarConfiguration(desktop);
+  await desktop.locator('#toolbar-notch-preview').uncheck();
+  await desktop.locator('#toolbar-display-profile').selectOption('13');
+  await assertToolbarPreview(desktop, { notch: false, profile: '13', colors: colours, order: requestedOrder });
+  assert.deepEqual(await toolbarConfiguration(desktop), beforePreviewOnlyChanges);
+  const unnotchedArchive = join(artifacts, 'pro-pure-black-no-notch-preview.zip');
+  await download(desktop, unnotchedArchive);
+  assert.deepEqual(await readFile(unnotchedArchive), await readFile(archive), 'Preview settings must not change the downloaded skin');
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'paused');
 
   const mobile = await openPage(base, { width: 390, height: 844 }, true);
@@ -376,11 +495,19 @@ try {
   assert.equal(await mobile.locator('#toolbar-sandbox').isChecked(), true);
   await mobile.locator('.custom-card .hex-input[data-deck="A"]').fill(colours[0]);
   assert.equal(await mobile.locator('#download').isEnabled(), true);
+  for (const key of ['account', 'shoutout', 'scheduler']) await mobile.locator(`#toolbar-${key}`).check();
+  await mobile.locator('#toolbar-notch-preview').check();
+  await mobile.locator('#toolbar-display-profile').selectOption('13');
+  const mobileColors = await mobile.locator('#preset-preview .preview-deck-hex').allTextContents();
+  await assertToolbarPreview(mobile, { notch: true, profile: '13', colors: mobileColors,
+    order: ['account', 'shoutout', 'sandbox', 'scheduler', 'layout', 'settings'] });
+  assert.equal(await mobile.locator('#download').isEnabled(), true);
+  assert.equal(await mobile.locator('#toolbar-order input:disabled').count(), 0);
   await noHorizontalOverflow(mobile);
   await assertBlackSurfaces(mobile);
   await mobile.screenshot({ path: join(artifacts, 'mobile.png'), fullPage: true, animations: 'disabled' });
   assert.deepEqual(errors, [], 'Browser errors were emitted.');
-  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, palette-linked website accents with black surfaces, real ZIP download, desktop/mobile layout, no browser errors.');
+  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, palette-linked website accents with black surfaces, native-coordinate notch/display previews, fixed custom starts and new random palettes, clipboard fallback, identical exports across preview settings, real ZIP download, desktop/mobile layout, no browser errors.');
 } catch (error) {
   for (const { page, label } of pages) {
     await page.screenshot({ path: join(artifacts, `${label}-failure.png`), fullPage: true, animations: 'disabled' }).catch(() => {});

@@ -2,7 +2,7 @@
 
 A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black desktop.
 
-**[Build your own skin →](https://elxrrr.github.io/pro-pure-black/)** Choose and reorder toolbar buttons, select palettes and add your own four-deck presets, then download your ZIP. Default is always included with Atomix’s original colours.
+**[Build your own skin →](https://elxrrr.github.io/pro-pure-black/)** Choose and reorder toolbar buttons, preview the notch layout, select palettes and add your own four-deck presets, then download your ZIP. Default is always included with Atomix’s original colours.
 
 ![Pro Pure Black fullscreen notch layout](screenshots/notch-layout.jpg)
 

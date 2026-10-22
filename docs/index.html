@@ -35,14 +35,28 @@
 
     <section class="panel toolbar-panel" aria-labelledby="toolbar-title">
       <div class="panel-heading"><h2 id="toolbar-title">Toolbar</h2><span id="toolbar-count" class="count-badge">2 visible</span></div>
+      <div class="toolbar-preview-controls">
+        <label class="toolbar-profile-label" for="toolbar-display-profile">Display size <select id="toolbar-display-profile" aria-describedby="toolbar-preview-note"></select></label>
+        <label class="toggle-row toolbar-notch-toggle"><span>Notch preview</span><input type="checkbox" id="toolbar-notch-preview" role="switch" aria-describedby="toolbar-preview-note"><span class="switch" aria-hidden="true"></span></label>
+      </div>
       <div id="toolbar-preview"></div>
+      <div class="toolbar-preview-notes"><p id="toolbar-preview-note">Approximate fullscreen preview. Display scaling can vary.</p><p id="toolbar-fit-status" role="status" aria-live="polite">All selected controls fit.</p></div>
       <p class="toolbar-order-hint" id="toolbar-order-hint">Left to right. Drag to reorder, or use the arrows.</p>
       <ol id="toolbar-order" class="toolbar-order" aria-label="Toolbar button order" aria-describedby="toolbar-order-hint"></ol>
       <p id="toolbar-order-status" class="sr-only" role="status" aria-live="polite"></p>
     </section>
 
     <div class="download-panel">
-      <div class="download-copy"><strong id="download-summary">8 palettes · 0 optional controls</strong><p>Copy the ZIP into <span>Skins</span>. Select <span>Pro Pure Black Custom</span>, then <span>Layout → Deck Colours</span>.</p></div>
+      <div class="download-copy">
+        <strong id="download-summary">8 palettes · 0 optional controls</strong>
+        <p>Copy the ZIP into your Skins folder.</p>
+        <div class="skin-paths">
+          <div class="skin-path-row"><span class="skin-path-platform">macOS</span><code id="skin-path-macos">~/Library/Application Support/VirtualDJ/Skins</code><button type="button" data-copy-path="macos" aria-label="Copy macOS Skins folder path">Copy path</button></div>
+          <div class="skin-path-row"><span class="skin-path-platform">Windows</span><code id="skin-path-windows">%LOCALAPPDATA%\VirtualDJ\Skins</code><button type="button" data-copy-path="windows" aria-label="Copy Windows Skins folder path">Copy path</button></div>
+        </div>
+        <p class="skin-path-legacy">Older installs: <code>Documents/VirtualDJ/Skins</code>.</p>
+        <p id="path-copy-status" class="path-copy-status" role="status" aria-live="polite" hidden></p>
+      </div>
       <button id="download" class="download-button" type="button" disabled><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m-5-5 5 5 5-5M5 16v4h14v-4"/></svg><span>Download skin</span></button>
     </div>
     <div class="status-row" hidden><p id="status" role="status" aria-live="polite" hidden></p><button id="retry" type="button" class="text-button" hidden>Try again</button></div>

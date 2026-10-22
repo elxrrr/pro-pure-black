@@ -121,6 +121,28 @@ export function toolbarLayout(options = {}, platform = 'mac', order = DEFAULT_TO
   });
 }
 
+/** Measure space in native 1920-wide skin coordinates, including active Sandbox. */
+export function measureToolbarFit(items, platform = 'mac', notch = platform === 'mac') {
+  if (!['mac', 'pc'].includes(platform)) throw new Error('Unknown toolbar platform.');
+  if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
+  if (!Array.isArray(items) || !items.length || items.some(item =>
+    !Number.isFinite(item.x) || !Number.isFinite(item.width) || item.width <= 0)) {
+    throw new TypeError('Toolbar bounds must contain valid control positions and widths.');
+  }
+  const phraseEnd = platform === 'mac' && notch ? 1160 : 1102;
+  const rightBoundary = platform === 'mac' ? 1910 : 1789;
+  const minGap = 10;
+  const left = Math.min(...items.map(item => item.x));
+  const right = Math.max(...items.map(item => item.x + item.width));
+  const gap = left - phraseEnd;
+  return {
+    fits: gap >= minGap && right <= rightBoundary,
+    gap, requiredWidth: right - left,
+    availableWidth: rightBoundary - phraseEnd - minGap,
+    phraseEnd, rightBoundary, minGap, items,
+  };
+}
+
 // VirtualDJ accepts a relaxed XML dialect. Insert at a matching group boundary
 // without parsing/reserializing its script attributes or existing source.
 function groupBounds(xml, name) {
@@ -150,6 +172,15 @@ export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
   if (xml.includes('BEGIN PURE BLACK TOOLBAR') || xml.includes('BEGIN PURE BLACK OPTIONAL TOOLBAR')) {
     throw new Error('Toolbar controls have already been configured.');
   }
+  const layouts = Object.fromEntries(['mac', 'pc'].map(platform => {
+    const items = toolbarLayout(options, platform, order);
+    // The ZIP supports either platform and retains automatic notch detection.
+    // Always check the larger Mac notch layout, regardless of the website preview.
+    if (!measureToolbarFit(items, platform).fits) {
+      throw new Error('Toolbar controls would overlap the phrase counters. Remove an optional control.');
+    }
+    return [platform, items];
+  }));
   const newline = xml.includes('\r\n') ? '\r\n' : '\n';
   for (const platform of ['mac', 'pc']) {
     const outer = groupBounds(xml, `pureblack_toolbar_${platform}`);
@@ -163,7 +194,7 @@ export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
     for (const { start, end } of removals.sort((a, b) => b.start - a.start)) {
       body = body.slice(0, start) + body.slice(end);
     }
-    const markup = toolbarLayout(options, platform, order).map(({ key, x }) => {
+    const markup = layouts[platform].map(({ key, x }) => {
       if (key === 'layout') return nativeLayout.replace(/^(<group name="layout_options" x=")[^"]*(")/, (_, before, after) => before + x + after);
       if (key === 'settings') return nativeSettings.replace(/(<pos x=")[^"]*(" y="8"\/>)/, (_, before, after) => before + x + after);
       return render[key](x);
