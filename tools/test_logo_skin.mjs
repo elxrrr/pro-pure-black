@@ -106,7 +106,7 @@ test('logo XML retains native logos, CRLF and all unrelated skin content', () =>
   assert.ok(!/(?<!\r)\n/.test(result), 'No bare LF inserted into CRLF source');
   const additions = [...result.matchAll(/<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g)].map(match => match[0]);
   assert.equal(additions.length, 2);
-  for (const [index, x] of [538, 443].entries()) {
+  for (const [index, x] of [554, 459].entries()) {
     assert.match(additions[index], /<visual name="pureblack_custom_logo">/);
     assert.ok(additions[index].includes(`<pos x="${x}" y="13"/>`));
     assert.match(additions[index], /<size width="72" height="17"\/>/);
@@ -143,15 +143,15 @@ test('custom logo follows the responsive Mac status block without moving the Win
     const macVisuals = [...additions[0].matchAll(/<visual[^>]*>[\s\S]*?<\/visual>/g)].map(match => match[0]);
     assert.equal(macVisuals.length, 2);
     assert.ok(macVisuals[0].includes(`visibility="has_notch ? true : maximize 'fullscreen' ? true : skin_width && param_bigger 1500"`));
-    assert.ok(macVisuals[0].includes('<pos x="538" y="13"/>'));
+    assert.ok(macVisuals[0].includes('<pos x="554" y="13"/>'));
     assert.ok(macVisuals[1].includes(`visibility="has_notch ? false : maximize 'fullscreen' ? false : skin_width && param_smaller 1501"`));
-    assert.ok(macVisuals[1].includes('<pos x="670" y="13"/>'));
+    assert.ok(macVisuals[1].includes('<pos x="686" y="13"/>'));
     for (const visual of macVisuals) {
       assert.ok(visual.includes('<size width="72" height="17"/>'));
       assert.ok(visual.includes('<off x="0" y="428" width="144" height="34"/>'));
     }
     assert.equal((additions[1].match(/<visual/g) || []).length, 1);
-    assert.ok(additions[1].includes('<pos x="443" y="13"/>'));
+    assert.ok(additions[1].includes('<pos x="459" y="13"/>'));
     assert.ok(!additions[1].includes('visibility='));
     for (const x of [195, 327, 100]) {
       assert.equal(result.split(`<group name="topbar_status" x="${x}" y="8">`).length - 1, 1);
@@ -290,7 +290,7 @@ test('selected palettes and custom colours get reindexed tinted logo tiles with 
       for (const [id, visual] of branch.entries()) {
         assert.equal(visual[1], `${name}_theme_${id}`);
         assert.ok(visual[0].includes(`<off x="${id * 144}" y="428" width="144" height="34"/>`));
-        const x = index === 1 ? 343 : name.endsWith('account_left') ? 570 : 438;
+        const x = index === 1 ? 359 : name.endsWith('account_left') ? 586 : 454;
         assert.ok(visual[0].includes(`<pos x="${x}" y="13"/>`));
         if (index === 0) assert.ok(visual[0].includes('visibility="has_notch ?'), 'Responsive placement remains independent of palette selection');
       }

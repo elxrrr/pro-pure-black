@@ -5,7 +5,7 @@
  * unconditionally when included, so its configurator toggle is predictable.
  */
 
-import { normaliseStatusOptions, statusLayout, statusLogoOffset, configureStatusGroup } from './status.js';
+import { normaliseStatusOptions, statusLayout, statusLogoOffset, configureStatusGroup } from './status.js?v=833b8390b0e2';
 
 const FEATURES = ['account', 'shoutout', 'scheduler', 'sandbox'];
 export const DEFAULT_TOOLBAR_ORDER = Object.freeze([...FEATURES, 'layout', 'settings']);

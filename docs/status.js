@@ -1,5 +1,7 @@
 /** Native status segments, shared by skin generation and the toolbar preview. */
 export const STATUS_KEYS = Object.freeze(['master', 'cpu', 'battery', 'clock']);
+// Match the 23px space from the native Mac logo's right edge (172) to status (195).
+export const STATUS_LOGO_GAP = 23;
 const WIDTHS = Object.freeze({ master: 160, cpu: 50, battery: 50, clock: 76 });
 
 export function normaliseStatusOptions(options = {}) {
@@ -32,10 +34,10 @@ export function statusLayout(options = {}, { batteryAvailable = true } = {}) {
   return { positions, items, separators, width };
 }
 
-/** Preserve the previous 7px gap, with no artificial gap for an empty status. */
+/** Equal spacing after the full status controls; no gap for an empty status. */
 export function statusLogoOffset(options = {}) {
   const width = statusLayout(options).width;
-  return width ? width + 7 : 0;
+  return width ? width + STATUS_LOGO_GAP : 0;
 }
 
 function nativeBlock(group, tag, name, visibility) {

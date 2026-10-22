@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { test } from 'node:test';
-import { STATUS_KEYS, normaliseStatusOptions, statusLayout, configureStatusGroup } from '../docs/status.js';
+import { STATUS_KEYS, STATUS_LOGO_GAP, normaliseStatusOptions, statusLayout, statusLogoOffset, configureStatusGroup } from '../docs/status.js';
 import { applyToolbar, resolveToolbarState } from '../docs/toolbar.js';
 import { toolbarFit } from '../docs/display.js';
 import { applyLogoXml } from '../docs/logo-skin.js';
@@ -107,7 +107,7 @@ test('status layouts compact controls and dividers with and without a battery', 
 test('custom logos follow every status subset in ordinary and Account-left layouts', () => {
   for (const options of cases) {
     const width = statusLayout(options).width;
-    const offset = width ? width + 7 : 0;
+    const offset = width ? width + 23 : 0;
     for (const account of [false, true]) {
       const requested = { ...options, account };
       const output = applyLogoXml(applyToolbar(source, requested), 428, requested);
@@ -127,6 +127,24 @@ test('custom logos follow every status subset in ordinary and Account-left layou
         assert.equal(fit.logoX, state.logoX);
         assert.equal(fit.statusWidth, width);
       }
+    }
+  }
+});
+
+test('uploaded logo gap matches the native Mac logo-to-status gap for every nonempty status selection', () => {
+  const nativeLogo = source.match(/<group name="applicationbuttons" condition="is_mac">\s*<logo>[\s\S]*?<\/logo>/)[0];
+  const left = Number(nativeLogo.match(/<pos x="(\d+)"/)[1]);
+  const width = Number(nativeLogo.match(/<size width="(\d+)"/)[1]);
+  const statusX = Number(group(source, 'topbar_status').match(/^<group name="topbar_status" x="(\d+)"/)[1]);
+  const nativeGap = statusX - (left + width);
+  assert.equal(nativeGap, 23);
+  assert.equal(STATUS_LOGO_GAP, nativeGap);
+  for (const options of cases) {
+    const statusWidth = statusLayout(options).width;
+    assert.equal(statusLogoOffset(options), statusWidth ? statusWidth + nativeGap : 0);
+    for (const account of [false, true]) {
+      const state = resolveToolbarState({ ...options, account }, { width: 1440 });
+      assert.equal(state.logoX - state.statusX - statusWidth, statusWidth ? nativeGap : 0);
     }
   }
 });

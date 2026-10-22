@@ -1,12 +1,12 @@
-import { inspectPng, pngCrc32, LOGO_LIMITS } from './logo-image.js';
-import { ACCOUNT_LEFT_VISIBILITY, ACCOUNT_NORMAL_VISIBILITY } from './toolbar.js';
-import { statusLogoOffset } from './status.js';
-import { normaliseThemes } from './generator.js';
-import { logoColour, tintLogoPixels } from './logo-colour.js';
+import { inspectPng, pngCrc32, LOGO_LIMITS } from './logo-image.js?v=4100aa6dc22c';
+import { ACCOUNT_LEFT_VISIBILITY, ACCOUNT_NORMAL_VISIBILITY } from './toolbar.js?v=97554d99c62c';
+import { statusLogoOffset } from './status.js?v=833b8390b0e2';
+import { normaliseThemes } from './generator.js?v=a60422764163';
+import { logoColour, tintLogoPixels } from './logo-colour.js?v=d8c56f529a68';
 
 export const LOGO_PLACEMENT = Object.freeze({
-  mac: Object.freeze({ x: 538, y: 13, statusX: 195 }),
-  pc: Object.freeze({ x: 443, y: 13, statusX: 100 }),
+  mac: Object.freeze({ x: 195 + statusLogoOffset(), y: 13, statusX: 195 }),
+  pc: Object.freeze({ x: 100 + statusLogoOffset(), y: 13, statusX: 100 }),
 });
 const MARKER = 'BEGIN PURE BLACK CUSTOM LOGO';
 

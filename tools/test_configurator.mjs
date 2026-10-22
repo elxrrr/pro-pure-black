@@ -223,7 +223,7 @@ test('responsive previews match window width, notch and fullscreen state without
         assert.equal(state.accountLeft, accountLeft);
         assert.equal(state.autoHiddenAccount, autoHiddenAccount);
         assert.equal(state.statusX, accountLeft ? 327 : 195);
-        assert.equal(state.logoX, accountLeft ? 670 : 538);
+        assert.equal(state.logoX, accountLeft ? 686 : 554);
         assert.deepEqual(state.rightOptions, { ...options, account: options.account && !accountLeft && !autoHiddenAccount });
         for (const order of representativeOrders) {
           const fit = toolbarFit(options, order, { width, notch, fullscreen });

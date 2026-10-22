@@ -964,7 +964,7 @@ with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as orig
         theme_visuals = [visual for visual in logo_visuals if re.search(r'name="pureblack_custom_logo(?:_account_left)?' + suffix + r'"', visual)]
         assert len(theme_visuals) == 3
         assert all(f'<off x="{x_offset}" y="{y_offset}" width="144" height="34"' in visual for visual in theme_visuals)
-        assert sorted(int(re.search(r'<pos x="(\d+)"', visual).group(1)) for visual in theme_visuals) == [443, 538, 670]
+        assert sorted(int(re.search(r'<pos x="(\d+)"', visual).group(1)) for visual in theme_visuals) == [459, 554, 686]
         for visual in theme_visuals:
             if not tinted:
                 assert re.search(r'\bcondition="', visual) is None, 'Untinted artwork remains the same in every palette'
@@ -1306,7 +1306,7 @@ try {
   assert.equal(await desktop.evaluate(() => Boolean(window.injectedLogo)), false);
   const logoImage = desktop.locator('#toolbar-preview image[data-custom-logo]');
   assert.equal(await logoImage.count(), 1);
-  assert.deepEqual(await logoImage.evaluate(image => ['x', 'y', 'width', 'height'].map(name => Number(image.getAttribute(name)))), [670, 13, 72, 17]);
+  assert.deepEqual(await logoImage.evaluate(image => ['x', 'y', 'width', 'height'].map(name => Number(image.getAttribute(name)))), [686, 13, 72, 17]);
   assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-logo').getAttribute('x'), '100', 'Native VirtualDJ logo must remain');
   assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-status').getAttribute('data-native-x'), '327');
   const validLogoUrl = await logoImage.getAttribute('href');
@@ -1330,12 +1330,23 @@ try {
   }, [...logos.transparent]);
   for (const key of ['cpu', 'battery']) await desktop.locator(`#toolbar-${key}`).uncheck();
   await assertStatusSelection(desktop, ['master', 'clock']);
-  assert.equal(await logoImage.getAttribute('x'), '570', 'The custom logo closes the gap left by hidden status items');
+  assert.equal(await logoImage.getAttribute('x'), '586', 'The custom logo closes the gap left by hidden status items');
+  await setPressed(desktop, '#toolbar-notch-preview', true);
+  assert.equal(await logoImage.getAttribute('x'), '454');
+  const logoGaps = await desktop.locator('#toolbar-preview').evaluate(preview => {
+    const native = preview.querySelector('.toolbar-sim-logo');
+    const status = preview.querySelector('.toolbar-sim-status');
+    const custom = preview.querySelector('image[data-custom-logo]');
+    return [Number(status.dataset.nativeX) - Number(native.getAttribute('x')) - Number(native.getAttribute('textLength')),
+      Number(custom.getAttribute('x')) - Number(status.dataset.nativeX) - Number(status.dataset.nativeWidth)];
+  });
+  assert.deepEqual(logoGaps, [23, 23], 'Master/Clock has matching space between the native and custom logos');
+  await setPressed(desktop, '#toolbar-notch-preview', false);
   const compactLogoArchive = join(artifacts, 'pro-pure-black-compact-status-logo.zip');
   await download(desktop, compactLogoArchive);
-  verifyStatusZip(compactLogoArchive, ['master', 'clock'], [438, 343, 570]);
+  verifyStatusZip(compactLogoArchive, ['master', 'clock'], [454, 359, 586]);
   for (const key of ['cpu', 'battery']) await desktop.locator(`#toolbar-${key}`).check();
-  assert.equal(await logoImage.getAttribute('x'), '670');
+  assert.equal(await logoImage.getAttribute('x'), '686');
 
   const artwork = await desktop.evaluate(async url => {
     const image = new Image();
@@ -1362,7 +1373,7 @@ try {
   assert.equal(await desktop.locator('#download').isEnabled(), true);
   await setPressed(desktop, '#toolbar-notch-preview', true);
   await assertToolbarPreview(desktop, { notch: true, colors: colours, order: requestedOrder.filter(key => key !== 'account') });
-  assert.equal(await logoImage.getAttribute('x'), '538');
+  assert.equal(await logoImage.getAttribute('x'), '554');
   await desktop.locator('#toolbar-preview .toolbar-preview-viewport').evaluate(viewport => { viewport.scrollLeft = 0; });
   await desktop.locator('.overall-preview').screenshot({ path: join(artifacts, 'toolbar-custom-logo.png'), animations: 'disabled' });
   const logoArchive = join(artifacts, 'pro-pure-black-with-logo.zip');

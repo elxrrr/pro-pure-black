@@ -1,4 +1,4 @@
-import { DEFAULT_TOOLBAR_ORDER, toolbarLayout, resolveToolbarState } from './toolbar.js';
+import { DEFAULT_TOOLBAR_ORDER, toolbarLayout, resolveToolbarState } from './toolbar.js?v=97554d99c62c';
 
 // Keep controls legible while the available preview width changes. On phones
 // the toolbar pans locally; the four deck previews remain visible together.

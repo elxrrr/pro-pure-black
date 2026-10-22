@@ -1,12 +1,12 @@
-import { generateSkinXml, createSkinZip, normaliseThemes, SKIN_README } from './generator.js';
-import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
-import { STATUS_KEYS } from './status.js';
-import { applyWebsiteTheme } from './appearance.js';
-import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
-import { prepareLogo } from './logo-image.js';
-import { addLogoToSkin } from './logo-skin.js';
-import { logoColour } from './logo-colour.js';
-import { renderPalettePreview, renderToolbarPreview, setupPreviewMotion } from './previews.js';
+import { generateSkinXml, createSkinZip, normaliseThemes, SKIN_README } from './generator.js?v=a60422764163';
+import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js?v=97554d99c62c';
+import { STATUS_KEYS } from './status.js?v=833b8390b0e2';
+import { applyWebsiteTheme } from './appearance.js?v=40220b205df5';
+import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js?v=a5a044743142';
+import { prepareLogo } from './logo-image.js?v=4100aa6dc22c';
+import { addLogoToSkin } from './logo-skin.js?v=98eb04da12df';
+import { logoColour } from './logo-colour.js?v=d8c56f529a68';
+import { renderPalettePreview, renderToolbarPreview, setupPreviewMotion } from './previews.js?v=e6b76092dc09';
 
 const $ = selector => document.querySelector(selector);
 const letters = ['A', 'B', 'C', 'D'];

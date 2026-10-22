@@ -1,7 +1,7 @@
-import { DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
-import { toolbarFit } from './display.js';
-import { statusLayout } from './status.js';
-import { DEFAULT_LOGO_COLOUR } from './logo-colour.js';
+import { DEFAULT_TOOLBAR_ORDER } from './toolbar.js?v=97554d99c62c';
+import { toolbarFit } from './display.js?v=2b59bdb30c3d';
+import { statusLayout } from './status.js?v=833b8390b0e2';
+import { DEFAULT_LOGO_COLOUR } from './logo-colour.js?v=d8c56f529a68';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 const DEFAULT_WAVES = ['#0085F4', '#FF0013', '#00FFBA', '#F94C00'];
