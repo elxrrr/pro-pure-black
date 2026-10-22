@@ -23,7 +23,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Builder toolbar | Master, CPU, battery and clock beside the logo on the left; buttons grouped on the right in your chosen order. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
-| Deck colours | Default retains the original colours; Red, Ember, Grove, Blue, Purple and Greyscale recolour the decks and associated controls. |
+| Deck colours | Default retains the original colours; Red, Orange, Yellow, Green, Blue, Purple and Greyscale recolour the decks and associated controls. |
 | Remaining controls | Original behaviour. |
 
 ## Install
@@ -40,9 +40,11 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 
 ![Red — decks A, B, C, D](screenshots/themes/red.png)
 
-![Ember — decks A, B, C, D](screenshots/themes/ember.png)
+![Orange — decks A, B, C, D](screenshots/themes/orange.png)
 
-![Grove — decks A, B, C, D](screenshots/themes/grove.png)
+![Yellow — decks A, B, C, D](screenshots/themes/yellow.png)
+
+![Green — decks A, B, C, D](screenshots/themes/green.png)
 
 ![Blue — decks A, B, C, D](screenshots/themes/blue.png)
 

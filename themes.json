@@ -1,9 +1,10 @@
 [
   {"id":0,"name":"Default","slug":"default","colors":["#156C89","#AC2F37","#0D7264","#A54D30"]},
-  {"id":1,"name":"Red","slug":"red","colors":["#CD657B","#E58C8D","#F1B3AE","#F8D9D5"]},
-  {"id":2,"name":"Ember","slug":"ember","colors":["#D66E59","#ED9760","#F5BE7C","#F9E0BA"]},
-  {"id":3,"name":"Grove","slug":"grove","colors":["#57AA92","#83C46A","#CBD879","#D7F0BD"]},
-  {"id":4,"name":"Blue","slug":"blue","colors":["#5F8FC7","#82B4D6","#AECFEE","#DEEAF8"]},
-  {"id":5,"name":"Purple","slug":"purple","colors":["#9376C9","#B491DE","#D0B7EB","#EBDCFA"]},
-  {"id":6,"name":"Greyscale","slug":"greyscale","colors":["#767676","#9E9E9E","#C7C7C7","#EEEEEE"]}
+  {"id":1,"name":"Red","slug":"red","colors":["#A4435F","#DD6B5B","#EBA6C6","#FFE8E9"]},
+  {"id":2,"name":"Orange","slug":"orange","colors":["#A14D2F","#CC7D1B","#F4A988","#FBEDD1"]},
+  {"id":3,"name":"Yellow","slug":"yellow","colors":["#816422","#BD8630","#D5BF36","#F9EFC9"]},
+  {"id":4,"name":"Green","slug":"green","colors":["#247261","#5DA260","#BBC769","#DAF7E3"]},
+  {"id":5,"name":"Blue","slug":"blue","colors":["#535EA3","#449AC0","#B0BBEB","#DDF3F9"]},
+  {"id":6,"name":"Purple","slug":"purple","colors":["#BD72A8","#917CD1","#D0A1E9","#EFCFED"]},
+  {"id":7,"name":"Greyscale","slug":"greyscale","colors":["#636363","#8F8F8F","#BEBEBE","#EEEEEE"]}
 ]

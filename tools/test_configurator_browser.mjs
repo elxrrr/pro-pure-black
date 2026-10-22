@@ -201,7 +201,7 @@ try {
   await assertDefaultLocked(desktop);
   const defaultAccent = await websiteAccent(desktop);
   await assertBlackSurfaces(desktop);
-  assert.equal(await desktop.locator('#presets input:checked').count(), 7);
+  assert.equal(await desktop.locator('#presets input:checked').count(), 8);
   assert.equal(await desktop.locator('#custom-presets .custom-card').count(), 0);
   assert.equal(await desktop.locator('header').count(), 0);
   for (const removed of ['VIRTUALDJ · PRO LAYOUT', 'Black base. Your colours.', 'Pure black, always',
@@ -370,7 +370,7 @@ try {
   assert.equal(await mobile.locator('#presets input:checked').count(), 1);
   await mobile.locator('#select-all').click();
   assert.equal(await mobile.locator('.custom-card .custom-include').isChecked(), true);
-  assert.equal(await mobile.locator('#presets input:checked').count(), 8);
+  assert.equal(await mobile.locator('#presets input:checked').count(), 9);
   await mobile.locator('#toolbar-order [data-toolbar-key="sandbox"] [data-move="-1"]').click();
   assert.deepEqual(await mobile.locator('#toolbar-order > [data-toolbar-key]').evaluateAll(items => items.map(item => item.dataset.toolbarKey)), ['account', 'shoutout', 'sandbox', 'scheduler', 'layout', 'settings']);
   assert.equal(await mobile.locator('#toolbar-sandbox').isChecked(), true);
