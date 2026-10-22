@@ -314,8 +314,11 @@ async function assertSharedPreview(page) {
   assert.equal(await page.locator('.overall-preview #toolbar-preview + #preset-preview').count(), 1);
   assert.equal(await page.locator('.palette-preview').count(), 1);
   assert.equal(await page.locator('.toolbar-sim-svg').count(), 1);
-  assert.equal(await page.locator('.toolbar-sim-svg > rect, .toolbar-sim-svg > path').count(), 0,
-    'The toolbar must not add a second outer frame or an empty outlined strip below its controls');
+  assert.equal(await page.locator('.toolbar-sim-svg > rect.toolbar-sim-frame').count(), 1,
+    'The toolbar keeps one clear outer boundary');
+  assert.equal(await page.locator('.toolbar-sim-svg > path').count(), 0,
+    'No second line creates an empty outlined strip below the controls');
+  assert.equal(await page.locator('#toolbar-preview').evaluate(element => getComputedStyle(element).borderBottomWidth), '0px');
   assert.ok(await page.evaluate(() => Boolean(document.querySelector('.overall-preview').compareDocumentPosition(document.querySelector('.presets-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)));
   const rows = await page.locator('#preset-preview .preview-wave').evaluateAll(elements => elements.map(element => {
     const rect = element.getBoundingClientRect(); return { y: rect.y, width: rect.width, height: rect.height };

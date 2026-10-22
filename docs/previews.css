@@ -47,7 +47,7 @@
 }
 
 .toolbar-simulation { padding: 12px; background: #000; border: 1px solid var(--line); border-radius: 10px; min-width: 0; overflow: hidden; }
-.overall-preview .toolbar-simulation { padding: 0 0 4px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+.overall-preview .toolbar-simulation { padding: 0; border: 0; border-radius: 0; }
 .overall-preview .palette-preview { padding: 4px 0 0; border: 0; border-radius: 0; }
 .toolbar-preview-viewport { display: flex; align-items: center; width: 100%; min-width: 0; min-height: 40px; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--accent-line) #000; }
 .toolbar-preview-viewport:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
