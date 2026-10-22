@@ -35,15 +35,15 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 | --- | --- |
 | <a href="screenshots/themes/default.png"><img src="screenshots/themes/default.png" alt="Default — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/grayscale.png"><img src="screenshots/themes/grayscale.png" alt="Grayscale — decks A, B, C, D" width="350"></a> |
 
-| Colour | Pastel | Bold |
-| --- | --- | --- |
-| Red | <a href="screenshots/themes/pastel-red.png"><img src="screenshots/themes/pastel-red.png" alt="Pastel Red — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-red.png"><img src="screenshots/themes/bold-red.png" alt="Bold Red — decks A, B, C, D" width="350"></a> |
-| Orange | <a href="screenshots/themes/pastel-orange.png"><img src="screenshots/themes/pastel-orange.png" alt="Pastel Orange — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-orange.png"><img src="screenshots/themes/bold-orange.png" alt="Bold Orange — decks A, B, C, D" width="350"></a> |
-| Yellow | <a href="screenshots/themes/pastel-yellow.png"><img src="screenshots/themes/pastel-yellow.png" alt="Pastel Yellow — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-yellow.png"><img src="screenshots/themes/bold-yellow.png" alt="Bold Yellow — decks A, B, C, D" width="350"></a> |
-| Green | <a href="screenshots/themes/pastel-green.png"><img src="screenshots/themes/pastel-green.png" alt="Pastel Green — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-green.png"><img src="screenshots/themes/bold-green.png" alt="Bold Green — decks A, B, C, D" width="350"></a> |
-| Blue | <a href="screenshots/themes/pastel-blue.png"><img src="screenshots/themes/pastel-blue.png" alt="Pastel Blue — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-blue.png"><img src="screenshots/themes/bold-blue.png" alt="Bold Blue — decks A, B, C, D" width="350"></a> |
-| Purple | <a href="screenshots/themes/pastel-purple.png"><img src="screenshots/themes/pastel-purple.png" alt="Pastel Purple — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-purple.png"><img src="screenshots/themes/bold-purple.png" alt="Bold Purple — decks A, B, C, D" width="350"></a> |
-| Pink | <a href="screenshots/themes/pastel-pink.png"><img src="screenshots/themes/pastel-pink.png" alt="Pastel Pink — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-pink.png"><img src="screenshots/themes/bold-pink.png" alt="Bold Pink — decks A, B, C, D" width="350"></a> |
+| Pastel | Bold |
+| --- | --- |
+| <a href="screenshots/themes/pastel-red.png"><img src="screenshots/themes/pastel-red.png" alt="Pastel Red — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-red.png"><img src="screenshots/themes/bold-red.png" alt="Bold Red — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/pastel-orange.png"><img src="screenshots/themes/pastel-orange.png" alt="Pastel Orange — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-orange.png"><img src="screenshots/themes/bold-orange.png" alt="Bold Orange — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/pastel-yellow.png"><img src="screenshots/themes/pastel-yellow.png" alt="Pastel Yellow — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-yellow.png"><img src="screenshots/themes/bold-yellow.png" alt="Bold Yellow — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/pastel-green.png"><img src="screenshots/themes/pastel-green.png" alt="Pastel Green — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-green.png"><img src="screenshots/themes/bold-green.png" alt="Bold Green — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/pastel-blue.png"><img src="screenshots/themes/pastel-blue.png" alt="Pastel Blue — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-blue.png"><img src="screenshots/themes/bold-blue.png" alt="Bold Blue — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/pastel-purple.png"><img src="screenshots/themes/pastel-purple.png" alt="Pastel Purple — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-purple.png"><img src="screenshots/themes/bold-purple.png" alt="Bold Purple — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/pastel-pink.png"><img src="screenshots/themes/pastel-pink.png" alt="Pastel Pink — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-pink.png"><img src="screenshots/themes/bold-pink.png" alt="Bold Pink — decks A, B, C, D" width="350"></a> |
 
 | Aesthetic palettes | |
 | --- | --- |
