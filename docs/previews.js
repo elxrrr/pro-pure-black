@@ -203,6 +203,38 @@ function toolbarAvailableWidth(container) {
   return Math.max(0, Math.round(container.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0)));
 }
 
+/** The display edge stays in view; its cutout follows the toolbar while panning. */
+function renderScreenFrame(frame, viewport, fit, notch, id) {
+  const { width, height } = viewport.getBoundingClientRect();
+  const right = width - .5;
+  const bottom = height - .5;
+  const radius = 16;
+  const edge = `M.5 ${bottom}V${radius + .5}Q.5 .5 ${radius + .5} .5H${right - radius}Q${right} .5 ${right} ${radius + .5}V${bottom}Z`;
+  const scale = fit.scale;
+  const notchWidth = 230 * scale;
+  const notchBottom = (30 + 7.5) * scale;
+  const corner = 8 * scale;
+  const shoulder = 6 * scale;
+  const contour = `M${-shoulder} .5Q0 .5 0 ${shoulder + .5}V${notchBottom - corner}Q0 ${notchBottom} ${corner} ${notchBottom}H${notchWidth - corner}Q${notchWidth} ${notchBottom} ${notchWidth} ${notchBottom - corner}V${shoulder + .5}Q${notchWidth} .5 ${notchWidth + shoulder} .5`;
+  frame.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  frame.innerHTML = `<defs>
+    <clipPath id="${id}-screen"><path d="${edge}"/></clipPath>
+    ${notch ? `<mask id="${id}-cutout" maskUnits="userSpaceOnUse" x="0" y="0" width="${width}" height="${height}">
+      <rect width="${width}" height="${height}" fill="white"/>
+      <g class="toolbar-screen-cutout"><path d="${contour}V-2H${-shoulder}Z" fill="black" stroke="black" stroke-width="1"/></g>
+    </mask>` : ''}
+  </defs>
+  <path class="toolbar-screen-outline" d="${edge}" ${notch ? `mask="url(#${id}-cutout)"` : ''}/>
+  ${notch ? `<g clip-path="url(#${id}-screen)"><g class="toolbar-screen-notch"><path d="${contour}"/></g></g>` : ''}`;
+  const movingParts = frame.querySelectorAll('.toolbar-screen-cutout, .toolbar-screen-notch');
+  const update = () => {
+    const left = (845 + fit.phraseOffset) * scale - viewport.scrollLeft;
+    for (const part of movingParts) part.setAttribute('transform', `translate(${left} 0)`);
+  };
+  update();
+  return update;
+}
+
 /** Fixed-size controls, centered phrases and right-anchored tools; preview choices never change the skin. */
 export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER, display = {}) {
   if (!container) throw new Error('The toolbar preview container is missing.');
@@ -240,7 +272,7 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   const description = `Approximate toolbar at a fixed control size. Left, from left to right: VirtualDJ logo${leftItem ? ', Account' : ''}, master level, CPU, battery, clock${logo ? ', uploaded logo' : ''}. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.${fit.autoHiddenAccount ? ' Account is hidden to leave space for the notch layout.' : ''}`;
   // Frame the native control row around y=21.5 with equal space above and below.
   // At the fixed preview scale, 58 units retain the existing 43.5px outer height.
-  const cutout = notch ? `<g class="toolbar-sim-notch" data-native-x="${845 + phraseOffset}" data-native-width="230" transform="translate(${phraseOffset} 0)"><path d="M845 -7.5V22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V-7.5" fill="#000" stroke="#343438"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>` : '';
+  const cutout = notch ? `<g class="toolbar-sim-notch" data-native-x="${845 + phraseOffset}" data-native-width="230" transform="translate(${phraseOffset} 0)"><path d="M845 -7.5V22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V-7.5" fill="#000"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>` : '';
   container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
     <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${renderWidth}px">
     <svg class="toolbar-sim-svg" viewBox="0 -7.5 ${canvasWidth} 58" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -255,7 +287,7 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
       ${cutout}
     </svg>
     </div>
-  </div>`;
+  </div><svg class="toolbar-screen-frame" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"></svg>`;
   container.querySelector('.toolbar-sim-svg').setAttribute('aria-label', description);
   if (logo) container.querySelector('[data-custom-logo]').setAttribute('href', logo);
   const viewport = container.querySelector('.toolbar-preview-viewport');
@@ -263,7 +295,8 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   // and retains the user's chosen position through palette and toolbar changes.
   viewport.scrollLeft = view.scrollLeft ?? Math.max(0, (renderWidth - viewport.clientWidth) / 2);
   view.scrollLeft = viewport.scrollLeft;
-  viewport.addEventListener('scroll', () => { view.scrollLeft = viewport.scrollLeft; }, { passive: true });
+  const updateFrame = renderScreenFrame(container.querySelector('.toolbar-screen-frame'), viewport, fit, notch, view.id);
+  viewport.addEventListener('scroll', () => { view.scrollLeft = viewport.scrollLeft; updateFrame(); }, { passive: true });
   if (retainFocus) viewport.focus({ preventScroll: true });
   watch(container);
   if (!view.resizeObserver && 'ResizeObserver' in window) {

@@ -316,29 +316,42 @@ async function assertSharedPreview(page) {
   assert.equal(await page.locator('.toolbar-sim-svg').count(), 1);
   assert.equal(await page.locator('.toolbar-sim-svg > rect, .toolbar-sim-svg > path').count(), 0,
     'No scrolling frame or second line creates an empty outlined strip below the controls');
-  const outline = await page.locator('.toolbar-preview-viewport').evaluate(element => {
-    const style = getComputedStyle(element);
-    return { style: style.outlineStyle, width: parseFloat(style.outlineWidth), offset: parseFloat(style.outlineOffset) };
-  });
-  assert.equal(outline.style, 'solid');
-  assert.ok(outline.width >= 1 && outline.offset <= -1,
-    'One inset boundary stays fixed to the visible toolbar area while its contents scroll');
-  const alignment = await page.locator('.toolbar-preview-viewport').evaluate(viewport => {
+  const frame = page.locator('.toolbar-preview-viewport + .toolbar-screen-frame');
+  assert.equal(await frame.count(), 1);
+  assert.equal(await frame.getAttribute('aria-hidden'), 'true');
+  assert.equal(await frame.evaluate(element => getComputedStyle(element).pointerEvents), 'none', 'The frame must not intercept toolbar scrolling');
+  const alignment = await page.locator('#toolbar-preview').evaluate(container => {
+    const viewport = container.querySelector('.toolbar-preview-viewport');
+    const frame = container.querySelector('.toolbar-screen-frame');
+    const viewportBounds = viewport.getBoundingClientRect(), frameBounds = frame.getBoundingClientRect();
+    const notch = frame.querySelector('.toolbar-screen-notch > path')?.getBoundingClientRect();
+    const camera = viewport.querySelector('.toolbar-sim-notch > circle')?.getBoundingClientRect();
     const top = viewport.getBoundingClientRect().top + viewport.clientTop;
     const centre = top + viewport.clientHeight / 2;
     return {
+      frameOffsets: ['x', 'y', 'width', 'height'].map(key => Math.abs(frameBounds[key] - viewportBounds[key])),
       offsets: [...viewport.querySelectorAll('.toolbar-sim-control > rect, .toolbar-sim-status > rect, .toolbar-sim-phrase > circle:first-of-type')].map(element => {
         const bounds = element.getBoundingClientRect();
         return Math.abs(bounds.top + bounds.height / 2 - centre);
       }),
-      notchTop: viewport.querySelector('.toolbar-sim-notch > path')?.getBoundingClientRect().top,
+      notchTop: notch?.top,
+      cameraOffset: notch && camera ? Math.abs(notch.x + notch.width / 2 - camera.x - camera.width / 2) : null,
+      mask: frame.querySelector('.toolbar-screen-outline').getAttribute('mask'),
+      notchClip: frame.querySelector('.toolbar-screen-notch')?.parentElement.getAttribute('clip-path'),
+      fillStroke: viewport.querySelector('.toolbar-sim-notch > path') ? getComputedStyle(viewport.querySelector('.toolbar-sim-notch > path')).stroke : null,
       top,
     };
   });
+  assert.ok(alignment.frameOffsets.every(offset => offset <= 1), 'The screen frame stays pinned to the visible viewport bounds');
   assert.ok(alignment.offsets.length > 0 && alignment.offsets.every(offset => offset <= 1),
     'Visible toolbar controls must be vertically centred inside the boundary');
-  if (alignment.notchTop !== undefined) assert.ok(Math.abs(alignment.notchTop - alignment.top) <= 1,
-    'The notch must remain attached to the top edge of the toolbar');
+  if (alignment.notchTop !== undefined) {
+    assert.ok(Math.abs(alignment.notchTop - alignment.top - .5) <= 1, 'The notch contour joins the top screen edge');
+    assert.ok(alignment.cameraOffset <= 1, 'The camera remains centred in the notch while panning');
+    assert.match(alignment.mask, /^url\(#/);
+    assert.match(alignment.notchClip, /^url\(#/);
+    assert.equal(alignment.fillStroke, 'none', 'Only the fixed screen overlay draws the notch outline');
+  }
   assert.equal(await page.locator('#toolbar-preview').evaluate(element => getComputedStyle(element).borderBottomWidth), '0px');
   assert.ok(await page.evaluate(() => Boolean(document.querySelector('.overall-preview').compareDocumentPosition(document.querySelector('.presets-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)));
   const rows = await page.locator('#preset-preview .preview-wave').evaluateAll(elements => elements.map(element => {
@@ -410,6 +423,30 @@ async function checkIphone17(base, engine) {
   await noHorizontalOverflow(page);
   await page.locator('.overall-preview').screenshot({ path: join(artifacts, `iphone17-${label}-preview.png`), animations: 'disabled' });
   await page.screenshot({ path: join(artifacts, `iphone17-${label}.png`), fullPage: true, animations: 'disabled' });
+  await page.locator('.overall-preview').scrollIntoViewIfNeeded();
+  const viewport = page.locator('.toolbar-preview-viewport');
+  const savedScroll = await viewport.evaluate(element => element.scrollLeft);
+  const pinnedFrame = await page.locator('.toolbar-screen-frame').boundingBox();
+  try {
+    for (const position of ['centred', 'panned']) {
+      await viewport.evaluate((element, position) => {
+        element.scrollLeft = position === 'centred'
+          ? (element.scrollWidth - element.clientWidth) / 2 : element.scrollWidth / 2 - 8;
+      }, position);
+      await page.waitForFunction(() => {
+        const notch = document.querySelector('.toolbar-screen-notch > path').getBoundingClientRect();
+        const camera = document.querySelector('.toolbar-sim-notch > circle').getBoundingClientRect();
+        return Math.abs(notch.x + notch.width / 2 - camera.x - camera.width / 2) <= 1;
+      });
+      await assertSharedPreview(page);
+      const movedFrame = await page.locator('.toolbar-screen-frame').boundingBox();
+      for (const key of ['x', 'y', 'width', 'height']) assert.ok(Math.abs(movedFrame[key] - pinnedFrame[key]) <= 1,
+        'Panning the notch must not move or resize the outer screen frame');
+      await page.locator('.overall-preview').screenshot({ path: join(artifacts, `iphone17-${label}-toolbar-${position}.png`), animations: 'disabled' });
+    }
+  } finally {
+    await viewport.evaluate((element, savedScroll) => { element.scrollLeft = savedScroll; }, savedScroll);
+  }
   await download(page, join(artifacts, `iphone17-${label}.zip`));
 }
 
