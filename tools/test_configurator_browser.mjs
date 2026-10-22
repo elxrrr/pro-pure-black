@@ -16,6 +16,7 @@ const customName = 'Studio <&> Mix';
 const secondColours = ['#CA8CD3', '#82D8D1', '#EDB274', '#C7CFEF'];
 const secondName = 'Second preset';
 const paletteNames = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Pink'];
+const aestheticNames = ['Daydream', 'Ghost in the Shell', 'Outrun', 'Drive', 'Cozycore', 'Cottagecore', 'Afterglow', 'Moon Garden'];
 const statusKeys = ['master', 'cpu', 'battery', 'clock'];
 const defaultToolbarOrder = ['account', 'shoutout', 'scheduler', 'sandbox', 'layout', 'settings'];
 const errors = [];
@@ -73,7 +74,7 @@ async function noHorizontalOverflow(page) {
   assert.ok(dimensions.content <= dimensions.viewport + 1, `Horizontal overflow: ${JSON.stringify(dimensions)}`);
 }
 
-async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-wave-strip', ['.preview-meter-cell', 'opacity']]) {
+async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-knob-needle', '.preview-wave-strip', ['.preview-meter-cell', 'opacity']]) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForFunction(selector => document.querySelector(selector).dataset.motion === 'running', selector);
   parts = parts.map(part => typeof part === 'string' ? [part, 'transform'] : part);
@@ -186,7 +187,11 @@ async function assertPhraseBeats(page) {
         animation.currentTime = Number(timing.delay) + Number(timing.duration) * (1 + (step + .5) / 16);
         return {
           circles: [...clock.querySelectorAll('.toolbar-sim-phrase')].map(circle => ({
-            segments: [...circle.querySelectorAll('.toolbar-phrase-segment')].map(element => Number(getComputedStyle(element).opacity)),
+            rings: [...circle.querySelectorAll('circle.toolbar-phrase-progress')].map(element => ({
+              offset: parseFloat(getComputedStyle(element).strokeDashoffset), length: element.getAttribute('pathLength'),
+            })),
+            trackDashes: getComputedStyle(circle.querySelector('.toolbar-phrase-track')).strokeDasharray,
+            segments: circle.querySelectorAll('.toolbar-phrase-segment').length,
             count: [...circle.querySelectorAll('.toolbar-phrase-count')].map(element => Number(getComputedStyle(element).opacity)),
           })),
           bars: [...clock.querySelectorAll('.toolbar-beat-row')].map(row =>
@@ -202,10 +207,12 @@ async function assertPhraseBeats(page) {
     const beat = step % 16 + 1;
     assert.equal(sample.circles.length, 4);
     sample.circles.forEach(circle => {
-      assert.deepEqual(circle.segments, Array.from({ length: 16 }, (_, index) => Number(index < beat)),
-        'The phrase ring fills one complete segment per beat, then resets after 16');
+      assert.equal(circle.segments, 0, 'The ring must be continuous, without separate gapped segments');
+      assert.equal(circle.trackDashes, 'none');
+      assert.deepEqual(circle.rings, [{ offset: 16 - beat, length: '16' }],
+        'One continuous ring fills by one sixteenth per beat, then resets after 16');
       assert.deepEqual(circle.count, Array.from({ length: 16 }, (_, index) => Number(index + 1 === beat)),
-        'Exactly one counter number is visible and matches the filled segments');
+        'Exactly one counter number is visible and matches the ring fill');
     });
     sample.bars.forEach(row => assert.deepEqual(row, Array.from({ length: 4 }, (_, index) => Number(index === step % 4)),
       'Phrase bar lights move left to right, one complete light per beat'));
@@ -321,6 +328,7 @@ async function assertToolbarPreview(page, { notch, colors, order, accountLeft = 
   assert.ok(Math.abs(preview.controls.at(-1).x + preview.controls.at(-1).width - (canvasWidth - 10)) < .001);
   assert.equal(await page.locator('#toolbar-preview .toolbar-sim-status').getAttribute('data-native-x'), accountLeft ? '327' : '195');
   if (accountLeft) assert.equal(await page.locator('#toolbar-preview .toolbar-sim-left [data-toolbar-control="account"]').getAttribute('data-native-x'), '182');
+  assert.equal(await page.locator('#toolbar-fit-status').isVisible(), false, 'Normal responsive toolbar behaviour must not add a status message');
 }
 
 async function assertToolbarScrolling(page) {
@@ -422,6 +430,28 @@ async function assertSharedPreview(page) {
   assert.ok(rows.every(row => row.width > 0 && row.height > 0));
   assert.ok(Math.max(...rows.map(row => row.y)) - Math.min(...rows.map(row => row.y)) <= 1,
     'All four deck waveforms must share the same horizontal row');
+  const knobs = await page.locator('#preset-preview .preview-deck').evaluateAll(decks => decks.map(deck => {
+    const bounds = deck.getBoundingClientRect(), wave = deck.querySelector('.preview-wave').getBoundingClientRect();
+    return {
+      colour: getComputedStyle(deck.querySelector('.preview-deck-heading')).color,
+      background: getComputedStyle(deck.querySelector('.preview-knobs')).backgroundColor,
+      controls: [...deck.querySelectorAll('.preview-knob')].map(knob => {
+        const box = knob.getBoundingClientRect(), needle = knob.querySelector('.preview-motion.preview-knob-needle');
+        return { band: knob.dataset.knob, width: box.width, height: box.height,
+          contained: box.left >= bounds.left && box.right <= bounds.right && box.bottom <= wave.top,
+          colour: needle && getComputedStyle(needle.querySelector('path')).stroke };
+      }),
+    };
+  }));
+  for (const deck of knobs) {
+    assert.deepEqual(deck.controls.map(knob => knob.band), ['high', 'mid', 'low'], 'Every deck has three EQ knobs');
+    assert.equal(deck.background, 'rgb(0, 0, 0)');
+    for (const knob of deck.controls) {
+      assert.equal(knob.colour, deck.colour, 'EQ needles follow the selected deck palette');
+      assert.ok(knob.contained && knob.width > 0 && Math.abs(knob.width - knob.height) < 1,
+        'EQ knobs stay square and within their deck above the waveform');
+    }
+  }
 }
 
 async function checkIphone17(base, engine) {
@@ -436,6 +466,7 @@ async function checkIphone17(base, engine) {
     }, { once: true, passive: true });
   });
   await assertDefaultLocked(page);
+  assert.equal(await page.locator('#presets .preset-card input:checked').count(), 1, 'Only Default starts included on mobile');
   await assertSharedPreview(page);
   await assertStatusSelection(page, ['master', 'clock']);
   await assertPhraseBeats(page);
@@ -462,7 +493,7 @@ async function checkIphone17(base, engine) {
   assert.deepEqual(await page.locator('#preset-preview .preview-deck-hex').allTextContents(), palette);
   await saved.locator('input').tap();
   await page.locator('#select-all').tap();
-  assert.equal(await page.locator('#presets .preset-card input:checked').count(), 17);
+  assert.equal(await page.locator('#presets .preset-card input:checked').count(), 25);
   await page.locator('#select-default').tap();
   await saved.locator('input').tap();
   for (const key of ['account', 'shoutout', 'scheduler', 'sandbox']) {
@@ -512,6 +543,17 @@ async function checkIphone17(base, engine) {
     await viewport.evaluate((element, savedScroll) => { element.scrollLeft = savedScroll; }, savedScroll);
   }
   await download(page, join(artifacts, `iphone17-${label}.zip`));
+  await page.setViewportSize({ width: 320, height: iphone17.height });
+  await page.waitForFunction(() => {
+    const preview = document.querySelector('#toolbar-preview');
+    const style = getComputedStyle(preview);
+    const width = preview.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0);
+    return Math.abs(Number(preview.dataset.availableWidth) - width) <= 1;
+  });
+  await assertToolbarScrolling(page);
+  await assertSharedPreview(page);
+  await assertLogoControlLayout(page, true);
+  await noHorizontalOverflow(page);
 }
 
 async function toolbarConfiguration(page) {
@@ -555,7 +597,7 @@ async function download(page, filename) {
   assert.equal(result.suggestedFilename(), 'pro-pure-black-custom.zip');
   assert.equal(await result.failure(), null);
   await result.saveAs(filename);
-  assert.match(await page.locator('#status').innerText(), /ZIP|download/i);
+  assert.equal(await page.locator('#status').isVisible(), false, 'Successful downloads must not add a status message');
 }
 
 function verifyStatusZip(filename, enabled, logoPositions = null) {
@@ -772,16 +814,19 @@ try {
   await assertDefaultLocked(desktop);
   const defaultAccent = await websiteAccent(desktop);
   await assertBlackSurfaces(desktop);
-  assert.equal(await desktop.locator('#presets .preset-card input:checked').count(), 16);
-  await assertPaletteGroup(desktop, 'pastel', true);
-  await assertPaletteGroup(desktop, 'bold', true);
+  assert.equal(await desktop.locator('#presets .preset-card').count(), 24);
+  assert.deepEqual(await desktop.locator('#presets .preset-card input:checked').evaluateAll(inputs => inputs.map(input => input.closest('.preset-card').dataset.slug)), ['default']);
+  for (const group of ['aesthetic', 'pastel', 'bold']) await assertPaletteGroup(desktop, group, false);
+  assert.equal(await desktop.locator('#status').isVisible(), false);
   assert.deepEqual(await desktop.locator('#personal-presets > .preset-card').evaluateAll(cards => cards.map(card => card.dataset.slug)), ['default', 'grayscale']);
   const grayscale = desktop.getByRole('checkbox', { name: 'Include Grayscale', exact: true });
   assert.equal(await grayscale.isEnabled(), true);
   assert.equal(await desktop.locator('[data-slug$="greyscale"], [data-slug$="grayscale"]').count(), 1);
-  await grayscale.uncheck();
-  await assertDefaultLocked(desktop);
+  assert.equal(await grayscale.isChecked(), false);
   await grayscale.check();
+  await assertDefaultLocked(desktop);
+  await grayscale.uncheck();
+  assert.deepEqual(await desktop.locator('[data-palette-group="aesthetic"] .preset-name').allTextContents(), aestheticNames);
   for (const group of ['pastel', 'bold']) {
     assert.deepEqual(await desktop.locator(`#presets .preset-card[data-slug^="${group}-"] .preset-name`).allTextContents(), paletteNames,
       'Group headings supply the palette family; card names stay concise');
@@ -817,7 +862,7 @@ try {
   await assertSharedPreview(desktop);
   await assertToolbarScrolling(desktop);
   await assertLogoControlLayout(desktop);
-  await assertAnimatedPreview(desktop, '#toolbar-preview', [['.toolbar-phrase-segment', 'opacity'], ['.toolbar-master-cell', 'opacity']]);
+  await assertAnimatedPreview(desktop, '#toolbar-preview', [['.toolbar-phrase-progress', 'strokeDashoffset'], ['.toolbar-master-cell', 'opacity']]);
   await assertPhraseBeats(desktop);
   assert.ok(await desktop.evaluate(() => Boolean(document.querySelector('.custom-panel').compareDocumentPosition(document.querySelector('.toolbar-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)), 'Custom preset editor must precede toolbar controls');
   await desktop.locator('#preset-preview').scrollIntoViewIfNeeded();
@@ -840,8 +885,25 @@ try {
   await assertStatusControls(desktop);
   await assertAnimatedPreview(desktop, '#toolbar-preview', ['.toolbar-cpu-fill']);
 
+  // Aesthetic palettes can be selected as a group or mixed individually.
+  await desktop.locator('#select-aesthetic').check();
+  await assertPaletteGroup(desktop, 'aesthetic', true);
+  assert.equal(await desktop.locator('#presets .preset-card input:checked').count(), 9);
+  await desktop.getByRole('checkbox', { name: 'Include Drive', exact: true }).uncheck();
+  await assertPaletteGroup(desktop, 'aesthetic', false, true);
+  await desktop.getByRole('checkbox', { name: 'Include Pastel Red', exact: true }).check();
+  const aestheticArchive = join(artifacts, 'pro-pure-black-aesthetic-mix.zip');
+  await download(desktop, aestheticArchive);
+  verifyPaletteSelectionZip(aestheticArchive, ['Default', 'Pastel Red', ...aestheticNames.filter(name => name !== 'Drive')]);
+  await desktop.getByRole('button', { name: 'Preview Daydream', exact: true }).click();
+  assert.notEqual(await websiteAccent(desktop), defaultAccent);
+  await desktop.locator('#select-default').click();
+  await assertPaletteGroup(desktop, 'aesthetic', false);
+  await desktop.getByRole('button', { name: 'Preview Default', exact: true }).click();
+
   // A whole family and individual entries from the other family can be mixed.
-  await desktop.locator('#select-bold').uncheck();
+  await grayscale.check();
+  await desktop.locator('#select-pastel').check();
   assert.equal(await desktop.locator('#presets .preset-card input:checked').count(), 9);
   await desktop.getByRole('checkbox', { name: 'Include Pastel Red', exact: true }).uncheck();
   await assertPaletteGroup(desktop, 'pastel', false, true);
@@ -1110,7 +1172,7 @@ try {
   await checkIphone17(base, safari);
   await recordAnimatedPreview(base);
   assert.deepEqual(errors, [], 'Browser errors were emitted.');
-  console.log('Passed: locked Default, one selectable Grayscale, mixed Pastel/Bold group selection, one shared animated preview, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, optional compact status controls in preview and exports, sixteen-beat phrase rings and left-to-right lights, toolbar toggles and button ordering, palette-linked website accents with black surfaces, responsive toolbar placement in narrow, wide and notched windows, fixed custom starts and new random palettes, installation README in the ZIP, validated transparent logos with safe removal, preview-independent exports with native window-state runtime layouts, real ZIP download, desktop and iPhone 17-sized Chromium/WebKit layout, no browser errors.');
+  console.log('Passed: Default-only initial selection, one selectable Grayscale, mixed Aesthetic/Pastel/Bold groups, quiet successful downloads, one shared animated preview, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, optional compact status controls in preview and exports, continuous sixteen-beat phrase rings and left-to-right lights, toolbar toggles and button ordering, palette-linked website accents with black surfaces, responsive toolbar placement in narrow, wide and notched windows, fixed custom starts and new random palettes, installation README in the ZIP, validated transparent logos with safe removal, preview-independent exports with native window-state runtime layouts, real ZIP download, desktop and iPhone 17-sized Chromium/WebKit layout, no browser errors.');
 } catch (error) {
   for (const { page, label } of pages) {
     await page.screenshot({ path: join(artifacts, `${label}-failure.png`), fullPage: true, animations: 'disabled' }).catch(() => {});

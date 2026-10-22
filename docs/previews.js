@@ -85,6 +85,13 @@ function jog() {
   </div>`;
 }
 
+function knobs(deckIndex) {
+  return `<div class="preview-knobs" aria-hidden="true">${['high', 'mid', 'low'].map((band, index) => `<div class="preview-knob" data-knob="${band}" style="--knob-delay:${-deckIndex * .43 - index * 1.7}s">
+    <svg viewBox="0 0 28 28"><title>${band[0].toUpperCase() + band.slice(1)} EQ</title><circle cx="14" cy="14" r="12" fill="none" stroke="var(--deck-color)" stroke-width="1" pathLength="100" stroke-dasharray="75 25" transform="rotate(135 14 14)"/><circle cx="14" cy="14" r="9" fill="#000" stroke="#484848"/><path d="M14 0v3" stroke="#a6a6a6"/></svg>
+    <svg class="preview-motion preview-knob-needle" viewBox="0 0 28 28"><path d="M14 7v6" stroke="var(--deck-color)" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>`).join('')}</div>`;
+}
+
 function level(defaultPalette, index) {
   const cells = Array.from({ length: 11 }, (_, cell) => {
     // Sample solid interiors of the native sprite, retaining its exact colours
@@ -108,7 +115,7 @@ export function renderPalettePreview(container, theme) {
   const signature = `${original}:${colours.join(',')}`;
   container.classList.add('palette-preview');
   container.setAttribute('role', 'img');
-  container.setAttribute('aria-label', `${theme.name || 'Custom'}: simulated decks, waveforms and levels. ${colours.map((colour, i) => `${LETTERS[i]} ${colour}`).join(', ')}.`);
+  container.setAttribute('aria-label', `${theme.name || 'Custom'}: simulated decks, EQ knobs, waveforms and levels. ${colours.map((colour, i) => `${LETTERS[i]} ${colour}`).join(', ')}.`);
   if (rendered.get(container) !== signature || container.childElementCount !== 4) {
     container.replaceChildren(...colours.map((colour, index) => {
       const deck = document.createElement('div');
@@ -121,6 +128,7 @@ export function renderPalettePreview(container, theme) {
       const bright = original ? base : tint(colour, .35, 255);
       deck.innerHTML = `<div class="preview-deck-heading"><span>${LETTERS[index]}</span><span class="preview-deck-hex">${colour}</span></div>
         <div class="preview-deck-instruments">${jog()}${level(original, index)}</div>
+        ${knobs(index)}
         <div class="preview-wave" aria-hidden="true"><div class="preview-motion preview-wave-strip"><svg viewBox="0 0 512 52" preserveAspectRatio="none"><path d="${wavePath(index, 1)}" fill="${dark}"/><path d="${wavePath(index, .7)}" fill="${base}"/><path d="${wavePath(index, .28)}" fill="${bright}"/></svg></div><span class="preview-wave-needle"></span></div>`;
       return deck;
     }));
@@ -188,16 +196,8 @@ function toolbarStatus(x = 195, options = {}) {
 }
 
 function phraseCircle(deck, x, colour) {
-  const point = angle => {
-    const radians = angle * Math.PI / 180;
-    return `${(15 + Math.sin(radians) * 12.5).toFixed(3)} ${(15 - Math.cos(radians) * 12.5).toFixed(3)}`;
-  };
-  const segments = Array.from({ length: 16 }, (_, beat) => {
-    const path = `M${point(beat * 22.5 + 2.25)}A12.5 12.5 0 0 1 ${point((beat + 1) * 22.5 - 2.25)}`;
-    return `<path d="${path}" fill="none" stroke="#484848" stroke-width="5"/><path class="toolbar-phrase-segment" data-beat="${beat + 1}" style="--phrase-index:${beat}" d="${path}" fill="none" stroke="${colour}" stroke-width="5"/>`;
-  }).join('');
   const counts = Array.from({ length: 16 }, (_, beat) => `<text class="toolbar-phrase-count" data-count="${beat + 1}" style="--phrase-number:${beat + 1}" x="15" y="19" text-anchor="middle" fill="#b8b8b8" font-size="11">${beat + 1}</text>`).join('');
-  return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck}: 16-beat phrase counter</title><circle cx="15" cy="15" r="15" fill="#000"/>${segments}<circle cx="15" cy="15" r="10" fill="#000"/>${counts}</g>`;
+  return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck}: 16-beat phrase counter</title><circle cx="15" cy="15" r="15" fill="#000"/><circle class="toolbar-phrase-track" cx="15" cy="15" r="12.5" fill="none" stroke="#484848" stroke-width="5"/><circle class="toolbar-phrase-progress" cx="15" cy="15" r="12.5" pathLength="16" fill="none" stroke="${colour}" stroke-width="5" stroke-dasharray="16" transform="rotate(-90 15 15)"/><circle cx="15" cy="15" r="10" fill="#000"/>${counts}</g>`;
 }
 
 function phrasePreview(notch, colours, offset = 0) {

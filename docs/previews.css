@@ -12,10 +12,14 @@
 .preview-deck + .preview-deck::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--line); }
 .preview-deck-heading { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 18px; color: var(--deck-color); font-size: 12px; font-weight: 650; }
 .preview-deck-hex { color: var(--muted); font: 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
-.preview-deck-instruments { display: grid; grid-template-columns: minmax(0, 110px) 7px; align-items: center; justify-content: center; gap: 12px; height: 126px; padding: 7px 0; }
+.preview-deck-instruments { display: grid; grid-template-columns: minmax(0, 110px) 7px; align-items: center; justify-content: center; gap: 12px; height: 118px; padding: 4px 0; }
 .preview-jog { width: 100%; min-width: 0; position: relative; aspect-ratio: 1; }
 .preview-jog svg { display: block; width: 100%; height: 100%; }
 .preview-rotor { position: absolute; inset: 0; animation: preview-spin 9s linear infinite; transform-origin: center; }
+.preview-knobs { display: grid; grid-template-columns: repeat(3, minmax(0, 22px)); justify-content: center; align-items: center; gap: 3px; height: 26px; padding-bottom: 4px; background: #000; }
+.preview-knob { position: relative; width: 100%; min-width: 0; aspect-ratio: 1; }
+.preview-knob svg { display: block; width: 100%; height: 100%; }
+.preview-knob-needle { position: absolute; inset: 0; transform-origin: center; animation: preview-knob-sweep 6s ease-in-out infinite; animation-delay: var(--knob-delay, 0s); }
 .preview-meter { --meter-cell-size: 7px; width: var(--meter-cell-size); height: calc(var(--meter-cell-size) * 11 + 20px); position: relative; isolation: isolate; background: #000; }
 .preview-meter-fill { position: absolute; inset: 0; display: flex; flex-direction: column-reverse; gap: 2px; background: #000; }
 .preview-meter-track { position: relative; flex: 0 0 var(--meter-cell-size); width: var(--meter-cell-size); height: var(--meter-cell-size); background: #19191b; }
@@ -34,6 +38,7 @@
 .palette-preview .preview-motion { animation-play-state: paused; }
 .palette-preview[data-motion="running"] .preview-motion { animation-play-state: running; }
 @keyframes preview-spin { to { transform: rotate(360deg); } }
+@keyframes preview-knob-sweep { 0%, 100% { transform: rotate(-18deg); } 28% { transform: rotate(24deg); } 55% { transform: rotate(-8deg); } 78% { transform: rotate(12deg); } }
 @keyframes preview-wave-scroll { to { transform: translateX(-50%); } }
 @keyframes meter-level {
   0%, 40%, 56%, 80%, 96%, 100% { --meter-level: 6; }
@@ -57,9 +62,9 @@
 .toolbar-display-frame { width: var(--toolbar-render-width); max-width: none; flex: 0 0 auto; }
 .toolbar-sim-svg { display: block; width: 100%; height: auto; color: #a6a6a6; fill: currentColor; font-family: Arial, sans-serif; }
 /* One clock keeps the 16-beat phrase and left-to-right four-beat bars in sync.
-   Unregistered integer properties switch whole segments and one count at a time. */
+   Unregistered integer properties advance the continuous ring and its count. */
 .toolbar-phrase-clock { --phrase-beat: 1; --bar-beat: 1; animation: toolbar-phrase-beats 8s steps(1, end) infinite; }
-.toolbar-phrase-segment { opacity: clamp(0, calc(var(--phrase-beat) - var(--phrase-index)), 1); }
+.toolbar-phrase-progress { stroke-dashoffset: calc(16 - var(--phrase-beat)); }
 .toolbar-phrase-count { opacity: clamp(0, min(calc(var(--phrase-beat) - var(--phrase-number) + 1), calc(var(--phrase-number) - var(--phrase-beat) + 1)), 1); font-variant-numeric: tabular-nums; }
 .toolbar-beat-progress { opacity: clamp(0, min(calc(var(--bar-beat) - var(--bar-number) + 1), calc(var(--bar-number) - var(--bar-beat) + 1)), 1); }
 .toolbar-master-fill { background: #000; }
@@ -90,7 +95,7 @@
 @media (max-width: 700px) {
   .palette-preview { padding: 10px 0; }
   .preview-deck { padding: 0 7px; }
-  .preview-deck-instruments { grid-template-columns: minmax(0, 88px) 5px; gap: 7px; height: 104px; padding: 7px 0; }
+  .preview-deck-instruments { grid-template-columns: minmax(0, 88px) 5px; gap: 7px; height: 96px; padding: 4px 0; }
   .preview-meter { --meter-cell-size: 5px; }
   .preview-deck-heading { align-items: flex-start; flex-direction: column; justify-content: flex-start; gap: 3px; min-height: 33px; }
   .preview-deck-hex { font-size: 9px; }
@@ -100,14 +105,14 @@
 @media (max-width: 420px) {
   .palette-preview { padding: 9px 0; }
   .preview-deck { padding: 0 5px; }
-  .preview-deck-instruments { grid-template-columns: minmax(0, 62px) 4px; gap: 4px; height: 78px; padding: 6px 0; }
+  .preview-deck-instruments { grid-template-columns: minmax(0, 62px) 4px; gap: 4px; height: 72px; padding: 4px 0; }
   .preview-meter { --meter-cell-size: 4px; }
   .preview-deck-hex { font-size: 8px; }
   .preview-wave { height: 29px; }
 }
 @media (max-width: 350px) {
   .preview-deck { padding: 0 4px; }
-  .preview-deck-instruments { grid-template-columns: minmax(0, 50px) 4px; height: 76px; padding: 6px 0; }
+  .preview-deck-instruments { grid-template-columns: minmax(0, 50px) 4px; height: 72px; padding: 4px 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .palette-preview .preview-motion, .toolbar-simulation .toolbar-motion { animation-play-state: paused !important; }

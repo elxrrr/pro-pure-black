@@ -12,7 +12,7 @@ const letters = ['A', 'B', 'C', 'D'];
 const toolbarKeys = ['sandbox', 'shoutout', 'scheduler', 'account'];
 const toolbarToggleKeys = [...toolbarKeys, ...STATUS_KEYS];
 const toolbarLabels = { account: 'Account box', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox', layout: 'Layout', settings: 'Settings' };
-const paletteGroups = [{ id: 'pastel', name: 'Pastel' }, { id: 'bold', name: 'Bold' }];
+const paletteGroups = [{ id: 'aesthetic', name: 'Aesthetic' }, { id: 'pastel', name: 'Pastel' }, { id: 'bold', name: 'Bold' }];
 const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#156C89', '#AC2F37', '#0D7264', '#A54D30'] };
 const state = {
   themes: [originalDefault], selected: new Set(['default']), preview: 'default',
@@ -26,10 +26,11 @@ let logoRequest = 0;
 
 function setStatus(message, error = false) {
   const status = $('#status');
-  status.textContent = message;
-  status.classList.toggle('is-error', error);
-  status.hidden = !message;
-  status.parentElement.hidden = !message && $('#retry').hidden;
+  const visible = error && Boolean(message);
+  status.textContent = visible ? message : '';
+  status.classList.toggle('is-error', visible);
+  status.hidden = !visible;
+  status.parentElement.hidden = !visible && $('#retry').hidden;
 }
 
 function toolbarOptions() {
@@ -54,9 +55,7 @@ function renderToolbar() {
 
 function updateToolbarFit(fit) {
   const status = $('#toolbar-fit-status');
-  const message = !fit.fits ? 'Controls overlap in this preview.'
-    : fit.autoHiddenAccount ? 'Account hides automatically while the notch layout is short of space.'
-    : fit.accountLeft ? 'Account moves before Master in a narrow window.' : '';
+  const message = !fit.fits ? 'Controls overlap in this preview.' : '';
   if (status.textContent !== message) status.textContent = message;
   status.hidden = !message;
   status.classList.toggle('is-error', !fit.fits);
@@ -414,13 +413,13 @@ async function fetchAsset(name, binary = false) {
 
 async function loadAssets() {
   $('#retry').hidden = true;
-  setStatus('Loading…');
+  setStatus('');
   try {
     const [themesText, xml, image, icons] = await Promise.all([
       fetchAsset('themes.json'), fetchAsset('Pro.xml'), fetchAsset('gfx-pro.png', true), fetchAsset('icons_daylight.png', true),
     ]);
     state.themes = normaliseThemes(JSON.parse(themesText));
-    state.selected = new Set(state.themes.map(theme => theme.slug));
+    state.selected = new Set(['default']);
     state.assets = { xml, image, icons };
     renderPresets(); updateSummary(); setStatus('');
   } catch (error) {
@@ -439,7 +438,7 @@ async function downloadSkin() {
   };
   state.busy = true; updateSummary();
   $('#download span').textContent = 'Building…';
-  setStatus('Building ZIP…');
+  setStatus('');
   try {
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     let xml = generateSkinXml(configuration.assets.xml, configuration.themes);
@@ -456,7 +455,6 @@ async function downloadSkin() {
     const url = URL.createObjectURL(new Blob([bytes], { type: 'application/zip' }));
     const link = document.createElement('a'); link.href = url; link.download = 'pro-pure-black-custom.zip'; document.body.append(link); link.click(); link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 30000);
-    setStatus('ZIP downloaded.');
   } catch (error) {
     setStatus(`Could not build the skin. ${error.message}`, true);
   } finally {

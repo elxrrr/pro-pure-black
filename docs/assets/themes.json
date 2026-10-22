@@ -14,5 +14,13 @@
   {"id":12,"name":"Bold Green","slug":"bold-green","group":"bold","colors":["#048568","#8BCF23","#20B339","#D5E43F"]},
   {"id":13,"name":"Bold Blue","slug":"bold-blue","group":"bold","colors":["#4C4BE9","#03BFF1","#0A8FF3","#59E4F3"]},
   {"id":14,"name":"Bold Purple","slug":"bold-purple","group":"bold","colors":["#7A40DA","#F151C7","#B93CE6","#C4A4FE"]},
-  {"id":15,"name":"Bold Pink","slug":"bold-pink","group":"bold","colors":["#BE148B","#FE79BE","#F034A3","#FEAFD4"]}
+  {"id":15,"name":"Bold Pink","slug":"bold-pink","group":"bold","colors":["#BE148B","#FE79BE","#F034A3","#FEAFD4"]},
+  {"id":16,"name":"Daydream","slug":"aesthetic-daydream","group":"aesthetic","colors":["#E98DB6","#89BFF0","#B69BE4","#F2C48F"]},
+  {"id":17,"name":"Ghost in the Shell","slug":"aesthetic-ghost-in-the-shell","group":"aesthetic","colors":["#70CBA5","#C69DD8","#4D9DAF","#D8BB82"]},
+  {"id":18,"name":"Outrun","slug":"aesthetic-outrun","group":"aesthetic","colors":["#F259BA","#65D9EB","#9E79EC","#F6B76C"]},
+  {"id":19,"name":"Drive","slug":"aesthetic-drive","group":"aesthetic","colors":["#E989B8","#8EC3A8","#A390D0","#E9C979"]},
+  {"id":20,"name":"Cozycore","slug":"aesthetic-cozycore","group":"aesthetic","colors":["#BD7F68","#9CB7BE","#A68DB4","#E6C694"]},
+  {"id":21,"name":"Cottagecore","slug":"aesthetic-cottagecore","group":"aesthetic","colors":["#7B9B70","#DAA3A5","#9A8066","#E2D39F"]},
+  {"id":22,"name":"Afterglow","slug":"aesthetic-afterglow","group":"aesthetic","colors":["#E2A369","#A69BE0","#D9798C","#8BCAC6"]},
+  {"id":23,"name":"Moon Garden","slug":"aesthetic-moon-garden","group":"aesthetic","colors":["#639B9C","#C3B0E2","#C888AA","#D8DDA9"]}
 ]

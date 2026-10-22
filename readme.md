@@ -2,7 +2,7 @@
 
 A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black desktop.
 
-**[Generate your skin →](https://elxrrr.github.io/pro-pure-black/)** Choose your toolbar, logo and palettes in one live preview. Select whole Pastel or Bold groups, mix individual palettes, or create your own. Default always retains Atomix’s original colours.
+**[Generate your skin →](https://elxrrr.github.io/pro-pure-black/)** Choose your toolbar, logo and palettes in one live preview. Select whole Pastel, Bold or Aesthetic groups, mix individual palettes, or create your own. Only Default is selected initially; its Atomix colours are always retained.
 
 ![Pro Pure Black fullscreen notch layout](screenshots/notch-layout.jpg)
 
@@ -24,7 +24,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Custom logo | Optional transparent PNG, placed after the master/status block. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
-| Deck colours | Default retains the original colours. A standalone Grayscale palette and Pastel/Bold groups covering Red, Orange, Yellow, Green, Blue, Purple and Pink. |
+| Deck colours | Default retains the original colours. A standalone Grayscale palette, Pastel/Bold groups covering Red, Orange, Yellow, Green, Blue, Purple and Pink, plus eight mixed-colour Aesthetic palettes. |
 | Remaining controls | Original behaviour. |
 
 ## Deck colours
@@ -44,3 +44,10 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 | Blue | <a href="screenshots/themes/pastel-blue.png"><img src="screenshots/themes/pastel-blue.png" alt="Pastel Blue — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-blue.png"><img src="screenshots/themes/bold-blue.png" alt="Bold Blue — decks A, B, C, D" width="350"></a> |
 | Purple | <a href="screenshots/themes/pastel-purple.png"><img src="screenshots/themes/pastel-purple.png" alt="Pastel Purple — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-purple.png"><img src="screenshots/themes/bold-purple.png" alt="Bold Purple — decks A, B, C, D" width="350"></a> |
 | Pink | <a href="screenshots/themes/pastel-pink.png"><img src="screenshots/themes/pastel-pink.png" alt="Pastel Pink — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-pink.png"><img src="screenshots/themes/bold-pink.png" alt="Bold Pink — decks A, B, C, D" width="350"></a> |
+
+| Aesthetic palettes | |
+| --- | --- |
+| <a href="screenshots/themes/aesthetic-daydream.png"><img src="screenshots/themes/aesthetic-daydream.png" alt="Daydream — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-ghost-in-the-shell.png"><img src="screenshots/themes/aesthetic-ghost-in-the-shell.png" alt="Ghost in the Shell — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/aesthetic-outrun.png"><img src="screenshots/themes/aesthetic-outrun.png" alt="Outrun — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-drive.png"><img src="screenshots/themes/aesthetic-drive.png" alt="Drive — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/aesthetic-cozycore.png"><img src="screenshots/themes/aesthetic-cozycore.png" alt="Cozycore — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-cottagecore.png"><img src="screenshots/themes/aesthetic-cottagecore.png" alt="Cottagecore — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/aesthetic-afterglow.png"><img src="screenshots/themes/aesthetic-afterglow.png" alt="Afterglow — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-moon-garden.png"><img src="screenshots/themes/aesthetic-moon-garden.png" alt="Moon Garden — decks A, B, C, D" width="350"></a> |
