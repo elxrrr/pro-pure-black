@@ -2762,122 +2762,122 @@
 			<define color="pureblack_plugin_disabled2" value="#4C4B45"/>
 		</group>
 		<group name="pureblack-theme-aesthetic-outrun" condition="var_equal '@$pureblackdecktheme' 18">
-			<define color="deckcolor" value="#FF7A28" deck="1"/>
-			<define color="deckcolorbright" value="#FF8A42" deck="1"/>
-			<define color="deckcolordark" value="#AD531B" deck="1"/>
-			<define color="deckcolor_invert" value="#FF8A42" deck="1"/>
-			<define color="padbuttonselected" value="#2E1607" deck="1"/>
-			<define color="buttonon" value="#FF7A28" deck="1"/>
-			<define color="buttonover" value="#3D1D0A" deck="1"/>
-			<define color="buttonselected" value="#2E1607" deck="1"/>
-			<define color="pureblack_buttonfill" value="#57290E" deck="1"/>
-			<define color="pureblack_deck_selected" value="#57290E" deck="1"/>
-			<define color="textdeck" value="#FF8A42" deck="1"/>
-			<define color="faderinon" value="#FF7A28" deck="1"/>
-			<define color="knobfillon" value="#FF7A28" deck="1"/>
-			<define color="colorbass" value="#57290E" deck="1"/>
-			<define color="colormed" value="#AD531B" deck="1"/>
-			<define color="colorhigh" value="#FF7A28" deck="1"/>
-			<define color="scratch1" value="#FF7A28" deck="1"/>
-			<define color="scratch2" value="#FF7A28" deck="1"/>
-			<define color="pureblack_wavevocal" value="#AD531B" deck="1"/>
-			<define color="pureblack_waveinstru" value="#FF7A28" deck="1"/>
-			<define color="pureblack_wavebeat" value="#FFA973" deck="1"/>
-			<define color="waveform_active1" value="#FF7A28"/>
-			<define color="waveform_passive1" value="#AD531B"/>
-			<define color="pureblack_meter1" value="#FF7A28"/>
-			<define color="deckcolor" value="#FFE05A" deck="2"/>
-			<define color="deckcolorbright" value="#FFE46E" deck="2"/>
-			<define color="deckcolordark" value="#AD983D" deck="2"/>
-			<define color="deckcolor_invert" value="#FFE46E" deck="2"/>
-			<define color="padbuttonselected" value="#2E2810" deck="2"/>
-			<define color="buttonon" value="#FFE05A" deck="2"/>
-			<define color="buttonover" value="#3D3616" deck="2"/>
-			<define color="buttonselected" value="#2E2810" deck="2"/>
-			<define color="pureblack_buttonfill" value="#574C1F" deck="2"/>
-			<define color="pureblack_deck_selected" value="#574C1F" deck="2"/>
-			<define color="textdeck" value="#FFE46E" deck="2"/>
-			<define color="faderinon" value="#FFE05A" deck="2"/>
-			<define color="knobfillon" value="#FFE05A" deck="2"/>
-			<define color="colorbass" value="#574C1F" deck="2"/>
-			<define color="colormed" value="#AD983D" deck="2"/>
-			<define color="colorhigh" value="#FFE05A" deck="2"/>
-			<define color="scratch1" value="#FFE05A" deck="2"/>
-			<define color="scratch2" value="#FFE05A" deck="2"/>
-			<define color="pureblack_wavevocal" value="#AD983D" deck="2"/>
-			<define color="pureblack_waveinstru" value="#FFE05A" deck="2"/>
-			<define color="pureblack_wavebeat" value="#FFEB94" deck="2"/>
-			<define color="waveform_active2" value="#FFE05A"/>
-			<define color="waveform_passive2" value="#AD983D"/>
-			<define color="pureblack_meter2" value="#FFE05A"/>
-			<define color="deckcolor" value="#7445AE" deck="3"/>
-			<define color="deckcolorbright" value="#855BB8" deck="3"/>
-			<define color="deckcolordark" value="#4F2F76" deck="3"/>
-			<define color="deckcolor_invert" value="#855BB8" deck="3"/>
-			<define color="padbuttonselected" value="#150C1F" deck="3"/>
-			<define color="buttonon" value="#7445AE" deck="3"/>
-			<define color="buttonover" value="#1C112A" deck="3"/>
-			<define color="buttonselected" value="#150C1F" deck="3"/>
-			<define color="pureblack_buttonfill" value="#27173B" deck="3"/>
-			<define color="pureblack_deck_selected" value="#27173B" deck="3"/>
-			<define color="textdeck" value="#855BB8" deck="3"/>
-			<define color="faderinon" value="#7445AE" deck="3"/>
-			<define color="knobfillon" value="#7445AE" deck="3"/>
-			<define color="colorbass" value="#27173B" deck="3"/>
-			<define color="colormed" value="#4F2F76" deck="3"/>
-			<define color="colorhigh" value="#7445AE" deck="3"/>
-			<define color="scratch1" value="#7445AE" deck="3"/>
-			<define color="scratch2" value="#7445AE" deck="3"/>
-			<define color="pureblack_wavevocal" value="#4F2F76" deck="3"/>
-			<define color="pureblack_waveinstru" value="#7445AE" deck="3"/>
-			<define color="pureblack_wavebeat" value="#A586CA" deck="3"/>
-			<define color="waveform_active3" value="#7445AE"/>
-			<define color="waveform_passive3" value="#4F2F76"/>
-			<define color="pureblack_meter3" value="#7445AE"/>
-			<define color="deckcolor" value="#F22EAF" deck="4"/>
-			<define color="deckcolorbright" value="#F447B9" deck="4"/>
-			<define color="deckcolordark" value="#A51F77" deck="4"/>
-			<define color="deckcolor_invert" value="#F447B9" deck="4"/>
-			<define color="padbuttonselected" value="#2C0820" deck="4"/>
-			<define color="buttonon" value="#F22EAF" deck="4"/>
-			<define color="buttonover" value="#3A0B2A" deck="4"/>
-			<define color="buttonselected" value="#2C0820" deck="4"/>
-			<define color="pureblack_buttonfill" value="#52103B" deck="4"/>
-			<define color="pureblack_deck_selected" value="#52103B" deck="4"/>
-			<define color="textdeck" value="#F447B9" deck="4"/>
-			<define color="faderinon" value="#F22EAF" deck="4"/>
-			<define color="knobfillon" value="#F22EAF" deck="4"/>
-			<define color="colorbass" value="#52103B" deck="4"/>
-			<define color="colormed" value="#A51F77" deck="4"/>
-			<define color="colorhigh" value="#F22EAF" deck="4"/>
-			<define color="scratch1" value="#F22EAF" deck="4"/>
-			<define color="scratch2" value="#F22EAF" deck="4"/>
-			<define color="pureblack_wavevocal" value="#A51F77" deck="4"/>
-			<define color="pureblack_waveinstru" value="#F22EAF" deck="4"/>
-			<define color="pureblack_wavebeat" value="#F777CB" deck="4"/>
-			<define color="waveform_active4" value="#F22EAF"/>
-			<define color="waveform_passive4" value="#A51F77"/>
-			<define color="pureblack_meter4" value="#F22EAF"/>
-			<define color="deckcolor" value="#FF7A28" deck="left"/>
-			<define color="faderinon" value="#FF7A28" deck="left"/>
-			<define color="knobfillon" value="#FF7A28" deck="left"/>
-			<define color="faderinleft" value="#FF7A28"/>
-			<define color="deckcolor" value="#FFE05A" deck="right"/>
-			<define color="faderinon" value="#FFE05A" deck="right"/>
-			<define color="knobfillon" value="#FFE05A" deck="right"/>
-			<define color="buttonon" value="#FFE05A" deck="right"/>
-			<define color="pureblack_buttonfill" value="#574C1F" deck="right"/>
-			<define color="faderinright" value="#FFE05A"/>
-			<define color="pureblack_plugin_over1" value="#3D1D0A"/>
-			<define color="pureblack_plugin_selected1" value="#57290E"/>
-			<define color="pureblack_plugin_down1" value="#47220B"/>
-			<define color="pureblack_plugin_slider1" value="#FF7A28"/>
-			<define color="pureblack_plugin_disabled1" value="#57290E"/>
-			<define color="pureblack_plugin_over2" value="#3D3616"/>
-			<define color="pureblack_plugin_selected2" value="#574C1F"/>
-			<define color="pureblack_plugin_down2" value="#473F19"/>
-			<define color="pureblack_plugin_slider2" value="#FFE05A"/>
-			<define color="pureblack_plugin_disabled2" value="#574C1F"/>
+			<define color="deckcolor" value="#7445AE" deck="1"/>
+			<define color="deckcolorbright" value="#855BB8" deck="1"/>
+			<define color="deckcolordark" value="#4F2F76" deck="1"/>
+			<define color="deckcolor_invert" value="#855BB8" deck="1"/>
+			<define color="padbuttonselected" value="#150C1F" deck="1"/>
+			<define color="buttonon" value="#7445AE" deck="1"/>
+			<define color="buttonover" value="#1C112A" deck="1"/>
+			<define color="buttonselected" value="#150C1F" deck="1"/>
+			<define color="pureblack_buttonfill" value="#27173B" deck="1"/>
+			<define color="pureblack_deck_selected" value="#27173B" deck="1"/>
+			<define color="textdeck" value="#855BB8" deck="1"/>
+			<define color="faderinon" value="#7445AE" deck="1"/>
+			<define color="knobfillon" value="#7445AE" deck="1"/>
+			<define color="colorbass" value="#27173B" deck="1"/>
+			<define color="colormed" value="#4F2F76" deck="1"/>
+			<define color="colorhigh" value="#7445AE" deck="1"/>
+			<define color="scratch1" value="#7445AE" deck="1"/>
+			<define color="scratch2" value="#7445AE" deck="1"/>
+			<define color="pureblack_wavevocal" value="#4F2F76" deck="1"/>
+			<define color="pureblack_waveinstru" value="#7445AE" deck="1"/>
+			<define color="pureblack_wavebeat" value="#A586CA" deck="1"/>
+			<define color="waveform_active1" value="#7445AE"/>
+			<define color="waveform_passive1" value="#4F2F76"/>
+			<define color="pureblack_meter1" value="#7445AE"/>
+			<define color="deckcolor" value="#FF7A28" deck="2"/>
+			<define color="deckcolorbright" value="#FF8A42" deck="2"/>
+			<define color="deckcolordark" value="#AD531B" deck="2"/>
+			<define color="deckcolor_invert" value="#FF8A42" deck="2"/>
+			<define color="padbuttonselected" value="#2E1607" deck="2"/>
+			<define color="buttonon" value="#FF7A28" deck="2"/>
+			<define color="buttonover" value="#3D1D0A" deck="2"/>
+			<define color="buttonselected" value="#2E1607" deck="2"/>
+			<define color="pureblack_buttonfill" value="#57290E" deck="2"/>
+			<define color="pureblack_deck_selected" value="#57290E" deck="2"/>
+			<define color="textdeck" value="#FF8A42" deck="2"/>
+			<define color="faderinon" value="#FF7A28" deck="2"/>
+			<define color="knobfillon" value="#FF7A28" deck="2"/>
+			<define color="colorbass" value="#57290E" deck="2"/>
+			<define color="colormed" value="#AD531B" deck="2"/>
+			<define color="colorhigh" value="#FF7A28" deck="2"/>
+			<define color="scratch1" value="#FF7A28" deck="2"/>
+			<define color="scratch2" value="#FF7A28" deck="2"/>
+			<define color="pureblack_wavevocal" value="#AD531B" deck="2"/>
+			<define color="pureblack_waveinstru" value="#FF7A28" deck="2"/>
+			<define color="pureblack_wavebeat" value="#FFA973" deck="2"/>
+			<define color="waveform_active2" value="#FF7A28"/>
+			<define color="waveform_passive2" value="#AD531B"/>
+			<define color="pureblack_meter2" value="#FF7A28"/>
+			<define color="deckcolor" value="#F22EAF" deck="3"/>
+			<define color="deckcolorbright" value="#F447B9" deck="3"/>
+			<define color="deckcolordark" value="#A51F77" deck="3"/>
+			<define color="deckcolor_invert" value="#F447B9" deck="3"/>
+			<define color="padbuttonselected" value="#2C0820" deck="3"/>
+			<define color="buttonon" value="#F22EAF" deck="3"/>
+			<define color="buttonover" value="#3A0B2A" deck="3"/>
+			<define color="buttonselected" value="#2C0820" deck="3"/>
+			<define color="pureblack_buttonfill" value="#52103B" deck="3"/>
+			<define color="pureblack_deck_selected" value="#52103B" deck="3"/>
+			<define color="textdeck" value="#F447B9" deck="3"/>
+			<define color="faderinon" value="#F22EAF" deck="3"/>
+			<define color="knobfillon" value="#F22EAF" deck="3"/>
+			<define color="colorbass" value="#52103B" deck="3"/>
+			<define color="colormed" value="#A51F77" deck="3"/>
+			<define color="colorhigh" value="#F22EAF" deck="3"/>
+			<define color="scratch1" value="#F22EAF" deck="3"/>
+			<define color="scratch2" value="#F22EAF" deck="3"/>
+			<define color="pureblack_wavevocal" value="#A51F77" deck="3"/>
+			<define color="pureblack_waveinstru" value="#F22EAF" deck="3"/>
+			<define color="pureblack_wavebeat" value="#F777CB" deck="3"/>
+			<define color="waveform_active3" value="#F22EAF"/>
+			<define color="waveform_passive3" value="#A51F77"/>
+			<define color="pureblack_meter3" value="#F22EAF"/>
+			<define color="deckcolor" value="#FFE05A" deck="4"/>
+			<define color="deckcolorbright" value="#FFE46E" deck="4"/>
+			<define color="deckcolordark" value="#AD983D" deck="4"/>
+			<define color="deckcolor_invert" value="#FFE46E" deck="4"/>
+			<define color="padbuttonselected" value="#2E2810" deck="4"/>
+			<define color="buttonon" value="#FFE05A" deck="4"/>
+			<define color="buttonover" value="#3D3616" deck="4"/>
+			<define color="buttonselected" value="#2E2810" deck="4"/>
+			<define color="pureblack_buttonfill" value="#574C1F" deck="4"/>
+			<define color="pureblack_deck_selected" value="#574C1F" deck="4"/>
+			<define color="textdeck" value="#FFE46E" deck="4"/>
+			<define color="faderinon" value="#FFE05A" deck="4"/>
+			<define color="knobfillon" value="#FFE05A" deck="4"/>
+			<define color="colorbass" value="#574C1F" deck="4"/>
+			<define color="colormed" value="#AD983D" deck="4"/>
+			<define color="colorhigh" value="#FFE05A" deck="4"/>
+			<define color="scratch1" value="#FFE05A" deck="4"/>
+			<define color="scratch2" value="#FFE05A" deck="4"/>
+			<define color="pureblack_wavevocal" value="#AD983D" deck="4"/>
+			<define color="pureblack_waveinstru" value="#FFE05A" deck="4"/>
+			<define color="pureblack_wavebeat" value="#FFEB94" deck="4"/>
+			<define color="waveform_active4" value="#FFE05A"/>
+			<define color="waveform_passive4" value="#AD983D"/>
+			<define color="pureblack_meter4" value="#FFE05A"/>
+			<define color="deckcolor" value="#7445AE" deck="left"/>
+			<define color="faderinon" value="#7445AE" deck="left"/>
+			<define color="knobfillon" value="#7445AE" deck="left"/>
+			<define color="faderinleft" value="#7445AE"/>
+			<define color="deckcolor" value="#FF7A28" deck="right"/>
+			<define color="faderinon" value="#FF7A28" deck="right"/>
+			<define color="knobfillon" value="#FF7A28" deck="right"/>
+			<define color="buttonon" value="#FF7A28" deck="right"/>
+			<define color="pureblack_buttonfill" value="#57290E" deck="right"/>
+			<define color="faderinright" value="#FF7A28"/>
+			<define color="pureblack_plugin_over1" value="#1C112A"/>
+			<define color="pureblack_plugin_selected1" value="#27173B"/>
+			<define color="pureblack_plugin_down1" value="#201331"/>
+			<define color="pureblack_plugin_slider1" value="#7445AE"/>
+			<define color="pureblack_plugin_disabled1" value="#27173B"/>
+			<define color="pureblack_plugin_over2" value="#3D1D0A"/>
+			<define color="pureblack_plugin_selected2" value="#57290E"/>
+			<define color="pureblack_plugin_down2" value="#47220B"/>
+			<define color="pureblack_plugin_slider2" value="#FF7A28"/>
+			<define color="pureblack_plugin_disabled2" value="#57290E"/>
 		</group>
 		<group name="pureblack-theme-aesthetic-cozycore" condition="var_equal '@$pureblackdecktheme' 19">
 			<define color="deckcolor" value="#C77A52" deck="1"/>

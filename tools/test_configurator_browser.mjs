@@ -1018,13 +1018,20 @@ try {
     assert.equal(await button.getAttribute('id'), id);
     assert.equal(await button.getAttribute('type'), 'button');
     assert.equal(await button.getAttribute('aria-pressed'), 'true');
+    assert.equal(await button.locator('svg, input, .switch').count(), 0, 'Preview toggles are plain text buttons');
   }
   assert.equal(await desktop.locator('#toolbar-display-profile').count(), 0);
+  const pressedBackground = await desktop.locator('#toolbar-notch-preview').evaluate(button => getComputedStyle(button).backgroundColor);
   await desktop.locator('#toolbar-notch-preview').press('Space');
   assert.equal(await desktop.locator('#toolbar-notch-preview').getAttribute('aria-pressed'), 'false');
+  const offBackground = await desktop.locator('#toolbar-notch-preview').evaluate(button => getComputedStyle(button).backgroundColor);
+  assert.notEqual(offBackground, pressedBackground, 'Pressed buttons use a highlighted background');
+  assert.equal(offBackground, await desktop.locator('#custom-logo-remove').evaluate(button => getComputedStyle(button).backgroundColor),
+    'Unpressed preview buttons share the Remove button background');
   await assertToolbarPreview(desktop, { notch: false, colors: defaults, order: ['layout', 'settings'] });
   await desktop.locator('#toolbar-notch-preview').press('Enter');
   assert.equal(await desktop.locator('#toolbar-notch-preview').getAttribute('aria-pressed'), 'true');
+  assert.equal(await desktop.locator('#toolbar-notch-preview').evaluate(button => getComputedStyle(button).backgroundColor), pressedBackground);
   await assertToolbarPreview(desktop, { notch: true, colors: defaults, order: ['layout', 'settings'] });
   await assertSharedPreview(desktop);
   await assertConfigurationLayout(desktop, true);

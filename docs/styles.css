@@ -76,14 +76,13 @@ main { padding-top: 10px; }
 .toolbar-profile-label select { min-height: 35px; max-width: 100%; padding: 5px 28px 5px 10px; border: 1px solid var(--accent-line); border-radius: 7px; background: #000; color: var(--text); cursor: pointer; }
 .custom-logo-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto; }
 .preview-toggle, .custom-logo-picker, #custom-logo-remove { display: inline-flex; align-items: center; min-height: 32px; padding: 5px 10px; border: 1px solid var(--accent-line); border-radius: 6px; background: #000; color: var(--accent-text); font-size: 11px; cursor: pointer; }
-.preview-toggle { flex: 0 0 auto; gap: 6px; }
-.preview-toggle[aria-pressed="false"] { border-color: var(--line); color: var(--muted); }
-.preview-toggle[aria-pressed="false"] svg { opacity: 0; }
-.preview-toggle[aria-pressed="true"] { color: var(--accent-text-strong); }
+.preview-toggle { flex: 0 0 auto; }
 .custom-logo-picker { position: relative; }
 .custom-logo-picker input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 .custom-logo-picker:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
 .preview-toggle:hover, .custom-logo-picker:hover, #custom-logo-remove:hover:not(:disabled) { border-color: var(--accent-line-strong); color: var(--accent-text-strong); }
+.preview-toggle[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.preview-toggle[aria-pressed="true"]:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 #custom-logo-status { margin-top: 6px; font-size: 11px; overflow-wrap: anywhere; }
 #custom-logo-status:empty { display: none; }
 #custom-logo-status.is-error { color: #ffb0be; }

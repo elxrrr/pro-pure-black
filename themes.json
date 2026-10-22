@@ -17,7 +17,7 @@
   {"id":15,"name":"Bold Pink","slug":"bold-pink","group":"bold","colors":["#BE148B","#FE79BE","#F034A3","#FEAFD4"]},
   {"id":16,"name":"Daydream","slug":"aesthetic-daydream","group":"aesthetic","colors":["#E98DB6","#89BFF0","#B69BE4","#F2C48F"]},
   {"id":17,"name":"Ghost in the Shell","slug":"aesthetic-ghost-in-the-shell","group":"aesthetic","colors":["#78B68A","#E0DDCC","#C75A61","#649AAF"]},
-  {"id":18,"name":"Outrun","slug":"aesthetic-outrun","group":"aesthetic","colors":["#FF7A28","#FFE05A","#7445AE","#F22EAF"]},
+  {"id":18,"name":"Outrun","slug":"aesthetic-outrun","group":"aesthetic","colors":["#7445AE","#FF7A28","#F22EAF","#FFE05A"]},
   {"id":19,"name":"Cozycore","slug":"aesthetic-cozycore","group":"aesthetic","colors":["#C77A52","#F1D9B4","#92705A","#E8AE57"]},
   {"id":20,"name":"Cottagecore","slug":"aesthetic-cottagecore","group":"aesthetic","colors":["#4F8147","#D8B86A","#BA785C","#EEE2BD"]},
   {"id":21,"name":"Afterglow","slug":"aesthetic-afterglow","group":"aesthetic","colors":["#D9674C","#F4C27D","#8B70AE","#E596AA"]},

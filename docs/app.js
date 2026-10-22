@@ -415,7 +415,7 @@ function addCustom() {
 }
 
 async function fetchAsset(name, binary = false) {
-  const response = await fetch(new URL(`./assets/${name}`, import.meta.url));
+  const response = await fetch(new URL(`./assets/${name}`, import.meta.url), { cache: 'no-cache' });
   if (!response.ok) throw new Error(`Could not load ${name} (${response.status}).`);
   return binary ? new Uint8Array(await response.arrayBuffer()) : response.text();
 }
