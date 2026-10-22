@@ -69,6 +69,33 @@ async function noHorizontalOverflow(page) {
   assert.ok(dimensions.content <= dimensions.viewport + 1, `Horizontal overflow: ${JSON.stringify(dimensions)}`);
 }
 
+async function assertAnimatedPreview(page, selector) {
+  await page.locator(selector).scrollIntoViewIfNeeded();
+  await page.waitForFunction(selector => document.querySelector(selector).dataset.motion === 'running', selector);
+  const parts = ['.preview-rotor', '.preview-wave-strip', '.preview-meter-fill'];
+  const before = await page.locator(selector).evaluate((preview, parts) =>
+    parts.map(part => getComputedStyle(preview.querySelector(part)).transform), parts);
+  await page.waitForFunction(({ selector, parts, before }) => parts.every((part, index) =>
+    getComputedStyle(document.querySelector(selector).querySelector(part)).transform !== before[index]),
+  { selector, parts, before });
+}
+
+async function recordAnimatedPreview(base) {
+  const size = { width: 720, height: 420 };
+  const context = await browser.newContext({ viewport: size, reducedMotion: 'no-preference', recordVideo: { dir: artifacts, size } });
+  const page = await context.newPage();
+  try {
+    await page.goto(base, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: 'Preview Orange', exact: true }).click();
+    await assertAnimatedPreview(page, '#preset-preview');
+    await page.waitForTimeout(4400);
+  } finally {
+    await context.close();
+  }
+  await page.video().saveAs(join(artifacts, 'animated-deck-preview.webm'));
+  await page.video().delete();
+}
+
 async function websiteAccent(page) {
   return page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim());
 }
@@ -89,7 +116,7 @@ async function assertBlackSurfaces(page) {
   assert.deepEqual(problems, [], 'Structural website surfaces must stay pure black');
 }
 
-async function assertToolbarPreview(page, { notch, profile, colors, order }) {
+async function assertToolbarPreview(page, { notch, profile, colors, order, fits = true }) {
   const preview = await page.locator('#toolbar-preview').evaluate(container => ({
     profile: container.dataset.profile,
     notch: container.dataset.notch,
@@ -105,7 +132,9 @@ async function assertToolbarPreview(page, { notch, profile, colors, order }) {
       width: Number(item.dataset.nativeWidth), color: item.dataset.color,
     })),
   }));
-  assert.equal(preview.width, 1920, 'Preview must retain native skin coordinates at every device width');
+  const canvasWidth = ({ '13': 1280, '14': 1512, '15': 1440, '16': 1728 })[profile] / .75;
+  const phraseOffset = (canvasWidth - 1920) / 2;
+  assert.ok(Math.abs(preview.width - canvasWidth) < .001, 'Display size must change available width rather than shrink the controls');
   assert.equal(preview.profile, String(profile));
   assert.equal(preview.notch, String(notch));
   assert.equal(preview.notchCount, notch ? 1 : 0);
@@ -114,7 +143,7 @@ async function assertToolbarPreview(page, { notch, profile, colors, order }) {
   const phrasePositions = notch ? { A: 760, C: 795, B: 1095, D: 1130 } : { C: 823, A: 858, B: 1037, D: 1072 };
   assert.equal(preview.circles.length, 4);
   for (const circle of preview.circles) {
-    assert.equal(circle.x, phrasePositions[circle.deck]);
+    assert.ok(Math.abs(circle.x - (phrasePositions[circle.deck] + phraseOffset)) < .001);
     assert.equal(circle.y, 6);
     assert.equal(circle.width, 30);
     assert.equal(circle.color.toUpperCase(), colors['ABCD'.indexOf(circle.deck)]);
@@ -128,8 +157,30 @@ async function assertToolbarPreview(page, { notch, profile, colors, order }) {
     if (item.key === 'sandbox') assert.equal(item.width, 235, 'Reserve the complete active Sandbox waveform');
     if (index) assert.ok(preview.controls[index - 1].x + preview.controls[index - 1].width + 10 <= item.x);
   }
-  assert.ok(preview.controls[0].x >= (notch ? 1160 : 1102) + 10, 'Right buttons must clear the phrase counters');
-  assert.equal(preview.controls.at(-1).x + preview.controls.at(-1).width, 1910);
+  assert.equal(preview.controls[0].x >= (notch ? 1160 : 1102) + phraseOffset + 10, fits,
+    'Fit result must agree with the actual gap beside the phrase counters');
+  assert.ok(Math.abs(preview.controls.at(-1).x + preview.controls.at(-1).width - (canvasWidth - 10)) < .001);
+}
+
+async function zoomToolbar(page, { initial = true } = {}) {
+  const widthBefore = await page.locator('#toolbar-preview .toolbar-sim-svg').evaluate(svg => svg.getBoundingClientRect().width);
+  const before = await toolbarConfiguration(page);
+  await page.locator('#toolbar-preview .toolbar-preview-zoom').click();
+  await page.waitForFunction(() => document.querySelector('#toolbar-preview .toolbar-preview-viewport').scrollLeft > 0);
+  const geometry = await page.locator('#toolbar-preview').evaluate(container => {
+    const viewport = container.querySelector('.toolbar-preview-viewport');
+    return { zoomed: container.dataset.zoomed, width: container.querySelector('.toolbar-sim-svg').getBoundingClientRect().width,
+      viewport: viewport.clientWidth, scrollWidth: viewport.scrollWidth, left: viewport.scrollLeft, tabIndex: viewport.tabIndex,
+      label: viewport.getAttribute('aria-label') || viewport.getAttribute('aria-labelledby') };
+  });
+  assert.equal(geometry.zoomed, 'true');
+  assert.ok(geometry.tabIndex >= 0 && geometry.label, 'Zoomed viewport must be named and keyboard focusable');
+  assert.ok(geometry.width > widthBefore * 1.3, 'Zoom must make toolbar details visibly larger');
+  assert.ok(geometry.scrollWidth > geometry.viewport, 'Only the preview gets a horizontal scroll area');
+  if (initial) assert.ok(Math.abs(geometry.left - (geometry.scrollWidth - geometry.viewport) / 2) <= 2,
+    'First zoom must center the phrase counters');
+  assert.deepEqual(await toolbarConfiguration(page), before, 'Zoom must preserve every skin selection');
+  await noHorizontalOverflow(page);
 }
 
 async function toolbarConfiguration(page) {
@@ -140,6 +191,24 @@ async function toolbarConfiguration(page) {
     customInputs: [...document.querySelectorAll('#custom-presets input')].map(input => [input.type, input.value, input.checked]),
     preview: document.querySelector('#preview-title').textContent,
   }));
+}
+
+async function logoFixtures(page) {
+  const encoded = await page.evaluate(() => {
+    const canvas = document.createElement('canvas'); canvas.width = 144; canvas.height = 34;
+    const context = canvas.getContext('2d');
+    const empty = canvas.toDataURL('image/png');
+    context.fillStyle = '#E89CBE'; context.fillRect(14, 6, 116, 22);
+    const transparent = canvas.toDataURL('image/png');
+    context.fillStyle = '#82D8D1'; context.fillRect(0, 0, 144, 34);
+    return { transparent, opaque: canvas.toDataURL('image/png'), empty };
+  });
+  return Object.fromEntries(Object.entries(encoded).map(([key, value]) => [key, Buffer.from(value.split(',')[1], 'base64')]));
+}
+
+async function uploadLogo(page, name, buffer) {
+  await page.locator('#custom-logo-upload').setInputFiles({ name, mimeType: 'image/png', buffer });
+  await page.waitForFunction(() => document.querySelector('#custom-logo-upload').getAttribute('aria-busy') === 'false');
 }
 
 async function assertDefaultLocked(page) {
@@ -247,6 +316,36 @@ print('Browser-exported ZIP: valid CRC, exact sprites, two independent custom pa
   console.log(result.stdout.trim());
 }
 
+function verifyLogoZip(filename, originalFilename) {
+  const result = spawnSync('python3', ['-c', String.raw`
+import re, struct, sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as original:
+    assert added.testzip() is None
+    assert added.namelist() == original.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png']
+    assert added.read('icons_daylight.png') == original.read('icons_daylight.png')
+    source_png = original.read('gfx-pro.png')
+    logo_png = added.read('gfx-pro.png')
+    assert logo_png[:8] == source_png[:8] == b'\x89PNG\r\n\x1a\n'
+    width, height = struct.unpack('>II', source_png[16:24])
+    assert struct.unpack('>II', logo_png[16:24]) == (width, height + 17)
+    assert logo_png[24:26] == bytes([8, 6]), 'Appended sprite must remain lossless 8-bit RGBA'
+    source_xml = original.read('Pro.xml').decode()
+    logo_xml = added.read('Pro.xml').decode()
+    assert re.findall(r'<logo>.*?</logo>', logo_xml, re.S) == re.findall(r'<logo>.*?</logo>', source_xml, re.S)
+    visuals = re.findall(r'<visual\b[^>]*>.*?</visual>', logo_xml, re.S)
+    logo_visuals = [visual for visual in visuals if f'<off x="0" y="{height}"' in visual]
+    assert len(logo_visuals) == 2
+    assert all('<size width="72" height="17"' in visual for visual in logo_visuals)
+    assert any('<pos x="182" y="13"' in visual for visual in logo_visuals)
+    assert any('<pos x="92" y="13"' in visual for visual in logo_visuals)
+    assert '<group name="topbar_status" x="276" y="8">' in logo_xml
+    assert '<group name="topbar_status" x="181" y="8">' in logo_xml
+print('Logo ZIP: valid CRC, native logo retained, 72×17 tile appended, both platform positions and status offsets correct.')
+`, filename, originalFilename], { encoding: 'utf8', cwd: root });
+  assert.equal(result.status, 0, result.stderr || result.error?.message || result.stdout);
+  console.log(result.stdout.trim());
+}
+
 await mkdir(artifacts, { recursive: true });
 try {
   const base = process.env.BASE_URL || await localServer();
@@ -265,6 +364,7 @@ try {
   assert.equal(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black"]').count(), 1);
   assert.equal(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black/releases/latest"]').count(), 1);
   assert.match(await desktop.locator('footer').innerText(), /Made with AI/i);
+  await desktop.locator('#skin-folder-paths summary').click();
   const macPath = '~/Library/Application Support/VirtualDJ/Skins';
   const windowsPath = String.raw`%LOCALAPPDATA%\VirtualDJ\Skins`;
   assert.equal(await desktop.locator('#skin-path-macos').innerText(), macPath);
@@ -279,6 +379,7 @@ try {
   await desktop.waitForFunction(() => document.querySelector('#path-copy-status').textContent.toLowerCase().includes('manually'));
   assert.equal(await desktop.evaluate(() => window.getSelection().toString()), windowsPath);
   assert.equal(await desktop.locator('a[href^="file:"]').count(), 0);
+  await desktop.locator('#skin-folder-paths summary').click();
   assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), defaults);
   assert.equal(await desktop.locator('#preset-preview .preview-deck').count(), 4);
   assert.equal(await desktop.locator('#preset-preview .preview-wave').count(), 4);
@@ -297,6 +398,7 @@ try {
   assert.ok(await desktop.evaluate(() => Boolean(document.querySelector('.custom-panel').compareDocumentPosition(document.querySelector('.toolbar-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)), 'Custom preset editor must precede toolbar controls');
   await desktop.locator('#preset-preview').scrollIntoViewIfNeeded();
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'running');
+  await assertAnimatedPreview(desktop, '#preset-preview');
   // Compositor animations stop when the system asks for reduced motion.
   await desktop.emulateMedia({ reducedMotion: 'reduce' });
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'paused');
@@ -352,6 +454,7 @@ try {
   assert.deepEqual(await firstTile.locator('.palette-swatches i').evaluateAll(items => items.map(item => item.style.getPropertyValue('--swatch'))), randomised);
   assert.deepEqual(await desktop.locator('#preset-preview .preview-deck-hex').allTextContents(), randomised);
   assert.deepEqual(await desktop.locator('#custom-preview .preview-deck-hex').allTextContents(), randomised);
+  await assertAnimatedPreview(desktop, '#custom-preview');
   const initialCustomAccent = await websiteAccent(desktop);
   // Invalid colours and a duplicate Default name must never produce a ZIP.
   await first.locator('.hex-input[data-deck="A"]').fill('#xyz');
@@ -425,17 +528,31 @@ try {
   assert.equal(await desktop.locator('#toolbar-count').innerText(), '6 visible');
   const beforeDisplayChanges = await toolbarConfiguration(desktop);
   await desktop.locator('#toolbar-notch-preview').check();
+  const controlWidth = await desktop.locator('#toolbar-preview [data-toolbar-control="settings"]').evaluate(item => item.getBoundingClientRect().width);
   for (const profile of ['13', '14', '15', '16']) {
     await desktop.locator('#toolbar-display-profile').selectOption(profile);
-    await assertToolbarPreview(desktop, { notch: true, profile, colors: colours, order: defaultToolbarOrder });
-    assert.equal(await desktop.locator('#download').isEnabled(), true, 'All six controls legitimately fit every profile');
-    assert.equal(await desktop.locator('#toolbar-order input:disabled').count(), 0, 'Do not impose an artificial button limit');
-    assert.match(await desktop.locator('#toolbar-fit-status').innerText(), /fit/i);
+    const fits = profile !== '13';
+    await assertToolbarPreview(desktop, { notch: true, profile, colors: colours, order: defaultToolbarOrder, fits });
+    const renderedWidth = await desktop.locator('#toolbar-preview [data-toolbar-control="settings"]').evaluate(item => item.getBoundingClientRect().width);
+    assert.ok(Math.abs(renderedWidth - controlWidth) < .1, 'Profile changes must preserve displayed control size');
+    assert.equal(await desktop.locator('#download').isEnabled(), fits, 'An overlapping toolbar must block download');
+    assert.equal(await desktop.locator('#toolbar-order input:checked').count(), 4, 'A narrower display must preserve selected controls');
+    assert.equal(await desktop.locator('#toolbar-order input:checked:disabled').count(), 0, 'Users must be able to remove overlapping controls');
+    assert.match(await desktop.locator('#toolbar-fit-status').innerText(), fits ? /fit/i : /overlap/i);
   }
   assert.deepEqual(await toolbarConfiguration(desktop), beforeDisplayChanges, 'Display preview changes must retain all choices');
   await desktop.locator('#toolbar-display-profile').selectOption('13');
+  await desktop.locator('#toolbar-account').uncheck();
+  assert.equal(await desktop.locator('#toolbar-account').isDisabled(), true, 'A candidate that would overlap must be unavailable');
+  assert.equal(await desktop.locator('#download').isEnabled(), true, 'Removing a control restores a valid toolbar');
+  await assertToolbarPreview(desktop, { notch: true, profile: '13', colors: colours, order: defaultToolbarOrder.filter(key => key !== 'account') });
   await noHorizontalOverflow(desktop);
-  await desktop.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-notch-13-all-controls.png'), animations: 'disabled' });
+  await desktop.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-notch-13-controls.png'), animations: 'disabled' });
+  await zoomToolbar(desktop);
+  await assertToolbarPreview(desktop, { notch: true, profile: '13', colors: colours, order: defaultToolbarOrder.filter(key => key !== 'account') });
+  await desktop.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-notch-13-zoomed.png'), animations: 'disabled' });
+  await desktop.locator('#toolbar-display-profile').selectOption('16');
+  await desktop.locator('#toolbar-account').check();
   const settingsEarlier = desktop.locator('#toolbar-order [data-toolbar-key="settings"] [data-move="-1"]');
   await settingsEarlier.click();
   await settingsEarlier.press('Enter');
@@ -454,6 +571,7 @@ try {
   await desktop.locator('#toolbar-account').check();
   assert.deepEqual(await desktop.locator('#toolbar-preview [data-toolbar-control]').evaluateAll(items => items.map(item => item.dataset.toolbarControl)), requestedOrder);
   await desktop.locator('#toolbar-display-profile').selectOption('16');
+  assert.equal(await desktop.locator('#toolbar-preview').getAttribute('data-zoomed'), 'true', 'Zoom persists when preview controls rerender');
   await assertToolbarPreview(desktop, { notch: true, profile: '16', colors: colours, order: requestedOrder });
   await desktop.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-notch-16-reordered.png'), animations: 'disabled' });
   await noHorizontalOverflow(desktop);
@@ -463,13 +581,77 @@ try {
   verifyDownloadedZip(archive, requestedOrder);
   // Profile and notch are illustrative preview settings; exported detection stays automatic.
   const beforePreviewOnlyChanges = await toolbarConfiguration(desktop);
+  await desktop.locator('#toolbar-preview .toolbar-preview-zoom').click();
+  assert.equal(await desktop.locator('#toolbar-preview').getAttribute('data-zoomed'), 'false');
   await desktop.locator('#toolbar-notch-preview').uncheck();
-  await desktop.locator('#toolbar-display-profile').selectOption('13');
-  await assertToolbarPreview(desktop, { notch: false, profile: '13', colors: colours, order: requestedOrder });
+  await desktop.locator('#toolbar-display-profile').selectOption('14');
+  await assertToolbarPreview(desktop, { notch: false, profile: '14', colors: colours, order: requestedOrder });
   assert.deepEqual(await toolbarConfiguration(desktop), beforePreviewOnlyChanges);
   const unnotchedArchive = join(artifacts, 'pro-pure-black-no-notch-preview.zip');
   await download(desktop, unnotchedArchive);
   assert.deepEqual(await readFile(unnotchedArchive), await readFile(archive), 'Preview settings must not change the downloaded skin');
+
+  // Logos are decoded as PNG pixels, with transparency and safe text metadata.
+  const logos = await logoFixtures(desktop);
+  for (const [name, buffer] of [
+    ['broken.png', Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])],
+    ['disguised.png', Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"></svg>')],
+    ['opaque.png', logos.opaque], ['invisible.png', logos.empty],
+  ]) {
+    await uploadLogo(desktop, name, buffer);
+    assert.equal(await desktop.locator('#custom-logo-status').evaluate(status => status.classList.contains('is-error')), true);
+    assert.equal(await desktop.locator('#toolbar-preview [data-custom-logo]').count(), 0);
+    assert.equal(await desktop.locator('#download').isEnabled(), true, 'Rejected logo must not block an otherwise valid skin');
+  }
+  const logoName = '<img src=x onerror="window.injectedLogo=true">.png';
+  await uploadLogo(desktop, logoName, logos.transparent);
+  assert.equal(await desktop.locator('#custom-logo-status').innerText(), 'Logo ready.');
+  assert.equal(await desktop.locator('#custom-logo-details').innerText(), `${logoName} · 144 × 34`);
+  assert.equal(await desktop.locator('#custom-logo-details img').count(), 0);
+  assert.equal(await desktop.evaluate(() => Boolean(window.injectedLogo)), false);
+  const logoImage = desktop.locator('#toolbar-preview image[data-custom-logo]');
+  assert.equal(await logoImage.count(), 1);
+  assert.deepEqual(await logoImage.evaluate(image => ['x', 'y', 'width', 'height'].map(name => Number(image.getAttribute(name)))), [182, 13, 72, 17]);
+  assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-logo').getAttribute('x'), '100', 'Native VirtualDJ logo must remain');
+  assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-status').getAttribute('data-native-x'), '276');
+  const validLogoUrl = await logoImage.getAttribute('href');
+  assert.match(validLogoUrl, /^data:image\/png;base64,/);
+  await uploadLogo(desktop, 'opaque-replacement.png', logos.opaque);
+  assert.match(await desktop.locator('#custom-logo-status').innerText(), /Previous logo kept\./);
+  assert.equal(await logoImage.getAttribute('href'), validLogoUrl);
+  assert.equal(await desktop.locator('#custom-logo-details').innerText(), `${logoName} · 144 × 34`);
+  assert.equal(await desktop.locator('#download').isEnabled(), true);
+  await desktop.locator('#toolbar-notch-preview').check();
+  await zoomToolbar(desktop, { initial: false });
+  await desktop.locator('#toolbar-preview .toolbar-preview-viewport').evaluate(viewport => { viewport.scrollLeft = 0; });
+  await desktop.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-custom-logo.png'), animations: 'disabled' });
+  const logoArchive = join(artifacts, 'pro-pure-black-with-logo.zip');
+  await download(desktop, logoArchive);
+  verifyLogoZip(logoArchive, unnotchedArchive);
+
+  // A late failed upload cannot undo Remove or leave Download disabled.
+  await desktop.evaluate(() => {
+    const file = new File(['invalid PNG payload'], 'pending.png', { type: 'image/png' });
+    file.arrayBuffer = () => new Promise(resolve => { window.finishPendingLogo = resolve; });
+    const input = document.querySelector('#custom-logo-upload');
+    Object.defineProperty(input, 'files', { configurable: true, value: [file] });
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  assert.equal(await desktop.locator('#download').isDisabled(), true, 'Logo validation gates Download');
+  await desktop.locator('#custom-logo-remove').click();
+  await desktop.evaluate(async () => {
+    window.finishPendingLogo(new TextEncoder().encode('invalid PNG payload').buffer);
+    await new Promise(resolve => setTimeout(resolve, 0));
+    delete document.querySelector('#custom-logo-upload').files;
+  });
+  assert.equal(await desktop.locator('#custom-logo-status').innerText(), 'Custom logo removed.');
+  assert.equal(await desktop.locator('#toolbar-preview [data-custom-logo]').count(), 0);
+  assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-status').getAttribute('data-native-x'), '195');
+  assert.equal(await desktop.locator('#custom-logo-details').isVisible(), false);
+  assert.equal(await desktop.locator('#download').isEnabled(), true);
+  const removedLogoArchive = join(artifacts, 'pro-pure-black-logo-removed.zip');
+  await download(desktop, removedLogoArchive);
+  assert.deepEqual(await readFile(removedLogoArchive), await readFile(unnotchedArchive), 'Removing the logo restores the exact original export');
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'paused');
 
   const mobile = await openPage(base, { width: 390, height: 844 }, true);
@@ -500,14 +682,21 @@ try {
   await mobile.locator('#toolbar-display-profile').selectOption('13');
   const mobileColors = await mobile.locator('#preset-preview .preview-deck-hex').allTextContents();
   await assertToolbarPreview(mobile, { notch: true, profile: '13', colors: mobileColors,
-    order: ['account', 'shoutout', 'sandbox', 'scheduler', 'layout', 'settings'] });
+    order: ['account', 'shoutout', 'sandbox', 'scheduler', 'layout', 'settings'], fits: false });
+  assert.equal(await mobile.locator('#download').isDisabled(), true);
+  await mobile.locator('#toolbar-account').uncheck();
+  assert.equal(await mobile.locator('#toolbar-account').isDisabled(), true);
   assert.equal(await mobile.locator('#download').isEnabled(), true);
-  assert.equal(await mobile.locator('#toolbar-order input:disabled').count(), 0);
+  await zoomToolbar(mobile);
+  await assertToolbarPreview(mobile, { notch: true, profile: '13', colors: mobileColors,
+    order: ['shoutout', 'sandbox', 'scheduler', 'layout', 'settings'] });
+  await mobile.locator('.toolbar-panel').screenshot({ path: join(artifacts, 'toolbar-notch-13-mobile-zoomed.png'), animations: 'disabled' });
   await noHorizontalOverflow(mobile);
   await assertBlackSurfaces(mobile);
   await mobile.screenshot({ path: join(artifacts, 'mobile.png'), fullPage: true, animations: 'disabled' });
+  await recordAnimatedPreview(base);
   assert.deepEqual(errors, [], 'Browser errors were emitted.');
-  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, palette-linked website accents with black surfaces, native-coordinate notch/display previews, fixed custom starts and new random palettes, clipboard fallback, identical exports across preview settings, real ZIP download, desktop/mobile layout, no browser errors.');
+  console.log('Passed: locked Default, multiple custom presets, independent selection/preview, custom validation, synchronized custom palette tiles, toolbar toggles and button ordering, palette-linked website accents with black surfaces, native-coordinate notch/display previews with local zoom, fixed custom starts and new random palettes, clipboard fallback, validated transparent logos with safe removal, identical exports across preview settings, real ZIP download, desktop/mobile layout, no browser errors.');
 } catch (error) {
   for (const { page, label } of pages) {
     await page.screenshot({ path: join(artifacts, `${label}-failure.png`), fullPage: true, animations: 'disabled' }).catch(() => {});

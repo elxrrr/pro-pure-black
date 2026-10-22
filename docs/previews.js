@@ -1,5 +1,5 @@
-import { DEFAULT_TOOLBAR_ORDER, toolbarLayout } from './toolbar.js';
-import { getDisplayProfile } from './display.js';
+import { DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
+import { getDisplayProfile, toolbarFit } from './display.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 const DEFAULT_WAVES = ['#0085F4', '#FF0013', '#00FFBA', '#F94C00'];
@@ -7,6 +7,8 @@ const DEFAULT_DARKS = ['#0D5269', '#8E1E25', '#0B544A', '#84341A'];
 const DEFAULT_METERS = [1792, 1776, 1469, 1453];
 const watched = new Map();
 const rendered = new WeakMap();
+const toolbarViews = new WeakMap();
+let nextToolbarView = 0;
 let motionReady = false;
 let observer;
 let reduceMotion;
@@ -159,10 +161,10 @@ function toolbarControl({ key, x, y, width, height }) {
   return `<g class="toolbar-sim-control toolbar-sim-${key}" data-toolbar-control="${key}" ${nativeBounds(x, y, width, height)} transform="translate(${x} ${y})"><title>${LABELS[key]}${key === 'sandbox' ? ' with active waveform' : ''}</title><rect width="${width}" height="${height}" rx="3" fill="#000" stroke="#303030"/>${content}</g>`;
 }
 
-function toolbarStatus() {
+function toolbarStatus(x = 195) {
   const meters = [9, 15].map((y, channel) => Array.from({ length: 13 }, (_, i) =>
     `<rect x="${65 + i * 5.4}" y="${y}" width="4" height="4" fill="${i < 9 - channel ? '#828282' : '#242424'}"/>`).join('')).join('');
-  return `<g class="toolbar-sim-status" ${nativeBounds(195, 8, 336, 27)} transform="translate(195 8)">
+  return `<g class="toolbar-sim-status" ${nativeBounds(x, 8, 336, 27)} transform="translate(${x} 8)">
     <rect width="333" height="27" rx="4" fill="#000" stroke="#282828"/>
     <g class="toolbar-sim-master"><text x="10" y="18" font-size="11">MASTER</text><g class="toolbar-sim-master-bars">${meters}</g><circle cx="144.5" cy="14.5" r="5" fill="none" stroke="#484848"/></g>
     <path d="M160 4v19m50-19v19m50-19v19" stroke="#282828"/>
@@ -176,45 +178,88 @@ function phraseCircle(deck, x, colour) {
   return `<g class="toolbar-sim-phrase" data-phrase-deck="${deck}" data-color="${colour}" ${nativeBounds(x, 6, 30, 30)} transform="translate(${x} 6)"><title>Deck ${deck} phrase counter</title><circle cx="15" cy="15" r="15" fill="#484848"/><circle cx="15" cy="15" r="12.5" fill="none" stroke="${colour}" stroke-width="5" stroke-dasharray="27 52" transform="rotate(-90 15 15)"/><circle cx="15" cy="15" r="10" fill="#000"/><text x="15" y="19" text-anchor="middle" fill="#a6a6a6" font-size="11">${deck}</text></g>`;
 }
 
-function phrasePreview(notch, colours) {
+function phrasePreview(notch, colours, offset = 0) {
   const positions = notch ? { A: 760, C: 795, B: 1095, D: 1130 } : { C: 823, A: 858, B: 1037, D: 1072 };
-  const circles = Object.entries(positions).map(([deck, x]) => phraseCircle(deck, x, colours[LETTERS.indexOf(deck)])).join('');
+  const circles = Object.entries(positions).map(([deck, x]) => phraseCircle(deck, x + offset, colours[LETTERS.indexOf(deck)])).join('');
   if (notch) return circles;
   const bars = colours.map((colour, deck) => Array.from({ length: 4 }, (_, beat) =>
-    `<rect x="${898 + beat * 33}" y="${8 + deck * 7}" width="28" height="5" rx="2" fill="${beat <= deck % 3 ? colour : '#484848'}"/>`).join('')).join('');
-  return `${circles}<g class="toolbar-sim-beat-bars" ${nativeBounds(898, 8, 127, 26)}>${bars}</g>`;
+    `<rect x="${898 + offset + beat * 33}" y="${8 + deck * 7}" width="28" height="5" rx="2" fill="${beat <= deck % 3 ? colour : '#484848'}"/>`).join('')).join('');
+  return `${circles}<g class="toolbar-sim-beat-bars" ${nativeBounds(898 + offset, 8, 127, 26)}>${bars}</g>`;
 }
 
-/** Proportional native toolbar geometry; display/notch choices affect only this preview. */
+/** Fixed-size controls, centered phrases and right-anchored tools; preview choices never change the skin. */
 export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER, display = {}) {
   if (!container) throw new Error('The toolbar preview container is missing.');
-  const { notch = false, profile = '14', colors = DEFAULT_TOOLBAR_COLOURS } = display;
+  const { notch = false, profile = '14', colors = DEFAULT_TOOLBAR_COLOURS, logo = null } = display;
   if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
+  if (logo !== null && (typeof logo !== 'string' || !/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(logo))) {
+    throw new TypeError('The toolbar logo must be a PNG data URL.');
+  }
   if (!Array.isArray(colors) || colors.length !== 4 || !colors.every(colour => typeof colour === 'string' && /^#[0-9a-f]{6}$/i.test(colour))) {
     throw new Error('The toolbar preview needs four hex colours.');
   }
   const colours = colors.map(colour => colour.toUpperCase());
   const device = getDisplayProfile(profile);
-  const items = toolbarLayout(options, 'mac', order);
+  const fit = toolbarFit(options, order, { notch, profile });
+  const { items, canvasWidth, phraseOffset } = fit;
   container.classList.add('toolbar-simulation');
   container.dataset.profile = device.id;
   container.dataset.notch = String(notch);
   container.dataset.displayWidth = device.width;
   container.dataset.displayHeight = device.height;
-  container.setAttribute('role', 'img');
-  container.setAttribute('aria-label', `Approximate ${device.label} fullscreen toolbar. Left: VirtualDJ logo, master level, CPU, battery and clock. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.`);
-  const cutout = notch ? '<g class="toolbar-sim-notch" data-native-x="845" data-native-width="230"><path d="M845 0v22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V0" fill="#000" stroke="#343438"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>' : '';
-  container.innerHTML = `<div class="toolbar-display-frame" style="--display-ratio:${device.width / 1728}">
-    <svg class="toolbar-sim-svg" viewBox="0 0 1920 84" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect x=".5" y=".5" width="1919" height="83" rx="10" fill="#000" stroke="var(--line)"/>
-      <path d="M1 43h1918" stroke="#282828"/>
+  container.dataset.canvasWidth = canvasWidth;
+  let view = toolbarViews.get(container);
+  if (!view) {
+    view = { zoomed: false, scrollLeft: null, id: `toolbar-detail-${++nextToolbarView}` };
+    toolbarViews.set(container, view);
+  }
+  const oldViewport = container.querySelector('.toolbar-preview-viewport');
+  if (view.zoomed && oldViewport) view.scrollLeft = oldViewport.scrollLeft;
+  container.setAttribute('role', 'group');
+  container.setAttribute('aria-label', 'Toolbar preview');
+  const description = `Approximate ${device.label} toolbar at a fixed control size. Left: VirtualDJ logo${logo ? ', uploaded logo' : ''}, master level, CPU, battery and clock. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.`;
+  const cutout = notch ? `<g class="toolbar-sim-notch" data-native-x="${845 + phraseOffset}" data-native-width="230" transform="translate(${phraseOffset} 0)"><path d="M845 0v22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V0" fill="#000" stroke="#343438"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>` : '';
+  container.innerHTML = `<div class="toolbar-preview-tools"><button class="toolbar-preview-zoom" type="button" aria-controls="${view.id}">Zoom</button></div>
+    <div class="toolbar-preview-viewport" id="${view.id}" role="region" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
+    <div class="toolbar-display-frame" style="--display-ratio:${device.width / 1728};--canvas-width:${canvasWidth}px">
+    <svg class="toolbar-sim-svg" viewBox="0 0 ${canvasWidth} 84" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect x=".5" y=".5" width="${canvasWidth - 1}" height="83" rx="10" fill="#000" stroke="var(--line)"/>
+      <path d="M1 43h${canvasWidth - 2}" stroke="#282828"/>
       <g class="toolbar-sim-left">
-        <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
-        ${toolbarStatus()}
+        <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text>${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(182, 13, 72, 17)} x="182" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"/>` : ''}</g>
+        ${toolbarStatus(logo ? 276 : 195)}
       </g>
-      <g class="toolbar-sim-phrases">${phrasePreview(notch, colours)}</g>
+      <g class="toolbar-sim-phrases">${phrasePreview(notch, colours, phraseOffset)}</g>
       <g class="toolbar-sim-right">${items.map(toolbarControl).join('')}</g>
       ${cutout}
     </svg>
+    </div>
   </div>`;
+  container.querySelector('.toolbar-sim-svg').setAttribute('aria-label', description);
+  if (logo) container.querySelector('[data-custom-logo]').setAttribute('href', logo);
+  const viewport = container.querySelector('.toolbar-preview-viewport');
+  const zoomButton = container.querySelector('.toolbar-preview-zoom');
+  const updateZoom = () => {
+    container.dataset.zoomed = String(view.zoomed);
+    zoomButton.textContent = view.zoomed ? 'Fit' : 'Zoom';
+    zoomButton.setAttribute('aria-label', view.zoomed ? 'Fit toolbar preview' : 'Zoom toolbar preview');
+    viewport.tabIndex = view.zoomed ? 0 : -1;
+    if (view.zoomed) {
+      // Native-size inspection starts at the phrase counters; subsequent renders
+      // and Fit/Zoom changes retain the user's chosen horizontal position.
+      viewport.scrollLeft = view.scrollLeft ?? Math.max(0, (canvasWidth - viewport.clientWidth) / 2);
+      view.scrollLeft = viewport.scrollLeft;
+    } else {
+      viewport.scrollLeft = 0;
+    }
+  };
+  zoomButton.addEventListener('click', () => {
+    if (view.zoomed) view.scrollLeft = viewport.scrollLeft;
+    view.zoomed = !view.zoomed;
+    updateZoom();
+  });
+  viewport.addEventListener('scroll', () => {
+    if (view.zoomed) view.scrollLeft = viewport.scrollLeft;
+  }, { passive: true });
+  updateZoom();
 }

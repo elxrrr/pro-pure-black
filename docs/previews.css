@@ -32,8 +32,15 @@
 @keyframes preview-wave-scroll { to { transform: translateX(-50%); } }
 @keyframes preview-level { 0%, 100% { transform: scaleY(.72); } 20% { transform: scaleY(.5); } 38% { transform: scaleY(.91); } 58% { transform: scaleY(.61); } 76% { transform: scaleY(.82); } }
 
-.toolbar-simulation { display: flex; align-items: center; justify-content: center; min-height: 100px; padding: 20px 12px; background: #000; border: 1px solid var(--line); border-radius: 10px; min-width: 0; overflow: hidden; }
-.toolbar-display-frame { width: calc(100% * var(--display-ratio)); max-width: 100%; flex: 0 0 auto; }
+.toolbar-simulation { padding: 12px; background: #000; border: 1px solid var(--line); border-radius: 10px; min-width: 0; overflow: hidden; }
+.toolbar-preview-tools { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+.toolbar-preview-zoom { min-height: 30px; padding: 3px 10px; border: 1px solid var(--accent-line); border-radius: 5px; background: #000; color: var(--accent-text); font-size: 11px; }
+.toolbar-preview-zoom:hover { border-color: var(--accent); color: var(--accent); }
+.toolbar-preview-viewport { display: flex; align-items: center; width: 100%; min-width: 0; min-height: 56px; overflow: hidden; }
+.toolbar-preview-viewport:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.toolbar-display-frame { width: calc(100% * var(--display-ratio)); max-width: 100%; flex: 0 0 auto; margin-inline: auto; }
+.toolbar-simulation[data-zoomed="true"] .toolbar-preview-viewport { overflow-x: auto; padding-bottom: 8px; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--accent-line) #000; }
+.toolbar-simulation[data-zoomed="true"] .toolbar-display-frame { width: var(--canvas-width); max-width: none; margin-inline: 0; }
 .toolbar-sim-svg { display: block; width: 100%; height: auto; color: #a6a6a6; fill: currentColor; font-family: Arial, sans-serif; }
 @media (max-width: 700px) {
   .palette-preview { padding: 11px; gap: 8px; }
@@ -43,7 +50,7 @@
   .preview-deck-heading { align-items: flex-start; flex-direction: column; gap: 3px; }
   .preview-deck-hex { font-size: 9px; }
   .preview-wave { height: 34px; }
-  .toolbar-simulation { min-height: 78px; padding: 18px 9px; }
+  .toolbar-simulation { padding: 9px; }
 }
 @media (max-width: 420px) {
   .palette-preview { gap: 6px; padding: 9px; }

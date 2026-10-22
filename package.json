@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tools/test_configurator.mjs tools/test_custom_palettes.mjs",
+    "test": "node --test tools/test_configurator.mjs tools/test_custom_palettes.mjs tools/test_logo_image.mjs tools/test_logo_skin.mjs",
     "browsercheck": "node tools/test_configurator_browser.mjs"
   },
   "devDependencies": {

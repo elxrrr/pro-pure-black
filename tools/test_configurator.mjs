@@ -167,7 +167,7 @@ test('every toolbar order and toggle combination fits beside the native counters
   }
 });
 
-test('display fit checks use the exported geometry across all profiles, including the active Sandbox width', () => {
+test('display fit checks preserve control sizes and detect narrow-screen overlap, including the active Sandbox width', () => {
   assert.deepEqual(DISPLAY_PROFILES.map(profile => profile.id), ['13', '14', '15', '16']);
   for (const profile of DISPLAY_PROFILES) {
     assert.equal(getDisplayProfile(profile.id), profile);
@@ -176,14 +176,25 @@ test('display fit checks use the exported geometry across all profiles, includin
         const options = Object.fromEntries(optional.map((key, bit) => [key, Boolean(mask & (1 << bit))]));
         for (const order of representativeOrders) {
           const fit = toolbarFit(options, order, { notch, profile: profile.id });
-          assert.deepEqual(fit.items, toolbarLayout(options, 'mac', order));
-          assert.equal(fit.fits, true, 'All current controls fit; display size must not invent a count limit');
+          const canvasWidth = profile.width / .75;
+          const shift = canvasWidth - 1920;
+          assert.equal(fit.canvasWidth, canvasWidth);
+          assert.equal(fit.phraseOffset, shift / 2);
+          const sourceItems = toolbarLayout(options, 'mac', order);
+          for (const [index, item] of fit.items.entries()) {
+            const {x, ...rest} = item;
+            const {x: sourceX, ...sourceRest} = sourceItems[index];
+            assert.deepEqual(rest, sourceRest, 'Profile changes must retain native control dimensions');
+            assert.ok(Math.abs(x - sourceX - shift) < .000001);
+          }
+          assert.equal(fit.fits, !(profile.id === '13' && notch && mask === 15),
+            'All controls overlap only the notched 13-inch preview; other combinations retain adequate space');
           assert.equal(fit.requiredWidth, fit.items.at(-1).x + fit.items.at(-1).width - fit.items[0].x);
-          assert.equal(fit.gap, fit.items[0].x - (notch ? 1160 : 1102));
-          assert.ok(fit.gap >= fit.minGap && fit.requiredWidth <= fit.availableWidth);
-          assert.equal(fit.scale, profile.width / 1920);
+          assert.equal(fit.gap, fit.items[0].x - ((notch ? 1160 : 1102) + shift / 2));
+          assert.equal(fit.gap >= fit.minGap && fit.requiredWidth <= fit.availableWidth, fit.fits);
+          assert.equal(fit.scale, .75);
           if (options.sandbox) assert.equal(fit.items.find(item => item.key === 'sandbox').width, 235);
-          if (mask === 15) assert.equal(fit.requiredWidth, 648);
+          if (mask === 15) assert.ok(Math.abs(fit.requiredWidth - 648) < .000001);
         }
       }
     }

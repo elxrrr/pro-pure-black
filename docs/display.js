@@ -1,4 +1,4 @@
-import { DEFAULT_TOOLBAR_ORDER, toolbarLayout, measureToolbarFit } from './toolbar.js';
+import { DEFAULT_TOOLBAR_ORDER, toolbarLayout } from './toolbar.js';
 
 // Approximate preview profiles at half the panel's native resolution. macOS
 // display scaling and VirtualDJ's window size can differ; these aren't detected
@@ -20,11 +20,26 @@ export function getDisplayProfile(id = '14') {
   return profile;
 }
 
-/** Relative skin geometry scales together; display size alone cannot cause overlap. */
+// Hold the controls at the same preview scale while changing available width.
+// This uses the 1920-wide source at a 1440-point reference width. The exported
+// skin retains VirtualDJ's own scaling; this is a conservative manual preview.
+export const PREVIEW_SCALE = .75;
+
 export function toolbarFit(options = {}, order = DEFAULT_TOOLBAR_ORDER, { notch = false, profile = '14' } = {}) {
   const display = getDisplayProfile(profile);
+  if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
+  const canvasWidth = display.width / PREVIEW_SCALE;
+  const phraseOffset = (canvasWidth - 1920) / 2;
+  const items = toolbarLayout(options, 'mac', order).map(item => ({ ...item, x: item.x + canvasWidth - 1920 }));
+  const phraseEnd = (notch ? 1160 : 1102) + phraseOffset;
+  const rightBoundary = canvasWidth - 10;
+  const gap = items[0].x - phraseEnd;
+  const minGap = 10;
+  const requiredWidth = items.at(-1).x + items.at(-1).width - items[0].x;
   return {
-    ...measureToolbarFit(toolbarLayout(options, 'mac', order), 'mac', notch),
-    profile: display, scale: display.width / 1920,
+    fits: gap >= minGap,
+    items, gap, requiredWidth, availableWidth: rightBoundary - phraseEnd - minGap,
+    phraseEnd, rightBoundary, minGap, canvasWidth, phraseOffset,
+    profile: display, scale: PREVIEW_SCALE,
   };
 }

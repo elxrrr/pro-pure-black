@@ -30,6 +30,8 @@ jobs:
         run: npm test
       - name: Check installed Chrome
         run: google-chrome --version
+      - name: Prepare preview recording
+        run: npx playwright install ffmpeg
       - name: Check browser interactions and downloads
         run: npm run browsercheck
         env:
