@@ -90,7 +90,7 @@ def document(title: str, height: int, content: str) -> str:
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" '
         f'viewBox="0 0 {WIDTH} {height}" role="img" aria-labelledby="title desc">\n'
         f'<title id="title">{escape(title)}</title>\n'
-        '<desc id="desc">Rendered palette preview based on the Pro OLED jog-wheel layout. '
+        '<desc id="desc">Rendered palette preview based on the Pro Pure Black jog-wheel layout. '
         'Four decks, A through D, shown left to right. Backgrounds remain pure black. '
         'This is an illustration, not an application screenshot.</desc>\n'
         '<style>text{font-family:Arial,Helvetica,sans-serif;font-variant-numeric:tabular-nums}</style>\n'
@@ -124,14 +124,14 @@ def main() -> None:
         ):
             raise ValueError(f"Expected four hex deck colours for {theme['name']}")
         target = ROOT / "screenshots" / "themes" / f"{theme['slug']}.svg"
-        save(target, document(f"Pro OLED — {theme['name']}", ROW_HEIGHT, theme_row(theme)))
+        save(target, document(f"Pro Pure Black — {theme['name']}", ROW_HEIGHT, theme_row(theme)))
 
     sheet = "\n".join(
         theme_row(theme, index * ROW_HEIGHT, divider=index > 0)
         for index, theme in enumerate(themes)
     )
     save(ROOT / "screenshots" / "theme-preview.svg",
-         document("Pro OLED — all deck palettes", ROW_HEIGHT * len(themes), sheet))
+         document("Pro Pure Black — all deck palettes", ROW_HEIGHT * len(themes), sheet))
     print(f"Rendered and XML-validated {len(themes)} palette previews and one combined sheet.")
 
 

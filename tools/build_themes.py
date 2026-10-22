@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Regenerate the deck palettes and menus in the single Pro OLED XML."""
+"""Regenerate the deck palettes and menus in the single Pro Pure Black XML."""
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / 'skin/Pro.xml'
-BEGIN = '\t\t<!-- BEGIN OLED DECK THEMES -->'
-END = '\t\t<!-- END OLED DECK THEMES -->'
+BEGIN = '\t\t<!-- BEGIN PURE BLACK DECK THEMES -->'
+END = '\t\t<!-- END PURE BLACK DECK THEMES -->'
 ATOMIX_DEFAULT = ('#156C89', '#AC2F37', '#0D7264', '#A54D30')
 METER_HEIGHTS = {'120-43': 77, '82': 82, '180-48': 132, '153-4': 149, '160': 160}
 METER_DECKS = {'1792': 1, '1793': 1, '1776': 2, '1777': 2, '1469': 3, '1453': 4}
@@ -53,36 +53,36 @@ def definition(name, value, deck=None, indent='\t\t\t'):
 def unwrap_variants(text, label):
     """Recover native elements before regenerating their themed alternatives."""
     generated = re.compile(
-        rf'^(?P<indent>[ \t]*)<!-- BEGIN OLED {label} -->\n'
+        rf'^(?P<indent>[ \t]*)<!-- BEGIN PURE BLACK {label} -->\n'
         r'[ \t]*<group condition="[^"]+">\n(?P<original>.*?)\n'
         r'(?P=indent)</group>\n.*?'
-        rf'(?P=indent)<!-- END OLED {label} -->', re.M | re.S)
+        rf'(?P=indent)<!-- END PURE BLACK {label} -->', re.M | re.S)
     return generated.sub(
         lambda match: '\n'.join(line[1:] for line in match['original'].split('\n')),
         text)
 
 
 def wrap_variant(original, custom, indent, themes, label):
-    native = ''.join(f"var_equal '@$oleddecktheme' {t['id']} ? false : "
+    native = ''.join(f"var_equal '@$pureblackdecktheme' {t['id']} ? false : "
                      for t in themes[1:]) + 'true'
-    themed = ''.join(f"var_equal '@$oleddecktheme' {t['id']} ? true : "
+    themed = ''.join(f"var_equal '@$pureblackdecktheme' {t['id']} ? true : "
                      for t in themes[1:]) + 'false'
     def nested(element):
         return '\n'.join('\t' + re.sub(r'^[ \t]+',
             lambda prefix: prefix[0].replace(' ', ''), line.rstrip())
             for line in element.split('\n'))
-    return (f'{indent}<!-- BEGIN OLED {label} -->\n'
+    return (f'{indent}<!-- BEGIN PURE BLACK {label} -->\n'
             f'{indent}<group condition="{native}">\n{nested(original)}\n'
             f'{indent}</group>\n'
             f'{indent}<group condition="{themed}">\n{nested(custom)}\n'
-            f'{indent}</group>\n{indent}<!-- END OLED {label} -->')
+            f'{indent}</group>\n{indent}<!-- END PURE BLACK {label} -->')
 
 
 def theme_waveforms(text, themes):
     """Give Shapes theme shades while leaving Default's native colours unset."""
     text = unwrap_variants(text, 'WAVEFORM')
-    colours = (' colorVocal="oled_wavevocal" colorInstru="oled_waveinstru"'
-               ' colorBeat="oled_wavebeat"')
+    colours = (' colorVocal="pureblack_wavevocal" colorInstru="pureblack_waveinstru"'
+               ' colorBeat="pureblack_wavebeat"')
 
     def variants(match):
         indent, original = match['indent'], match[0]
@@ -101,7 +101,7 @@ def meter_classes():
     lines = []
     for height in sorted(METER_HEIGHTS.values()):
         phase = 1 if height == 149 else 0
-        lines.append(f'\t\t<define class="oled_meter_{height}" placeholders="metercolor=deckcolor">')
+        lines.append(f'\t\t<define class="pureblack_meter_{height}" placeholders="metercolor=deckcolor">')
         for sprite_y in reversed(range(0, height + phase, 6)):
             top, bottom = max(0, sprite_y - phase), min(height, sprite_y + 4 - phase)
             if bottom <= top:
@@ -127,7 +127,7 @@ def theme_meters(text, themes):
         assert int(sprite[2]) == (1 if height == 149 else 0)
         deck = METER_DECKS[sprite[1]]
         custom = original.replace('type="linear"', 'type="vumeter"', 1)
-        custom = custom.replace('>', f' class="oled_meter_{height}" smooth="true" metercolor="oled_meter{deck}">', 1)
+        custom = custom.replace('>', f' class="pureblack_meter_{height}" smooth="true" metercolor="pureblack_meter{deck}">', 1)
         custom = re.sub(r'^[ \t]*<(?:off|on) x="\d+" y="\d+"/>\n', '', custom, flags=re.M)
         return wrap_variant(original, custom, indent, themes, 'METER')
     text, count = re.subn(
@@ -151,38 +151,38 @@ def build():
         start = text.index(BEGIN)
         end = text.index(END, start) + len(END)
         text = text[:start] + text[end:]
-    text = re.sub(r'^.*<background\b[^>]*condition="var_equal \'@\$oledcolorscheme\' [123]"[^>]*/>\n', '', text, flags=re.M)
-    text = re.sub(r'^.*<customicons\b[^>]*condition="var_equal \'@\$oledcolorscheme\' 2"[^>]*/>\n', '', text, flags=re.M)
+    text = re.sub(r'^.*<background\b[^>]*condition="var_equal \'@\$pureblackcolorscheme\' [123]"[^>]*/>\n', '', text, flags=re.M)
+    text = re.sub(r'^.*<customicons\b[^>]*condition="var_equal \'@\$pureblackcolorscheme\' 2"[^>]*/>\n', '', text, flags=re.M)
     # Daylight sprite alternatives and dialog appearance are no longer needed.
-    text = re.sub(r'^.*<(?:off|dialogs)\b[^>]*condition="var_equal \'@\$oledcolorscheme\' 2"[^>]*/>\n', '', text, flags=re.M)
-    text = text.replace(' condition="var_not_equal \'@$oledcolorscheme\' 2"', '')
-    text = text.replace(' condition="var_equal \'@$oledcolorscheme\' 0"', '')
-    # Remove obsolete fallbacks now that the OLED values are unconditional.
-    text = re.sub(r'^\s*<define color="oled_[^"]+" value="(?!#)[^"]+"/>\n', '\n', text, flags=re.M)
+    text = re.sub(r'^.*<(?:off|dialogs)\b[^>]*condition="var_equal \'@\$pureblackcolorscheme\' 2"[^>]*/>\n', '', text, flags=re.M)
+    text = text.replace(' condition="var_not_equal \'@$pureblackcolorscheme\' 2"', '')
+    text = text.replace(' condition="var_equal \'@$pureblackcolorscheme\' 0"', '')
+    # Remove obsolete fallbacks now that the PURE BLACK values are unconditional.
+    text = re.sub(r'^\s*<define color="pureblack_[^"]+" value="(?!#)[^"]+"/>\n', '\n', text, flags=re.M)
 
     plugin_defaults = {
-        'oled_plugin_over1': '#1C7B97', 'oled_plugin_selected1': '#136C8A',
-        'oled_plugin_down1': '#0B485D', 'oled_plugin_over2': '#B73B42',
-        'oled_plugin_selected2': '#AD3237', 'oled_plugin_down2': '#821A1F',
-        'oled_plugin_slider1': '#136C8A', 'oled_plugin_disabled1': '#0A3F50',
-        'oled_plugin_slider2': '#AD3237', 'oled_plugin_disabled2': '#761318',
+        'pureblack_plugin_over1': '#1C7B97', 'pureblack_plugin_selected1': '#136C8A',
+        'pureblack_plugin_down1': '#0B485D', 'pureblack_plugin_over2': '#B73B42',
+        'pureblack_plugin_selected2': '#AD3237', 'pureblack_plugin_down2': '#821A1F',
+        'pureblack_plugin_slider1': '#136C8A', 'pureblack_plugin_disabled1': '#0A3F50',
+        'pureblack_plugin_slider2': '#AD3237', 'pureblack_plugin_disabled2': '#761318',
     }
     attrs = {'over_deck': 'over', 'selected_deck': 'selected', 'down_deck': 'down'}
     for prefix, role in attrs.items():
         for deck in (1, 2):
-            text = re.sub(fr'{prefix}{deck}="#[0-9a-fA-F]+"', f'{prefix}{deck}="oled_plugin_{role}{deck}"', text)
+            text = re.sub(fr'{prefix}{deck}="#[0-9a-fA-F]+"', f'{prefix}{deck}="pureblack_plugin_{role}{deck}"', text)
     for deck in (1, 2):
-        text = re.sub(fr'\bdeck{deck}="#[0-9a-fA-F]+"', f'deck{deck}="oled_plugin_slider{deck}"', text)
-        text = re.sub(fr'\bdeck{deck}_disabled="#[0-9a-fA-F]+"', f'deck{deck}_disabled="oled_plugin_disabled{deck}"', text)
+        text = re.sub(fr'\bdeck{deck}="#[0-9a-fA-F]+"', f'deck{deck}="pureblack_plugin_slider{deck}"', text)
+        text = re.sub(fr'\bdeck{deck}_disabled="#[0-9a-fA-F]+"', f'deck{deck}_disabled="pureblack_plugin_disabled{deck}"', text)
 
     # Text-bearing filled controls use darker shades; indicator rings stay bright.
     def fill_alias(match):
         tag = match[0]
         if tag.startswith('<on ') and 'shape="circle"' in tag:
             return tag
-        return tag.replace('color="buttonon"', 'color="oled_buttonfill"')
+        return tag.replace('color="buttonon"', 'color="pureblack_buttonfill"')
     text = re.sub(r'<(?:selected|down|on)\b[^>]*\bcolor="buttonon"[^>]*/>', fill_alias, text)
-    text = text.replace('<selected color="deckcolordark"', '<selected color="oled_deck_selected"')
+    text = text.replace('<selected color="deckcolordark"', '<selected color="pureblack_deck_selected"')
 
     lines = [BEGIN]
     lines.extend(meter_classes())
@@ -191,44 +191,44 @@ def build():
     originals = themes[0]['colors']
     darks = ['#0D5269', '#8E1E25', '#0B544A', '#84341A']
     for deck, base, dark in zip(range(1, 5), originals, darks):
-        lines.append(definition('oled_buttonfill', base, deck, '\t\t'))
-        lines.append(definition('oled_deck_selected', dark, deck, '\t\t'))
-    lines += [definition('oled_buttonfill', '#B03239', 'right', '\t\t'),
-              definition('oled_buttonfill', '#4F5076', 'master', '\t\t')]
+        lines.append(definition('pureblack_buttonfill', base, deck, '\t\t'))
+        lines.append(definition('pureblack_deck_selected', dark, deck, '\t\t'))
+    lines += [definition('pureblack_buttonfill', '#B03239', 'right', '\t\t'),
+              definition('pureblack_buttonfill', '#4F5076', 'master', '\t\t')]
     for theme in themes[1:]:
-        lines.append(f'\t\t<group name="oled-theme-{theme["slug"]}" condition="var_equal \'@$oleddecktheme\' {theme["id"]}">')
+        lines.append(f'\t\t<group name="pureblack-theme-{theme["slug"]}" condition="var_equal \'@$pureblackdecktheme\' {theme["id"]}">')
         for deck, base in enumerate(theme['colors'], 1):
             bright, dark = mix(base, .12, 255), mix(base, .32)
             roles = {
                 'deckcolor': base, 'deckcolorbright': bright, 'deckcolordark': dark,
                 'deckcolor_invert': bright, 'padbuttonselected': mix(base, .82),
                 'buttonon': base, 'buttonover': mix(base, .76),
-                'buttonselected': mix(base, .82), 'oled_buttonfill': mix(base, .66),
-                'oled_deck_selected': mix(base, .66), 'textdeck': bright,
+                'buttonselected': mix(base, .82), 'pureblack_buttonfill': mix(base, .66),
+                'pureblack_deck_selected': mix(base, .66), 'textdeck': bright,
                 'faderinon': base, 'knobfillon': base, 'colorbass': mix(base, .66),
                 'colormed': dark, 'colorhigh': base, 'scratch1': base, 'scratch2': base,
-                'oled_wavevocal': dark, 'oled_waveinstru': base,
-                'oled_wavebeat': mix(base, .35, 255),
+                'pureblack_wavevocal': dark, 'pureblack_waveinstru': base,
+                'pureblack_wavebeat': mix(base, .35, 255),
             }
             for name, value in roles.items():
                 lines.append(definition(name, value, deck))
             lines.append(definition(f'waveform_active{deck}', base))
             lines.append(definition(f'waveform_passive{deck}', dark))
-            lines.append(definition(f'oled_meter{deck}', base))
+            lines.append(definition(f'pureblack_meter{deck}', base))
         for side, index in (('left', 0), ('right', 1)):
             base = theme['colors'][index]
             for name in ('deckcolor', 'faderinon', 'knobfillon'):
                 lines.append(definition(name, base, side))
             if side == 'right':
                 lines.append(definition('buttonon', base, side))
-                lines.append(definition('oled_buttonfill', mix(base, .66), side))
+                lines.append(definition('pureblack_buttonfill', mix(base, .66), side))
             lines.append(definition(f'faderin{side}', base))
         for deck in (1, 2):
             base = theme['colors'][deck-1]
             for role, value in {'over': mix(base, .76), 'selected': mix(base, .66),
                                 'down': mix(base, .72), 'slider': base,
                                 'disabled': mix(base, .66)}.items():
-                lines.append(definition(f'oled_plugin_{role}{deck}', value))
+                lines.append(definition(f'pureblack_plugin_{role}{deck}', value))
         lines.append('\t\t</group>')
     lines.append(END)
     marker = '\t\t<!--  dialogs & tooltips -->'
@@ -237,15 +237,15 @@ def build():
 
     menu = '<submenu text="Deck Colours" localize="false">\n'
     for theme in themes:
-        menu += f'\t\t\t\t\t\t<item text="{theme["name"]}" localize="false" action="set \'@$oleddecktheme\' {theme["id"]} & load_skin" check="var_equal \'@$oleddecktheme\' {theme["id"]}"/>\n'
+        menu += f'\t\t\t\t\t\t<item text="{theme["name"]}" localize="false" action="set \'@$pureblackdecktheme\' {theme["id"]} & load_skin" check="var_equal \'@$pureblackdecktheme\' {theme["id"]}"/>\n'
     menu += '\t\t\t\t\t</submenu>'
     text, count = re.subn(r'<submenu text="(?:Color Scheme|Deck Colours)"[^>]*>.*?</submenu>', lambda _: menu, text, flags=re.S)
     assert count == 2
-    assert '@$oledcolorscheme' not in text
+    assert '@$pureblackcolorscheme' not in text
     text = theme_waveforms(text, themes)
     text = theme_meters(text, themes)
     text = re.sub(r'\n[ \t]*\n(?:[ \t]*\n)+', '\n\n', text)
-    text = re.sub(r'(^[ \t]*(?:over|selected|down)_deck[12]="oled_plugin_[^"]+")[ \t]+$', r'\1', text, flags=re.M)
+    text = re.sub(r'(^[ \t]*(?:over|selected|down)_deck[12]="pureblack_plugin_[^"]+")[ \t]+$', r'\1', text, flags=re.M)
     PATH.write_bytes(text.replace('\n', '\r\n').encode())
     print(f'Built {len(themes)} deck colour choices in {PATH.name}')
 

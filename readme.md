@@ -1,8 +1,8 @@
-# Pro OLED for VirtualDJ
+# Pro Pure Black for VirtualDJ
 
 A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black desktop.
 
-![Pro OLED fullscreen notch layout](screenshots/notch-layout.jpg)
+![Pro Pure Black fullscreen notch layout](screenshots/notch-layout.jpg)
 
 ## Changes
 
@@ -26,9 +26,9 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 
 ## Install
 
-1. Download **[Pro-OLED.zip](https://github.com/elxrrr/virtualdj-pro-oled/releases/latest/download/Pro-OLED.zip)** from the latest release.
-2. Copy `Pro-OLED.zip` into your VirtualDJ `Skins` folder without extracting it.
-3. Select **Pro OLED** in **Settings → Interface**. Choose a palette under **Layout → Deck Colours**.
+1. Download **[pro-pure-black.zip](https://github.com/elxrrr/pro-pure-black/releases/latest/download/pro-pure-black.zip)** from the latest release.
+2. Copy `pro-pure-black.zip` into your VirtualDJ `Skins` folder without extracting it.
+3. Select **Pro Pure Black** in **Settings → Interface**. Choose a palette under **Layout → Deck Colours**.
 
 ## Deck colours
 

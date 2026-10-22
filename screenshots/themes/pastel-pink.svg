@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="245" viewBox="0 0 900 245" role="img" aria-labelledby="title desc">
-<title id="title">Pro OLED — Pastel Pink</title>
-<desc id="desc">Rendered palette preview based on the Pro OLED jog-wheel layout. Four decks, A through D, shown left to right. Backgrounds remain pure black. This is an illustration, not an application screenshot.</desc>
+<title id="title">Pro Pure Black — Pastel Pink</title>
+<desc id="desc">Rendered palette preview based on the Pro Pure Black jog-wheel layout. Four decks, A through D, shown left to right. Backgrounds remain pure black. This is an illustration, not an application screenshot.</desc>
 <style>text{font-family:Arial,Helvetica,sans-serif;font-variant-numeric:tabular-nums}</style>
 <rect width="900" height="245" fill="#000000"/>
 <g transform="translate(0,0)">
