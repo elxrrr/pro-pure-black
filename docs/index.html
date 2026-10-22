@@ -7,9 +7,9 @@
   <meta name="description" content="Configure Pro Pure Black for VirtualDJ: toolbar controls, colour presets and custom deck colours.">
   <title>Pro Pure Black · Skin builder</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23CC98E5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23CC98E5'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=643b897cb3ae">
   <link rel="stylesheet" href="previews.css">
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=c1fca56c7daa"></script>
 </head>
 <body>
   <main aria-label="Pro Pure Black skin builder">
@@ -17,9 +17,9 @@
       <div class="panel-heading">
         <h1 id="preview-title">Preview</h1>
         <div class="toolbar-preview-controls">
-          <label class="toggle-row toolbar-notch-toggle"><span>Notch</span><input type="checkbox" id="toolbar-notch-preview" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
+          <button type="button" id="toolbar-notch-preview" class="preview-toggle toolbar-notch-toggle" aria-pressed="true"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 8 3 3 7-7"/></svg>Notch</button>
           <div class="custom-logo-controls">
-            <label class="toggle-row logo-tint-toggle"><span>Logo tint</span><input type="checkbox" id="logo-tint" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
+            <button type="button" id="logo-tint" class="preview-toggle logo-tint-toggle" aria-pressed="true"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 8 3 3 7-7"/></svg>Tint</button>
             <label class="custom-logo-picker" title="Transparent PNG · 5 MB max · 144 × 34 px"><span>Add Logo...</span><input id="custom-logo-upload" type="file" accept=".png" aria-label="Add Logo..." aria-describedby="custom-logo-hint custom-logo-status" title="Transparent PNG · 5 MB max · 144 × 34 px"></label>
             <button id="custom-logo-remove" type="button" disabled>Remove</button>
             <span id="custom-logo-hint" class="sr-only">Transparent PNG · 5 MB max · 144 × 34 px</span>

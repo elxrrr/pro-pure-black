@@ -66,8 +66,10 @@ function updateToolbarFit(fit) {
 
 function setupDisplayPreview() {
   $('#toolbar-preview').addEventListener('toolbarlayoutchange', event => updateToolbarFit(event.detail));
-  $('#toolbar-notch-preview').addEventListener('change', event => {
-    state.notchPreview = event.target.checked; renderToolbar(); updateSummary();
+  $('#toolbar-notch-preview').addEventListener('click', event => {
+    state.notchPreview = !state.notchPreview;
+    event.currentTarget.setAttribute('aria-pressed', String(state.notchPreview));
+    renderToolbar(); updateSummary();
   });
 }
 
@@ -84,8 +86,10 @@ function updateLogoControls() {
 
 function setupLogoUpload() {
   const input = $('#custom-logo-upload');
-  $('#logo-tint').addEventListener('change', event => {
-    state.logoTint = event.target.checked; renderToolbar();
+  $('#logo-tint').addEventListener('click', event => {
+    state.logoTint = !state.logoTint;
+    event.currentTarget.setAttribute('aria-pressed', String(state.logoTint));
+    renderToolbar();
   });
   input.addEventListener('change', async () => {
     const file = input.files?.[0];

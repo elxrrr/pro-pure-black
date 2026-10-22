@@ -394,6 +394,11 @@ async function assertLogoControlLayout(page, mobile = false) {
   assert.equal(await page.locator('.custom-logo-label').count(), 0);
   assert.equal(await page.locator('.custom-logo-controls').evaluate(element => getComputedStyle(element).borderLeftWidth), '0px');
   assert.equal(await page.locator('.custom-logo-picker > span').innerText(), 'Add Logo...');
+  const upload = await page.locator('.custom-logo-picker').boundingBox();
+  for (const selector of ['#toolbar-notch-preview', '#logo-tint']) {
+    const toggle = await page.locator(selector).boundingBox();
+    assert.ok(Math.abs(toggle.height - upload.height) <= 1, 'Preview toggle buttons match the upload control height');
+  }
   assert.equal(await page.locator('#custom-logo-upload').getAttribute('accept'), '.png');
   assert.equal(await page.locator('.custom-logo-picker').evaluate(picker =>
     picker.querySelector('input').getAttribute('title') || picker.getAttribute('title')), 'Transparent PNG · 5 MB max · 144 × 34 px');
@@ -405,6 +410,24 @@ async function assertLogoControlLayout(page, mobile = false) {
 
 async function assertPaletteGroup(page, group, checked, indeterminate = false) {
   assert.deepEqual(await page.locator(`#select-${group}`).evaluate(input => [input.checked, input.indeterminate]), [checked, indeterminate]);
+}
+
+async function setPressed(page, selector, pressed) {
+  const button = page.locator(selector);
+  if (await button.getAttribute('aria-pressed') !== String(pressed)) await button.click();
+  assert.equal(await button.getAttribute('aria-pressed'), String(pressed));
+}
+
+async function assertCustomBorders(page) {
+  await page.evaluate(() => document.activeElement?.blur());
+  await page.mouse.move(0, 0);
+  await page.waitForFunction(() => {
+    const colour = getComputedStyle(document.querySelector('.toolbar-order-row')).borderTopColor;
+    return [...document.querySelectorAll('.custom-name, .custom-randomise, #add-custom, .hex-input')].every(element => {
+      const style = getComputedStyle(element);
+      return (element.matches('.hex-input') ? style.borderBottomColor : style.borderTopColor) === colour;
+    });
+  });
 }
 
 async function assertConfigurationLayout(page, wide) {
@@ -543,8 +566,8 @@ async function checkIphone17(base, engine) {
   });
   await assertDefaultLocked(page);
   assert.equal(await page.locator('#presets .preset-card input:checked').count(), 1, 'Only Default starts included on mobile');
-  assert.equal(await page.locator('#toolbar-notch-preview').isChecked(), true);
-  assert.equal(await page.locator('#logo-tint').isChecked(), true);
+  assert.equal(await page.locator('#toolbar-notch-preview').getAttribute('aria-pressed'), 'true');
+  assert.equal(await page.locator('#logo-tint').getAttribute('aria-pressed'), 'true');
   await assertToolbarPreview(page, { notch: true, colors: defaults, order: ['layout', 'settings'] });
   await assertSharedPreview(page);
   await assertConfigurationLayout(page, false);
@@ -990,13 +1013,22 @@ try {
   await assertStatusSelection(desktop, ['master', 'clock']);
   assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-right [data-toolbar-control]').count(), 2);
   assert.equal(await desktop.locator('#toolbar-count').innerText(), '4 included');
-  assert.equal(await desktop.locator('#toolbar-notch-preview').isChecked(), true);
-  assert.equal(await desktop.locator('#logo-tint').isChecked(), true);
+  for (const [id, name] of [['toolbar-notch-preview', 'Notch'], ['logo-tint', 'Tint']]) {
+    const button = desktop.getByRole('button', { name, exact: true });
+    assert.equal(await button.getAttribute('id'), id);
+    assert.equal(await button.getAttribute('type'), 'button');
+    assert.equal(await button.getAttribute('aria-pressed'), 'true');
+  }
   assert.equal(await desktop.locator('#toolbar-display-profile').count(), 0);
-  assert.equal(await desktop.locator('.toolbar-notch-toggle > span').first().innerText(), 'Notch');
+  await desktop.locator('#toolbar-notch-preview').press('Space');
+  assert.equal(await desktop.locator('#toolbar-notch-preview').getAttribute('aria-pressed'), 'false');
+  await assertToolbarPreview(desktop, { notch: false, colors: defaults, order: ['layout', 'settings'] });
+  await desktop.locator('#toolbar-notch-preview').press('Enter');
+  assert.equal(await desktop.locator('#toolbar-notch-preview').getAttribute('aria-pressed'), 'true');
   await assertToolbarPreview(desktop, { notch: true, colors: defaults, order: ['layout', 'settings'] });
   await assertSharedPreview(desktop);
   await assertConfigurationLayout(desktop, true);
+  await assertCustomBorders(desktop);
   await assertToolbarScrolling(desktop);
   await assertLogoControlLayout(desktop);
   await assertAnimatedPreview(desktop, '#toolbar-preview', [['.toolbar-phrase-progress', 'strokeDashoffset'], ['.toolbar-master-cell', 'opacity']]);
@@ -1022,7 +1054,7 @@ try {
   await desktop.screenshot({ path: join(artifacts, 'desktop-default.png'), fullPage: true, animations: 'disabled' });
   await assertStatusControls(desktop);
   await assertAnimatedPreview(desktop, '#toolbar-preview', ['.toolbar-cpu-fill']);
-  await desktop.locator('#toolbar-notch-preview').uncheck();
+  await setPressed(desktop, '#toolbar-notch-preview', false);
   await assertToolbarPreview(desktop, { notch: false, colors: defaults, order: ['layout', 'settings'] });
   await assertPhraseBeats(desktop);
 
@@ -1165,7 +1197,7 @@ try {
   const beforeDisplayChanges = await toolbarConfiguration(desktop);
   await assertToolbarPreview(desktop, { notch: false, colors: colours, order: defaultToolbarOrder.filter(key => key !== 'account'), accountLeft: true });
   const controlWidth = await desktop.locator('#toolbar-preview [data-toolbar-control="settings"]').evaluate(item => item.getBoundingClientRect().width);
-  await desktop.locator('#toolbar-notch-preview').check();
+  await setPressed(desktop, '#toolbar-notch-preview', true);
   await assertToolbarPreview(desktop, { notch: true, colors: colours, order: defaultToolbarOrder.filter(key => key !== 'account') });
   assert.equal(await desktop.locator('#toolbar-account').isChecked(), true);
   assert.equal(await desktop.locator('#toolbar-account').isEnabled(), true);
@@ -1210,7 +1242,7 @@ try {
   const narrowArchive = join(artifacts, 'pro-pure-black-narrow-notch.zip');
   await download(desktop, narrowArchive);
   assert.deepEqual(await readFile(narrowArchive), await readFile(archive));
-  await desktop.locator('#toolbar-notch-preview').uncheck();
+  await setPressed(desktop, '#toolbar-notch-preview', false);
   await assertToolbarPreview(desktop, { notch: false, colors: colours, order: requestedOrder.filter(key => key !== 'account'), accountLeft: true });
   assert.deepEqual(await toolbarConfiguration(desktop), beforePreviewOnlyChanges);
   const unnotchedArchive = join(artifacts, 'pro-pure-black-no-notch-preview.zip');
@@ -1291,7 +1323,7 @@ try {
   assert.match(await desktop.locator('#custom-logo-status').innerText(), /Previous logo kept\./);
   assert.equal(await logoImage.getAttribute('href'), validLogoUrl);
   assert.equal(await desktop.locator('#download').isEnabled(), true);
-  await desktop.locator('#toolbar-notch-preview').check();
+  await setPressed(desktop, '#toolbar-notch-preview', true);
   await assertToolbarPreview(desktop, { notch: true, colors: colours, order: requestedOrder.filter(key => key !== 'account') });
   assert.equal(await logoImage.getAttribute('x'), '538');
   await desktop.locator('#toolbar-preview .toolbar-preview-viewport').evaluate(viewport => { viewport.scrollLeft = 0; });
@@ -1299,14 +1331,16 @@ try {
   const logoArchive = join(artifacts, 'pro-pure-black-with-logo.zip');
   await download(desktop, logoArchive);
   verifyLogoZip(logoArchive, unnotchedArchive, expectedLogoColours, expectedLogoAlpha);
-  await desktop.locator('#logo-tint').uncheck();
+  await desktop.locator('#logo-tint').press('Space');
+  assert.equal(await desktop.locator('#logo-tint').getAttribute('aria-pressed'), 'false');
   await assertLogoTint(desktop, null, validLogoUrl);
   await desktop.getByRole('button', { name: 'Preview Default', exact: true }).click();
   await assertLogoTint(desktop, null, validLogoUrl);
   const originalLogoArchive = join(artifacts, 'pro-pure-black-original-logo-colours.zip');
   await download(desktop, originalLogoArchive);
   verifyLogoZip(originalLogoArchive, unnotchedArchive, ['#FFFFFF'], expectedLogoAlpha, false);
-  await desktop.locator('#logo-tint').check();
+  await desktop.locator('#logo-tint').press('Enter');
+  assert.equal(await desktop.locator('#logo-tint').getAttribute('aria-pressed'), 'true');
   await assertLogoTint(desktop, '#959595', validLogoUrl);
   await firstTile.locator('.preset-preview').click();
   await assertLogoTint(desktop, colours[0], validLogoUrl);
