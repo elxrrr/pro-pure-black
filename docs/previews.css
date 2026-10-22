@@ -49,7 +49,7 @@
 .toolbar-simulation { padding: 12px; background: #000; border: 1px solid var(--line); border-radius: 10px; min-width: 0; overflow: hidden; }
 .overall-preview .toolbar-simulation { padding: 0; border: 0; border-radius: 0; }
 .overall-preview .palette-preview { padding: 4px 0 0; border: 0; border-radius: 0; }
-.toolbar-preview-viewport { display: flex; align-items: center; width: 100%; min-width: 0; min-height: 40px; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; outline: 1px solid var(--line); outline-offset: -1px; border-radius: 8px; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--accent-line) #000; }
+.toolbar-preview-viewport { display: flex; align-items: center; width: 100%; min-width: 0; min-height: 40px; overflow-x: auto; overflow-y: hidden; outline: 1px solid var(--line); outline-offset: -1px; border-radius: 8px; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--accent-line) #000; }
 .toolbar-preview-viewport:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .toolbar-display-frame { width: var(--toolbar-render-width); max-width: none; flex: 0 0 auto; }
 .toolbar-sim-svg { display: block; width: 100%; height: auto; color: #a6a6a6; fill: currentColor; font-family: Arial, sans-serif; }

@@ -323,6 +323,22 @@ async function assertSharedPreview(page) {
   assert.equal(outline.style, 'solid');
   assert.ok(outline.width >= 1 && outline.offset <= -1,
     'One inset boundary stays fixed to the visible toolbar area while its contents scroll');
+  const alignment = await page.locator('.toolbar-preview-viewport').evaluate(viewport => {
+    const top = viewport.getBoundingClientRect().top + viewport.clientTop;
+    const centre = top + viewport.clientHeight / 2;
+    return {
+      offsets: [...viewport.querySelectorAll('.toolbar-sim-control > rect, .toolbar-sim-status > rect, .toolbar-sim-phrase > circle:first-of-type')].map(element => {
+        const bounds = element.getBoundingClientRect();
+        return Math.abs(bounds.top + bounds.height / 2 - centre);
+      }),
+      notchTop: viewport.querySelector('.toolbar-sim-notch > path')?.getBoundingClientRect().top,
+      top,
+    };
+  });
+  assert.ok(alignment.offsets.length > 0 && alignment.offsets.every(offset => offset <= 1),
+    'Visible toolbar controls must be vertically centred inside the boundary');
+  if (alignment.notchTop !== undefined) assert.ok(Math.abs(alignment.notchTop - alignment.top) <= 1,
+    'The notch must remain attached to the top edge of the toolbar');
   assert.equal(await page.locator('#toolbar-preview').evaluate(element => getComputedStyle(element).borderBottomWidth), '0px');
   assert.ok(await page.evaluate(() => Boolean(document.querySelector('.overall-preview').compareDocumentPosition(document.querySelector('.presets-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)));
   const rows = await page.locator('#preset-preview .preview-wave').evaluateAll(elements => elements.map(element => {
