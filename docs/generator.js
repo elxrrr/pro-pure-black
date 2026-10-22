@@ -7,8 +7,8 @@ const END = '\t\t<!-- END PURE BLACK DECK THEMES -->';
 const encoder = new TextEncoder();
 
 export function normaliseThemes(themes) {
-  if (!Array.isArray(themes) || !themes.length || themes.length > 64) {
-    throw new Error('Include Default and up to 63 additional palettes.');
+  if (!Array.isArray(themes) || !themes.length) {
+    throw new Error('Include Default before adding other palettes.');
   }
   const first = themes[0];
   if (!first || first.id !== 0 || first.name !== 'Default' || first.slug !== 'default' ||

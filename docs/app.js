@@ -1,61 +1,44 @@
-import { generateSkinXml, createSkinZip } from './generator.js';
+import { generateSkinXml, createSkinZip, normaliseThemes } from './generator.js';
 import { applyToolbar } from './toolbar.js';
+import { renderPalettePreview, renderToolbarPreview, setupPreviewMotion } from './previews.js';
 
-const $ = (selector) => document.querySelector(selector);
+const $ = selector => document.querySelector(selector);
 const letters = ['A', 'B', 'C', 'D'];
 const toolbarKeys = ['sandbox', 'shoutout', 'scheduler', 'account'];
 const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#156C89', '#AC2F37', '#0D7264', '#A54D30'] };
 const state = {
   themes: [originalDefault], selected: new Set(['default']), preview: 'default',
-  custom: ['#E98DB6', '#89BFF0', '#B69BE4', '#F2C48F'], assets: null, busy: false,
+  customs: [], activeCustom: null, nextCustom: 1, assets: null, busy: false,
 };
 const hexPattern = /^#[0-9a-f]{6}$/i;
 
 function setStatus(message, error = false) {
-  $('#status').textContent = message;
-  $('#status').classList.toggle('is-error', error);
+  const status = $('#status');
+  status.textContent = message;
+  status.classList.toggle('is-error', error);
+  status.hidden = !message;
+  status.parentElement.hidden = !message && $('#retry').hidden;
 }
 
-function customTheme() {
-  return { id: state.themes.length, name: $('#custom-name').value.trim() || 'Custom', slug: 'custom', colors: [...state.custom] };
+function toolbarOptions() {
+  return Object.fromEntries(toolbarKeys.map(key => [key, $(`#toolbar-${key}`).checked]));
 }
 
-function currentTheme() {
-  return state.preview === 'custom' ? customTheme() : state.themes.find(theme => theme.slug === state.preview) || originalDefault;
-}
-
-function renderPreview() {
-  const theme = currentTheme();
+function renderPresetPreview() {
+  const theme = state.themes.find(theme => theme.slug === state.preview) || originalDefault;
   $('#preview-title').textContent = theme.name;
-  $('#preview-kind').textContent = theme.slug === 'default' ? 'Original Atomix colours' : theme.slug === 'custom' ? 'Your custom palette' : 'Decks · waveforms · meters';
-  $('#deck-preview').replaceChildren(...theme.colors.map((colour, index) => {
-    const deck = document.createElement('div');
-    deck.className = 'deck';
-    deck.style.setProperty('--deck-color', colour);
-    const ticks = Array.from({ length: 60 }, (_, tick) => {
-      const angle = tick * 6 * Math.PI / 180;
-      const inner = tick % 5 === 0 ? 61 : 64;
-      const x1 = 80 + Math.sin(angle) * inner, y1 = 80 - Math.cos(angle) * inner;
-      const x2 = 80 + Math.sin(angle) * 68, y2 = 80 - Math.cos(angle) * 68;
-      return `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="${colour}" stroke-opacity="${tick % 5 === 0 ? '.9' : '.35'}" stroke-width="${tick % 5 === 0 ? '1.3' : '.7'}"/>`;
-    }).join('');
-    // Colours are validated six-digit hex values; palette names are only set as text.
-    deck.innerHTML = `<svg class="jog" viewBox="0 0 160 160" role="img" aria-label="Deck ${letters[index]}, ${colour}"><circle cx="80" cy="80" r="72" fill="#09090b" stroke="#26232b"/><circle cx="80" cy="80" r="56" fill="#050506" stroke="${colour}" stroke-width="2.5"/><circle cx="80" cy="80" r="52" fill="none" stroke="${colour}" stroke-opacity=".17" stroke-width="1"/><circle cx="80" cy="80" r="44" fill="none" stroke="#202025" stroke-width=".8"/><circle cx="80" cy="80" r="34" fill="#0b0b0e" stroke="#212126" stroke-width=".8"/>${ticks}<path d="M80 25v14" stroke="${colour}" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="80" r="3" fill="${colour}"/><text x="80" y="67" text-anchor="middle" font-size="10" font-family="Arial,sans-serif" fill="${colour}" font-weight="600">${letters[index]}</text><text x="80" y="99" text-anchor="middle" font-size="5.5" font-family="Arial,sans-serif" letter-spacing="1.4" fill="#77717f">PURE BLACK</text><path d="M65 122h30" stroke="${colour}" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/></svg><div class="deck-meta"><span class="deck-letter">DECK ${letters[index]}</span><span class="deck-hex">${colour}</span></div>`;
-    return deck;
-  }));
+  renderPalettePreview($('#preset-preview'), theme);
   document.querySelectorAll('.preset-card').forEach(card => {
     const active = card.dataset.slug === state.preview;
     card.classList.toggle('is-preview', active);
     card.querySelector('.preset-preview').setAttribute('aria-pressed', String(active));
   });
-  $('#preview-custom').setAttribute('aria-pressed', String(state.preview === 'custom'));
 }
 
 function renderPresets() {
   $('#presets').replaceChildren(...state.themes.map(theme => {
     const card = document.createElement('div');
-    card.className = 'preset-card';
-    card.dataset.slug = theme.slug;
+    card.className = 'preset-card'; card.dataset.slug = theme.slug;
     const preview = document.createElement('button');
     preview.type = 'button'; preview.className = 'preset-preview';
     preview.setAttribute('aria-label', `Preview ${theme.name}`);
@@ -68,7 +51,7 @@ function renderPresets() {
     const swatches = document.createElement('span'); swatches.className = 'palette-swatches'; swatches.setAttribute('aria-hidden', 'true');
     theme.colors.forEach(colour => { const swatch = document.createElement('i'); swatch.style.setProperty('--swatch', colour); swatches.append(swatch); });
     preview.append(nameRow, swatches);
-    preview.addEventListener('click', () => { state.preview = theme.slug; renderPreview(); });
+    preview.addEventListener('click', () => { state.preview = theme.slug; renderPresetPreview(); });
     const label = document.createElement('label'); label.className = 'preset-checkbox';
     const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = state.selected.has(theme.slug); checkbox.disabled = theme.slug === 'default';
     checkbox.setAttribute('aria-label', theme.slug === 'default' ? 'Default is always included' : `Include ${theme.name}`);
@@ -79,52 +62,118 @@ function renderPresets() {
     const face = document.createElement('span'); face.className = 'checkbox-face'; face.setAttribute('aria-hidden', 'true');
     label.append(checkbox, face); card.append(preview, label); return card;
   }));
-  renderPreview();
+  renderPresetPreview();
 }
 
-function validateCustom() {
-  const invalid = [...document.querySelectorAll('.hex-input')].filter(input => !hexPattern.test(input.value.trim()));
-  document.querySelectorAll('.hex-input').forEach(input => input.setAttribute('aria-invalid', String(!hexPattern.test(input.value.trim()))));
-  const included = $('#include-custom').checked;
-  const duplicate = state.themes.some(theme => state.selected.has(theme.slug) && theme.name.toLowerCase() === customTheme().name.toLowerCase());
-  let error = '';
-  if (included && invalid.length) error = 'Use a six-digit hex colour for each deck, for example #E98DB6.';
-  else if (included && duplicate) error = 'Give your custom palette a different name from the included presets.';
-  $('#custom-error').textContent = error;
-  $('#custom-error').hidden = !error;
-  $('#custom-name').setAttribute('aria-invalid', String(included && duplicate));
-  return !error;
+function customTheme(custom) {
+  return { name: custom.name.trim(), slug: custom.key, colors: [...custom.colors] };
+}
+
+function selectCustom(key) {
+  state.activeCustom = key;
+  const custom = state.customs.find(item => item.key === key);
+  $('#custom-preview').hidden = !custom;
+  $('#custom-preview-heading').hidden = !custom;
+  $('#custom-preview-title').textContent = custom ? custom.name.trim() || 'Custom' : '';
+  if (custom) renderPalettePreview($('#custom-preview'), customTheme(custom));
+  else $('#custom-preview').replaceChildren();
+  state.customs.forEach(item => {
+    item.element.classList.toggle('is-preview', item.key === key);
+    item.element.querySelector('.custom-preview-button').setAttribute('aria-pressed', String(item.key === key));
+  });
+}
+
+function validateCustoms() {
+  const names = new Map();
+  const addName = name => { const key = name.trim().toLowerCase(); names.set(key, (names.get(key) || 0) + 1); };
+  state.themes.filter(theme => state.selected.has(theme.slug)).forEach(theme => addName(theme.name));
+  state.customs.filter(custom => custom.included).forEach(custom => addName(custom.name));
+  let valid = true;
+  for (const custom of state.customs) {
+    const nameInvalid = !custom.name.trim() || custom.name.trim().length > 64 || /[\u0000-\u001f\u007f]/.test(custom.name);
+    const duplicate = names.get(custom.name.trim().toLowerCase()) > 1;
+    const invalidColours = custom.rawColors.some(colour => !hexPattern.test(colour.trim()));
+    let error = '';
+    if (custom.included) {
+      if (nameInvalid) error = 'Enter a palette name.';
+      else if (duplicate) error = 'Use a different name from the other included palettes.';
+      else if (invalidColours) error = 'Use a six-digit hex colour for each deck.';
+    }
+    custom.element.querySelector('.custom-name').setAttribute('aria-invalid', String(custom.included && (nameInvalid || duplicate)));
+    custom.element.querySelectorAll('.hex-input').forEach((input, index) => {
+      input.setAttribute('aria-invalid', String(custom.included && !hexPattern.test(custom.rawColors[index].trim())));
+    });
+    const message = custom.element.querySelector('.custom-error');
+    message.textContent = error; message.hidden = !error;
+    if (error) valid = false;
+  }
+  return valid;
 }
 
 function updateSummary() {
-  const valid = validateCustom();
-  const count = state.selected.size + Number($('#include-custom').checked);
-  const toolbarCount = toolbarKeys.filter(key => $(`#toolbar-${key}`).checked).length;
+  const valid = validateCustoms();
+  const count = state.selected.size + state.customs.filter(custom => custom.included).length;
+  const toolbarCount = Object.values(toolbarOptions()).filter(Boolean).length;
   $('#preset-count').textContent = `${state.selected.size} included`;
   $('#toolbar-count').textContent = `${toolbarCount} visible`;
   $('#download-summary').textContent = `${count} palette${count === 1 ? '' : 's'} · ${toolbarCount} optional control${toolbarCount === 1 ? '' : 's'}`;
   $('#download').disabled = !state.assets || state.busy || !valid;
 }
 
-function renderCustomInputs() {
-  $('#custom-colours').replaceChildren(...letters.map((letter, index) => {
+function createCustomCard(custom) {
+  const card = document.createElement('article');
+  card.className = 'custom-card'; card.dataset.customId = custom.key;
+  // Only generated keys enter this template; user-provided names use text/value.
+  card.innerHTML = `<div class="custom-card-head"><label class="custom-name-label"><span class="sr-only">Preset name</span><input class="custom-name" type="text" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="${custom.key}-error"></label><div class="custom-actions"><label class="custom-enable"><input type="checkbox" class="custom-include" checked><span class="checkbox-face" aria-hidden="true"></span><span>Include</span></label><button type="button" class="custom-preview-button" aria-pressed="false">Preview</button><button type="button" class="custom-remove">Remove</button></div></div><div class="custom-colours"></div><p class="custom-error field-error" id="${custom.key}-error" role="alert" hidden></p>`;
+  custom.element = card;
+  const name = card.querySelector('.custom-name');
+  name.value = custom.name;
+  name.addEventListener('input', () => { custom.name = name.value; selectCustom(custom.key); updateSummary(); });
+  const include = card.querySelector('.custom-include');
+  include.addEventListener('change', () => { custom.included = include.checked; updateSummary(); });
+  card.querySelector('.custom-preview-button').addEventListener('click', () => selectCustom(custom.key));
+  card.querySelector('.custom-remove').addEventListener('click', () => {
+    const index = state.customs.indexOf(custom);
+    state.customs.splice(index, 1); card.remove();
+    if (state.activeCustom === custom.key) selectCustom(state.customs[Math.min(index, state.customs.length - 1)]?.key || null);
+    updateSummary();
+    if (!state.customs.length) $('#add-custom').focus();
+  });
+  card.querySelector('.custom-colours').append(...letters.map((letter, index) => {
     const field = document.createElement('div'); field.className = 'colour-field';
-    const label = document.createElement('label'); label.className = 'colour-field-label'; label.htmlFor = `colour-${letter}`; label.textContent = `Deck ${letter}`;
+    const label = document.createElement('label'); label.className = 'colour-field-label'; label.htmlFor = `${custom.key}-colour-${letter}`; label.textContent = `Deck ${letter}`;
     const wrap = document.createElement('div'); wrap.className = 'colour-swatch-wrap';
-    const picker = document.createElement('input'); picker.type = 'color'; picker.id = `colour-${letter}`; picker.className = 'colour-picker'; picker.value = state.custom[index];
-    const hex = document.createElement('input'); hex.type = 'text'; hex.className = 'hex-input'; hex.value = state.custom[index]; hex.maxLength = 7; hex.spellcheck = false; hex.autocomplete = 'off';
-    hex.setAttribute('aria-label', `Deck ${letter} hex colour`);
-    hex.setAttribute('aria-describedby', 'custom-error');
+    const picker = document.createElement('input'); picker.type = 'color'; picker.id = label.htmlFor; picker.className = 'colour-picker'; picker.value = custom.colors[index]; picker.dataset.deck = letter;
+    const hex = document.createElement('input'); hex.type = 'text'; hex.className = 'hex-input'; hex.value = custom.rawColors[index]; hex.maxLength = 7; hex.spellcheck = false; hex.autocomplete = 'off'; hex.dataset.deck = letter;
+    hex.setAttribute('aria-label', `Deck ${letter} hex colour`); hex.setAttribute('aria-describedby', `${custom.key}-error`);
     const changed = value => {
-      $('#include-custom').checked = true;
-      if (hexPattern.test(value.trim())) { state.custom[index] = value.trim().toUpperCase(); picker.value = state.custom[index]; }
-      state.preview = 'custom'; renderPreview(); updateSummary();
+      custom.rawColors[index] = value;
+      custom.included = true; include.checked = true;
+      if (hexPattern.test(value.trim())) { custom.colors[index] = value.trim().toUpperCase(); picker.value = custom.colors[index]; }
+      selectCustom(custom.key); updateSummary();
     };
-    picker.addEventListener('input', () => { hex.value = picker.value.toUpperCase(); changed(picker.value); });
+    picker.addEventListener('input', () => { hex.value = picker.value.toUpperCase(); changed(hex.value); });
     hex.addEventListener('input', () => changed(hex.value));
-    hex.addEventListener('blur', () => { if (hexPattern.test(hex.value.trim())) hex.value = hex.value.trim().toUpperCase(); });
+    hex.addEventListener('blur', () => {
+      if (hexPattern.test(hex.value.trim())) { hex.value = hex.value.trim().toUpperCase(); custom.rawColors[index] = hex.value; }
+    });
     wrap.append(picker); field.append(label, wrap, hex); return field;
   }));
+  return card;
+}
+
+function addCustom() {
+  const existingNames = new Set([...state.themes, ...state.customs].map(item => item.name.trim().toLowerCase()));
+  let number = state.nextCustom++;
+  while (existingNames.has(`custom ${number}`)) number = state.nextCustom++;
+  const active = state.customs.find(custom => custom.key === state.activeCustom);
+  const preset = state.themes.find(theme => theme.slug === state.preview && theme.slug !== 'default');
+  const colors = [...(active?.colors || preset?.colors || ['#E98DB6', '#89BFF0', '#B69BE4', '#F2C48F'])];
+  const custom = { key: `custom-${number}`, name: `Custom ${number}`, colors, rawColors: [...colors], included: true };
+  state.customs.push(custom);
+  $('#custom-presets').append(createCustomCard(custom));
+  selectCustom(custom.key); updateSummary();
+  custom.element.querySelector('.custom-name').focus();
 }
 
 async function fetchAsset(name, binary = false) {
@@ -135,48 +184,43 @@ async function fetchAsset(name, binary = false) {
 
 async function loadAssets() {
   $('#retry').hidden = true;
-  setStatus('Loading skin assets…');
+  setStatus('Loading…');
   try {
     const [themesText, xml, image, icons] = await Promise.all([
       fetchAsset('themes.json'), fetchAsset('Pro.xml'), fetchAsset('gfx-pro.png', true), fetchAsset('icons_daylight.png', true),
     ]);
-    const themes = JSON.parse(themesText);
-    if (!Array.isArray(themes) || !themes.length || themes.some(theme => !Array.isArray(theme.colors) || theme.colors.length !== 4 || theme.colors.some(colour => !hexPattern.test(colour)))) throw new Error('The palette data could not be loaded.');
-    if (themes[0].slug !== 'default' || JSON.stringify(themes[0].colors) !== JSON.stringify(originalDefault.colors)) throw new Error('The original Default palette could not be verified.');
-    state.themes = themes;
-    state.selected = new Set(themes.map(theme => theme.slug));
+    state.themes = normaliseThemes(JSON.parse(themesText));
+    state.selected = new Set(state.themes.map(theme => theme.slug));
     state.assets = { xml, image, icons };
-    renderPresets(); updateSummary(); setStatus('Ready to build your skin.');
+    renderPresets(); updateSummary(); setStatus('');
   } catch (error) {
     state.assets = null; updateSummary();
-    setStatus(`${error.message} Try loading the skin assets again.`, true);
     $('#retry').hidden = false;
+    setStatus(`${error.message} Try again.`, true);
   }
 }
 
 async function downloadSkin() {
-  if (!state.assets || !validateCustom() || state.busy) return;
+  if (!state.assets || !validateCustoms() || state.busy) return;
   state.busy = true; updateSummary();
-  $('#download span').textContent = 'Building skin…';
-  setStatus('Building your skin…');
+  $('#download span').textContent = 'Building…';
+  setStatus('Building ZIP…');
   try {
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     const themes = state.themes.filter(theme => theme.slug === 'default' || state.selected.has(theme.slug));
-    if ($('#include-custom').checked) themes.push(customTheme());
+    themes.push(...state.customs.filter(custom => custom.included).map(customTheme));
     let xml = generateSkinXml(state.assets.xml, themes);
-    const toolbar = Object.fromEntries(toolbarKeys.map(key => [key, $(`#toolbar-${key}`).checked]));
-    xml = applyToolbar(xml, toolbar);
+    xml = applyToolbar(xml, toolbarOptions());
     xml = xml.replace(/(<skin\s[^>]*\bname=")[^"]*(")/, '$1Pro Pure Black Custom$2');
     const bytes = createSkinZip([
       { name: 'Pro.xml', data: xml },
       { name: 'gfx-pro.png', data: state.assets.image },
       { name: 'icons_daylight.png', data: state.assets.icons },
     ]);
-    const blob = new Blob([bytes], { type: 'application/zip' });
-    const url = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(new Blob([bytes], { type: 'application/zip' }));
     const link = document.createElement('a'); link.href = url; link.download = 'pro-pure-black-custom.zip'; document.body.append(link); link.click(); link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 30000);
-    setStatus('Skin built — your ZIP download is ready.');
+    setStatus('ZIP downloaded.');
   } catch (error) {
     setStatus(`Could not build the skin. ${error.message}`, true);
   } finally {
@@ -184,13 +228,16 @@ async function downloadSkin() {
   }
 }
 
-toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', updateSummary));
-$('#include-custom').addEventListener('change', updateSummary);
-$('#custom-name').addEventListener('input', () => { updateSummary(); if (state.preview === 'custom') renderPreview(); });
-$('#preview-custom').addEventListener('click', () => { state.preview = 'custom'; renderPreview(); });
+setupPreviewMotion();
+toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', () => {
+  renderToolbarPreview($('#toolbar-preview'), toolbarOptions()); updateSummary();
+}));
+$('#add-custom').addEventListener('click', addCustom);
 $('#select-all').addEventListener('click', () => { state.selected = new Set(state.themes.map(theme => theme.slug)); renderPresets(); updateSummary(); });
 $('#select-default').addEventListener('click', () => { state.selected = new Set(['default']); renderPresets(); updateSummary(); });
 $('#download').addEventListener('click', downloadSkin);
 $('#retry').addEventListener('click', loadAssets);
-renderCustomInputs(); renderPresets(); updateSummary();
+renderPresets();
+renderToolbarPreview($('#toolbar-preview'), toolbarOptions());
+updateSummary();
 loadAssets();

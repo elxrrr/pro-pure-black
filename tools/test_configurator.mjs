@@ -98,6 +98,18 @@ builder.build()
   } finally { rmSync(temporary, {recursive: true, force: true}); }
 });
 
+test('custom presets have no artificial count limit and retain distinct menu entries', () => {
+  const customs = Array.from({length: 80}, (_, index) => ({
+    ...custom, name: `Custom ${index + 1}`, slug: `custom-${index + 1}`,
+  }));
+  const selection = [themes[0], ...customs];
+  const generated = generateSkinXml(xml, selection);
+  assert.equal(normaliseThemes(selection).length, 81);
+  assert.equal((generated.match(/<group name="pureblack-theme-custom-/g) || []).length, 80);
+  assert.equal((generated.match(/<item text="Custom 80"[^>]*action="set '@\$pureblackdecktheme' 80 & load_skin"/g) || []).length, 2);
+  assert.equal(generatedRegionsRemoved(generated), generatedRegionsRemoved(xml));
+});
+
 test('all sixteen toolbar combinations preserve existing markup and fit native clear regions', () => {
   assert.equal(applyToolbar(xml, {}), xml);
   for (let mask = 0; mask < 16; mask++) {
