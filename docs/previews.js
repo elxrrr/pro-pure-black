@@ -1,6 +1,7 @@
 import { DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
 import { toolbarFit } from './display.js';
 import { statusLayout } from './status.js';
+import { DEFAULT_LOGO_COLOUR } from './logo-colour.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 const DEFAULT_WAVES = ['#0085F4', '#FF0013', '#00FFBA', '#F94C00'];
@@ -85,11 +86,13 @@ function jog() {
   </div>`;
 }
 
-function knobs(deckIndex) {
-  return `<div class="preview-knobs" aria-hidden="true">${['high', 'mid', 'low'].map((band, index) => `<div class="preview-knob" data-knob="${band}" style="--knob-delay:${-deckIndex * .43 - index * 1.7}s">
-    <svg viewBox="0 0 28 28"><title>${band[0].toUpperCase() + band.slice(1)} EQ</title><circle cx="14" cy="14" r="12" fill="none" stroke="var(--deck-color)" stroke-width="1" pathLength="100" stroke-dasharray="75 25" transform="rotate(135 14 14)"/><circle cx="14" cy="14" r="9" fill="#000" stroke="#484848"/><path d="M14 0v3" stroke="#a6a6a6"/></svg>
-    <svg class="preview-motion preview-knob-needle" viewBox="0 0 28 28"><path d="M14 7v6" stroke="var(--deck-color)" stroke-width="2" stroke-linecap="round"/></svg>
-  </div>`).join('')}</div>`;
+function knob(deckIndex) {
+  // The native 42px control uses a black 34px body and -140°…140° travel.
+  const arc = 'M8.787 35.555A19 19 0 1 1 33.213 35.555';
+  return `<div class="preview-knob" data-knob="effect" aria-hidden="true" style="--knob-delay:${-deckIndex * .43}s">
+    <svg viewBox="0 0 42 42"><title>Control preview: off to on</title><path class="preview-knob-track" d="${arc}" fill="none" stroke="#303030" stroke-width="4"/><path class="preview-motion preview-knob-highlight" d="${arc}" pathLength="100" fill="none" stroke="var(--deck-color)" stroke-width="4" stroke-dasharray="100"/><circle cx="21" cy="21" r="16.5" fill="#000" stroke="#303030"/></svg>
+    <svg class="preview-motion preview-knob-needle" viewBox="0 0 42 42"><path d="M21 8v12" stroke="#848484" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>`;
 }
 
 function level(defaultPalette, index) {
@@ -115,7 +118,7 @@ export function renderPalettePreview(container, theme) {
   const signature = `${original}:${colours.join(',')}`;
   container.classList.add('palette-preview');
   container.setAttribute('role', 'img');
-  container.setAttribute('aria-label', `${theme.name || 'Custom'}: simulated decks, EQ knobs, waveforms and levels. ${colours.map((colour, i) => `${LETTERS[i]} ${colour}`).join(', ')}.`);
+  container.setAttribute('aria-label', `${theme.name || 'Custom'}: simulated decks, control knobs, waveforms and levels. ${colours.map((colour, i) => `${LETTERS[i]} ${colour}`).join(', ')}.`);
   if (rendered.get(container) !== signature || container.childElementCount !== 4) {
     container.replaceChildren(...colours.map((colour, index) => {
       const deck = document.createElement('div');
@@ -127,8 +130,7 @@ export function renderPalettePreview(container, theme) {
       const dark = original ? DEFAULT_DARKS[index] : tint(colour, .32);
       const bright = original ? base : tint(colour, .35, 255);
       deck.innerHTML = `<div class="preview-deck-heading"><span>${LETTERS[index]}</span><span class="preview-deck-hex">${colour}</span></div>
-        <div class="preview-deck-instruments">${jog()}${level(original, index)}</div>
-        ${knobs(index)}
+        <div class="preview-deck-instruments">${jog()}${level(original, index)}${knob(index)}</div>
         <div class="preview-wave" aria-hidden="true"><div class="preview-motion preview-wave-strip"><svg viewBox="0 0 512 52" preserveAspectRatio="none"><path d="${wavePath(index, 1)}" fill="${dark}"/><path d="${wavePath(index, .7)}" fill="${base}"/><path d="${wavePath(index, .28)}" fill="${bright}"/></svg></div><span class="preview-wave-needle"></span></div>`;
       return deck;
     }));
@@ -225,6 +227,11 @@ function renderScreenFrame(frame, viewport, fit, notch, id) {
   const bottom = height - .5;
   const radius = 16;
   const edge = `M.5 ${bottom}V${radius + .5}Q.5 .5 ${radius + .5} .5H${right - radius}Q${right} .5 ${right} ${radius + .5}V${bottom}Z`;
+  // The shared window continues these sides around the decks. Keep only the
+  // top and side strokes here, so no extra line separates toolbar and controls.
+  const outline = viewport.closest('.preview-window')
+    ? `M.5 ${height}V${radius + .5}Q.5 .5 ${radius + .5} .5H${right - radius}Q${right} .5 ${right} ${radius + .5}V${height}`
+    : edge;
   const scale = fit.scale;
   const notchWidth = 230 * scale;
   const notchBottom = (30 + 7.5) * scale;
@@ -239,7 +246,7 @@ function renderScreenFrame(frame, viewport, fit, notch, id) {
       <g class="toolbar-screen-cutout"><path d="${contour}V-2H${-shoulder}Z" fill="black" stroke="black" stroke-width="1"/></g>
     </mask>` : ''}
   </defs>
-  <path class="toolbar-screen-outline" d="${edge}" ${notch ? `mask="url(#${id}-cutout)"` : ''}/>
+  <path class="toolbar-screen-outline" d="${outline}" ${notch ? `mask="url(#${id}-cutout)"` : ''}/>
   ${notch ? `<g clip-path="url(#${id}-screen)"><g class="toolbar-screen-notch"><path d="${contour}"/></g></g>` : ''}`;
   const movingParts = frame.querySelectorAll('.toolbar-screen-cutout, .toolbar-screen-notch');
   const update = () => {
@@ -253,10 +260,13 @@ function renderScreenFrame(frame, viewport, fit, notch, id) {
 /** Fixed-size controls, centered phrases and right-anchored tools; preview choices never change the skin. */
 export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER, display = {}) {
   if (!container) throw new Error('The toolbar preview container is missing.');
-  const { notch = false, fullscreen = notch, colors = DEFAULT_TOOLBAR_COLOURS, logo = null } = display;
+  const { notch = false, fullscreen = notch, colors = DEFAULT_TOOLBAR_COLOURS, logo = null, logoColour = DEFAULT_LOGO_COLOUR } = display;
   if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
   if (logo !== null && (typeof logo !== 'string' || !/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(logo))) {
     throw new TypeError('The toolbar logo must be a PNG data URL.');
+  }
+  if (typeof logoColour !== 'string' || !/^#[0-9a-f]{6}$/i.test(logoColour)) {
+    throw new TypeError('The toolbar logo needs a six-digit hex colour.');
   }
   if (!Array.isArray(colors) || colors.length !== 4 || !colors.every(colour => typeof colour === 'string' && /^#[0-9a-f]{6}$/i.test(colour))) {
     throw new Error('The toolbar preview needs four hex colours.');
@@ -293,11 +303,12 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
     <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${renderWidth}px">
     <svg class="toolbar-sim-svg" viewBox="0 -7.5 ${canvasWidth} 58" xmlns="http://www.w3.org/2000/svg" role="img">
+      ${logo ? `<defs><filter id="${view.id}-logo-tint" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feFlood class="toolbar-logo-tint" flood-color="${logoColour}"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>` : ''}
       <g class="toolbar-sim-left">
-        <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
+        <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="${DEFAULT_LOGO_COLOUR}">VirtualDJ</text></g>
         ${leftItem ? toolbarControl(leftItem) : ''}
         ${toolbarStatus(statusX, options)}
-        ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(logoX, 13, 72, 17)} x="${logoX}" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"/>` : ''}
+        ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(logoX, 13, 72, 17)} x="${logoX}" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet" filter="url(#${view.id}-logo-tint)"/>` : ''}
       </g>
       <g class="toolbar-sim-phrases">${phrasePreview(notch, colours, phraseOffset)}</g>
       <g class="toolbar-sim-right">${items.map(toolbarControl).join('')}</g>

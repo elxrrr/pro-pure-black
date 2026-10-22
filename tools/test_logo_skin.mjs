@@ -2,11 +2,14 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { deflateSync, inflateSync } from 'node:zlib';
-import { addLogoToSkin, appendLogoSprite, applyLogoXml } from '../docs/logo-skin.js';
+import { addLogoToSkin, appendLogoSprite, appendLogoSprites, applyLogoXml } from '../docs/logo-skin.js';
 import { applyToolbar } from '../docs/toolbar.js';
+import { generateSkinXml } from '../docs/generator.js';
+import { DEFAULT_LOGO_COLOUR, logoColour, tintLogoPixels } from '../docs/logo-colour.js';
 
 const sprite = new Uint8Array(await readFile(new URL('../docs/assets/gfx-pro.png', import.meta.url)));
 const sourceXml = await readFile(new URL('../docs/assets/Pro.xml', import.meta.url), 'utf8');
+const themes = JSON.parse(await readFile(new URL('../themes.json', import.meta.url), 'utf8'));
 const tile = Uint8Array.from({length: 144 * 34 * 4}, (_, index) => {
   const channel = index % 4, pixel = Math.floor(index / 4);
   return channel === 3 ? (pixel % 3 === 0 ? 0 : 255) : (pixel * (channel + 1) + 37) % 256;
@@ -191,4 +194,128 @@ test('logo XML rejects duplicate, missing and invalid inputs', () => {
   const responsive = applyToolbar(sourceXml, {account: true});
   assert.throws(() => applyLogoXml(responsive.replace('name="topbar_status" x="327"', 'name="topbar_status" x="328"'), 428), /relocated skin status position/);
   assert.throws(() => applyLogoXml(responsive + '<group name="topbar_status" x="327" y="8">', 428), /relocated skin status position/);
+});
+
+test('logo tint uses Default grey or deck A and retains every alpha byte without mutation', () => {
+  assert.equal(DEFAULT_LOGO_COLOUR, '#959595');
+  assert.equal(logoColour(themes[0]), '#959595');
+  assert.equal(logoColour(), '#959595');
+  assert.equal(logoColour({ slug: 'custom', colors: ['#e98db6'] }), '#E98DB6');
+  assert.equal(logoColour(themes.at(-1)), themes.at(-1).colors[0]);
+  const pixels = Buffer.from(Array.from({ length: 256 }, (_, alpha) => [255, 127, 32, alpha]).flat());
+  const before = Buffer.from(pixels);
+  const tinted = tintLogoPixels(pixels, '#95a5b5');
+  assert.ok(tinted instanceof Uint8Array);
+  assert.notEqual(tinted.buffer, pixels.buffer);
+  for (let alpha = 0; alpha < 256; alpha++) {
+    assert.deepEqual([...tinted.subarray(alpha * 4, alpha * 4 + 4)], [149, 165, 181, alpha]);
+  }
+  assert.deepEqual(pixels, before);
+  for (const invalid of [null, [], new Uint8Array(3)]) assert.throws(() => tintLogoPixels(invalid, '#959595'), /RGBA/);
+  for (const invalid of ['red', '#fff', '#GGGGGG', null]) {
+    assert.throws(() => tintLogoPixels(pixels, invalid), /six-digit/);
+    assert.throws(() => logoColour({ slug: 'custom', colors: [invalid] }), /six-digit/);
+  }
+});
+
+test('multiple logo tiles wrap after thirteen columns and preserve original pixels and metadata', async () => {
+  const original = parsePng(sprite);
+  assert.equal(original.width, 1920);
+  const tiles = Array.from({ length: 14 }, (_, index) => Uint8Array.from(tile,
+    (value, channel) => channel % 4 === 3 ? (channel + index) % 256 : (value + index * 17) % 256));
+  const input = Buffer.from(sprite), originalBytes = Buffer.from(input);
+  const result = await appendLogoSprites(input, tiles);
+  const output = parsePng(result.image);
+  assert.equal(output.height, 496);
+  assert.equal(output.width, original.width);
+  assert.deepEqual(result.positions, Array.from({ length: 14 }, (_, index) => ({ x: index % 13 * 144, y: 428 + Math.floor(index / 13) * 34 })));
+  const before = original.scanlines(), after = output.scanlines(), stride = 1920 * 4 + 1;
+  assert.deepEqual(after.subarray(0, before.length), before);
+  const ancillary = png => png.chunks.filter(item => !['IHDR', 'IDAT'].includes(item.type)).map(item => item.raw);
+  assert.deepEqual(ancillary(output), ancillary(original));
+  assert.deepEqual(input, originalBytes);
+  for (const [index, expected] of tiles.entries()) {
+    const { x, y } = result.positions[index];
+    for (let row = 0; row < 34; row++) {
+      const start = (y + row) * stride + 1 + x * 4;
+      assert.deepEqual(after.subarray(start, start + 144 * 4), Buffer.from(expected.subarray(row * 144 * 4, (row + 1) * 144 * 4)));
+    }
+  }
+  for (let y = 428; y < 496; y++) {
+    assert.equal(after[y * stride], 0, 'Appended scanlines use the None filter');
+    const used = y < 462 ? 13 * 144 : 144;
+    assert.ok(after.subarray(y * stride + 1 + used * 4, (y + 1) * stride).every(value => value === 0));
+  }
+  await assert.rejects(appendLogoSprites(sprite, []), /prepared 144/);
+  await assert.rejects(appendLogoSprites(sprite, [tile, new Uint8Array(3)]), /prepared 144/);
+});
+
+function paletteQuery(query, selected) {
+  if (query === 'true' || query === 'false') return query === 'true';
+  const match = query.match(/^var_equal '@\$pureblackdecktheme' (\d+)(?: \? (true|false) : (.*))?$/);
+  assert.ok(match, `Unexpected palette query: ${query}`);
+  const matches = Number(match[1]) === selected;
+  return match[2] ? (matches ? match[2] === 'true' : paletteQuery(match[3], selected)) : matches;
+}
+
+test('selected palettes and custom colours get reindexed tinted logo tiles with an exclusive Default fallback', async () => {
+  const selected = [themes[0], themes.at(-1), { id: 999, name: 'My Custom', slug: 'custom', colors: ['#f2c48f', '#AABBCC', '#C090D0', '#80C0A0'] }];
+  const options = { account: true, master: true, cpu: false, battery: false, clock: true };
+  const prepared = applyToolbar(generateSkinXml(sourceXml, selected), options);
+  const alphaTile = Uint8Array.from(tile, (value, index) => index % 4 === 3 ? Math.floor(index / 4) % 256 : 255);
+  const originalTile = alphaTile.slice();
+  const result = await addLogoToSkin(prepared, sprite, { tilePixels: alphaTile }, options, selected);
+  const output = parsePng(result.image), pixels = output.scanlines(), stride = output.width * 4 + 1;
+  const expectedColours = ['#959595', themes.at(-1).colors[0], '#F2C48F'];
+  assert.equal(output.height, 462);
+  for (const [index, colour] of expectedColours.entries()) {
+    const rgb = [1, 3, 5].map(offset => Number.parseInt(colour.slice(offset, offset + 2), 16));
+    for (let pixel = 0; pixel < 144 * 34; pixel++) {
+      const x = index * 144 + pixel % 144, y = 428 + Math.floor(pixel / 144);
+      assert.deepEqual([...pixels.subarray(y * stride + 1 + x * 4, y * stride + 1 + x * 4 + 4)], [...rgb, alphaTile[pixel * 4 + 3]]);
+    }
+  }
+  assert.deepEqual(alphaTile, originalTile);
+  assert.deepEqual(pixels.subarray(0, 428 * stride), parsePng(sprite).scanlines());
+  assert.ok(!/(?<!\r)\n/.test(result.xml));
+  const additions = [...result.xml.matchAll(/<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g)].map(match => match[0]);
+  assert.equal(additions.length, 2);
+  for (const [index, markup] of additions.entries()) {
+    const visuals = [...markup.matchAll(/<visual name="([^"]+)" condition="([^"]+)"[^>]*>[\s\S]*?<\/visual>/g)];
+    assert.equal(visuals.length, index === 0 ? 6 : 3);
+    const names = index === 0 ? ['pureblack_custom_logo', 'pureblack_custom_logo_account_left'] : ['pureblack_custom_logo'];
+    for (const name of names) {
+      const branch = visuals.filter(visual => visual[1].startsWith(`${name}_theme_`));
+      assert.equal(branch.length, 3);
+      for (const [id, visual] of branch.entries()) {
+        assert.equal(visual[1], `${name}_theme_${id}`);
+        assert.ok(visual[0].includes(`<off x="${id * 144}" y="428" width="144" height="34"/>`));
+        const x = index === 1 ? 343 : name.endsWith('account_left') ? 570 : 438;
+        assert.ok(visual[0].includes(`<pos x="${x}" y="13"/>`));
+        if (index === 0) assert.ok(visual[0].includes('visibility="has_notch ?'), 'Responsive placement remains independent of palette selection');
+      }
+      for (const chosen of [undefined, -1, 0, 1, 2, themes.at(-1).id, 999]) {
+        const active = branch.filter(visual => paletteQuery(visual[2], chosen));
+        assert.equal(active.length, 1, 'Exactly one tint is visible even for stale palette state');
+        assert.equal(active[0][1], `${name}_theme_${chosen === 1 || chosen === 2 ? chosen : 0}`);
+      }
+    }
+  }
+  const restored = result.xml.replace(/\r\n<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g, '');
+  assert.equal(restored, prepared, 'Tinting leaves existing palette definitions, controls, native logos and status branches unchanged');
+  assert.deepEqual(selected.map(theme => theme.id), [0, themes.at(-1).id, 999], 'Caller palette identities are not mutated');
+});
+
+test('Default-only exports remain grey and the full preset set uses additional sprite rows', async () => {
+  const grey = await addLogoToSkin(generateSkinXml(sourceXml, [themes[0]]), sprite, { tilePixels: tile }, {}, [themes[0]]);
+  assert.equal((grey.xml.match(/name="pureblack_custom_logo_theme_0" condition="true"/g) || []).length, 2);
+  const first = parsePng(grey.image), stride = first.width * 4 + 1;
+  assert.deepEqual([...first.scanlines().subarray(428 * stride + 1, 428 * stride + 5)], [149, 149, 149, tile[3]]);
+  const all = await addLogoToSkin(sourceXml, sprite, { tilePixels: tile }, {}, themes);
+  const image = parsePng(all.image);
+  assert.equal(image.height, 428 + Math.ceil(themes.length / 13) * 34);
+  assert.equal((all.xml.match(/name="pureblack_custom_logo_theme_\d+"/g) || []).length, themes.length * 2);
+  const last = themes.length - 1, x = last % 13 * 144, y = 428 + Math.floor(last / 13) * 34;
+  assert.equal((all.xml.match(new RegExp(`<off x="${x}" y="${y}" width="144" height="34"/>`, 'g')) || []).length, 2);
+  await assert.rejects(addLogoToSkin(sourceXml, sprite, { tilePixels: tile }, {}, themes.slice(1)), /Default/);
 });

@@ -44,7 +44,7 @@ main { padding-top: 10px; }
 .text-actions button:hover, .text-button:hover, .custom-preview-button:hover, .custom-remove:hover { color: var(--accent-text-strong); text-decoration: underline; text-underline-offset: 3px; }
 .custom-randomise { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; padding: 7px 13px; border: 1px solid var(--accent-line); border-radius: 7px; background: #000; color: var(--accent-text); font-size: 12px; white-space: nowrap; }
 .custom-randomise:hover { border-color: var(--accent-line-strong); color: var(--accent-text-strong); background: #000; }
-.preset-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.preset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(154px, 1fr)); gap: 8px; }
 .palette-groups { display: grid; gap: 10px; }
 .palette-group { min-width: 0; }
 .palette-group-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
@@ -116,9 +116,9 @@ main { padding-top: 10px; }
 .add-button { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 5px 12px; border: 1px solid var(--accent-line); border-radius: 7px; background: #000000; color: var(--accent-text); font-size: 12px; }
 .add-button span { font-size: 17px; line-height: 1; }
 .add-button:hover { background: #000000; border-color: var(--accent-line-strong); }
-#custom-presets { display: grid; gap: 8px; }
+#custom-presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 10px 16px; }
 #custom-presets:not(:empty) { margin-top: 8px; }
-.custom-card { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.5fr); gap: 8px 16px; align-items: center; padding: 0; border: 0; border-radius: 0; background: #000000; min-width: 0; }
+.custom-card { display: grid; grid-template-columns: minmax(180px, .8fr) minmax(0, 1.5fr); gap: 8px 12px; align-items: center; padding: 0; border: 0; border-radius: 0; background: #000000; min-width: 0; }
 .custom-card.is-preview, .custom-card.is-active { border-color: var(--accent-line-strong); background: #000000; }
 .custom-card-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; min-width: 0; }
 .custom-name-label { display: block; min-width: 0; }
@@ -154,14 +154,16 @@ footer a:hover { color: var(--accent-text-strong); }
 .noscript { border: 1px solid #a04c5d; padding: 15px; border-radius: 9px; color: #ffc5d2; margin-top: 15px; }
 [hidden] { display: none !important; }
 @media (max-width: 900px) {
-  .preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .custom-card { grid-template-columns: minmax(220px, 1fr) minmax(0, 1.4fr); gap: 10px; }
 }
 @media (min-width: 700px) {
   .toolbar-order { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 1120px) {
-  .toolbar-order { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .toolbar-panel { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 8px 12px; }
+  .toolbar-panel > .panel-heading { grid-column: 1 / -1; }
+  .toolbar-status { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; border: 0; }
+  .toolbar-order { grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); align-content: start; margin: 0; }
 }
 @media (max-width: 760px) {
   .custom-logo-controls { margin-left: auto; padding-left: 12px; }
@@ -176,7 +178,7 @@ footer a:hover { color: var(--accent-text-strong); }
   .panel + .panel, .download-panel { margin-top: 8px; }
   h1, h2 { font-size: 18px; }
   .count-badge { font-size: 10px; }
-  .preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .preset-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
   .preset-card { min-height: 48px; }
   .preset-preview { padding: 6px 4px 6px 8px; }
   .preset-name { font-size: 11px; }
@@ -215,6 +217,7 @@ footer a:hover { color: var(--accent-text-strong); }
   .panel { padding: 9px; }
   .panel-heading { gap: 8px; }
   h1, h2 { font-size: 17px; }
+  .preset-grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); }
   .preset-checkbox { width: 32px; }
   .preset-name { font-size: 10px; }
   .locked-label { font-size: 6px; }

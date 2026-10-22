@@ -5,6 +5,7 @@ import { applyWebsiteTheme } from './appearance.js';
 import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
 import { prepareLogo } from './logo-image.js';
 import { addLogoToSkin } from './logo-skin.js';
+import { logoColour } from './logo-colour.js';
 import { renderPalettePreview, renderToolbarPreview, setupPreviewMotion } from './previews.js';
 
 const $ = selector => document.querySelector(selector);
@@ -46,7 +47,8 @@ function activePreviewTheme() {
 function renderToolbar() {
   const container = $('#toolbar-preview');
   const options = toolbarOptions();
-  const display = { notch: state.notchPreview, colors: activePreviewTheme().colors, logo: state.logo?.dataUrl || null };
+  const theme = activePreviewTheme();
+  const display = { notch: state.notchPreview, colors: theme.colors, logo: state.logo?.dataUrl || null, logoColour: logoColour(theme) };
   const signature = JSON.stringify([options, state.toolbarOrder, display]);
   if (signature === toolbarPreviewSignature && container.childElementCount) return;
   renderToolbarPreview(container, options, state.toolbarOrder, display);
@@ -444,7 +446,7 @@ async function downloadSkin() {
     let xml = generateSkinXml(configuration.assets.xml, configuration.themes);
     xml = applyToolbar(xml, configuration.toolbar, configuration.order);
     let image = configuration.assets.image;
-    if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo, configuration.toolbar));
+    if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo, configuration.toolbar, configuration.themes));
     xml = xml.replace(/(<skin\s[^>]*\bname=")[^"]*(")/, '$1Pro Pure Black Custom$2');
     const bytes = createSkinZip([
       { name: 'Pro.xml', data: xml },

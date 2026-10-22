@@ -74,7 +74,8 @@ async function noHorizontalOverflow(page) {
   assert.ok(dimensions.content <= dimensions.viewport + 1, `Horizontal overflow: ${JSON.stringify(dimensions)}`);
 }
 
-async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-knob-needle', '.preview-wave-strip', ['.preview-meter-cell', 'opacity']]) {
+async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', '.preview-knob-needle',
+  ['.preview-knob-highlight', 'strokeDashoffset'], '.preview-wave-strip', ['.preview-meter-cell', 'opacity']]) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForFunction(selector => document.querySelector(selector).dataset.motion === 'running', selector);
   parts = parts.map(part => typeof part === 'string' ? [part, 'transform'] : part);
@@ -84,6 +85,35 @@ async function assertAnimatedPreview(page, selector, parts = ['.preview-rotor', 
   await page.waitForFunction(({ selector, parts, before }) => parts.every(([part, property], index) =>
     JSON.stringify([...document.querySelector(selector).querySelectorAll(part)].map(element => getComputedStyle(element)[property])) !== JSON.stringify(before[index])),
   { selector, parts, before });
+}
+
+async function assertKnobRange(page) {
+  const ranges = await page.locator('#preset-preview .preview-knob-highlight').evaluateAll(async highlights => {
+    const records = highlights.map(highlight => ({ highlight, animation: highlight.getAnimations()[0] }));
+    const reset = highlights.flatMap(highlight => [highlight, highlight.closest('.preview-knob').querySelector('.preview-knob-needle')])
+      .map(element => ({ element, inlineName: element.style.getPropertyValue('animation-name') }));
+    records.forEach(({ animation }) => animation.pause());
+    await Promise.all(records.map(({ animation }) => animation.ready));
+    try {
+      return records.map(({ highlight, animation }) => {
+        const timing = animation.effect.getTiming();
+        return [.1, .6, .95].map(phase => {
+          animation.currentTime = Number(timing.delay) + Number(timing.duration) * (1 + phase);
+          return parseFloat(getComputedStyle(highlight).strokeDashoffset);
+        });
+      });
+    } finally {
+      // Restart the matching needle together with its arc, retaining their phase.
+      reset.forEach(({ element }) => { element.style.animationName = 'none'; });
+      reset.forEach(({ element }) => getComputedStyle(element).animationName);
+      reset.forEach(({ element, inlineName }) => {
+        if (inlineName) element.style.animationName = inlineName;
+        else element.style.removeProperty('animation-name');
+      });
+    }
+  });
+  assert.equal(ranges.length, 4);
+  ranges.forEach(range => assert.deepEqual(range, [100, 0, 100], 'Each effect knob starts unlit, fills with colour, then returns to grey'));
 }
 
 async function assertWholeSquareMeters(page) {
@@ -381,6 +411,17 @@ async function assertSharedPreview(page) {
     const style = getComputedStyle(title); return [style.fontSize, style.fontWeight];
   }), 'The shared Preview heading must match the Colour presets heading');
   assert.equal(await page.locator('.overall-preview #toolbar-preview + #preset-preview').count(), 1);
+  const sharedFrame = await page.locator('.overall-preview .preview-window').evaluate(window => {
+    const toolbar = window.querySelector('#toolbar-preview').getBoundingClientRect();
+    const palette = window.querySelector('#preset-preview'), deckBounds = palette.getBoundingClientRect();
+    const style = getComputedStyle(palette);
+    return { widths: Math.abs(toolbar.width - deckBounds.width), gap: deckBounds.top - toolbar.bottom,
+      borders: ['Top', 'Right', 'Bottom', 'Left'].map(edge => style[`border${edge}Width`]),
+      outline: window.querySelector('.toolbar-screen-outline').getAttribute('d') };
+  });
+  assert.ok(sharedFrame.widths <= 1 && Math.abs(sharedFrame.gap) <= 1, 'Toolbar and decks join into one frame');
+  assert.deepEqual(sharedFrame.borders, ['0px', '1px', '1px', '1px']);
+  assert.doesNotMatch(sharedFrame.outline, /z/i, 'The toolbar outline stays open where the deck frame continues');
   assert.equal(await page.locator('.palette-preview').count(), 1);
   assert.equal(await page.locator('.toolbar-sim-svg').count(), 1);
   assert.equal(await page.locator('.toolbar-sim-svg > rect, .toolbar-sim-svg > path').count(), 0,
@@ -432,24 +473,27 @@ async function assertSharedPreview(page) {
     'All four deck waveforms must share the same horizontal row');
   const knobs = await page.locator('#preset-preview .preview-deck').evaluateAll(decks => decks.map(deck => {
     const bounds = deck.getBoundingClientRect(), wave = deck.querySelector('.preview-wave').getBoundingClientRect();
+    const meter = deck.querySelector('.preview-meter').getBoundingClientRect();
     return {
       colour: getComputedStyle(deck.querySelector('.preview-deck-heading')).color,
-      background: getComputedStyle(deck.querySelector('.preview-knobs')).backgroundColor,
       controls: [...deck.querySelectorAll('.preview-knob')].map(knob => {
         const box = knob.getBoundingClientRect(), needle = knob.querySelector('.preview-motion.preview-knob-needle');
         return { band: knob.dataset.knob, width: box.width, height: box.height,
-          contained: box.left >= bounds.left && box.right <= bounds.right && box.bottom <= wave.top,
-          colour: needle && getComputedStyle(needle.querySelector('path')).stroke };
+          contained: box.left >= meter.right && box.right <= bounds.right && box.bottom <= wave.top,
+          followsMeter: knob.previousElementSibling.classList.contains('preview-meter'),
+          colour: getComputedStyle(knob.querySelector('.preview-knob-highlight')).stroke,
+          needleColour: needle && getComputedStyle(needle.querySelector('path')).stroke };
       }),
     };
   }));
   for (const deck of knobs) {
-    assert.deepEqual(deck.controls.map(knob => knob.band), ['high', 'mid', 'low'], 'Every deck has three EQ knobs');
-    assert.equal(deck.background, 'rgb(0, 0, 0)');
+    assert.deepEqual(deck.controls.map(knob => knob.band), ['effect'], 'Every deck has one effect knob');
     for (const knob of deck.controls) {
-      assert.equal(knob.colour, deck.colour, 'EQ needles follow the selected deck palette');
-      assert.ok(knob.contained && knob.width > 0 && Math.abs(knob.width - knob.height) < 1,
-        'EQ knobs stay square and within their deck above the waveform');
+      assert.equal(knob.colour, deck.colour, 'Effect highlights follow the selected deck palette');
+      const channels = knob.needleColour.match(/\d+/g).map(Number);
+      assert.ok(channels.length === 3 && channels.every(channel => channel === channels[0]), 'The knob needle stays neutral grey');
+      assert.ok(knob.followsMeter && knob.contained && knob.width > 0 && Math.abs(knob.width - knob.height) < 1,
+        'Effect knobs stay square, beside the level meter and within their deck above the waveform');
     }
   }
 }
@@ -483,6 +527,7 @@ async function checkIphone17(base, engine) {
   const palette = await draft.locator('.hex-input').evaluateAll(inputs => inputs.map(input => input.value));
   await assertAnimatedPreview(page, '#preset-preview');
   await assertWholeSquareMeters(page);
+  await assertKnobRange(page);
   await page.locator('#add-custom').tap();
   const saved = page.locator('#presets .preset-card[data-slug="custom-1"]');
   assert.equal(await saved.locator('input').isChecked(), true);
@@ -571,7 +616,9 @@ async function logoFixtures(page) {
     const canvas = document.createElement('canvas'); canvas.width = 144; canvas.height = 34;
     const context = canvas.getContext('2d');
     const empty = canvas.toDataURL('image/png');
-    context.fillStyle = '#E89CBE'; context.fillRect(14, 6, 116, 22);
+    context.fillStyle = '#FFFFFF'; context.fillRect(14, 6, 116, 22);
+    context.clearRect(40, 10, 18, 7);
+    context.fillStyle = 'rgba(255,255,255,.5)'; context.fillRect(40, 10, 18, 7);
     const transparent = canvas.toDataURL('image/png');
     context.fillStyle = '#82D8D1'; context.fillRect(0, 0, 144, 34);
     return { transparent, opaque: canvas.toDataURL('image/png'), empty };
@@ -582,6 +629,21 @@ async function logoFixtures(page) {
 async function uploadLogo(page, name, buffer) {
   await page.locator('#custom-logo-upload').setInputFiles({ name, mimeType: 'image/png', buffer });
   await page.waitForFunction(() => document.querySelector('#custom-logo-upload').getAttribute('aria-busy') === 'false');
+}
+
+async function assertLogoTint(page, colour, originalUrl) {
+  const tint = await page.locator('#toolbar-preview image[data-custom-logo]').evaluate(image => {
+    const id = /^url\(#([^)]*)\)$/.exec(image.getAttribute('filter') || '')?.[1];
+    const filter = id && image.ownerSVGElement.querySelector(`filter[id="${id}"]`);
+    const flood = filter?.querySelector('feFlood'), composite = filter?.querySelector('feComposite');
+    return { colour: flood && getComputedStyle(flood).floodColor, alpha: composite?.getAttribute('in2'),
+      operator: composite?.getAttribute('operator'), url: image.getAttribute('href') };
+  });
+  const rgb = [1, 3, 5].map(offset => parseInt(colour.slice(offset, offset + 2), 16));
+  assert.equal(tint.colour, `rgb(${rgb.join(', ')})`, 'The logo follows the active palette tint');
+  assert.match(tint.alpha, /^Source(?:Alpha|Graphic)$/, 'Tinting must use the uploaded logo alpha mask');
+  assert.equal(tint.operator, 'in');
+  assert.equal(tint.url, originalUrl, 'Changing palettes must retain the uploaded artwork');
 }
 
 async function assertDefaultLocked(page) {
@@ -620,7 +682,7 @@ for platform in ['mac', 'pc']:
 positions = json.loads(sys.argv[3])
 if positions is not None:
     visuals = re.findall(r'<visual name="pureblack_custom_logo[^"]*"[^>]*>(.*?)</visual>', xml, re.S)
-    assert sorted(int(re.search(r'<pos x="(\d+)"', visual).group(1)) for visual in visuals) == sorted(positions)
+    assert sorted({int(re.search(r'<pos x="(\d+)"', visual).group(1)) for visual in visuals}) == sorted(positions)
 `, filename, JSON.stringify(enabled), JSON.stringify(logoPositions)], { encoding: 'utf8', cwd: root });
   assert.equal(result.status, 0, result.stderr || result.error?.message || result.stdout);
 }
@@ -757,9 +819,18 @@ print('Browser-exported ZIP: valid CRC, exact sprites, two independent custom pa
   console.log(result.stdout.trim());
 }
 
-function verifyLogoZip(filename, originalFilename) {
+function verifyLogoZip(filename, originalFilename, expectedColours, expectedAlpha) {
   const result = spawnSync('python3', ['-c', String.raw`
-import re, struct, sys, zipfile, zlib
+import html, json, math, re, struct, sys, zipfile, zlib
+colours = json.loads(sys.argv[3])
+expected_alpha = json.loads(sys.argv[4])
+def png_rows(png):
+    chunks, offset = [], 8
+    while offset < len(png):
+        length = struct.unpack('>I', png[offset:offset+4])[0]
+        if png[offset+4:offset+8] == b'IDAT': chunks.append(png[offset+8:offset+8+length])
+        offset += length + 12
+    return zlib.decompress(b''.join(chunks))
 with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as original:
     assert added.testzip() is None
     assert added.namelist() == original.namelist() == ['Pro.xml', 'gfx-pro.png', 'icons_daylight.png', 'README.txt']
@@ -769,39 +840,51 @@ with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as orig
     logo_png = added.read('gfx-pro.png')
     assert logo_png[:8] == source_png[:8] == b'\x89PNG\r\n\x1a\n'
     width, height = struct.unpack('>II', source_png[16:24])
-    assert struct.unpack('>II', logo_png[16:24]) == (width, height + 34)
+    columns = width // 144
+    assert struct.unpack('>II', logo_png[16:24]) == (width, height + math.ceil(len(colours) / columns) * 34)
     assert logo_png[24:26] == bytes([8, 6]), 'Appended sprite must remain lossless 8-bit RGBA'
     source_xml = original.read('Pro.xml').decode()
     logo_xml = added.read('Pro.xml').decode()
     assert re.findall(r'<logo>.*?</logo>', logo_xml, re.S) == re.findall(r'<logo>.*?</logo>', source_xml, re.S)
     visuals = re.findall(r'<visual\b[^>]*>.*?</visual>', logo_xml, re.S)
-    logo_visuals = [visual for visual in visuals if f'<off x="0" y="{height}"' in visual]
-    assert len(logo_visuals) == 3
+    logo_visuals = [visual for visual in visuals if 'name="pureblack_custom_logo' in visual]
+    assert len(logo_visuals) == len(colours) * 3
     assert all('<size width="72" height="17"' in visual for visual in logo_visuals)
-    assert all(f'<off x="0" y="{height}" width="144" height="34"' in visual for visual in logo_visuals)
-    assert any('<pos x="538" y="13"' in visual for visual in logo_visuals)
-    assert any('<pos x="443" y="13"' in visual for visual in logo_visuals)
-    assert any('<pos x="670" y="13"' in visual for visual in logo_visuals)
     assert '<group name="topbar_status" x="195" y="8">' in logo_xml
     assert '<group name="topbar_status" x="100" y="8">' in logo_xml
     assert '<group name="topbar_status" x="327" y="8">' in logo_xml
-    chunks = []
-    offset = 8
-    while offset < len(logo_png):
-        length = struct.unpack('>I', logo_png[offset:offset+4])[0]
-        if logo_png[offset+4:offset+8] == b'IDAT': chunks.append(logo_png[offset+8:offset+8+length])
-        offset += length + 12
-    rows = zlib.decompress(b''.join(chunks))
+    rows = png_rows(logo_png)
     stride = width * 4 + 1
-    visible = []
-    for y in range(34):
-        row = rows[(height+y)*stride:(height+y+1)*stride]
-        assert row[0] == 0
-        visible.extend((x, y) for x in range(144) if row[1+x*4+3])
-    assert max(x for x, y in visible) - min(x for x, y in visible) + 1 == 144, 'Transparent margins must not shrink exported artwork'
-    assert 26 <= max(y for x, y in visible) - min(y for x, y in visible) + 1 <= 29
-print('Logo ZIP: valid CRC, native logo retained, cropped artwork in a 144×34 sprite displayed at 72×17, correct responsive positions.')
-`, filename, originalFilename], { encoding: 'utf8', cwd: root });
+    assert rows[:height*stride] == png_rows(source_png), 'All original sprite scanlines remain byte-identical'
+    assert len(expected_alpha) == 144 * 34 and any(0 < alpha < 255 for alpha in expected_alpha)
+    for index, colour in enumerate(colours):
+        x_offset, y_offset = (index % columns) * 144, height + (index // columns) * 34
+        theme_visuals = [visual for visual in logo_visuals if re.search(r'name="pureblack_custom_logo(?:_account_left)?_theme_' + str(index) + r'"', visual)]
+        assert len(theme_visuals) == 3
+        assert all(f'<off x="{x_offset}" y="{y_offset}" width="144" height="34"' in visual for visual in theme_visuals)
+        assert sorted(int(re.search(r'<pos x="(\d+)"', visual).group(1)) for visual in theme_visuals) == [443, 538, 670]
+        for visual in theme_visuals:
+            condition = html.unescape(re.search(r'\bcondition="([^"]*)"', visual).group(1))
+            if index:
+                assert condition == f"var_equal '@$pureblackdecktheme' {index}"
+            else:
+                assert all(f"var_equal '@$pureblackdecktheme' {other} ? false : " in condition for other in range(1, len(colours)))
+                assert condition.endswith('true')
+        rgb = tuple(bytes.fromhex(colour.removeprefix('#')))
+        visible = []
+        for y in range(34):
+            row = rows[(y_offset+y)*stride:(y_offset+y+1)*stride]
+            assert row[0] == 0
+            for x in range(144):
+                pixel = tuple(row[1+(x_offset+x)*4:1+(x_offset+x)*4+4])
+                assert pixel[3] == expected_alpha[y*144+x], 'Tinting must preserve every alpha byte'
+                if pixel[3]:
+                    assert pixel[:3] == rgb, (index, colour, pixel)
+                    visible.append((x, y))
+        assert max(x for x, y in visible) - min(x for x, y in visible) + 1 == 144, 'Transparent margins must not shrink exported artwork'
+        assert 26 <= max(y for x, y in visible) - min(y for x, y in visible) + 1 <= 29
+print('Logo ZIP: selected palette tints and Default grey, preserved alpha and original sprites, per-theme source tiles and responsive positions.')
+`, filename, originalFilename, JSON.stringify(expectedColours), JSON.stringify(expectedAlpha)], { encoding: 'utf8', cwd: root });
   assert.equal(result.status, 0, result.stderr || result.error?.message || result.stdout);
   console.log(result.stdout.trim());
 }
@@ -869,6 +952,7 @@ try {
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'running');
   await assertAnimatedPreview(desktop, '#preset-preview');
   await assertWholeSquareMeters(desktop);
+  await assertKnobRange(desktop);
   // Compositor animations stop when the system asks for reduced motion.
   await desktop.emulateMedia({ reducedMotion: 'reduce' });
   await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'paused');
@@ -1101,6 +1185,23 @@ try {
   assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-status').getAttribute('data-native-x'), '327');
   const validLogoUrl = await logoImage.getAttribute('href');
   assert.match(validLogoUrl, /^data:image\/png;base64,/);
+  const blueLogoColour = await desktop.locator('#presets [data-slug="pastel-blue"] .palette-swatches i').first()
+    .evaluate(swatch => swatch.style.getPropertyValue('--swatch'));
+  for (const [name, colour] of [['Default', '#959595'], ['Pastel Blue', blueLogoColour],
+    [customName, colours[0]], [secondName, secondColours[0]], [customName, colours[0]]]) {
+    await desktop.getByRole('button', { name: `Preview ${name}`, exact: true }).click();
+    await assertLogoTint(desktop, colour, validLogoUrl);
+  }
+  const expectedLogoColours = await desktop.evaluate(slugs => slugs.map(slug => {
+    const card = document.querySelector(`#presets .preset-card[data-slug="${slug}"]`);
+    if (!card.querySelector('input').checked) throw new Error(`Expected included logo palette: ${slug}`);
+    return slug === 'default' ? '#959595' : card.querySelector('.palette-swatches i').style.getPropertyValue('--swatch');
+  }), ['default', 'pastel-red', 'custom-1', 'custom-2']);
+  const expectedLogoAlpha = await desktop.evaluate(async bytes => {
+    const { prepareLogo } = await import('./logo-image.js');
+    const prepared = await prepareLogo(new File([new Uint8Array(bytes)], 'white-logo.png', { type: 'image/png' }));
+    return [...prepared.tilePixels].filter((_, index) => index % 4 === 3);
+  }, [...logos.transparent]);
   for (const key of ['cpu', 'battery']) await desktop.locator(`#toolbar-${key}`).uncheck();
   await assertStatusSelection(desktop, ['master', 'clock']);
   assert.equal(await logoImage.getAttribute('x'), '570', 'The custom logo closes the gap left by hidden status items');
@@ -1140,7 +1241,7 @@ try {
   await desktop.locator('.overall-preview').screenshot({ path: join(artifacts, 'toolbar-custom-logo.png'), animations: 'disabled' });
   const logoArchive = join(artifacts, 'pro-pure-black-with-logo.zip');
   await download(desktop, logoArchive);
-  verifyLogoZip(logoArchive, unnotchedArchive);
+  verifyLogoZip(logoArchive, unnotchedArchive, expectedLogoColours, expectedLogoAlpha);
 
   // A late failed upload cannot undo Remove or leave Download disabled.
   await desktop.evaluate(() => {
