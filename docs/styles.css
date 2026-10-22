@@ -119,7 +119,7 @@ main { padding-top: 10px; }
 .custom-panel { display: flex; flex-direction: column; }
 #custom-presets { display: grid; flex: 1; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px 16px; }
 #custom-presets:not(:empty) { margin-top: 8px; }
-.custom-card { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 8px; align-items: stretch; width: 100%; max-width: 360px; padding: 0; border: 0; border-radius: 0; background: #000000; min-width: 0; }
+.custom-card { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 8px; align-items: stretch; width: 100%; max-width: 360px; padding: 0; border: 0; border-radius: 0; background: #000000; min-width: 0; }
 .custom-card.is-preview, .custom-card.is-active { border-color: var(--accent-line-strong); background: #000000; }
 .custom-card-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; min-width: 0; }
 .custom-name-label { display: block; min-width: 0; }

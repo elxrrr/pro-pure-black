@@ -1176,6 +1176,14 @@ try {
   const initialCustomAccent = await websiteAccent(desktop);
   await draft.locator('.hex-input[data-deck="A"]').fill('#xyz');
   assert.equal(await desktop.locator('#add-custom').isDisabled(), true);
+  assert.equal(await draft.locator('.custom-error').isVisible(), true);
+  assert.ok(await draft.evaluate(card => {
+    const error = card.querySelector('.custom-error').getBoundingClientRect();
+    const hexBottom = Math.max(...[...card.querySelectorAll('.hex-input')].map(input => input.getBoundingClientRect().bottom));
+    const panel = card.closest('.custom-panel'), style = getComputedStyle(panel);
+    const innerBottom = panel.getBoundingClientRect().bottom - parseFloat(style.borderBottomWidth) - parseFloat(style.paddingBottom);
+    return error.top >= hexBottom - 1 && error.bottom <= innerBottom + 1;
+  }), 'Validation errors stay below the colour inputs and inside the stretched panel');
   assert.equal(await desktop.locator('#download').isEnabled(), true, 'An unsaved invalid draft must not block existing palettes');
   assert.equal(await websiteAccent(desktop), initialCustomAccent);
   await draft.getByRole('button', { name: 'Random', exact: true }).click();
