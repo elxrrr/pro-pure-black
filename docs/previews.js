@@ -260,8 +260,9 @@ function renderScreenFrame(frame, viewport, fit, notch, id) {
 /** Fixed-size controls, centered phrases and right-anchored tools; preview choices never change the skin. */
 export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER, display = {}) {
   if (!container) throw new Error('The toolbar preview container is missing.');
-  const { notch = false, fullscreen = notch, colors = DEFAULT_TOOLBAR_COLOURS, logo = null, logoColour = DEFAULT_LOGO_COLOUR } = display;
+  const { notch = false, fullscreen = notch, colors = DEFAULT_TOOLBAR_COLOURS, logo = null, logoColour = DEFAULT_LOGO_COLOUR, logoTint = true } = display;
   if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
+  if (typeof logoTint !== 'boolean') throw new TypeError('Logo tint must be on or off.');
   if (logo !== null && (typeof logo !== 'string' || !/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(logo))) {
     throw new TypeError('The toolbar logo must be a PNG data URL.');
   }
@@ -303,12 +304,12 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
     <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${renderWidth}px">
     <svg class="toolbar-sim-svg" viewBox="0 -7.5 ${canvasWidth} 58" xmlns="http://www.w3.org/2000/svg" role="img">
-      ${logo ? `<defs><filter id="${view.id}-logo-tint" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feFlood class="toolbar-logo-tint" flood-color="${logoColour}"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>` : ''}
+      ${logo && logoTint ? `<defs><filter id="${view.id}-logo-tint" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feFlood class="toolbar-logo-tint" flood-color="${logoColour}"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs>` : ''}
       <g class="toolbar-sim-left">
         <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="${DEFAULT_LOGO_COLOUR}">VirtualDJ</text></g>
         ${leftItem ? toolbarControl(leftItem) : ''}
         ${toolbarStatus(statusX, options)}
-        ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(logoX, 13, 72, 17)} x="${logoX}" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet" filter="url(#${view.id}-logo-tint)"/>` : ''}
+        ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(logoX, 13, 72, 17)} x="${logoX}" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"${logoTint ? ` filter="url(#${view.id}-logo-tint)"` : ''}/>` : ''}
       </g>
       <g class="toolbar-sim-phrases">${phrasePreview(notch, colours, phraseOffset)}</g>
       <g class="toolbar-sim-right">${items.map(toolbarControl).join('')}</g>

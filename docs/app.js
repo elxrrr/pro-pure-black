@@ -18,8 +18,8 @@ const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#15
 const state = {
   themes: [originalDefault], selected: new Set(['default']), preview: 'default',
   customs: [], draft: null, nextCustom: 1, assets: null, busy: false,
-  toolbarOrder: [...DEFAULT_TOOLBAR_ORDER], notchPreview: false,
-  logo: null, logoBusy: false,
+  toolbarOrder: [...DEFAULT_TOOLBAR_ORDER], notchPreview: true,
+  logo: null, logoBusy: false, logoTint: true,
 };
 const hexPattern = /^#[0-9a-f]{6}$/i;
 let toolbarPreviewSignature = '';
@@ -48,7 +48,7 @@ function renderToolbar() {
   const container = $('#toolbar-preview');
   const options = toolbarOptions();
   const theme = activePreviewTheme();
-  const display = { notch: state.notchPreview, colors: theme.colors, logo: state.logo?.dataUrl || null, logoColour: logoColour(theme) };
+  const display = { notch: state.notchPreview, colors: theme.colors, logo: state.logo?.dataUrl || null, logoColour: logoColour(theme), logoTint: state.logoTint };
   const signature = JSON.stringify([options, state.toolbarOrder, display]);
   if (signature === toolbarPreviewSignature && container.childElementCount) return;
   renderToolbarPreview(container, options, state.toolbarOrder, display);
@@ -84,6 +84,9 @@ function updateLogoControls() {
 
 function setupLogoUpload() {
   const input = $('#custom-logo-upload');
+  $('#logo-tint').addEventListener('change', event => {
+    state.logoTint = event.target.checked; renderToolbar();
+  });
   input.addEventListener('change', async () => {
     const file = input.files?.[0];
     if (!file) return;
@@ -343,7 +346,7 @@ function updateSummary() {
 function createDraftCard(draft) {
   const card = document.createElement('article');
   card.className = 'custom-card'; card.dataset.customId = 'draft';
-  card.innerHTML = `<div class="custom-card-head"><label class="custom-name-label"><span class="sr-only">Preset name</span><input class="custom-name" type="text" maxlength="64" autocomplete="off" spellcheck="false" aria-describedby="custom-draft-error"></label><div class="custom-actions"><button type="button" class="custom-randomise">Random</button></div></div><div class="custom-colours"></div><p class="custom-error field-error" id="custom-draft-error" role="alert" hidden></p>`;
+  card.innerHTML = `<div class="custom-card-head"><label class="custom-name-label"><span class="sr-only">Preset name</span><input class="custom-name" type="text" maxlength="64" autocomplete="off" spellcheck="false" aria-describedby="custom-draft-error"></label><div class="custom-actions"><button type="button" class="custom-randomise">Random</button><button id="add-custom" class="add-button" type="button" aria-label="Add preset" title="Add preset" disabled>+</button></div></div><div class="custom-colours"></div><p class="custom-error field-error" id="custom-draft-error" role="alert" hidden></p>`;
   draft.element = card;
   const name = card.querySelector('.custom-name');
   name.addEventListener('input', () => {
@@ -434,7 +437,7 @@ async function loadAssets() {
 async function downloadSkin() {
   if (!state.assets || state.busy || state.logoBusy) return;
   const configuration = {
-    assets: state.assets, logo: state.logo, toolbar: toolbarOptions(), order: [...state.toolbarOrder],
+    assets: state.assets, logo: state.logo, logoTint: state.logoTint, toolbar: toolbarOptions(), order: [...state.toolbarOrder],
     themes: [...state.themes.filter(theme => theme.slug === 'default' || state.selected.has(theme.slug)),
       ...state.customs.filter(custom => custom.included).map(customTheme)],
   };
@@ -446,7 +449,7 @@ async function downloadSkin() {
     let xml = generateSkinXml(configuration.assets.xml, configuration.themes);
     xml = applyToolbar(xml, configuration.toolbar, configuration.order);
     let image = configuration.assets.image;
-    if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo, configuration.toolbar, configuration.themes));
+    if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo, configuration.toolbar, configuration.logoTint ? configuration.themes : undefined));
     xml = xml.replace(/(<skin\s[^>]*\bname=")[^"]*(")/, '$1Pro Pure Black Custom$2');
     const bytes = createSkinZip([
       { name: 'Pro.xml', data: xml },

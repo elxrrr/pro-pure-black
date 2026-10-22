@@ -391,8 +391,13 @@ async function assertLogoControlLayout(page, mobile = false) {
     assert.ok(Math.abs(logo.y + logo.height / 2 - display.y - display.height / 2) < 2,
       'Logo and display controls share one desktop line');
   }
-  assert.equal(await page.locator('#custom-logo-hint').evaluate(hint => hint.previousElementSibling?.id), 'custom-logo-remove',
-    'The PNG hint stays inline after Remove');
+  assert.equal(await page.locator('.custom-logo-label').count(), 0);
+  assert.equal(await page.locator('.custom-logo-controls').evaluate(element => getComputedStyle(element).borderLeftWidth), '0px');
+  assert.equal(await page.locator('.custom-logo-picker > span').innerText(), 'Add Logo...');
+  assert.equal(await page.locator('#custom-logo-upload').getAttribute('accept'), '.png');
+  assert.equal(await page.locator('.custom-logo-picker').evaluate(picker =>
+    picker.querySelector('input').getAttribute('title') || picker.getAttribute('title')), 'Transparent PNG · 5 MB max · 144 × 34 px');
+  assert.equal(await page.locator('#custom-logo-hint').evaluate(hint => hint.classList.contains('sr-only')), true);
   assert.match(await page.locator('#custom-logo-hint').innerText(), /144 × 34 px/);
   assert.match(await page.locator('#custom-logo-hint').innerText(), /5 MB max/);
   assert.equal(await page.locator('#toolbar-preview-note, #toolbar-order-hint, #custom-logo-details, #toolbar-display-profile').count(), 0);
@@ -408,6 +413,7 @@ async function assertConfigurationLayout(page, wide) {
   if (wide) {
     assert.ok(Math.abs(custom.y - toolbar.y) <= 1 && custom.x + custom.width <= toolbar.x,
       'Custom presets and toolbar controls share one desktop row');
+    assert.ok(Math.abs(custom.height - toolbar.height) <= 1, 'Desktop configuration panels have matching outer heights');
   } else {
     assert.ok(toolbar.y >= custom.y + custom.height, 'Configuration panels stack on narrow screens');
   }
@@ -416,6 +422,16 @@ async function assertConfigurationLayout(page, wide) {
   assert.equal(await page.getByRole('button', { name: 'Move Account earlier', exact: true }).count(), 1);
   assert.deepEqual(await page.locator('#custom-presets .colour-field-label').evaluateAll(labels =>
     labels.map(label => getComputedStyle(label).textAlign)), Array(4).fill('center'), 'Deck colour labels are centred over their selectors');
+  const add = page.getByRole('button', { name: 'Add preset', exact: true });
+  assert.equal(await add.getAttribute('id'), 'add-custom');
+  assert.equal(await add.innerText(), '+');
+  assert.equal(await page.locator('.custom-panel > .panel-heading #add-custom').count(), 0);
+  const actions = await page.locator('.custom-actions').evaluate(element => {
+    const random = element.querySelector('.custom-randomise').getBoundingClientRect();
+    const add = element.querySelector('#add-custom').getBoundingClientRect();
+    return { left: add.left >= random.right, aligned: Math.abs(add.top + add.height / 2 - random.top - random.height / 2) <= 1 };
+  });
+  assert.ok(actions.left && actions.aligned, 'The add button sits beside Random');
 }
 
 async function assertSharedPreview(page) {
@@ -527,12 +543,17 @@ async function checkIphone17(base, engine) {
   });
   await assertDefaultLocked(page);
   assert.equal(await page.locator('#presets .preset-card input:checked').count(), 1, 'Only Default starts included on mobile');
+  assert.equal(await page.locator('#toolbar-notch-preview').isChecked(), true);
+  assert.equal(await page.locator('#logo-tint').isChecked(), true);
+  await assertToolbarPreview(page, { notch: true, colors: defaults, order: ['layout', 'settings'] });
   await assertSharedPreview(page);
   await assertConfigurationLayout(page, false);
   await assertStatusSelection(page, ['master', 'clock']);
   await assertPhraseBeats(page);
   await page.locator('#select-default').tap();
   assert.equal(await page.locator('html').getAttribute('data-touch-observed'), 'true');
+  await page.locator('.toolbar-notch-toggle').tap();
+  await assertPhraseBeats(page);
   await page.locator('#select-bold').tap();
   assert.equal(await page.locator('#presets .preset-card input:checked').count(), 8);
   await page.getByRole('checkbox', { name: 'Include Bold Pink', exact: true }).tap();
@@ -655,13 +676,19 @@ async function assertLogoTint(page, colour, originalUrl) {
     const filter = id && image.ownerSVGElement.querySelector(`filter[id="${id}"]`);
     const flood = filter?.querySelector('feFlood'), composite = filter?.querySelector('feComposite');
     return { colour: flood && getComputedStyle(flood).floodColor, alpha: composite?.getAttribute('in2'),
+      filter: image.getAttribute('filter'), filters: image.ownerSVGElement.querySelectorAll('.toolbar-logo-tint').length,
       operator: composite?.getAttribute('operator'), url: image.getAttribute('href') };
   });
+  assert.equal(tint.url, originalUrl, 'Changing palettes or tint settings must retain the uploaded artwork');
+  if (colour === null) {
+    assert.equal(tint.filter, null, 'Disabled tint leaves the uploaded PNG unfiltered');
+    assert.equal(tint.filters, 0);
+    return;
+  }
   const rgb = [1, 3, 5].map(offset => parseInt(colour.slice(offset, offset + 2), 16));
   assert.equal(tint.colour, `rgb(${rgb.join(', ')})`, 'The logo follows the active palette tint');
   assert.match(tint.alpha, /^Source(?:Alpha|Graphic)$/, 'Tinting must use the uploaded logo alpha mask');
   assert.equal(tint.operator, 'in');
-  assert.equal(tint.url, originalUrl, 'Changing palettes must retain the uploaded artwork');
 }
 
 async function assertDefaultLocked(page) {
@@ -839,11 +866,12 @@ print('Browser-exported ZIP: valid CRC, exact sprites, two independent custom pa
   console.log(result.stdout.trim());
 }
 
-function verifyLogoZip(filename, originalFilename, expectedColours, expectedAlpha) {
+function verifyLogoZip(filename, originalFilename, expectedColours, expectedAlpha, tinted = true) {
   const result = spawnSync('python3', ['-c', String.raw`
 import html, json, math, re, struct, sys, zipfile, zlib
 colours = json.loads(sys.argv[3])
 expected_alpha = json.loads(sys.argv[4])
+tinted = json.loads(sys.argv[5])
 def png_rows(png):
     chunks, offset = [], 8
     while offset < len(png):
@@ -879,11 +907,15 @@ with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as orig
     assert len(expected_alpha) == 144 * 34 and any(0 < alpha < 255 for alpha in expected_alpha)
     for index, colour in enumerate(colours):
         x_offset, y_offset = (index % columns) * 144, height + (index // columns) * 34
-        theme_visuals = [visual for visual in logo_visuals if re.search(r'name="pureblack_custom_logo(?:_account_left)?_theme_' + str(index) + r'"', visual)]
+        suffix = '_theme_' + str(index) if tinted else ''
+        theme_visuals = [visual for visual in logo_visuals if re.search(r'name="pureblack_custom_logo(?:_account_left)?' + suffix + r'"', visual)]
         assert len(theme_visuals) == 3
         assert all(f'<off x="{x_offset}" y="{y_offset}" width="144" height="34"' in visual for visual in theme_visuals)
         assert sorted(int(re.search(r'<pos x="(\d+)"', visual).group(1)) for visual in theme_visuals) == [443, 538, 670]
         for visual in theme_visuals:
+            if not tinted:
+                assert re.search(r'\bcondition="', visual) is None, 'Untinted artwork remains the same in every palette'
+                continue
             condition = html.unescape(re.search(r'\bcondition="([^"]*)"', visual).group(1))
             if index:
                 assert condition == f"var_equal '@$pureblackdecktheme' {index}"
@@ -903,8 +935,8 @@ with zipfile.ZipFile(sys.argv[1]) as added, zipfile.ZipFile(sys.argv[2]) as orig
                     visible.append((x, y))
         assert max(x for x, y in visible) - min(x for x, y in visible) + 1 == 144, 'Transparent margins must not shrink exported artwork'
         assert 26 <= max(y for x, y in visible) - min(y for x, y in visible) + 1 <= 29
-print('Logo ZIP: selected palette tints and Default grey, preserved alpha and original sprites, per-theme source tiles and responsive positions.')
-`, filename, originalFilename, JSON.stringify(expectedColours), JSON.stringify(expectedAlpha)], { encoding: 'utf8', cwd: root });
+print('Logo ZIP: validated ' + ('palette tints' if tinted else 'original artwork colours') + ', preserved alpha and original sprites, correct source tiles and responsive positions.')
+`, filename, originalFilename, JSON.stringify(expectedColours), JSON.stringify(expectedAlpha), JSON.stringify(tinted)], { encoding: 'utf8', cwd: root });
   assert.equal(result.status, 0, result.stderr || result.error?.message || result.stdout);
   console.log(result.stdout.trim());
 }
@@ -943,7 +975,7 @@ try {
     assert.ok(!(await desktop.locator('body').innerText()).includes(removed), `Removed copy remains: ${removed}`);
   }
   assert.equal(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black"]').count(), 1);
-  assert.match(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black/tree/main/skin"]').innerText(), /^Skin source/);
+  assert.equal(await desktop.locator('footer a[href="https://github.com/elxrrr/pro-pure-black/tree/main/skin"]').count(), 0);
   assert.equal(await desktop.locator('footer a[href*="releases/latest"]').count(), 0);
   assert.match(await desktop.locator('footer').innerText(), /Made with AI/i);
   assert.equal(await desktop.locator('#skin-folder-paths, [data-copy-path], #skin-path-macos, #skin-path-windows').count(), 0);
@@ -958,10 +990,11 @@ try {
   await assertStatusSelection(desktop, ['master', 'clock']);
   assert.equal(await desktop.locator('#toolbar-preview .toolbar-sim-right [data-toolbar-control]').count(), 2);
   assert.equal(await desktop.locator('#toolbar-count').innerText(), '4 included');
-  assert.equal(await desktop.locator('#toolbar-notch-preview').isChecked(), false);
+  assert.equal(await desktop.locator('#toolbar-notch-preview').isChecked(), true);
+  assert.equal(await desktop.locator('#logo-tint').isChecked(), true);
   assert.equal(await desktop.locator('#toolbar-display-profile').count(), 0);
   assert.equal(await desktop.locator('.toolbar-notch-toggle > span').first().innerText(), 'Notch');
-  await assertToolbarPreview(desktop, { notch: false, colors: defaults, order: ['layout', 'settings'] });
+  await assertToolbarPreview(desktop, { notch: true, colors: defaults, order: ['layout', 'settings'] });
   await assertSharedPreview(desktop);
   await assertConfigurationLayout(desktop, true);
   await assertToolbarScrolling(desktop);
@@ -989,6 +1022,9 @@ try {
   await desktop.screenshot({ path: join(artifacts, 'desktop-default.png'), fullPage: true, animations: 'disabled' });
   await assertStatusControls(desktop);
   await assertAnimatedPreview(desktop, '#toolbar-preview', ['.toolbar-cpu-fill']);
+  await desktop.locator('#toolbar-notch-preview').uncheck();
+  await assertToolbarPreview(desktop, { notch: false, colors: defaults, order: ['layout', 'settings'] });
+  await assertPhraseBeats(desktop);
 
   // Aesthetic palettes can be selected as a group or mixed individually.
   await desktop.locator('#select-aesthetic').check();
@@ -1263,6 +1299,17 @@ try {
   const logoArchive = join(artifacts, 'pro-pure-black-with-logo.zip');
   await download(desktop, logoArchive);
   verifyLogoZip(logoArchive, unnotchedArchive, expectedLogoColours, expectedLogoAlpha);
+  await desktop.locator('#logo-tint').uncheck();
+  await assertLogoTint(desktop, null, validLogoUrl);
+  await desktop.getByRole('button', { name: 'Preview Default', exact: true }).click();
+  await assertLogoTint(desktop, null, validLogoUrl);
+  const originalLogoArchive = join(artifacts, 'pro-pure-black-original-logo-colours.zip');
+  await download(desktop, originalLogoArchive);
+  verifyLogoZip(originalLogoArchive, unnotchedArchive, ['#FFFFFF'], expectedLogoAlpha, false);
+  await desktop.locator('#logo-tint').check();
+  await assertLogoTint(desktop, '#959595', validLogoUrl);
+  await firstTile.locator('.preset-preview').click();
+  await assertLogoTint(desktop, colours[0], validLogoUrl);
 
   // A late failed upload cannot undo Remove or leave Download disabled.
   await desktop.evaluate(() => {

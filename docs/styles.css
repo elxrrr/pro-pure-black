@@ -74,15 +74,13 @@ main { padding-top: 10px; }
 .toolbar-preview-controls { display: flex; flex: 1; align-items: center; flex-wrap: wrap; gap: 6px 16px; min-width: 0; }
 .toolbar-profile-label { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 10px; color: var(--muted); font-size: 12px; }
 .toolbar-profile-label select { min-height: 35px; max-width: 100%; padding: 5px 28px 5px 10px; border: 1px solid var(--accent-line); border-radius: 7px; background: #000; color: var(--text); cursor: pointer; }
-.toolbar-preview-controls .toolbar-notch-toggle { flex: 0 0 auto; gap: 12px; color: var(--accent-text); font-size: 12px; }
-.custom-logo-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto; padding-left: 12px; border-left: 1px solid var(--line); }
-.custom-logo-label { font-size: 12px; }
+.toolbar-preview-controls .toolbar-notch-toggle, .toolbar-preview-controls .logo-tint-toggle { flex: 0 0 auto; gap: 12px; color: var(--accent-text); font-size: 12px; }
+.custom-logo-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto; }
 .custom-logo-picker, #custom-logo-remove { display: inline-flex; align-items: center; min-height: 32px; padding: 5px 10px; border: 1px solid var(--accent-line); border-radius: 6px; background: #000; color: var(--accent-text); font-size: 11px; cursor: pointer; }
 .custom-logo-picker { position: relative; }
 .custom-logo-picker input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 .custom-logo-picker:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
 .custom-logo-picker:hover, #custom-logo-remove:hover:not(:disabled) { border-color: var(--accent-line-strong); color: var(--accent-text-strong); }
-#custom-logo-hint { color: var(--muted); font-size: 11px; white-space: nowrap; }
 #custom-logo-status { margin-top: 6px; font-size: 11px; overflow-wrap: anywhere; }
 #custom-logo-status:empty { display: none; }
 #custom-logo-status.is-error { color: #ffb0be; }
@@ -114,8 +112,7 @@ main { padding-top: 10px; }
 .toolbar-move-buttons button { display: inline-flex; align-items: center; justify-content: center; width: 34px; min-height: 36px; padding: 0; border: 1px solid var(--accent-line); border-radius: 5px; background: #000; color: var(--accent-text); font-size: 16px; }
 .toolbar-move-buttons button:hover:not([aria-disabled="true"]) { border-color: var(--accent-line-strong); color: var(--accent-text-strong); }
 .toolbar-move-buttons button[aria-disabled="true"] { opacity: .3; cursor: default; }
-.add-button { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 5px 12px; border: 1px solid var(--accent-line); border-radius: 7px; background: #000000; color: var(--accent-text); font-size: 12px; }
-.add-button span { font-size: 17px; line-height: 1; }
+.add-button { display: inline-flex; align-items: center; justify-content: center; width: 38px; min-height: 38px; padding: 0; border: 1px solid var(--accent-line); border-radius: 7px; background: #000000; color: var(--accent-text); font-size: 20px; line-height: 1; }
 .add-button:hover { background: #000000; border-color: var(--accent-line-strong); }
 #custom-presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px 16px; }
 #custom-presets:not(:empty) { margin-top: 8px; }
@@ -126,7 +123,7 @@ main { padding-top: 10px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .custom-name, .name-input { width: 100%; height: 38px; background: #000000; border: 1px solid var(--accent-line); border-radius: 7px; color: var(--text); padding: 0 10px; font-size: 13px; min-width: 0; }
 .custom-name[aria-invalid=true] { border-color: #dd8498; }
-.custom-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.custom-actions { display: flex; align-items: center; gap: 8px; }
 .custom-enable { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--accent-text); cursor: pointer; position: relative; }
 .custom-enable input { left: 0; }
 .custom-remove { color: var(--muted); margin-left: auto; }
@@ -159,12 +156,8 @@ footer a:hover { color: var(--accent-text-strong); }
   .toolbar-order { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 1000px) {
-  .configuration-panels { grid-template-columns: 340px minmax(0, 1fr); }
+  .configuration-panels { grid-template-columns: 340px minmax(0, 1fr); align-items: stretch; }
   .toolbar-order { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-}
-@media (max-width: 760px) {
-  .custom-logo-controls { margin-left: auto; padding-left: 12px; }
-  #custom-logo-hint { flex-basis: 100%; }
 }
 @media (max-width: 620px) {
   .toolbar-status { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -184,8 +177,7 @@ footer a:hover { color: var(--accent-text-strong); }
   .text-actions button { font-size: 11px; }
   .toolbar-preview-controls { display: contents; }
   .toolbar-preview-controls .toolbar-notch-toggle { margin-left: auto; }
-  .custom-logo-controls { flex: 1 1 100%; gap: 4px 8px; margin-left: 0; padding-left: 0; border-left: 0; }
-  .custom-logo-label { flex-basis: auto; }
+  .custom-logo-controls { flex: 1 1 100%; gap: 4px 8px; margin-left: 0; }
   .custom-logo-picker, #custom-logo-remove { min-height: 36px; }
   .toolbar-status > .toggle-row { min-height: 42px; }
   .toolbar-order-row { gap: 7px; padding: 2px 6px; font-size: 11px; min-height: 44px; }
@@ -194,7 +186,8 @@ footer a:hover { color: var(--accent-text-strong); }
   .toolbar-move-buttons button { width: 38px; min-height: 38px; }
   .custom-card { gap: 8px; }
   .custom-card-head { gap: 9px; }
-  .custom-name, .name-input, .custom-randomise { min-height: 40px; }
+  .custom-name, .name-input, .custom-randomise, .add-button { min-height: 40px; }
+  .add-button { width: 40px; }
   .custom-name, .name-input { font-size: 16px; }
   .custom-colours { gap: 8px; margin-top: 0; }
   .colour-swatch-wrap { height: 38px; }
@@ -217,7 +210,6 @@ footer a:hover { color: var(--accent-text-strong); }
   .preset-name { font-size: 10px; }
   .locked-label { font-size: 6px; }
   .custom-logo-controls { gap: 4px 6px; }
-  .custom-logo-label { font-size: 11px; }
   .custom-colours { gap: 6px; }
   .hex-input { letter-spacing: -.8px; }
   .toolbar-order-row { gap: 5px; }

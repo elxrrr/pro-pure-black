@@ -21,7 +21,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. |
 | Sandbox, Shoutout, Event Scheduler and account box | Hidden by default; individually configurable in the skin builder. |
 | Builder toolbar | Master, CPU, battery and clock individually configurable beside the logo on the left; CPU and battery off by default. Buttons grouped on the right in your chosen order. In narrow Mac windows, Account moves before Master; when the notch layout is active and all controls are included, Account hides to make room. |
-| Custom logo | Optional transparent PNG after the master/status block. Tinted to Deck A for each palette; soft grey `#959595` for Default. |
+| Custom logo | Optional transparent PNG after the master/status block. Logo tint uses Deck A for each palette and soft grey `#959595` for Default; switch it off to keep the PNG’s original colours. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
 | Deck colours | Default retains the original colours. A standalone Grayscale palette, Pastel/Bold groups covering Red, Orange, Yellow, Green, Blue, Purple and Pink, plus seven mixed-colour Aesthetic palettes. |

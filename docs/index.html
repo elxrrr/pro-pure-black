@@ -17,8 +17,13 @@
       <div class="panel-heading">
         <h1 id="preview-title">Preview</h1>
         <div class="toolbar-preview-controls">
-          <label class="toggle-row toolbar-notch-toggle"><span>Notch</span><input type="checkbox" id="toolbar-notch-preview" role="switch"><span class="switch" aria-hidden="true"></span></label>
-          <div class="custom-logo-controls"><span class="custom-logo-label">Custom logo</span><label class="custom-logo-picker"><span>Choose PNG</span><input id="custom-logo-upload" type="file" accept="image/png" aria-label="Upload transparent PNG logo" aria-describedby="custom-logo-hint custom-logo-status"></label><button id="custom-logo-remove" type="button" disabled>Remove</button><span id="custom-logo-hint">Transparent PNG · 5 MB max · 144 × 34 px</span></div>
+          <label class="toggle-row toolbar-notch-toggle"><span>Notch</span><input type="checkbox" id="toolbar-notch-preview" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
+          <div class="custom-logo-controls">
+            <label class="toggle-row logo-tint-toggle"><span>Logo tint</span><input type="checkbox" id="logo-tint" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
+            <label class="custom-logo-picker" title="Transparent PNG · 5 MB max · 144 × 34 px"><span>Add Logo...</span><input id="custom-logo-upload" type="file" accept=".png" aria-label="Add Logo..." aria-describedby="custom-logo-hint custom-logo-status" title="Transparent PNG · 5 MB max · 144 × 34 px"></label>
+            <button id="custom-logo-remove" type="button" disabled>Remove</button>
+            <span id="custom-logo-hint" class="sr-only">Transparent PNG · 5 MB max · 144 × 34 px</span>
+          </div>
         </div>
       </div>
       <p id="custom-logo-status" role="status" aria-live="polite" hidden></p>
@@ -42,7 +47,7 @@
 
     <div class="configuration-panels">
       <section class="panel custom-panel" aria-labelledby="custom-title">
-        <div class="panel-heading"><h2 id="custom-title">Custom presets</h2><button id="add-custom" class="add-button" type="button" disabled><span aria-hidden="true">+</span> Add preset</button></div>
+        <div class="panel-heading"><h2 id="custom-title">Custom presets</h2></div>
         <div id="custom-presets" aria-label="Custom palette editor"></div>
       </section>
 
@@ -68,7 +73,7 @@
   </main>
 
   <footer>
-    <nav aria-label="Project links"><a href="https://github.com/elxrrr/pro-pure-black" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="https://github.com/elxrrr/pro-pure-black/tree/main/skin">Skin source <span aria-hidden="true">↗</span></a></nav>
+    <nav aria-label="Project links"><a href="https://github.com/elxrrr/pro-pure-black" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></nav>
     <span>Made with AI</span>
   </footer>
 </body>
