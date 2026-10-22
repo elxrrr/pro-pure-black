@@ -242,7 +242,6 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
     <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${renderWidth}px">
     <svg class="toolbar-sim-svg" viewBox="0 0 ${canvasWidth} 50" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect class="toolbar-sim-frame" x=".5" y=".5" width="${canvasWidth - 1}" height="49" rx="10" fill="#000" stroke="var(--line)"/>
       <g class="toolbar-sim-left">
         <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
         ${leftItem ? toolbarControl(leftItem) : ''}

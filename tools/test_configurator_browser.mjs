@@ -314,10 +314,15 @@ async function assertSharedPreview(page) {
   assert.equal(await page.locator('.overall-preview #toolbar-preview + #preset-preview').count(), 1);
   assert.equal(await page.locator('.palette-preview').count(), 1);
   assert.equal(await page.locator('.toolbar-sim-svg').count(), 1);
-  assert.equal(await page.locator('.toolbar-sim-svg > rect.toolbar-sim-frame').count(), 1,
-    'The toolbar keeps one clear outer boundary');
-  assert.equal(await page.locator('.toolbar-sim-svg > path').count(), 0,
-    'No second line creates an empty outlined strip below the controls');
+  assert.equal(await page.locator('.toolbar-sim-svg > rect, .toolbar-sim-svg > path').count(), 0,
+    'No scrolling frame or second line creates an empty outlined strip below the controls');
+  const outline = await page.locator('.toolbar-preview-viewport').evaluate(element => {
+    const style = getComputedStyle(element);
+    return { style: style.outlineStyle, width: parseFloat(style.outlineWidth), offset: parseFloat(style.outlineOffset) };
+  });
+  assert.equal(outline.style, 'solid');
+  assert.ok(outline.width >= 1 && outline.offset <= -1,
+    'One inset boundary stays fixed to the visible toolbar area while its contents scroll');
   assert.equal(await page.locator('#toolbar-preview').evaluate(element => getComputedStyle(element).borderBottomWidth), '0px');
   assert.ok(await page.evaluate(() => Boolean(document.querySelector('.overall-preview').compareDocumentPosition(document.querySelector('.presets-panel')) & Node.DOCUMENT_POSITION_FOLLOWING)));
   const rows = await page.locator('#preset-preview .preview-wave').evaluateAll(elements => elements.map(element => {
