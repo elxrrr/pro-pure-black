@@ -40,22 +40,24 @@
       <div class="palette-groups" id="presets" aria-label="Included colour presets"></div>
     </section>
 
-    <section class="panel custom-panel" aria-labelledby="custom-title">
-      <div class="panel-heading"><h2 id="custom-title">Custom presets</h2><button id="add-custom" class="add-button" type="button" disabled><span aria-hidden="true">+</span> Add preset</button></div>
-      <div id="custom-presets" aria-label="Custom palette editor"></div>
-    </section>
+    <div class="configuration-panels">
+      <section class="panel custom-panel" aria-labelledby="custom-title">
+        <div class="panel-heading"><h2 id="custom-title">Custom presets</h2><button id="add-custom" class="add-button" type="button" disabled><span aria-hidden="true">+</span> Add preset</button></div>
+        <div id="custom-presets" aria-label="Custom palette editor"></div>
+      </section>
 
-    <section class="panel toolbar-panel" aria-labelledby="toolbar-title">
-      <div class="panel-heading"><h2 id="toolbar-title">Toolbar</h2><span id="toolbar-count" class="count-badge">4 included</span></div>
-      <div id="toolbar-status" class="toolbar-status" role="group" aria-label="Status indicators">
-        <label class="toggle-row"><span>Master</span><input type="checkbox" id="toolbar-master" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
-        <label class="toggle-row"><span>CPU</span><input type="checkbox" id="toolbar-cpu" role="switch"><span class="switch" aria-hidden="true"></span></label>
-        <label class="toggle-row"><span>Battery</span><input type="checkbox" id="toolbar-battery" role="switch"><span class="switch" aria-hidden="true"></span></label>
-        <label class="toggle-row"><span>Clock</span><input type="checkbox" id="toolbar-clock" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
-      </div>
-      <ol id="toolbar-order" class="toolbar-order" aria-label="Toolbar button order"></ol>
-      <p id="toolbar-order-status" class="sr-only" role="status" aria-live="polite"></p>
-    </section>
+      <section class="panel toolbar-panel" aria-labelledby="toolbar-title">
+        <div class="panel-heading"><h2 id="toolbar-title">Toolbar</h2><span id="toolbar-count" class="count-badge">4 included</span></div>
+        <div id="toolbar-status" class="toolbar-status" role="group" aria-label="Status indicators">
+          <label class="toggle-row"><span>Master</span><input type="checkbox" id="toolbar-master" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
+          <label class="toggle-row"><span>CPU</span><input type="checkbox" id="toolbar-cpu" role="switch"><span class="switch" aria-hidden="true"></span></label>
+          <label class="toggle-row"><span>Battery</span><input type="checkbox" id="toolbar-battery" role="switch"><span class="switch" aria-hidden="true"></span></label>
+          <label class="toggle-row"><span>Clock</span><input type="checkbox" id="toolbar-clock" role="switch" checked><span class="switch" aria-hidden="true"></span></label>
+        </div>
+        <ol id="toolbar-order" class="toolbar-order" aria-label="Toolbar button order"></ol>
+        <p id="toolbar-order-status" class="sr-only" role="status" aria-live="polite"></p>
+      </section>
+    </div>
 
     <div class="download-panel">
       <strong id="download-summary">1 palette · 4 controls</strong>

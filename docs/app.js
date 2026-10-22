@@ -12,7 +12,7 @@ const $ = selector => document.querySelector(selector);
 const letters = ['A', 'B', 'C', 'D'];
 const toolbarKeys = ['sandbox', 'shoutout', 'scheduler', 'account'];
 const toolbarToggleKeys = [...toolbarKeys, ...STATUS_KEYS];
-const toolbarLabels = { account: 'Account box', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox', layout: 'Layout', settings: 'Settings' };
+const toolbarLabels = { account: 'Account', shoutout: 'Shoutout', scheduler: 'Event Scheduler', sandbox: 'Sandbox', layout: 'Layout', settings: 'Settings' };
 const paletteGroups = [{ id: 'aesthetic', name: 'Aesthetic' }, { id: 'pastel', name: 'Pastel' }, { id: 'bold', name: 'Bold' }];
 const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#156C89', '#AC2F37', '#0D7264', '#A54D30'] };
 const state = {
@@ -128,7 +128,7 @@ function setupToolbarOrder() {
     const optional = toolbarKeys.includes(key);
     row.innerHTML = `<span class="toolbar-drag-handle" draggable="true" aria-hidden="true" title="Drag to reorder">⠿</span>${optional
       ? `<label class="toggle-row"><span>${label}</span><input type="checkbox" id="toolbar-${key}" role="switch"><span class="switch" aria-hidden="true"></span></label>`
-      : `<span class="toolbar-fixed-name">${label}</span><span class="toolbar-always">Always visible</span>`}<span class="toolbar-move-buttons"><button type="button" data-move="-1" aria-label="Move ${label} earlier" title="Move earlier">↑</button><button type="button" data-move="1" aria-label="Move ${label} later" title="Move later">↓</button></span>`;
+      : `<span class="toolbar-fixed-name">${label}</span>`}<span class="toolbar-move-buttons"><button type="button" data-move="-1" aria-label="Move ${label} earlier" title="Move earlier">↑</button><button type="button" data-move="1" aria-label="Move ${label} later" title="Move later">↓</button></span>`;
     rows.set(key, row); list.append(row);
   }
   function refreshOrder() {

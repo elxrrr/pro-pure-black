@@ -24,7 +24,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Custom logo | Optional transparent PNG after the master/status block. Tinted to Deck A for each palette; soft grey `#959595` for Default. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
-| Deck colours | Default retains the original colours. A standalone Grayscale palette, Pastel/Bold groups covering Red, Orange, Yellow, Green, Blue, Purple and Pink, plus eight mixed-colour Aesthetic palettes. |
+| Deck colours | Default retains the original colours. A standalone Grayscale palette, Pastel/Bold groups covering Red, Orange, Yellow, Green, Blue, Purple and Pink, plus seven mixed-colour Aesthetic palettes. |
 | Remaining controls | Original behaviour. |
 
 ## Deck colours
@@ -48,6 +48,6 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 | Aesthetic palettes | |
 | --- | --- |
 | <a href="screenshots/themes/aesthetic-daydream.png"><img src="screenshots/themes/aesthetic-daydream.png" alt="Daydream — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-ghost-in-the-shell.png"><img src="screenshots/themes/aesthetic-ghost-in-the-shell.png" alt="Ghost in the Shell — decks A, B, C, D" width="350"></a> |
-| <a href="screenshots/themes/aesthetic-outrun.png"><img src="screenshots/themes/aesthetic-outrun.png" alt="Outrun — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-drive.png"><img src="screenshots/themes/aesthetic-drive.png" alt="Drive — decks A, B, C, D" width="350"></a> |
-| <a href="screenshots/themes/aesthetic-cozycore.png"><img src="screenshots/themes/aesthetic-cozycore.png" alt="Cozycore — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-cottagecore.png"><img src="screenshots/themes/aesthetic-cottagecore.png" alt="Cottagecore — decks A, B, C, D" width="350"></a> |
-| <a href="screenshots/themes/aesthetic-afterglow.png"><img src="screenshots/themes/aesthetic-afterglow.png" alt="Afterglow — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-moon-garden.png"><img src="screenshots/themes/aesthetic-moon-garden.png" alt="Moon Garden — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/aesthetic-outrun.png"><img src="screenshots/themes/aesthetic-outrun.png" alt="Outrun — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-cozycore.png"><img src="screenshots/themes/aesthetic-cozycore.png" alt="Cozycore — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/aesthetic-cottagecore.png"><img src="screenshots/themes/aesthetic-cottagecore.png" alt="Cottagecore — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/aesthetic-afterglow.png"><img src="screenshots/themes/aesthetic-afterglow.png" alt="Afterglow — decks A, B, C, D" width="350"></a> |
+| <a href="screenshots/themes/aesthetic-moon-garden.png"><img src="screenshots/themes/aesthetic-moon-garden.png" alt="Moon Garden — decks A, B, C, D" width="350"></a> |  |

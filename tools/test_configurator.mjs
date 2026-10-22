@@ -51,7 +51,7 @@ test('standalone and grouped palettes retain their identities and export only se
     ['#BD72A8', '#EFCFED', '#917CD1', '#D0A1E9'],
     ['#C06099', '#F3B1CF', '#E087B2', '#FEDEEC'],
   ];
-  assert.equal(themes.length, 24);
+  assert.equal(themes.length, 23);
   assert.deepEqual(themes[0], {id: 0, name: 'Default', slug: 'default', colors: ATOMIX_DEFAULT});
   assert.deepEqual(themes[1], {id: 1, name: 'Grayscale', slug: 'grayscale', colors: ['#5B5B5B', '#C8C8C8', '#909090', '#FFFFFF']});
   assert.deepEqual(themes.filter(theme => theme.group === 'pastel').map(theme => theme.colors), pastelColors);
@@ -65,10 +65,10 @@ test('standalone and grouped palettes retain their identities and export only se
   assert.deepEqual(themes.find(theme => theme.slug === 'bold-yellow').colors, ['#B4870A', '#F1CB0D', '#D3A810', '#FFE97F']);
   assert.deepEqual(themes.find(theme => theme.slug === 'bold-pink').colors, ['#BE148B', '#FE79BE', '#F034A3', '#FEAFD4']);
   const aesthetic = themes.filter(theme => theme.group === 'aesthetic');
-  const aestheticNames = ['Daydream', 'Ghost in the Shell', 'Outrun', 'Drive', 'Cozycore', 'Cottagecore', 'Afterglow', 'Moon Garden'];
+  const aestheticNames = ['Daydream', 'Ghost in the Shell', 'Outrun', 'Cozycore', 'Cottagecore', 'Afterglow', 'Moon Garden'];
   assert.deepEqual(aesthetic.map(theme => theme.name), aestheticNames);
   assert.deepEqual(aesthetic.map(theme => theme.slug), aestheticNames.map(name => `aesthetic-${name.toLowerCase().replaceAll(' ', '-')}`));
-  assert.deepEqual(aesthetic.map(theme => theme.id), [16, 17, 18, 19, 20, 21, 22, 23]);
+  assert.deepEqual(aesthetic.map(theme => theme.id), [16, 17, 18, 19, 20, 21, 22]);
   assert.deepEqual(aesthetic[0].colors, ['#E98DB6', '#89BFF0', '#B69BE4', '#F2C48F']);
   assert.ok(aesthetic.every(theme => new Set(theme.colors).size === 4));
   assert.deepEqual(normaliseThemes(themes).map(theme => theme.group), themes.map(theme => theme.group));

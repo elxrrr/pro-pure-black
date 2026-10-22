@@ -16,7 +16,7 @@ const customName = 'Studio <&> Mix';
 const secondColours = ['#CA8CD3', '#82D8D1', '#EDB274', '#C7CFEF'];
 const secondName = 'Second preset';
 const paletteNames = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Pink'];
-const aestheticNames = ['Daydream', 'Ghost in the Shell', 'Outrun', 'Drive', 'Cozycore', 'Cottagecore', 'Afterglow', 'Moon Garden'];
+const aestheticNames = ['Daydream', 'Ghost in the Shell', 'Outrun', 'Cozycore', 'Cottagecore', 'Afterglow', 'Moon Garden'];
 const statusKeys = ['master', 'cpu', 'battery', 'clock'];
 const defaultToolbarOrder = ['account', 'shoutout', 'scheduler', 'sandbox', 'layout', 'settings'];
 const errors = [];
@@ -402,6 +402,22 @@ async function assertPaletteGroup(page, group, checked, indeterminate = false) {
   assert.deepEqual(await page.locator(`#select-${group}`).evaluate(input => [input.checked, input.indeterminate]), [checked, indeterminate]);
 }
 
+async function assertConfigurationLayout(page, wide) {
+  const custom = await page.locator('.custom-panel').boundingBox();
+  const toolbar = await page.locator('.toolbar-panel').boundingBox();
+  if (wide) {
+    assert.ok(Math.abs(custom.y - toolbar.y) <= 1 && custom.x + custom.width <= toolbar.x,
+      'Custom presets and toolbar controls share one desktop row');
+  } else {
+    assert.ok(toolbar.y >= custom.y + custom.height, 'Configuration panels stack on narrow screens');
+  }
+  assert.equal(await page.locator('.toolbar-always').count(), 0);
+  assert.equal(await page.locator('#toolbar-order [data-toolbar-key="account"] .toggle-row').innerText(), 'Account');
+  assert.equal(await page.getByRole('button', { name: 'Move Account earlier', exact: true }).count(), 1);
+  assert.deepEqual(await page.locator('#custom-presets .colour-field-label').evaluateAll(labels =>
+    labels.map(label => getComputedStyle(label).textAlign)), Array(4).fill('center'), 'Deck colour labels are centred over their selectors');
+}
+
 async function assertSharedPreview(page) {
   assert.equal(await page.locator('.overall-preview > .panel-heading > h1#preview-title').innerText(), 'Preview');
   assert.equal(await page.locator('h2#presets-title').innerText(), 'Colour presets');
@@ -512,6 +528,7 @@ async function checkIphone17(base, engine) {
   await assertDefaultLocked(page);
   assert.equal(await page.locator('#presets .preset-card input:checked').count(), 1, 'Only Default starts included on mobile');
   await assertSharedPreview(page);
+  await assertConfigurationLayout(page, false);
   await assertStatusSelection(page, ['master', 'clock']);
   await assertPhraseBeats(page);
   await page.locator('#select-default').tap();
@@ -538,7 +555,7 @@ async function checkIphone17(base, engine) {
   assert.deepEqual(await page.locator('#preset-preview .preview-deck-hex').allTextContents(), palette);
   await saved.locator('input').tap();
   await page.locator('#select-all').tap();
-  assert.equal(await page.locator('#presets .preset-card input:checked').count(), 25);
+  assert.equal(await page.locator('#presets .preset-card input:checked').count(), 24);
   await page.locator('#select-default').tap();
   await saved.locator('input').tap();
   for (const key of ['account', 'shoutout', 'scheduler', 'sandbox']) {
@@ -599,6 +616,7 @@ async function checkIphone17(base, engine) {
   await assertSharedPreview(page);
   await assertLogoControlLayout(page, true);
   await noHorizontalOverflow(page);
+  await assertConfigurationLayout(page, false);
 }
 
 async function toolbarConfiguration(page) {
@@ -899,7 +917,7 @@ try {
   await assertDefaultLocked(desktop);
   const defaultAccent = await websiteAccent(desktop);
   await assertBlackSurfaces(desktop);
-  assert.equal(await desktop.locator('#presets .preset-card').count(), 24);
+  assert.equal(await desktop.locator('#presets .preset-card').count(), 23);
   assert.deepEqual(await desktop.locator('#presets .preset-card input:checked').evaluateAll(inputs => inputs.map(input => input.closest('.preset-card').dataset.slug)), ['default']);
   for (const group of ['aesthetic', 'pastel', 'bold']) await assertPaletteGroup(desktop, group, false);
   assert.equal(await desktop.locator('#status').isVisible(), false);
@@ -945,6 +963,7 @@ try {
   assert.equal(await desktop.locator('.toolbar-notch-toggle > span').first().innerText(), 'Notch');
   await assertToolbarPreview(desktop, { notch: false, colors: defaults, order: ['layout', 'settings'] });
   await assertSharedPreview(desktop);
+  await assertConfigurationLayout(desktop, true);
   await assertToolbarScrolling(desktop);
   await assertLogoControlLayout(desktop);
   await assertAnimatedPreview(desktop, '#toolbar-preview', [['.toolbar-phrase-progress', 'strokeDashoffset'], ['.toolbar-master-cell', 'opacity']]);
@@ -974,13 +993,13 @@ try {
   // Aesthetic palettes can be selected as a group or mixed individually.
   await desktop.locator('#select-aesthetic').check();
   await assertPaletteGroup(desktop, 'aesthetic', true);
-  assert.equal(await desktop.locator('#presets .preset-card input:checked').count(), 9);
-  await desktop.getByRole('checkbox', { name: 'Include Drive', exact: true }).uncheck();
+  assert.equal(await desktop.locator('#presets .preset-card input:checked').count(), 8);
+  await desktop.getByRole('checkbox', { name: 'Include Outrun', exact: true }).uncheck();
   await assertPaletteGroup(desktop, 'aesthetic', false, true);
   await desktop.getByRole('checkbox', { name: 'Include Pastel Red', exact: true }).check();
   const aestheticArchive = join(artifacts, 'pro-pure-black-aesthetic-mix.zip');
   await download(desktop, aestheticArchive);
-  verifyPaletteSelectionZip(aestheticArchive, ['Default', 'Pastel Red', ...aestheticNames.filter(name => name !== 'Drive')]);
+  verifyPaletteSelectionZip(aestheticArchive, ['Default', 'Pastel Red', ...aestheticNames.filter(name => name !== 'Outrun')]);
   await desktop.getByRole('button', { name: 'Preview Daydream', exact: true }).click();
   assert.notEqual(await websiteAccent(desktop), defaultAccent);
   await desktop.locator('#select-default').click();
@@ -1268,7 +1287,16 @@ try {
   const removedLogoArchive = join(artifacts, 'pro-pure-black-logo-removed.zip');
   await download(desktop, removedLogoArchive);
   assert.deepEqual(await readFile(removedLogoArchive), await readFile(unnotchedArchive), 'Removing the logo restores the exact original export');
-  await desktop.waitForFunction(() => document.querySelector('#preset-preview').dataset.motion === 'paused');
+  // A compact page may keep the preview visible even after scrolling to Download.
+  await desktop.setViewportSize({ width: 1440, height: 420 });
+  await desktop.locator('footer').scrollIntoViewIfNeeded();
+  await desktop.waitForFunction(() => {
+    const preview = document.querySelector('#preset-preview');
+    return preview.getBoundingClientRect().bottom <= 0 && preview.dataset.motion === 'paused';
+  });
+  assert.ok(await desktop.locator('#preset-preview .preview-motion').evaluateAll(elements =>
+    elements.length > 0 && elements.every(element => getComputedStyle(element).animationPlayState === 'paused')),
+  'All deck animations pause when the preview is outside the viewport');
 
   await checkIphone17(base, browser);
   safari = await webkit.launch({ headless: true });
