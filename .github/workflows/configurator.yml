@@ -1,0 +1,42 @@
+name: Configurator checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: configurator-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Check published assets
+        run: python3 tools/build_configurator.py --check
+      - name: Check generated skins
+        run: npm test
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium --only-shell
+      - name: Check browser interactions and downloads
+        run: npm run browsercheck
+      - name: Save screenshots and exported skin
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: configurator-browser-checks
+          path: browser-checks/
+          if-no-files-found: ignore
+          retention-days: 14

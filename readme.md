@@ -2,6 +2,8 @@
 
 A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black desktop.
 
+**[Build your own skin →](https://elxrrr.github.io/pro-pure-black/)** Toggle toolbar controls, choose palettes and set custom deck colours, then download your ZIP. Default is always included with Atomix’s original colours.
+
 ![Pro Pure Black fullscreen notch layout](screenshots/notch-layout.jpg)
 
 ## Changes
@@ -17,7 +19,7 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Shape waveforms | Vocal, instrumental and beat layers follow the selected deck colour using darker and lighter shades. Default retains the original waveform colours. |
 | Mixer level meters | Follow each deck’s theme colour, retaining segmented bars and `#BEBEBE` peak segments. Default retains the original meters. |
 | Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. |
-| Sandbox, Shoutout, Event Scheduler and account box | Hidden from the toolbar. |
+| Sandbox, Shoutout, Event Scheduler and account box | Hidden by default; individually configurable in the skin builder. |
 | Layout, status and Settings | Grouped on the right on macOS. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |

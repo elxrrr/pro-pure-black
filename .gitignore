@@ -2,3 +2,5 @@
 release/
 *.zip
 __pycache__/
+node_modules/
+browser-checks/
