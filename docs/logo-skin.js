@@ -1,4 +1,5 @@
 import { inspectPng, pngCrc32, LOGO_LIMITS } from './logo-image.js';
+import { ACCOUNT_LEFT_VISIBILITY, ACCOUNT_NORMAL_VISIBILITY } from './toolbar.js';
 
 export const LOGO_PLACEMENT = Object.freeze({
   mac: Object.freeze({ x: 538, y: 13, statusX: 195 }),
@@ -78,18 +79,26 @@ export function applyLogoXml(xml, spriteY) {
   if (typeof xml !== 'string' || !Number.isSafeInteger(spriteY) || spriteY < 1) throw new TypeError('A valid skin and logo sprite position are required.');
   if (xml.includes(MARKER)) throw new Error('This skin already contains a custom logo.');
   const newline = xml.includes('\r\n') ? '\r\n' : '\n';
+  const responsiveAccount = xml.includes('<group name="pureblack_toolbar_account_left"');
   const seen = new Set();
   xml = xml.replace(/<group name="applicationbuttons" condition="is_(mac|pc)">[\s\S]*?<\/logo>/g, (native, platform) => {
     if (seen.has(platform)) throw new Error('The native logo group is duplicated.');
     seen.add(platform);
     const { x, y } = LOGO_PLACEMENT[platform];
-    const markup = [
-      `<!-- ${MARKER} -->`,
-      '<visual name="pureblack_custom_logo">',
-      `  <pos x="${x}" y="${y}"/>`,
+    const visual = (name, left, visibility = '') => [
+      `<visual name="${name}"${visibility ? ` visibility="${visibility}"` : ''}>`,
+      `  <pos x="${left}" y="${y}"/>`,
       '  <size width="72" height="17"/>',
       `  <off x="0" y="${spriteY}"/>`,
       '</visual>',
+    ].join(newline);
+    const markup = [
+      `<!-- ${MARKER} -->`,
+      visual('pureblack_custom_logo', x,
+        platform === 'mac' && responsiveAccount ? ACCOUNT_NORMAL_VISIBILITY : ''),
+      ...(platform === 'mac' && responsiveAccount ? [
+        visual('pureblack_custom_logo_account_left', 670, ACCOUNT_LEFT_VISIBILITY),
+      ] : []),
       '<!-- END PURE BLACK CUSTOM LOGO -->',
     ].join(newline);
     return native + newline + markup;
@@ -98,6 +107,9 @@ export function applyLogoXml(xml, spriteY) {
   for (const { statusX } of Object.values(LOGO_PLACEMENT)) {
     const status = `<group name="topbar_status" x="${statusX}" y="8">`;
     if (xml.split(status).length !== 2) throw new Error('The skin status position could not be identified.');
+  }
+  if (responsiveAccount && xml.split('<group name="topbar_status" x="327" y="8">').length !== 2) {
+    throw new Error('The relocated skin status position could not be identified.');
   }
   return xml;
 }

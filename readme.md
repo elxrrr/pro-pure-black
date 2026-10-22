@@ -2,7 +2,7 @@
 
 A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black desktop.
 
-**[Generate your skin →](https://elxrrr.github.io/pro-pure-black/)** Choose your toolbar, logo and palettes. Select whole Pastel or Bold groups, mix individual palettes, or create your own. Default always retains Atomix’s original colours.
+**[Generate your skin →](https://elxrrr.github.io/pro-pure-black/)** Choose your toolbar, logo and palettes in one live preview. Select whole Pastel or Bold groups, mix individual palettes, or create your own. Default always retains Atomix’s original colours.
 
 ![Pro Pure Black fullscreen notch layout](screenshots/notch-layout.jpg)
 
@@ -20,11 +20,11 @@ A pure-black version of VirtualDJ’s **Pro** layout, made to blend into a black
 | Mixer level meters | Follow each deck’s theme colour, retaining segmented bars and `#BEBEBE` peak segments. Default retains the original meters. |
 | Jog wheels | Rings and borders `#484848`; position markers `#A6A6A6`; labels and time text `#B0B0B0`. |
 | Sandbox, Shoutout, Event Scheduler and account box | Hidden by default; individually configurable in the skin builder. |
-| Builder toolbar | Master, CPU, battery and clock beside the logo on the left; buttons grouped on the right in your chosen order. With all controls included, the 13″ Air layout hides Account only while VirtualDJ reports a notch. |
+| Builder toolbar | Master, CPU, battery and clock beside the logo on the left; buttons grouped on the right in your chosen order. In narrow Mac windows, Account moves before Master; when the notch layout is active and all controls are included, Account hides to make room. |
 | Custom logo | Optional transparent PNG, placed after the master/status block. |
 | Tap, Edit and beat-grid controls | Always visible; clicking BPM no longer toggles them. |
 | VirtualDJ logo | Reduced to 72 × 17 beside the window controls. |
-| Deck colours | Default retains the original colours. Pastel and Bold groups each include Red, Orange, Yellow, Green, Blue, Purple and Greyscale. |
+| Deck colours | Default retains the original colours. Pastel and Bold groups each include Red, Orange, Yellow, Green, Blue, Purple, Pink and Greyscale. |
 | Remaining controls | Original behaviour. |
 
 ## Deck colours
@@ -41,4 +41,5 @@ All themes keep `#000000` backgrounds. Rendered previews show decks **A, B, C, D
 | Green | <a href="screenshots/themes/pastel-green.png"><img src="screenshots/themes/pastel-green.png" alt="Pastel Green — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-green.png"><img src="screenshots/themes/bold-green.png" alt="Bold Green — decks A, B, C, D" width="350"></a> |
 | Blue | <a href="screenshots/themes/pastel-blue.png"><img src="screenshots/themes/pastel-blue.png" alt="Pastel Blue — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-blue.png"><img src="screenshots/themes/bold-blue.png" alt="Bold Blue — decks A, B, C, D" width="350"></a> |
 | Purple | <a href="screenshots/themes/pastel-purple.png"><img src="screenshots/themes/pastel-purple.png" alt="Pastel Purple — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-purple.png"><img src="screenshots/themes/bold-purple.png" alt="Bold Purple — decks A, B, C, D" width="350"></a> |
+| Pink | <a href="screenshots/themes/pastel-pink.png"><img src="screenshots/themes/pastel-pink.png" alt="Pastel Pink — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-pink.png"><img src="screenshots/themes/bold-pink.png" alt="Bold Pink — decks A, B, C, D" width="350"></a> |
 | Greyscale | <a href="screenshots/themes/pastel-greyscale.png"><img src="screenshots/themes/pastel-greyscale.png" alt="Pastel Greyscale — decks A, B, C, D" width="350"></a> | <a href="screenshots/themes/bold-greyscale.png"><img src="screenshots/themes/bold-greyscale.png" alt="Bold Greyscale — decks A, B, C, D" width="350"></a> |

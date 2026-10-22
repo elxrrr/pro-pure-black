@@ -1,7 +1,6 @@
 import { generateSkinXml, createSkinZip, normaliseThemes } from './generator.js';
 import { applyToolbar, DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
 import { applyWebsiteTheme } from './appearance.js';
-import { DISPLAY_PROFILES, toolbarFit } from './display.js';
 import { CUSTOM_START_COLORS, randomPalette } from './custom-palettes.js';
 import { prepareLogo } from './logo-image.js';
 import { addLogoToSkin } from './logo-skin.js';
@@ -15,8 +14,8 @@ const paletteGroups = [{ id: 'pastel', name: 'Pastel' }, { id: 'bold', name: 'Bo
 const originalDefault = { id: 0, name: 'Default', slug: 'default', colors: ['#156C89', '#AC2F37', '#0D7264', '#A54D30'] };
 const state = {
   themes: [originalDefault], selected: new Set(['default']), preview: 'default',
-  customs: [], activeCustom: null, nextCustom: 1, assets: null, busy: false,
-  toolbarOrder: [...DEFAULT_TOOLBAR_ORDER], notchPreview: false, displayProfile: '14',
+  customs: [], draft: null, nextCustom: 1, assets: null, busy: false,
+  toolbarOrder: [...DEFAULT_TOOLBAR_ORDER], notchPreview: false,
   logo: null, logoBusy: false,
 };
 const hexPattern = /^#[0-9a-f]{6}$/i;
@@ -36,30 +35,26 @@ function toolbarOptions() {
 }
 
 function activePreviewTheme() {
+  if (state.draft && state.preview === state.draft.key) return customTheme(state.draft);
   const custom = state.customs.find(item => item.key === state.preview);
   return custom ? customTheme(custom) : state.themes.find(theme => theme.slug === state.preview) || originalDefault;
-}
-
-function displayOptions() {
-  return { notch: state.notchPreview, profile: state.displayProfile };
 }
 
 function renderToolbar() {
   const container = $('#toolbar-preview');
   const options = toolbarOptions();
-  const display = { ...displayOptions(), colors: activePreviewTheme().colors, logo: state.logo?.dataUrl || null };
+  const display = { notch: state.notchPreview, colors: activePreviewTheme().colors, logo: state.logo?.dataUrl || null };
   const signature = JSON.stringify([options, state.toolbarOrder, display]);
   if (signature === toolbarPreviewSignature && container.childElementCount) return;
   renderToolbarPreview(container, options, state.toolbarOrder, display);
   toolbarPreviewSignature = signature;
 }
 
-function updateToolbarFit() {
-  const options = toolbarOptions();
-  const fit = toolbarFit(options, state.toolbarOrder, displayOptions());
+function updateToolbarFit(fit) {
   const status = $('#toolbar-fit-status');
   const message = !fit.fits ? 'Controls overlap in this preview.'
-    : fit.autoHiddenAccount ? 'Account hides automatically in the 13″ notch layout.' : '';
+    : fit.autoHiddenAccount ? 'Account hides automatically while the notch layout is short of space.'
+    : fit.accountLeft ? 'Account moves before Master in a narrow window.' : '';
   if (status.textContent !== message) status.textContent = message;
   status.hidden = !message;
   status.classList.toggle('is-error', !fit.fits);
@@ -67,15 +62,7 @@ function updateToolbarFit() {
 }
 
 function setupDisplayPreview() {
-  const select = $('#toolbar-display-profile');
-  select.replaceChildren(...DISPLAY_PROFILES.map(profile => {
-    const option = document.createElement('option');
-    option.value = profile.id; option.textContent = profile.label; return option;
-  }));
-  select.value = state.displayProfile;
-  select.addEventListener('change', () => {
-    state.displayProfile = select.value; renderToolbar(); updateSummary();
-  });
+  $('#toolbar-preview').addEventListener('toolbarlayoutchange', event => updateToolbarFit(event.detail));
   $('#toolbar-notch-preview').addEventListener('change', event => {
     state.notchPreview = event.target.checked; renderToolbar(); updateSummary();
   });
@@ -212,11 +199,7 @@ function renderPresetPreview() {
     card.classList.toggle('is-preview', active);
     card.querySelector('.preset-preview').setAttribute('aria-pressed', String(active));
   });
-  state.customs.forEach(custom => {
-    const active = custom.key === state.preview;
-    custom.element.classList.toggle('is-preview', active);
-    custom.element.querySelector('.custom-preview-button').setAttribute('aria-pressed', String(active));
-  });
+  state.draft?.element.classList.toggle('is-preview', state.preview === state.draft.key);
   renderToolbar();
 }
 
@@ -247,7 +230,6 @@ function createPresetCard(theme, custom = null) {
   checkbox.addEventListener('change', () => {
     if (custom) {
       custom.included = checkbox.checked;
-      custom.element.querySelector('.custom-include').checked = custom.included;
     } else if (checkbox.checked) state.selected.add(theme.slug); else state.selected.delete(theme.slug);
     updateSummary();
   });
@@ -316,47 +298,36 @@ function customTheme(custom) {
 }
 
 function selectCustom(key) {
-  state.activeCustom = key;
-  const custom = state.customs.find(item => item.key === key);
-  if (custom) {
-    state.preview = custom.key;
-    renderPresetPreview();
-  } else {
-    if (!state.themes.some(theme => theme.slug === state.preview)) {
-      state.preview = 'default'; renderPresetPreview();
-    }
-  }
+  if (!state.customs.some(custom => custom.key === key)) return;
+  state.preview = key; renderPresetPreview();
 }
 
-function validateCustoms() {
-  const names = new Map();
-  const addName = name => { const key = name.trim().toLowerCase(); names.set(key, (names.get(key) || 0) + 1); };
-  state.themes.filter(theme => state.selected.has(theme.slug)).forEach(theme => addName(theme.name));
-  state.customs.filter(custom => custom.included).forEach(custom => addName(custom.name));
-  let valid = true;
-  for (const custom of state.customs) {
-    const nameInvalid = !custom.name.trim() || custom.name.trim().length > 64 || /[\u0000-\u001f\u007f]/.test(custom.name);
-    const duplicate = names.get(custom.name.trim().toLowerCase()) > 1;
-    const invalidColours = custom.rawColors.some(colour => !hexPattern.test(colour.trim()));
-    let error = '';
-    if (custom.included) {
-      if (nameInvalid) error = 'Enter a palette name.';
-      else if (duplicate) error = 'Use a different name from the other included palettes.';
-      else if (invalidColours) error = 'Use a six-digit hex colour for each deck.';
-    }
-    custom.element.querySelector('.custom-name').setAttribute('aria-invalid', String(custom.included && (nameInvalid || duplicate)));
-    custom.element.querySelectorAll('.hex-input').forEach((input, index) => {
-      input.setAttribute('aria-invalid', String(custom.included && !hexPattern.test(custom.rawColors[index].trim())));
-    });
-    const message = custom.element.querySelector('.custom-error');
-    message.textContent = error; message.hidden = !error;
-    if (error) valid = false;
-  }
-  return valid;
+function previewDraft() {
+  state.preview = state.draft.key; renderPresetPreview();
+}
+
+function validateDraft() {
+  const draft = state.draft;
+  if (!draft) return false;
+  const name = draft.name.trim();
+  const nameInvalid = !name || name.length > 64 || /[\u0000-\u001f\u007f]/.test(name);
+  const duplicate = [...state.themes, ...state.customs].some(theme => theme.name.trim().toLowerCase() === name.toLowerCase());
+  const invalidColours = draft.rawColors.some(colour => !hexPattern.test(colour.trim()));
+  const error = nameInvalid ? 'Enter a palette name.' : duplicate
+    ? 'Use a different name from the other palettes.' : invalidColours
+      ? 'Use a six-digit hex colour for each deck.' : '';
+  draft.element.querySelector('.custom-name').setAttribute('aria-invalid', String(nameInvalid || duplicate));
+  draft.element.querySelectorAll('.hex-input').forEach((input, index) => {
+    input.setAttribute('aria-invalid', String(!hexPattern.test(draft.rawColors[index].trim())));
+  });
+  const message = draft.element.querySelector('.custom-error');
+  message.textContent = error; message.hidden = !error;
+  $('#add-custom').disabled = !state.assets || Boolean(error);
+  return !error;
 }
 
 function updateSummary() {
-  const valid = validateCustoms();
+  validateDraft();
   const count = state.selected.size + state.customs.filter(custom => custom.included).length;
   const toolbarCount = Object.values(toolbarOptions()).filter(Boolean).length;
   $('#preset-count').textContent = `${count} included`;
@@ -364,76 +335,74 @@ function updateSummary() {
   syncPaletteSelection();
   $('#toolbar-count').textContent = `${toolbarCount + 2} included`;
   $('#download-summary').textContent = `${count} palette${count === 1 ? '' : 's'} · ${toolbarCount} optional control${toolbarCount === 1 ? '' : 's'}`;
-  const fit = updateToolbarFit();
-  $('#download').disabled = !state.assets || state.busy || state.logoBusy || !valid || !fit.fits;
+  $('#download').disabled = !state.assets || state.busy || state.logoBusy;
 }
 
-function createCustomCard(custom) {
+function createDraftCard(draft) {
   const card = document.createElement('article');
-  card.className = 'custom-card'; card.dataset.customId = custom.key;
-  // Only generated keys enter this template; user-provided names use text/value.
-  card.innerHTML = `<div class="custom-card-head"><label class="custom-name-label"><span class="sr-only">Preset name</span><input class="custom-name" type="text" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="${custom.key}-error"></label><div class="custom-actions"><label class="custom-enable"><input type="checkbox" class="custom-include" checked><span class="checkbox-face" aria-hidden="true"></span><span>Include</span></label><button type="button" class="custom-preview-button" aria-pressed="false">Preview</button><button type="button" class="custom-randomise">Random</button><button type="button" class="custom-remove">Remove</button></div></div><div class="custom-colours"></div><p class="custom-error field-error" id="${custom.key}-error" role="alert" hidden></p>`;
-  custom.element = card;
+  card.className = 'custom-card'; card.dataset.customId = 'draft';
+  card.innerHTML = `<div class="custom-card-head"><label class="custom-name-label"><span class="sr-only">Preset name</span><input class="custom-name" type="text" maxlength="64" autocomplete="off" spellcheck="false" aria-describedby="custom-draft-error"></label><div class="custom-actions"><button type="button" class="custom-randomise">Random</button></div></div><div class="custom-colours"></div><p class="custom-error field-error" id="custom-draft-error" role="alert" hidden></p>`;
+  draft.element = card;
   const name = card.querySelector('.custom-name');
-  name.value = custom.name;
   name.addEventListener('input', () => {
-    custom.name = name.value; selectCustom(custom.key); updateSummary();
+    draft.name = name.value; previewDraft(); updateSummary();
   });
-  const include = card.querySelector('.custom-include');
-  include.addEventListener('change', () => { custom.included = include.checked; updateSummary(); });
-  card.querySelector('.custom-preview-button').addEventListener('click', () => selectCustom(custom.key));
   card.querySelector('.custom-randomise').addEventListener('click', () => {
     const colors = randomPalette();
-    custom.included = true; include.checked = true;
-    for (let index = 0; index < letters.length; index++) {
-      custom.colors[index] = colors[index]; custom.rawColors[index] = colors[index];
-      card.querySelector(`.colour-picker[data-deck="${letters[index]}"]`).value = colors[index];
-      card.querySelector(`.hex-input[data-deck="${letters[index]}"]`).value = colors[index];
-    }
-    selectCustom(custom.key); updateSummary();
-  });
-  card.querySelector('.custom-remove').addEventListener('click', () => {
-    const index = state.customs.indexOf(custom);
-    state.customs.splice(index, 1); card.remove(); custom.tile?.remove();
-    if (state.preview === custom.key) { state.preview = 'default'; renderPresetPreview(); }
-    if (state.activeCustom === custom.key) selectCustom(state.customs[Math.min(index, state.customs.length - 1)]?.key || null);
-    updateSummary();
-    if (!state.customs.length) $('#add-custom').focus();
+    draft.colors = [...colors]; draft.rawColors = [...colors];
+    letters.forEach((letter, index) => {
+      card.querySelector(`.colour-picker[data-deck="${letter}"]`).value = colors[index];
+      card.querySelector(`.hex-input[data-deck="${letter}"]`).value = colors[index];
+    });
+    previewDraft(); updateSummary();
   });
   card.querySelector('.custom-colours').append(...letters.map((letter, index) => {
     const field = document.createElement('div'); field.className = 'colour-field';
-    const label = document.createElement('label'); label.className = 'colour-field-label'; label.htmlFor = `${custom.key}-colour-${letter}`; label.textContent = `Deck ${letter}`;
+    const label = document.createElement('label'); label.className = 'colour-field-label'; label.htmlFor = `custom-draft-colour-${letter}`; label.textContent = `Deck ${letter}`;
     const wrap = document.createElement('div'); wrap.className = 'colour-swatch-wrap';
-    const picker = document.createElement('input'); picker.type = 'color'; picker.id = label.htmlFor; picker.className = 'colour-picker'; picker.value = custom.colors[index]; picker.dataset.deck = letter;
-    const hex = document.createElement('input'); hex.type = 'text'; hex.className = 'hex-input'; hex.value = custom.rawColors[index]; hex.maxLength = 7; hex.spellcheck = false; hex.autocomplete = 'off'; hex.dataset.deck = letter;
-    hex.setAttribute('aria-label', `Deck ${letter} hex colour`); hex.setAttribute('aria-describedby', `${custom.key}-error`);
+    const picker = document.createElement('input'); picker.type = 'color'; picker.id = label.htmlFor; picker.className = 'colour-picker'; picker.dataset.deck = letter;
+    const hex = document.createElement('input'); hex.type = 'text'; hex.className = 'hex-input'; hex.maxLength = 7; hex.spellcheck = false; hex.autocomplete = 'off'; hex.dataset.deck = letter;
+    hex.setAttribute('aria-label', `Deck ${letter} hex colour`); hex.setAttribute('aria-describedby', 'custom-draft-error');
     const changed = value => {
-      custom.rawColors[index] = value;
-      custom.included = true; include.checked = true;
-      if (hexPattern.test(value.trim())) { custom.colors[index] = value.trim().toUpperCase(); picker.value = custom.colors[index]; }
-      selectCustom(custom.key); updateSummary();
+      draft.rawColors[index] = value;
+      if (hexPattern.test(value.trim())) { draft.colors[index] = value.trim().toUpperCase(); picker.value = draft.colors[index]; }
+      previewDraft(); updateSummary();
     };
     picker.addEventListener('input', () => { hex.value = picker.value.toUpperCase(); changed(hex.value); });
     hex.addEventListener('input', () => changed(hex.value));
     hex.addEventListener('blur', () => {
-      if (hexPattern.test(hex.value.trim())) { hex.value = hex.value.trim().toUpperCase(); custom.rawColors[index] = hex.value; }
+      if (hexPattern.test(hex.value.trim())) { hex.value = hex.value.trim().toUpperCase(); draft.rawColors[index] = hex.value; }
     });
     wrap.append(picker); field.append(label, wrap, hex); return field;
   }));
   return card;
 }
 
-function addCustom() {
-  const existingNames = new Set([...state.themes, ...state.customs].map(item => item.name.trim().toLowerCase()));
+function resetDraft() {
+  const names = new Set([...state.themes, ...state.customs].map(theme => theme.name.trim().toLowerCase()));
   let number = state.nextCustom++;
-  while (existingNames.has(`custom ${number}`)) number = state.nextCustom++;
-  const colors = [...CUSTOM_START_COLORS];
-  const custom = { key: `custom-${number}`, name: `Custom ${number}`, colors, rawColors: [...colors], included: true };
+  while (names.has(`custom ${number}`)) number = state.nextCustom++;
+  const draft = state.draft || { key: 'custom-draft' };
+  Object.assign(draft, { number, name: `Custom ${number}`, colors: [...CUSTOM_START_COLORS], rawColors: [...CUSTOM_START_COLORS] });
+  state.draft = draft;
+  if (!draft.element) $('#custom-presets').append(createDraftCard(draft));
+  draft.element.querySelector('.custom-name').value = draft.name;
+  letters.forEach((letter, index) => {
+    draft.element.querySelector(`.colour-picker[data-deck="${letter}"]`).value = draft.colors[index];
+    draft.element.querySelector(`.hex-input[data-deck="${letter}"]`).value = draft.rawColors[index];
+  });
+  validateDraft();
+}
+
+function addCustom() {
+  if (!state.assets || !validateDraft()) return;
+  const draft = state.draft;
+  const custom = { key: `custom-${draft.number}`, name: draft.name.trim(), colors: draft.rawColors.map(colour => colour.trim().toUpperCase()), included: true };
   state.customs.push(custom);
-  $('#custom-presets').append(createCustomCard(custom));
   $('#personal-presets').append(createPresetCard(customTheme(custom), custom));
-  selectCustom(custom.key); updateSummary();
-  custom.element.querySelector('.custom-name').focus();
+  state.preview = custom.key;
+  resetDraft(); renderPresetPreview(); updateSummary();
+  state.draft.element.querySelector('.custom-name').focus();
 }
 
 async function copySkinPath(button) {
@@ -480,14 +449,9 @@ async function loadAssets() {
 }
 
 async function downloadSkin() {
-  if (!state.assets || !validateCustoms() || state.busy || state.logoBusy) return;
-  if (!updateToolbarFit().fits) {
-    setStatus('Selected toolbar controls overlap. Hide a control before downloading.', true);
-    updateSummary(); return;
-  }
+  if (!state.assets || state.busy || state.logoBusy) return;
   const configuration = {
     assets: state.assets, logo: state.logo, toolbar: toolbarOptions(), order: [...state.toolbarOrder],
-    compactNotch: state.displayProfile === '13',
     themes: [...state.themes.filter(theme => theme.slug === 'default' || state.selected.has(theme.slug)),
       ...state.customs.filter(custom => custom.included).map(customTheme)],
   };
@@ -497,7 +461,7 @@ async function downloadSkin() {
   try {
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     let xml = generateSkinXml(configuration.assets.xml, configuration.themes);
-    xml = applyToolbar(xml, configuration.toolbar, configuration.order, { compactNotch: configuration.compactNotch });
+    xml = applyToolbar(xml, configuration.toolbar, configuration.order);
     let image = configuration.assets.image;
     if (configuration.logo) ({ xml, image } = await addLogoToSkin(xml, image, configuration.logo));
     xml = xml.replace(/(<skin\s[^>]*\bname=")[^"]*(")/, '$1Pro Pure Black Custom$2');
@@ -521,18 +485,19 @@ setupPreviewMotion();
 setupToolbarOrder();
 setupDisplayPreview();
 setupLogoUpload();
+resetDraft();
 toolbarKeys.forEach(key => $(`#toolbar-${key}`).addEventListener('change', () => {
   renderToolbar(); updateSummary();
 }));
 $('#add-custom').addEventListener('click', addCustom);
 $('#select-all').addEventListener('click', () => {
   state.selected = new Set(state.themes.map(theme => theme.slug));
-  state.customs.forEach(custom => { custom.included = true; custom.element.querySelector('.custom-include').checked = true; });
+  state.customs.forEach(custom => { custom.included = true; });
   renderPresets(); updateSummary();
 });
 $('#select-default').addEventListener('click', () => {
   state.selected = new Set(['default']);
-  state.customs.forEach(custom => { custom.included = false; custom.element.querySelector('.custom-include').checked = false; });
+  state.customs.forEach(custom => { custom.included = false; });
   renderPresets(); updateSummary();
 });
 document.querySelectorAll('[data-copy-path]').forEach(button => button.addEventListener('click', () => copySkinPath(button)));

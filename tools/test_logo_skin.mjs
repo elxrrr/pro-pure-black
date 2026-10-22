@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { deflateSync, inflateSync } from 'node:zlib';
 import { addLogoToSkin, appendLogoSprite, applyLogoXml } from '../docs/logo-skin.js';
+import { applyToolbar } from '../docs/toolbar.js';
 
 const sprite = new Uint8Array(await readFile(new URL('../docs/assets/gfx-pro.png', import.meta.url)));
 const sourceXml = await readFile(new URL('../docs/assets/Pro.xml', import.meta.url), 'utf8');
@@ -123,6 +124,37 @@ test('combined logo export points both native visuals at the appended tile', asy
   assert.equal(result.xml.match(/BEGIN PURE BLACK CUSTOM LOGO/g).length, 2);
 });
 
+test('custom logo follows the responsive Mac status block without moving the Windows logo', () => {
+  for (const options of [{account: true}, {account: true, sandbox: true, scheduler: true, shoutout: true}]) {
+    const toolbar = applyToolbar(sourceXml, options);
+    const result = applyLogoXml(toolbar, 428);
+    assert.ok(!/(?<!\r)\n/.test(result), 'Responsive markup preserves CRLF');
+    const additions = [...result.matchAll(/<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g)].map(match => match[0]);
+    assert.equal(additions.length, 2);
+    const macVisuals = [...additions[0].matchAll(/<visual[^>]*>[\s\S]*?<\/visual>/g)].map(match => match[0]);
+    assert.equal(macVisuals.length, 2);
+    assert.ok(macVisuals[0].includes(`visibility="has_notch ? true : maximize 'fullscreen' ? true : skin_width && param_bigger 1500"`));
+    assert.ok(macVisuals[0].includes('<pos x="538" y="13"/>'));
+    assert.ok(macVisuals[1].includes(`visibility="has_notch ? false : maximize 'fullscreen' ? false : skin_width && param_smaller 1501"`));
+    assert.ok(macVisuals[1].includes('<pos x="670" y="13"/>'));
+    for (const visual of macVisuals) {
+      assert.ok(visual.includes('<size width="72" height="17"/>'));
+      assert.ok(visual.includes('<off x="0" y="428"/>'));
+    }
+    assert.equal((additions[1].match(/<visual/g) || []).length, 1);
+    assert.ok(additions[1].includes('<pos x="443" y="13"/>'));
+    assert.ok(!additions[1].includes('visibility='));
+    for (const x of [195, 327, 100]) {
+      assert.equal(result.split(`<group name="topbar_status" x="${x}" y="8">`).length - 1, 1);
+    }
+    const restored = result.replace(/\r\n<!-- BEGIN PURE BLACK CUSTOM LOGO -->[\s\S]*?<!-- END PURE BLACK CUSTOM LOGO -->/g, '');
+    assert.equal(restored, toolbar, 'Logo insertion leaves all toolbar branches and native logos intact');
+  }
+  const noAccount = applyLogoXml(applyToolbar(sourceXml, {account: false, sandbox: true}), 428);
+  assert.ok(!noAccount.includes('name="pureblack_custom_logo_account_left"'));
+  assert.equal((noAccount.match(/<off x="0" y="428"\/>/g) || []).length, 2);
+});
+
 test('sprite writer rejects invalid, unsupported and incomplete input', async () => {
   await assert.rejects(appendLogoSprite(Buffer.from('not PNG'), tile), /not a PNG/);
   for (const invalid of [null, [], new Uint8Array(72 * 17 * 4 - 1)]) {
@@ -150,4 +182,7 @@ test('logo XML rejects duplicate, missing and invalid inputs', () => {
   assert.throws(() => applyLogoXml(sourceXml + nativeMac, 428), /native logo group is duplicated/);
   assert.throws(() => applyLogoXml(sourceXml.replace('name="topbar_status" x="195"', 'name="topbar_status" x="196"'), 428), /status position/);
   assert.throws(() => applyLogoXml(sourceXml + '<group name="topbar_status" x="100" y="8">', 428), /status position/);
+  const responsive = applyToolbar(sourceXml, {account: true});
+  assert.throws(() => applyLogoXml(responsive.replace('name="topbar_status" x="327"', 'name="topbar_status" x="328"'), 428), /relocated skin status position/);
+  assert.throws(() => applyLogoXml(responsive + '<group name="topbar_status" x="327" y="8">', 428), /relocated skin status position/);
 });

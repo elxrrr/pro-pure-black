@@ -1,5 +1,5 @@
 import { DEFAULT_TOOLBAR_ORDER } from './toolbar.js';
-import { getDisplayProfile, toolbarFit } from './display.js';
+import { toolbarFit } from './display.js';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 const DEFAULT_WAVES = ['#0085F4', '#FF0013', '#00FFBA', '#F94C00'];
@@ -162,8 +162,8 @@ function toolbarControl({ key, x, y, width, height }) {
 }
 
 function toolbarStatus(x = 195) {
-  const meters = [9, 15].map((y, channel) => {
-    const segments = Array.from({ length: 13 }, (_, i) => `<rect x="${65 + i * 5.4}" y="${y}" width="4" height="4"/>`).join('');
+  const meters = [8, 15].map((y, channel) => {
+    const segments = Array.from({ length: 11 }, (_, i) => `<rect x="${65 + i * 6.5}" y="${y}" width="5" height="5"/>`).join('');
     return `<g fill="#242424">${segments}</g><g class="toolbar-motion toolbar-master-fill" fill="#828282" style="--toolbar-delay:${-channel * .37}s">${segments}</g>`;
   }).join('');
   return `<g class="toolbar-sim-status" ${nativeBounds(x, 8, 336, 27)} transform="translate(${x} 8)">
@@ -191,10 +191,15 @@ function phrasePreview(notch, colours, offset = 0) {
   return `${circles}<g class="toolbar-sim-beat-bars" ${nativeBounds(898 + offset, 8, 127, 26)}>${bars}</g>`;
 }
 
+function toolbarAvailableWidth(container) {
+  const style = window.getComputedStyle(container);
+  return Math.max(0, Math.round(container.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0)));
+}
+
 /** Fixed-size controls, centered phrases and right-anchored tools; preview choices never change the skin. */
 export function renderToolbarPreview(container, options = {}, order = DEFAULT_TOOLBAR_ORDER, display = {}) {
   if (!container) throw new Error('The toolbar preview container is missing.');
-  const { notch = false, profile = '14', colors = DEFAULT_TOOLBAR_COLOURS, logo = null } = display;
+  const { notch = false, fullscreen = notch, colors = DEFAULT_TOOLBAR_COLOURS, logo = null } = display;
   if (typeof notch !== 'boolean') throw new TypeError('Notch preview must be on or off.');
   if (logo !== null && (typeof logo !== 'string' || !/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(logo))) {
     throw new TypeError('The toolbar logo must be a PNG data URL.');
@@ -203,35 +208,40 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
     throw new Error('The toolbar preview needs four hex colours.');
   }
   const colours = colors.map(colour => colour.toUpperCase());
-  const device = getDisplayProfile(profile);
-  const fit = toolbarFit(options, order, { notch, profile });
-  const { items, canvasWidth, phraseOffset } = fit;
   container.classList.add('toolbar-simulation');
-  container.dataset.profile = device.id;
-  container.dataset.notch = String(notch);
-  container.dataset.displayWidth = device.width;
-  container.dataset.displayHeight = device.height;
-  container.dataset.canvasWidth = canvasWidth;
   let view = toolbarViews.get(container);
   if (!view) {
     view = { scrollLeft: null, id: `toolbar-detail-${++nextToolbarView}` };
     toolbarViews.set(container, view);
   }
+  view.args = { options, order, display };
+  const width = toolbarAvailableWidth(container) || view.width || 1440;
+  const fit = toolbarFit(options, order, { notch, fullscreen, width });
+  const { items, leftItem, canvasWidth, phraseOffset, renderWidth, statusX, logoX } = fit;
+  view.width = width;
+  container.dataset.notch = String(notch);
+  container.dataset.availableWidth = width;
+  container.dataset.renderWidth = renderWidth;
+  container.dataset.canvasWidth = canvasWidth;
+  container.dataset.accountLeft = String(fit.accountLeft);
+  container.dataset.autoHiddenAccount = String(fit.autoHiddenAccount);
   const oldViewport = container.querySelector('.toolbar-preview-viewport');
+  const retainFocus = oldViewport === document.activeElement;
   if (oldViewport) view.scrollLeft = oldViewport.scrollLeft;
   container.setAttribute('role', 'group');
   container.setAttribute('aria-label', 'Toolbar preview');
-  const description = `Approximate ${device.label} toolbar at a fixed control size. Left, from left to right: VirtualDJ logo, master level, CPU, battery, clock${logo ? ', uploaded logo' : ''}. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.`;
+  const description = `Approximate toolbar at a fixed control size. Left, from left to right: VirtualDJ logo${leftItem ? ', Account' : ''}, master level, CPU, battery, clock${logo ? ', uploaded logo' : ''}. ${notch ? 'A and C phrase counters left of the notch, B and D right; top beat bars hidden.' : 'Normal phrase counters and top beat bars visible.'} Right, from left to right: ${items.map(item => LABELS[item.key]).join(', ')}.${fit.autoHiddenAccount ? ' Account is hidden to leave space for the notch layout.' : ''}`;
   const cutout = notch ? `<g class="toolbar-sim-notch" data-native-x="${845 + phraseOffset}" data-native-width="230" transform="translate(${phraseOffset} 0)"><path d="M845 0v22a8 8 0 0 0 8 8h214a8 8 0 0 0 8-8V0" fill="#000" stroke="#343438"/><circle cx="960" cy="13" r="4" fill="#141418" stroke="#343438"/></g>` : '';
   container.innerHTML = `<div class="toolbar-preview-viewport" id="${view.id}" role="region" tabindex="0" aria-label="Toolbar detail; scroll horizontally to inspect the toolbar">
-    <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${canvasWidth * fit.scale}px">
-    <svg class="toolbar-sim-svg" viewBox="0 0 ${canvasWidth} 84" xmlns="http://www.w3.org/2000/svg" role="img">
-      <rect x=".5" y=".5" width="${canvasWidth - 1}" height="83" rx="10" fill="#000" stroke="var(--line)"/>
+    <div class="toolbar-display-frame" style="--canvas-width:${canvasWidth}px;--toolbar-render-width:${renderWidth}px">
+    <svg class="toolbar-sim-svg" viewBox="0 0 ${canvasWidth} 50" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect x=".5" y=".5" width="${canvasWidth - 1}" height="49" rx="10" fill="#000" stroke="var(--line)"/>
       <path d="M1 43h${canvasWidth - 2}" stroke="#282828"/>
       <g class="toolbar-sim-left">
         <g class="toolbar-sim-window"><g class="toolbar-sim-lights"><circle cx="22.5" cy="20.5" r="7.5" fill="#bf4744"/><circle cx="47.5" cy="20.5" r="7.5" fill="#be8d2f"/><circle cx="72.5" cy="20.5" r="7.5" fill="#279637"/></g><text class="toolbar-sim-logo" x="100" y="27" textLength="72" lengthAdjust="spacingAndGlyphs" font-size="17" font-style="italic" font-weight="700" fill="#959595">VirtualDJ</text></g>
-        ${toolbarStatus()}
-        ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(538, 13, 72, 17)} x="538" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"/>` : ''}
+        ${leftItem ? toolbarControl(leftItem) : ''}
+        ${toolbarStatus(statusX)}
+        ${logo ? `<image class="toolbar-sim-custom-logo" data-custom-logo="" ${nativeBounds(logoX, 13, 72, 17)} x="${logoX}" y="13" width="72" height="17" preserveAspectRatio="xMidYMid meet"/>` : ''}
       </g>
       <g class="toolbar-sim-phrases">${phrasePreview(notch, colours, phraseOffset)}</g>
       <g class="toolbar-sim-right">${items.map(toolbarControl).join('')}</g>
@@ -244,8 +254,19 @@ export function renderToolbarPreview(container, options = {}, order = DEFAULT_TO
   const viewport = container.querySelector('.toolbar-preview-viewport');
   // Keep controls readable at one fixed scale. Panning stays local to the preview
   // and retains the user's chosen position through palette and toolbar changes.
-  viewport.scrollLeft = view.scrollLeft ?? Math.max(0, (canvasWidth * fit.scale - viewport.clientWidth) / 2);
+  viewport.scrollLeft = view.scrollLeft ?? Math.max(0, (renderWidth - viewport.clientWidth) / 2);
   view.scrollLeft = viewport.scrollLeft;
   viewport.addEventListener('scroll', () => { view.scrollLeft = viewport.scrollLeft; }, { passive: true });
+  if (retainFocus) viewport.focus({ preventScroll: true });
   watch(container);
+  if (!view.resizeObserver && 'ResizeObserver' in window) {
+    view.resizeObserver = new window.ResizeObserver(entries => {
+      const nextWidth = Math.round(entries[0].contentRect.width);
+      if (nextWidth <= 0 || nextWidth === view.width) return;
+      view.width = nextWidth;
+      renderToolbarPreview(container, view.args.options, view.args.order, view.args.display);
+    });
+    view.resizeObserver.observe(container);
+  }
+  container.dispatchEvent(new window.CustomEvent('toolbarlayoutchange', { detail: fit }));
 }

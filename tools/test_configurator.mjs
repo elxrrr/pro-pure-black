@@ -6,9 +6,9 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 import {test} from 'node:test';
 import {generateSkinXml, normaliseThemes, createSkinZip, ATOMIX_DEFAULT} from '../docs/generator.js';
-import {applyToolbar, toolbarLayout, DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder, measureToolbarFit} from '../docs/toolbar.js';
+import {applyToolbar, toolbarLayout, DEFAULT_TOOLBAR_ORDER, normaliseToolbarOrder, measureToolbarFit, resolveToolbarState, SMALL_WINDOW_MAX_WIDTH} from '../docs/toolbar.js';
 import {websiteThemeProperties} from '../docs/appearance.js';
-import {DISPLAY_PROFILES, getDisplayProfile, toolbarFit} from '../docs/display.js';
+import {toolbarFit, MIN_PREVIEW_WIDTH} from '../docs/display.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const xml = readFileSync(join(root, 'skin', 'Pro.xml'), 'utf8');
@@ -41,27 +41,30 @@ test('all existing palettes reproduce the released source exactly', () => {
 });
 
 test('Pastel and Bold groups retain their identities and export only selected palettes', () => {
-  const names = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Greyscale'];
+  const names = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Pink', 'Greyscale'];
   const pastelColors = [
-    ['#A4435F', '#DD6B5B', '#EBA6C6', '#FFE8E9'],
-    ['#A14D2F', '#CC7D1B', '#F4A988', '#FBEDD1'],
-    ['#816422', '#BD8630', '#D5BF36', '#F9EFC9'],
+    ['#CE5954', '#EB8278', '#F9AEA7', '#FEDBD7'],
+    ['#CF752D', '#EA9952', '#F8BD84', '#FEE3C5'],
+    ['#BCA341', '#D3BE58', '#EAD793', '#F9EFC9'],
     ['#247261', '#5DA260', '#BBC769', '#DAF7E3'],
     ['#535EA3', '#449AC0', '#B0BBEB', '#DDF3F9'],
     ['#BD72A8', '#917CD1', '#D0A1E9', '#EFCFED'],
+    ['#C06099', '#E087B2', '#F3B1CF', '#FEDEEC'],
     ['#636363', '#8F8F8F', '#BEBEBE', '#EEEEEE'],
   ];
-  assert.equal(themes.length, 15);
+  assert.equal(themes.length, 17);
   assert.deepEqual(themes[0].colors, ATOMIX_DEFAULT);
-  assert.deepEqual(themes.slice(1, 8).map(theme => theme.colors), pastelColors);
+  assert.deepEqual(themes.slice(1, 9).map(theme => theme.colors), pastelColors);
   for (const [index, group] of ['pastel', 'bold'].entries()) {
-    const palettes = themes.slice(1 + index * 7, 8 + index * 7);
+    const palettes = themes.slice(1 + index * 8, 9 + index * 8);
     assert.deepEqual(palettes.map(theme => theme.name), names.map(name => `${group === 'pastel' ? 'Pastel' : 'Bold'} ${name}`));
     assert.deepEqual(palettes.map(theme => theme.slug), names.map(name => `${group}-${name.toLowerCase()}`));
     assert.ok(palettes.every(theme => theme.group === group));
   }
+  assert.deepEqual(themes.find(theme => theme.slug === 'bold-yellow').colors, ['#B4870A', '#D3A810', '#F1CB0D', '#FFE97F']);
+  assert.deepEqual(themes.find(theme => theme.slug === 'bold-pink').colors, ['#BE148B', '#F034A3', '#FE79BE', '#FEAFD4']);
   assert.deepEqual(normaliseThemes(themes).map(theme => theme.group), themes.map(theme => theme.group));
-  const selected = [themes[0], ...themes.slice(1, 8), themes.find(theme => theme.slug === 'bold-blue')];
+  const selected = [themes[0], ...themes.slice(1, 9), themes.find(theme => theme.slug === 'bold-blue')];
   const generated = generateSkinXml(xml, selected);
   assert.equal(generatedRegionsRemoved(generated), generatedRegionsRemoved(xml));
   assert.deepEqual([...generated.matchAll(/<group name="pureblack-theme-([^"]+)"/g)].map(match => match[1]), selected.slice(1).map(theme => theme.slug));
@@ -197,48 +200,56 @@ test('every toolbar order and toggle combination fits beside the native counters
   }
 });
 
-test('display fit checks preserve control sizes and preview only Account omitted on a notched 13-inch Air with all controls requested', () => {
-  assert.deepEqual(DISPLAY_PROFILES.map(profile => profile.id), ['13', '14', '15', '16']);
-  for (const profile of DISPLAY_PROFILES) {
-    assert.equal(getDisplayProfile(profile.id), profile);
-    for (const notch of [false, true]) {
+test('responsive previews match window width, notch and fullscreen state without changing requested controls', () => {
+  assert.equal(SMALL_WINDOW_MAX_WIDTH, 1500);
+  assert.equal(MIN_PREVIEW_WIDTH, 1344);
+  for (const width of [402, 1344, 1500, 1501, 1920]) {
+    for (const notch of [false, true]) for (const fullscreen of [false, true]) {
       for (let mask = 0; mask < 16; mask++) {
         const options = Object.fromEntries(optional.map((key, bit) => [key, Boolean(mask & (1 << bit))]));
+        const before = { ...options };
+        const renderWidth = Math.max(1344, width);
+        const accountLeft = options.account && renderWidth <= 1500 && !notch && !fullscreen;
+        const autoHiddenAccount = mask === 15 && renderWidth <= 1500 && notch;
+        const state = resolveToolbarState(options, { width: renderWidth, notch, fullscreen });
+        assert.equal(state.accountLeft, accountLeft);
+        assert.equal(state.autoHiddenAccount, autoHiddenAccount);
+        assert.equal(state.statusX, accountLeft ? 327 : 195);
+        assert.equal(state.logoX, accountLeft ? 670 : 538);
+        assert.deepEqual(state.rightOptions, { ...options, account: options.account && !accountLeft && !autoHiddenAccount });
         for (const order of representativeOrders) {
-          const fit = toolbarFit(options, order, { notch, profile: profile.id });
-          const canvasWidth = profile.width / .75;
-          const shift = canvasWidth - 1920;
-          assert.equal(fit.canvasWidth, canvasWidth);
-          assert.equal(fit.phraseOffset, shift / 2);
-          const autoHiddenAccount = profile.id === '13' && notch && mask === 15;
+          const fit = toolbarFit(options, order, { width, notch, fullscreen });
+          assert.equal(fit.renderWidth, renderWidth);
+          assert.equal(fit.canvasWidth, renderWidth / .75);
+          assert.equal(fit.accountLeft, accountLeft);
           assert.equal(fit.autoHiddenAccount, autoHiddenAccount);
-          const sourceItems = toolbarLayout(autoHiddenAccount ? {...options, account: false} : options, 'mac', order);
-          assert.deepEqual(fit.items.map(item => item.key), sourceItems.map(item => item.key));
-          for (const [index, item] of fit.items.entries()) {
-            const {x, ...rest} = item;
-            const {x: sourceX, ...sourceRest} = sourceItems[index];
-            assert.deepEqual(rest, sourceRest, 'Profile changes must retain native control dimensions');
-            assert.ok(Math.abs(x - sourceX - shift) < .000001);
-          }
-          assert.equal(fit.fits, true, 'Automatic Account omission must keep every requested combination usable');
-          assert.equal(fit.requiredWidth, fit.items.at(-1).x + fit.items.at(-1).width - fit.items[0].x);
+          assert.equal(fit.statusX, state.statusX);
+          assert.equal(fit.logoX, state.logoX);
+          assert.deepEqual(fit.leftItem, accountLeft ? { key: 'account', x: 182, y: 8, width: 135, height: 27 } : null);
+          const shift = fit.canvasWidth - 1920;
+          assert.equal(fit.phraseOffset, shift / 2);
+          const native = toolbarLayout(state.rightOptions, 'mac', order);
+          assert.deepEqual(fit.items.map(item => item.key), native.map(item => item.key));
+          fit.items.forEach((item, index) => {
+            assert.equal(item.width, native[index].width);
+            assert.ok(Math.abs(item.x - native[index].x - shift) < .000001);
+          });
+          assert.equal(fit.fits, true);
           assert.equal(fit.gap, fit.items[0].x - ((notch ? 1160 : 1102) + shift / 2));
-          assert.equal(fit.gap >= fit.minGap && fit.requiredWidth <= fit.availableWidth, fit.fits);
-          assert.equal(fit.scale, .75);
           if (options.sandbox) assert.equal(fit.items.find(item => item.key === 'sandbox').width, 235);
-          if (mask === 15) assert.ok(Math.abs(fit.requiredWidth - (autoHiddenAccount ? 503 : 648)) < .000001);
         }
+        assert.deepEqual(options, before, 'Preview resolution never changes the requested options');
       }
     }
   }
-  assert.throws(() => toolbarFit({}, DEFAULT_TOOLBAR_ORDER, { profile: 'unknown' }), /display/i);
+  assert.throws(() => toolbarFit({}, DEFAULT_TOOLBAR_ORDER, { width: 0 }), /width/i);
   for (const platform of ['mac', 'pc']) {
     const phraseEnd = platform === 'mac' ? 1160 : 1102;
     const right = platform === 'mac' ? 1910 : 1789;
     const fitting = [{ key: 'settings', x: phraseEnd + 10, y: 8, width: right - phraseEnd - 10, height: 27 }];
-    assert.equal(measureToolbarFit(fitting, platform).fits, true, 'Exact safe boundary must fit');
-    assert.equal(measureToolbarFit([{...fitting[0], x: phraseEnd + 9}], platform).fits, false, 'Reject intrusion into the counter gap');
-    assert.equal(measureToolbarFit([{...fitting[0], width: fitting[0].width + 1}], platform).fits, false, 'Reject intrusion into the window controls');
+    assert.equal(measureToolbarFit(fitting, platform).fits, true);
+    assert.equal(measureToolbarFit([{...fitting[0], x: phraseEnd + 9}], platform).fits, false);
+    assert.equal(measureToolbarFit([{...fitting[0], width: fitting[0].width + 1}], platform).fits, false);
   }
 });
 
@@ -273,8 +284,9 @@ test('toolbar exports preserve native status, menus, actions, colours and automa
           }
         }
       }
-      for (const [key, action, copies] of [['account', 'connect', 2], ['shoutout', 'shoutout', 2], ['scheduler', 'eventscheduler', 2], ['sandbox', 'sandbox', 6]]) {
-        assert.equal((output.match(new RegExp(`<button action="${action}"`, 'g')) || []).length, options[key] ? copies : 0, `${mask}: ${key}`);
+      for (const [key, action, perCopy] of [['account', 'connect', 1], ['shoutout', 'shoutout', 1], ['scheduler', 'eventscheduler', 1], ['sandbox', 'sandbox', 3]]) {
+        const copies = key === 'account' ? 3 : 2 + Number(options.account) + Number(mask === 15);
+        assert.equal((output.match(new RegExp(`<button action="${action}"`, 'g')) || []).length, options[key] ? copies * perCopy : 0, `${mask}: ${key}`);
       }
       assert.throws(() => applyToolbar(output, options, order), /already/);
       assert.equal(output.replaceAll('\r\n', '').includes('\n'), false, 'CRLF skin must retain its newline format');
@@ -282,32 +294,45 @@ test('toolbar exports preserve native status, menus, actions, colours and automa
   }
 });
 
-test('13-inch exports retain Account in the full Mac layout and reflow only the runtime notch branch', () => {
+test('native runtime branches move Account before status in narrow windows and hide it only for crowded notch layouts', () => {
   const controls = toolbar => toolbar.match(/<!-- BEGIN PURE BLACK TOOLBAR -->([\s\S]*?)<!-- END PURE BLACK TOOLBAR -->/)[1].trim();
+  const inner = group => group.slice(group.indexOf('>') + 1, -'</group>'.length).trim();
+  const leftCondition = "has_notch ? false : maximize 'fullscreen' ? false : skin_width && param_smaller 1501";
+  const normalCondition = "has_notch ? true : maximize 'fullscreen' ? true : skin_width && param_bigger 1500";
   for (let mask = 0; mask < 16; mask++) {
     const options = Object.fromEntries(optional.map((key, bit) => [key, Boolean(mask & (1 << bit))]));
     for (const order of representativeOrders) {
-      const normal = applyToolbar(xml, options, order);
-      const configured = applyToolbar(xml, options, order, { compactNotch: true });
-      if (mask !== 15) {
-        assert.equal(configured, normal, 'Missing any optional control needs no runtime branch');
+      const configured = applyToolbar(xml, options, order);
+      const mac = skinGroup(configured, 'pureblack_toolbar_mac');
+      const pc = skinGroup(configured, 'pureblack_toolbar_pc');
+      assert.ok(!pc.includes('pureblack_status_') && !pc.includes('pureblack_toolbar_full'), 'Windows has one ordinary toolbar');
+      if (!options.account) {
+        assert.ok(!mac.includes('pureblack_status_') && !mac.includes('pureblack_toolbar_full'));
         continue;
       }
-      assert.equal(withoutToolbar(configured), withoutToolbar(xml));
-      assert.equal(skinGroup(configured, 'pureblack_toolbar_pc'), skinGroup(normal, 'pureblack_toolbar_pc'), 'Windows retains the requested full toolbar');
-      const mac = skinGroup(configured, 'pureblack_toolbar_mac');
+      const normalStatus = skinGroup(mac, 'pureblack_status_normal');
+      const movedStatus = skinGroup(mac, 'pureblack_status_account_left');
+      assert.ok(normalStatus.startsWith(`<group name="pureblack_status_normal" visibility="${normalCondition}">`));
+      assert.ok(movedStatus.startsWith(`<group name="pureblack_status_account_left" visibility="${leftCondition}">`));
+      assert.equal(inner(normalStatus), skinGroup(xml, 'topbar_status'));
+      assert.equal(inner(movedStatus).replace('x="327"', 'x="195"'), inner(normalStatus));
       const full = skinGroup(mac, 'pureblack_toolbar_full');
-      const compact = skinGroup(mac, 'pureblack_toolbar_compact');
-      assert.ok(full.startsWith('<group name="pureblack_toolbar_full" visibility="not has_notch">'));
-      assert.ok(compact.startsWith('<group name="pureblack_toolbar_compact" visibility="has_notch">'));
-      const inner = group => group.slice(group.indexOf('>') + 1, -'</group>'.length).trim();
-      assert.equal(inner(full), controls(skinGroup(normal, 'pureblack_toolbar_mac')));
+      const moved = skinGroup(mac, 'pureblack_toolbar_account_left');
+      const fullCondition = mask === 15 ? "has_notch ? skin_width && param_bigger 1500 : maximize 'fullscreen' ? true : skin_width && param_bigger 1500" : normalCondition;
+      assert.ok(full.startsWith(`<group name="pureblack_toolbar_full" visibility="${fullCondition}">`));
+      assert.ok(moved.startsWith(`<group name="pureblack_toolbar_account_left" visibility="${leftCondition}">`));
+      const leftAccount = skinGroup(moved, 'login');
+      assert.ok(leftAccount.startsWith('<group name="login" x="182" y="8">'));
       const withoutAccount = applyToolbar(xml, { ...options, account: false }, order);
-      assert.equal(inner(compact), controls(skinGroup(withoutAccount, 'pureblack_toolbar_mac')), 'Compact controls reflow without gaps in any requested order');
-      assert.ok(full.includes('<button action="connect">') && !compact.includes('<button action="connect">'));
-      assert.equal(skinGroup(mac, 'topbar_status'), skinGroup(normal, 'topbar_status'));
-      assert.equal((mac.match(/name="topbar_status"/g) || []).length, 1);
-      assert.ok(!full.includes('topbar_status') && !compact.includes('topbar_status'), 'Status remains outside both runtime branches');
+      const expectedRight = controls(skinGroup(withoutAccount, 'pureblack_toolbar_mac'));
+      assert.equal(inner(moved).replace(leftAccount, '').trim(), expectedRight, 'Moving Account reflows the remaining right controls');
+      assert.ok(!full.includes('topbar_status') && !moved.includes('topbar_status'));
+      if (mask === 15) {
+        const compact = skinGroup(mac, 'pureblack_toolbar_compact');
+        assert.ok(compact.startsWith('<group name="pureblack_toolbar_compact" visibility="has_notch ? skin_width && param_smaller 1501 : false">'));
+        assert.equal(inner(compact), expectedRight);
+        assert.ok(!compact.includes('action="connect"') && !compact.includes('topbar_status'));
+      } else assert.ok(!mac.includes('pureblack_toolbar_compact'));
     }
   }
 });
@@ -321,7 +346,6 @@ test('invalid toolbar values or incomplete, duplicate and unknown orders fail cl
     assert.throws(() => applyToolbar(xml, {}, order), /order|button|control/i);
   }
   assert.throws(() => applyToolbar(xml, {sandbox: 'true'}), /on or off/);
-  assert.throws(() => applyToolbar(xml, {}, DEFAULT_TOOLBAR_ORDER, { compactNotch: 'true' }), /on or off/);
   assert.throws(() => toolbarLayout({}, 'unknown'), /platform/i);
 });
 

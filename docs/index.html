@@ -13,13 +13,23 @@
 </head>
 <body>
   <main aria-label="Pro Pure Black skin builder">
+    <section class="panel overall-preview" aria-label="Skin preview">
+      <div class="preview-heading"><span id="preview-title">Default</span></div>
+      <div class="toolbar-preview-controls">
+        <label class="toggle-row toolbar-notch-toggle"><span>Notch</span><input type="checkbox" id="toolbar-notch-preview" role="switch"><span class="switch" aria-hidden="true"></span></label>
+        <div class="custom-logo-controls"><span class="custom-logo-label">Custom logo</span><label class="custom-logo-picker"><span>Choose PNG</span><input id="custom-logo-upload" type="file" accept="image/png" aria-label="Upload transparent PNG logo" aria-describedby="custom-logo-hint custom-logo-status"></label><button id="custom-logo-remove" type="button" disabled>Remove</button><span id="custom-logo-hint">Transparent PNG · 5 MB max.</span></div>
+      </div>
+      <p id="custom-logo-status" role="status" aria-live="polite" hidden></p>
+      <div id="toolbar-preview"></div>
+      <div id="preset-preview"></div>
+      <div class="toolbar-preview-notes"><p id="toolbar-fit-status" role="status" aria-live="polite" hidden></p></div>
+    </section>
+
     <section class="panel presets-panel" aria-labelledby="presets-title">
       <div class="panel-heading">
         <h1 id="presets-title">Colour presets</h1>
-        <span id="preset-count" class="count-badge">15 included</span>
+        <span id="preset-count" class="count-badge">17 included</span>
       </div>
-      <div class="preview-heading"><span id="preview-title">Default</span></div>
-      <div id="preset-preview"></div>
       <div class="preset-tools">
         <div class="text-actions"><button id="select-all" type="button">All</button><span aria-hidden="true">/</span><button id="select-default" type="button">Default only</button></div>
       </div>
@@ -27,26 +37,18 @@
     </section>
 
     <section class="panel custom-panel" aria-labelledby="custom-title">
-      <div class="panel-heading"><h2 id="custom-title">Custom presets</h2><button id="add-custom" class="add-button" type="button"><span aria-hidden="true">+</span> Add preset</button></div>
-      <div id="custom-presets"></div>
+      <div class="panel-heading"><h2 id="custom-title">Custom presets</h2><button id="add-custom" class="add-button" type="button" disabled><span aria-hidden="true">+</span> Add preset</button></div>
+      <div id="custom-presets" aria-label="Custom palette editor"></div>
     </section>
 
     <section class="panel toolbar-panel" aria-labelledby="toolbar-title">
       <div class="panel-heading"><h2 id="toolbar-title">Toolbar</h2><span id="toolbar-count" class="count-badge">2 included</span></div>
-      <div class="toolbar-preview-controls">
-        <label class="toolbar-profile-label" for="toolbar-display-profile">Display size <select id="toolbar-display-profile"></select></label>
-        <label class="toggle-row toolbar-notch-toggle"><span>Notch preview</span><input type="checkbox" id="toolbar-notch-preview" role="switch"><span class="switch" aria-hidden="true"></span></label>
-        <div class="custom-logo-controls"><span class="custom-logo-label">Custom logo</span><label class="custom-logo-picker"><span>Choose PNG</span><input id="custom-logo-upload" type="file" accept="image/png" aria-label="Upload transparent PNG logo" aria-describedby="custom-logo-hint custom-logo-status"></label><button id="custom-logo-remove" type="button" disabled>Remove</button><span id="custom-logo-hint">Transparent PNG · 5 MB max.</span></div>
-      </div>
-      <p id="custom-logo-status" role="status" aria-live="polite" hidden></p>
-      <div id="toolbar-preview"></div>
-      <div class="toolbar-preview-notes"><p id="toolbar-fit-status" role="status" aria-live="polite" hidden></p></div>
       <ol id="toolbar-order" class="toolbar-order" aria-label="Toolbar button order"></ol>
       <p id="toolbar-order-status" class="sr-only" role="status" aria-live="polite"></p>
     </section>
 
     <div class="download-panel">
-      <strong id="download-summary">15 palettes · 0 optional controls</strong>
+      <strong id="download-summary">17 palettes · 0 optional controls</strong>
       <button id="download" class="download-button" type="button" disabled><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m-5-5 5 5 5-5M5 16v4h14v-4"/></svg><span>Download skin</span></button>
       <details id="skin-folder-paths" class="skin-folder-paths">
         <summary>Skin folder paths</summary>

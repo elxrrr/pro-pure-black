@@ -8,6 +8,15 @@
 const FEATURES = ['account', 'shoutout', 'scheduler', 'sandbox'];
 export const DEFAULT_TOOLBAR_ORDER = Object.freeze([...FEATURES, 'layout', 'settings']);
 const WIDTHS = { account: 135, shoutout: 35, scheduler: 35, sandbox: 235, layout: 123, settings: 35 };
+// Atomix's stock skins use this runtime window-width breakpoint. These queries
+// are evaluated by VirtualDJ whenever the window/display state changes.
+export const SMALL_WINDOW_MAX_WIDTH = 1500;
+const SMALL_WINDOW_VISIBILITY = `skin_width && param_smaller ${SMALL_WINDOW_MAX_WIDTH + 1}`;
+const LARGE_WINDOW_VISIBILITY = `skin_width && param_bigger ${SMALL_WINDOW_MAX_WIDTH}`;
+export const ACCOUNT_LEFT_VISIBILITY = `has_notch ? false : maximize 'fullscreen' ? false : ${SMALL_WINDOW_VISIBILITY}`;
+export const ACCOUNT_NORMAL_VISIBILITY = `has_notch ? true : maximize 'fullscreen' ? true : ${LARGE_WINDOW_VISIBILITY}`;
+const COMPACT_NOTCH_VISIBILITY = `has_notch ? ${SMALL_WINDOW_VISIBILITY} : false`;
+const FULL_WITH_COMPACT_VISIBILITY = `has_notch ? ${LARGE_WINDOW_VISIBILITY} : maximize 'fullscreen' ? true : ${LARGE_WINDOW_VISIBILITY}`;
 
 export function normaliseToolbarOrder(order = DEFAULT_TOOLBAR_ORDER) {
   if (!Array.isArray(order) || order.length !== DEFAULT_TOOLBAR_ORDER.length ||
@@ -27,6 +36,23 @@ function validateOptions(options) {
       throw new TypeError(`Toolbar option ${key} must be on or off.`);
     }
   }
+}
+
+/** Mirror the Mac runtime branches for the builder's current-window preview. */
+export function resolveToolbarState(options = {}, { width = 1920, notch = false, fullscreen = false } = {}) {
+  validateOptions(options);
+  if (!Number.isFinite(width) || width <= 0) throw new TypeError('Window width must be positive.');
+  if (typeof notch !== 'boolean' || typeof fullscreen !== 'boolean') throw new TypeError('Window states must be on or off.');
+  const small = width <= SMALL_WINDOW_MAX_WIDTH;
+  const accountLeft = options.account === true && small && !notch && !fullscreen;
+  const autoHiddenAccount = FEATURES.every(key => options[key] === true) && small && notch;
+  return {
+    accountLeft,
+    autoHiddenAccount,
+    statusX: accountLeft ? 327 : 195,
+    logoX: accountLeft ? 670 : 538,
+    rightOptions: { ...options, ...(accountLeft || autoHiddenAccount ? { account: false } : {}) },
+  };
 }
 
 const account = (x) => `<group name="login" x="${x}" y="8">
@@ -165,9 +191,8 @@ function groupBounds(xml, name) {
 }
 
 /** Arrange selected controls without rewriting native menus or VDJScript. */
-export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER, { compactNotch = false } = {}) {
+export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER) {
   if (typeof xml !== 'string') throw new TypeError('Skin template must be text.');
-  if (typeof compactNotch !== 'boolean') throw new TypeError('Compact notch toolbar must be on or off.');
   validateOptions(options);
   order = normaliseToolbarOrder(order);
   if (xml.includes('BEGIN PURE BLACK TOOLBAR') || xml.includes('BEGIN PURE BLACK OPTIONAL TOOLBAR')) {
@@ -192,6 +217,15 @@ export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER, {
     if (settings.length !== 1) throw new Error('Skin toolbar must contain one Settings button per platform.');
     const nativeSettings = settings[0][0];
     const removals = [layout, { start: settings[0].index, end: settings[0].index + nativeSettings.length }];
+    let nativeStatus;
+    if (platform === 'mac' && options.account) {
+      const status = groupBounds(body, 'topbar_status');
+      nativeStatus = body.slice(status.start, status.end);
+      if (!nativeStatus.startsWith('<group name="topbar_status" x="195" y="8">')) {
+        throw new Error('The skin status position could not be identified.');
+      }
+      removals.push(status);
+    }
     for (const { start, end } of removals.sort((a, b) => b.start - a.start)) {
       body = body.slice(0, start) + body.slice(end);
     }
@@ -201,13 +235,22 @@ export function applyToolbar(xml, options = {}, order = DEFAULT_TOOLBAR_ORDER, {
       return render[key](x);
     }).join(newline).replace(/\r?\n/g, newline);
     let markup = renderLayout(layouts[platform]);
-    // The selected 13-inch layout keeps Account in the ZIP. VirtualDJ chooses
-    // the appropriate branch live, using the same native notch query as the
-    // phrase counters. Reflow every control so arbitrary ordering leaves no gap.
-    if (platform === 'mac' && compactNotch && FEATURES.every(key => options[key] === true)) {
-      const compact = renderLayout(toolbarLayout({ ...options, account: false }, platform, order));
-      markup = `<group name="pureblack_toolbar_full" visibility="not has_notch">${newline}${markup}${newline}</group>${newline}` +
-        `<group name="pureblack_toolbar_compact" visibility="has_notch">${newline}${compact}${newline}</group>`;
+    // Keep Account in the ZIP and let VirtualDJ respond to the actual window.
+    // In a small window it sits before Master; a narrow fullscreen notch view
+    // hides it only when all optional controls need the remaining right space.
+    if (platform === 'mac' && options.account) {
+      const rightWithoutAccount = renderLayout(toolbarLayout({ ...options, account: false }, platform, order));
+      const hasCompact = FEATURES.every(key => options[key] === true);
+      const wrap = (name, visibility, content) => `<group name="${name}" visibility="${visibility}">${newline}${content}${newline}</group>`;
+      const statusMoved = nativeStatus.replace('x="195"', 'x="327"');
+      markup = [
+        wrap('pureblack_status_normal', ACCOUNT_NORMAL_VISIBILITY, nativeStatus),
+        wrap('pureblack_status_account_left', ACCOUNT_LEFT_VISIBILITY, statusMoved),
+        wrap('pureblack_toolbar_full', hasCompact ? FULL_WITH_COMPACT_VISIBILITY : ACCOUNT_NORMAL_VISIBILITY, markup),
+        wrap('pureblack_toolbar_account_left', ACCOUNT_LEFT_VISIBILITY,
+          account(182).replace(/\r?\n/g, newline) + newline + rightWithoutAccount),
+        ...(hasCompact ? [wrap('pureblack_toolbar_compact', COMPACT_NOTCH_VISIBILITY, rightWithoutAccount)] : []),
+      ].join(newline);
     }
     const insertion = `${newline}<!-- BEGIN PURE BLACK TOOLBAR -->${newline}${markup}${newline}<!-- END PURE BLACK TOOLBAR -->${newline}`;
     xml = xml.slice(0, outer.bodyStart) + body + insertion + xml.slice(outer.close);
